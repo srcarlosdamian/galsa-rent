@@ -1,0 +1,169 @@
+import React, { useState } from 'react';
+import { Star, Heart, ChevronLeft, ChevronRight, Users, Gauge, Shield, Sparkles } from 'lucide-react';
+import { Vehicle } from '../types/vehicle';
+
+interface VehicleCardProps {
+  vehicle: Vehicle;
+  onSelect: (vehicle: Vehicle) => void;
+}
+
+export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) => {
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIdx((prev) => (prev + 1) % vehicle.images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIdx((prev) => (prev - 1 + vehicle.images.length) % vehicle.images.length);
+  };
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsFavorite(!isFavorite);
+  };
+
+  return (
+    <article
+      onClick={() => onSelect(vehicle)}
+      className="group cursor-pointer bg-white rounded-2xl border border-neutral-200/90 overflow-hidden transition-all duration-300 hover:border-neutral-400 hover:shadow-sm flex flex-col"
+    >
+      {/* Photo carousel container */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
+        <img
+          src={vehicle.images[currentImageIdx]}
+          alt={`${vehicle.make} ${vehicle.model} ${vehicle.year} en renta en Durango`}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        {/* Top badges */}
+        <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-white/95 text-neutral-900 px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm">
+            <Sparkles className="w-3 h-3 text-neutral-800" />
+            <span>Verificado</span>
+          </span>
+          {vehicle.rating >= 4.95 && (
+            <span className="inline-flex items-center text-[11px] font-semibold bg-black text-white px-2 py-1 rounded-full shadow-sm">
+              Top Auto
+            </span>
+          )}
+        </div>
+
+        {/* Favorite heart button */}
+        <button
+          type="button"
+          onClick={toggleFavorite}
+          aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white text-neutral-800 backdrop-blur-sm transition-all z-10 shadow-sm"
+        >
+          <Heart
+            className={`w-4 h-4 transition-colors ${
+              isFavorite ? 'fill-rose-500 text-rose-500' : 'text-neutral-700'
+            }`}
+          />
+        </button>
+
+        {/* Arrow navigators (visible on hover) */}
+        {vehicle.images.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={prevImage}
+              aria-label="Foto anterior"
+              className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 hover:bg-white text-neutral-800 opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-md"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={nextImage}
+              aria-label="Siguiente foto"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 hover:bg-white text-neutral-800 opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-md"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </>
+        )}
+
+        {/* Carousel indicator dots */}
+        {vehicle.images.length > 1 && (
+          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+            {vehicle.images.map((_, idx) => (
+              <span
+                key={idx}
+                className={`h-1.5 rounded-full transition-all ${
+                  idx === currentImageIdx ? 'w-4 bg-white' : 'w-1.5 bg-white/60'
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Card Body & Info */}
+      <div className="p-4 flex flex-col flex-1 justify-between">
+        <div>
+          {/* Header row: title and rating */}
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <h3 className="text-base font-bold text-neutral-900 tracking-tight leading-snug">
+                {vehicle.make} {vehicle.model}
+              </h3>
+              <p className="text-xs text-neutral-500 font-medium">
+                Modelo {vehicle.year} · {vehicle.category}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-1 shrink-0 bg-neutral-50 px-2 py-0.5 rounded-md border border-neutral-100">
+              <Star className="w-3.5 h-3.5 fill-black text-black" />
+              <span className="text-xs font-bold text-neutral-900">{vehicle.rating.toFixed(2)}</span>
+              <span className="text-[11px] text-neutral-500 font-normal">({vehicle.tripsCount})</span>
+            </div>
+          </div>
+
+          {/* Quick specs pills */}
+          <div className="mt-3 flex items-center gap-2 text-xs text-neutral-600">
+            <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
+              <Users className="w-3 h-3 text-neutral-500" />
+              <span>{vehicle.seats} plazas</span>
+            </span>
+            <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
+              <Gauge className="w-3 h-3 text-neutral-500" />
+              <span>{vehicle.transmission}</span>
+            </span>
+            <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
+              <Shield className="w-3 h-3 text-neutral-500" />
+              <span>Libre km</span>
+            </span>
+          </div>
+
+          <p className="mt-2.5 text-xs text-neutral-500 line-clamp-1">
+            {vehicle.location}
+          </p>
+        </div>
+
+        {/* Pricing footer row */}
+        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-baseline justify-between">
+          <div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-lg font-extrabold text-neutral-900">
+                ${vehicle.pricePerDay.toLocaleString('es-MX')}
+              </span>
+              <span className="text-xs font-semibold text-neutral-600">MXN</span>
+              <span className="text-xs text-neutral-500">/ día</span>
+            </div>
+            <p className="text-[10px] text-neutral-400">Total transparente · IVA incluido</p>
+          </div>
+
+          <span className="text-xs font-semibold text-neutral-900 underline group-hover:no-underline">
+            Ver detalles
+          </span>
+        </div>
+      </div>
+    </article>
+  );
+};
