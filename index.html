@@ -6,16 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- SEO Meta Tags -->
-    <title>GALSA | Renta de Autos en Durango y México — Reserva 100% Digital</title>
-    <meta name="description" content="Renta de autos en Durango sin filas, con contratos digitales y entrega en minutos. Flota verificada, kilometraje libre y marketplace de anfitriones en México. Muévete con total confianza." />
-    <meta name="keywords" content="renta de autos Durango, alquilar auto Durango, renta de autos aeropuerto Durango, GALSA rent, renta de camionetas Durango, renta de autos sin tarjeta de crédito, marketplace de autos, autos para plataforma Durango" />
-    <meta name="author" content="GALSA Movilidad" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <title>Renta de Autos en Durango — Reserva en Línea | GALSA</title>
+    <meta name="description" content="Renta autos en Durango desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, firma digital y kilometraje libre. Entrega en Plaza 450." />
+    <meta name="author" content="GALSA Rent" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
 
     <!-- Canonical & Alternate URLs -->
     <link rel="canonical" href="https://galsarent.com.mx/" />
     <link rel="alternate" hreflang="es-MX" href="https://galsarent.com.mx/" />
     <link rel="alternate" hreflang="x-default" href="https://galsarent.com.mx/" />
+
+    <!-- Preload LCP Hero Image -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=80" fetchpriority="high" />
 
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' font-family='sans-serif' fill='%23111827'>g</text></svg>" />
@@ -23,24 +25,27 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="GALSA RENT" />
+    <meta property="og:site_name" content="GALSA Rent" />
     <meta property="og:url" content="https://galsarent.com.mx/" />
-    <meta property="og:title" content="GALSA | Renta de Autos en Durango y México — Reserva 100% Digital" />
-    <meta property="og:description" content="Renta de autos sin filas, contratos digitales y entrega garantizada en Durango. Flota verificada con seguro y kilometraje libre." />
+    <meta property="og:title" content="Renta de Autos en Durango — Reserva en Línea | GALSA" />
+    <meta property="og:description" content="Renta autos en Durango desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, firma digital y kilometraje libre. Entrega en Plaza 450." />
     <meta property="og:image" content="https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Flota de autos en renta en Sucursal Plaza 450, Durango — GALSA Rent" />
     <meta property="og:locale" content="es_MX" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://galsarent.com.mx/" />
-    <meta name="twitter:title" content="GALSA | Renta de Autos en Durango y México — Reserva 100% Digital" />
-    <meta name="twitter:description" content="Renta de autos sin filas, contratos digitales y entrega garantizada en Durango. Flota propia y de anfitriones." />
+    <meta name="twitter:title" content="Renta de Autos en Durango — Reserva en Línea | GALSA" />
+    <meta name="twitter:description" content="Renta autos en Durango desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, firma digital y kilometraje libre. Entrega en Plaza 450." />
     <meta name="twitter:image" content="https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg" />
 
-    <!-- Google Fonts: Google Sans & Plus Jakarta Sans Fallback -->
+    <!-- Google Sans Web Font with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Product+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
       @font-face {
@@ -76,7 +81,7 @@
       }
     </style>
 
-    <!-- Schema.org Structured Data: AutoRental & WebSite -->
+    <!-- Schema.org JSON-LD (AutoRental, WebSite) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -84,83 +89,56 @@
         {
           "@type": "AutoRental",
           "@id": "https://galsarent.com.mx/#autorental",
-          "name": "GALSA RENT",
-          "alternateName": "GALSA Movilidad",
+          "name": "GALSA Rent",
+          "legalName": "GALSA Rent Durango",
           "url": "https://galsarent.com.mx/",
           "logo": "https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg",
-          "description": "Renta de autos sin filas, marketplace de anfitriones y operación de flota en Durango y México con contratos 100% digitales.",
+          "image": "https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg",
+          "description": "Renta de autos 100% en línea en Durango con entrega en Sucursal Plaza 450 y marketplace de anfitriones.",
           "priceRange": "$$",
           "currenciesAccepted": "MXN",
-          "paymentAccepted": "Credit Card, Debit Card, Transfer",
+          "paymentAccepted": "Credit Card, Debit Card, Bank Transfer",
+          "areaServed": {
+            "@type": "City",
+            "name": "Durango"
+          },
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Plaza 450",
+            "streetAddress": "Blvd. Guadiana, Plaza 450",
             "addressLocality": "Durango",
             "addressRegion": "Durango",
-            "postalCode": "34000",
+            "postalCode": "34138",
             "addressCountry": "MX"
           },
           "geo": {
             "@type": "GeoCoordinates",
-            "latitude": "24.0277",
-            "longitude": "-104.6532"
+            "latitude": "24.02388",
+            "longitude": "-104.68652"
           },
+          "telephone": "+526180000000",
           "openingHoursSpecification": [
             {
               "@type": "OpeningHoursSpecification",
-              "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday"
-              ],
-              "opens": "07:00",
-              "closes": "23:00"
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "opens": "08:00",
+              "closes": "20:00"
             }
           ],
-          "areaServed": {
-            "@type": "AdministrativeArea",
-            "name": "Durango, México"
-          }
+          "sameAs": []
         },
         {
           "@type": "WebSite",
           "@id": "https://galsarent.com.mx/#website",
           "url": "https://galsarent.com.mx/",
-          "name": "GALSA RENT",
-          "description": "Plataforma digital para la renta de autos y movilidad en México",
+          "name": "GALSA Rent",
           "inLanguage": "es-MX",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://galsarent.com.mx/?search={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Inicio",
-              "item": "https://galsarent.com.mx/"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Vehículos en Durango",
-              "item": "https://galsarent.com.mx/#catalogo"
-            }
-          ]
+          "description": "Renta de autos en Durango, 100% en línea"
         }
       ]
     }
     </script>
   </head>
-  <body class="bg-white text-ink-900 antialiased selection:bg-neutral-900 selection:text-white">
+  <body class="bg-white text-neutral-900 antialiased selection:bg-black selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
