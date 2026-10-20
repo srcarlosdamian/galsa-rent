@@ -1,111 +1,119 @@
 import React from 'react';
-import { MapPin, Phone, Mail, ShieldCheck, Instagram, Facebook, Twitter } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate?: (path: string) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="bg-white border-t border-neutral-200 text-neutral-900 text-xs">
       
-      {/* Upper Main Footer Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-baseline tracking-tighter">
-              <span className="text-3xl font-black tracking-tight text-black">galsa</span>
+              <span className="text-2xl font-black tracking-tight text-black">galsa</span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-black ml-0.5 mb-0.5"></span>
-              <span className="ml-2 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded">
+              <span className="ml-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded">
                 Rent
               </span>
             </div>
             
             <p className="text-xs text-neutral-600 leading-relaxed max-w-sm">
-              Plataforma tecnológica premium para la renta de autos en Durango y movilidad en México. Contratos 100% digitales, autos verificados y marketplace transparente para anfitriones.
+              GALSA Rent: renta de autos en Durango, marketplace de anfitriones y unidades para conductores de apps de movilidad.
             </p>
 
-            <div className="space-y-2 pt-2 text-neutral-700">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-neutral-400 shrink-0" />
-                <span>Sucursal Plaza 450, Blvd. Guadiana, Durango, Dgo., México</span>
+            {/* NAP Local Data (Idéntico a JSON-LD y Contacto) */}
+            <div className="space-y-2 pt-1 text-neutral-700 text-xs">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-3.5 h-3.5 text-neutral-400 mt-0.5 shrink-0" />
+                <span>Sucursal Plaza 450, Blvd. Guadiana, Durango, Dgo., C.P. 34138, México</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-neutral-400 shrink-0" />
-                <span>+52 618 123 4567 · Atención 24/7</span>
+                <Clock className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                {/* TODO: Confirmar horario oficial de atención en Sucursal Plaza 450 */}
+                <span>Lunes a Domingo: 08:00 - 20:00 hrs</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-neutral-400 shrink-0" />
+                <Phone className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                {/* TODO: Reemplazar con el número de teléfono oficial de GALSA Rent */}
+                <span>+52 618 000 0000 · WhatsApp & Atención</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                {/* TODO: Reemplazar con el correo oficial de atención al cliente */}
                 <span>contacto@galsarent.com.mx</span>
               </div>
             </div>
           </div>
 
-          {/* Column: Flota & Modelos */}
+          {/* Navigation Column 1: Flota */}
           <div className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-wider text-neutral-900">
-              Flota en Durango
+              Autos en Durango
             </p>
             <ul className="space-y-2 text-neutral-600">
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Jeep Wrangler Rubicon 4x4</a></li>
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Jeep Wrangler Sport Unlimited</a></li>
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Volkswagen Virtus Trendline</a></li>
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Nissan Sentra Sense 2024</a></li>
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Honda Civic Coupé Sport</a></li>
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Renta con entrega en aeropuerto</a></li>
+              <li><a href="/catalogo" onClick={(e) => handleLink(e, '/catalogo')} className="hover:text-black transition-colors">Catálogo de autos</a></li>
+              <li><a href="/vehiculos/nissan-sentra-sense-2024-durango" onClick={(e) => handleLink(e, '/vehiculos/nissan-sentra-sense-2024-durango')} className="hover:text-black transition-colors">Nissan Sentra Sense 2024</a></li>
+              <li><a href="/vehiculos/volkswagen-virtus-trendline-2024-durango" onClick={(e) => handleLink(e, '/vehiculos/volkswagen-virtus-trendline-2024-durango')} className="hover:text-black transition-colors">Volkswagen Virtus 2024</a></li>
+              <li><a href="/vehiculos/jeep-wrangler-sport-unlimited-2011-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-sport-unlimited-2011-durango')} className="hover:text-black transition-colors">Jeep Wrangler Sport 4x4</a></li>
+              <li><a href="/vehiculos/jeep-wrangler-rubicon-unlimited-2021-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-rubicon-unlimited-2021-durango')} className="hover:text-black transition-colors">Jeep Wrangler Rubicon 2021</a></li>
+              <li><a href="/vehiculos/honda-civic-coupe-sport-2020-durango" onClick={(e) => handleLink(e, '/vehiculos/honda-civic-coupe-sport-2020-durango')} className="hover:text-black transition-colors">Honda Civic Coupé Sport</a></li>
             </ul>
           </div>
 
-          {/* Column: Anfitriones & Movilidad */}
+          {/* Navigation Column 2: Marketplace */}
           <div className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-wider text-neutral-900">
-              Marketplace
+              Anfitriones
             </p>
             <ul className="space-y-2 text-neutral-600">
-              <li><a href="#anfitriones" className="hover:text-black transition-colors">Pon tu auto a trabajar</a></li>
-              <li><a href="#anfitriones" className="hover:text-black transition-colors">Calculadora de ingresos</a></li>
-              <li><a href="#anfitriones" className="hover:text-black transition-colors">Validación de conductores</a></li>
-              <li><a href="#seguridad" className="hover:text-black transition-colors">Cobertura y seguro de renta</a></li>
-              <li><a href="#catalogo" className="hover:text-black transition-colors">Autos para Uber y DiDi</a></li>
+              <li><a href="/anfitriones" onClick={(e) => handleLink(e, '/anfitriones')} className="hover:text-black transition-colors">Gana dinero con tu auto</a></li>
+              <li><a href="/anfitriones#simulador" onClick={(e) => handleLink(e, '/anfitriones')} className="hover:text-black transition-colors">Simulador de ingresos</a></li>
+              <li><a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-black transition-colors">Seguridad y validación</a></li>
+              <li><a href="/#como-rentar" onClick={(e) => handleLink(e, '/#como-rentar')} className="hover:text-black transition-colors">Cómo funciona la entrega</a></li>
+              <li><a href="/catalogo" onClick={(e) => handleLink(e, '/catalogo')} className="hover:text-black transition-colors">Autos para apps de movilidad</a></li>
             </ul>
           </div>
 
-          {/* Column: Legal & Ayuda */}
+          {/* Navigation Column 3: Legal & Ayuda */}
           <div className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-wider text-neutral-900">
-              Legal y Confianza
+              Legal y Contacto
             </p>
             <ul className="space-y-2 text-neutral-600">
-              <li><a href="#seguridad" className="hover:text-black transition-colors">Términos del contrato digital</a></li>
-              <li><a href="#faq" className="hover:text-black transition-colors">Aviso de privacidad</a></li>
-              <li><a href="#faq" className="hover:text-black transition-colors">Política de combustible 1:1</a></li>
-              <li><a href="#faq" className="hover:text-black transition-colors">Cancelación flexible 48h</a></li>
-              <li><a href="#faq" className="hover:text-black transition-colors">Preguntas frecuentes (FAQ)</a></li>
+              <li><a href="/contacto" onClick={(e) => handleLink(e, '/contacto')} className="hover:text-black transition-colors font-medium text-neutral-900">Contacto y Sucursal</a></li>
+              <li><a href="/faq" onClick={(e) => handleLink(e, '/faq')} className="hover:text-black transition-colors">Preguntas frecuentes</a></li>
+              <li><a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-black transition-colors">Contrato digital y seguro</a></li>
+              <li><a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-black transition-colors">Términos y condiciones</a></li>
+              <li><a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-black transition-colors">Aviso de privacidad</a></li>
             </ul>
           </div>
 
-        </div>
-
-        {/* SEO Breadcrumbs / Location Directory */}
-        <div className="mt-12 pt-8 border-t border-neutral-100 flex flex-wrap gap-2 text-[11px] text-neutral-400">
-          <span className="font-semibold text-neutral-600">Destinos y servicios populares:</span>
-          <span>Renta de autos Aeropuerto Durango</span> ·
-          <span>Renta de camionetas 4x4 Mexiquillo</span> ·
-          <span>Alquiler de autos ejecutivos Durango Centro</span> ·
-          <span>Autos sin tarjeta de crédito en Durango</span> ·
-          <span>Plataforma de anfitriones de movilidad en México</span>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-neutral-200 bg-white py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-neutral-500">
-            © 2026 GALSA Movilidad S.A.P.I. de C.V. Todos los derechos reservados. Hecho en Durango, México.
-          </p>
+      <div className="border-t border-neutral-200 bg-white py-5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-neutral-500">
+          <p>© 2026 GALSA Rent. Operando en Durango, México.</p>
 
-          <div className="flex items-center space-x-6 text-neutral-400">
-            <span className="hover:text-black cursor-pointer transition-colors">Privacidad</span>
-            <span className="hover:text-black cursor-pointer transition-colors">Términos</span>
-            <span className="hover:text-black cursor-pointer transition-colors">Mapa del sitio</span>
+          <div className="flex items-center space-x-5">
+            <a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-black transition-colors">Aviso de privacidad</a>
+            <a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-black transition-colors">Términos del contrato</a>
+            <a href="/contacto" onClick={(e) => handleLink(e, '/contacto')} className="hover:text-black transition-colors">Contacto</a>
           </div>
         </div>
       </div>
