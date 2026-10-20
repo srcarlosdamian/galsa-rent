@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Star, Heart, ChevronLeft, ChevronRight, Users, Gauge, Shield, Sparkles } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight, Users, Gauge, Shield, Sparkles } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
   onSelect: (vehicle: Vehicle) => void;
+  priority?: boolean;
 }
 
-export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) => {
+export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, priority = false }) => {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -26,6 +27,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
     setIsFavorite(!isFavorite);
   };
 
+  const currentImg = vehicle.images[currentImageIdx];
+  const serviceFee = Math.round(vehicle.pricePerDay * 0.33);
+  const totalPerDay = vehicle.pricePerDay + serviceFee;
+
   return (
     <article
       onClick={() => onSelect(vehicle)}
@@ -34,23 +39,21 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
       {/* Photo carousel container */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
         <img
-          src={vehicle.images[currentImageIdx]}
-          alt={`${vehicle.make} ${vehicle.model} ${vehicle.year} en renta en Durango`}
-          loading="lazy"
+          src={currentImg.url}
+          alt={currentImg.alt}
+          width={currentImg.width}
+          height={currentImg.height}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Top badges */}
+        {/* Top badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-          <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-white/95 text-neutral-900 px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm">
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-white/95 text-neutral-900 px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm">
             <Sparkles className="w-3 h-3 text-neutral-800" />
-            <span>Verificado</span>
+            <span>Revisado y verificado</span>
           </span>
-          {vehicle.rating >= 4.95 && (
-            <span className="inline-flex items-center text-[11px] font-semibold bg-black text-white px-2 py-1 rounded-full shadow-sm">
-              Top Auto
-            </span>
-          )}
         </div>
 
         {/* Favorite heart button */}
@@ -61,13 +64,13 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
           className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white text-neutral-800 backdrop-blur-sm transition-all z-10 shadow-sm"
         >
           <Heart
-            className={`w-4 h-4 transition-colors ${
+            className={`w-3.5 h-3.5 transition-colors ${
               isFavorite ? 'fill-rose-500 text-rose-500' : 'text-neutral-700'
             }`}
           />
         </button>
 
-        {/* Arrow navigators (visible on hover) */}
+        {/* Arrow navigators */}
         {vehicle.images.length > 1 && (
           <>
             <button
@@ -96,7 +99,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
               <span
                 key={idx}
                 className={`h-1.5 rounded-full transition-all ${
-                  idx === currentImageIdx ? 'w-4 bg-white' : 'w-1.5 bg-white/60'
+                  idx === currentImageIdx ? 'w-3.5 bg-white' : 'w-1.5 bg-white/60'
                 }`}
               />
             ))}
@@ -107,22 +110,20 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
       {/* Card Body & Info */}
       <div className="p-4 flex flex-col flex-1 justify-between">
         <div>
-          {/* Header row: title and rating */}
+          {/* Header row: title and category */}
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-base font-bold text-neutral-900 tracking-tight leading-snug">
                 {vehicle.make} {vehicle.model}
               </h3>
               <p className="text-xs text-neutral-500 font-medium">
-                Modelo {vehicle.year} · {vehicle.category}
+                {vehicle.trim} · Modelo {vehicle.year}
               </p>
             </div>
 
-            <div className="flex items-center gap-1 shrink-0 bg-neutral-50 px-2 py-0.5 rounded-md border border-neutral-100">
-              <Star className="w-3.5 h-3.5 fill-black text-black" />
-              <span className="text-xs font-bold text-neutral-900">{vehicle.rating.toFixed(2)}</span>
-              <span className="text-[11px] text-neutral-500 font-normal">({vehicle.tripsCount})</span>
-            </div>
+            <span className="text-[11px] font-semibold text-neutral-700 bg-neutral-100 px-2 py-0.5 rounded-md shrink-0">
+              {vehicle.category}
+            </span>
           </div>
 
           {/* Quick specs pills */}
@@ -141,8 +142,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
             </span>
           </div>
 
-          <p className="mt-2.5 text-xs text-neutral-500 line-clamp-1">
-            {vehicle.location}
+          <p className="mt-2 text-xs text-neutral-500">
+            Entrega en {vehicle.location}
           </p>
         </div>
 
@@ -150,18 +151,27 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) =
         <div className="mt-4 pt-3 border-t border-neutral-100 flex items-baseline justify-between">
           <div>
             <div className="flex items-baseline gap-1">
-              <span className="text-lg font-extrabold text-neutral-900">
+              <span className="text-lg font-black text-neutral-900">
                 ${vehicle.pricePerDay.toLocaleString('es-MX')}
               </span>
               <span className="text-xs font-semibold text-neutral-600">MXN</span>
               <span className="text-xs text-neutral-500">/ día</span>
             </div>
-            <p className="text-[10px] text-neutral-400">Total transparente · IVA incluido</p>
+            <p className="text-[10px] text-neutral-500">
+              Total con 33% servicio: <strong>${totalPerDay.toLocaleString('es-MX')} MXN/día</strong> (IVA inc.)
+            </p>
           </div>
 
-          <span className="text-xs font-semibold text-neutral-900 underline group-hover:no-underline">
-            Ver detalles
-          </span>
+          <a
+            href={`/vehiculos/${vehicle.slug}`}
+            onClick={(e) => {
+              e.preventDefault();
+              onSelect(vehicle);
+            }}
+            className="text-xs font-bold text-neutral-900 underline group-hover:no-underline"
+          >
+            Ver ficha
+          </a>
         </div>
       </div>
     </article>
