@@ -205,12 +205,12 @@ const homeInitialHtml = `
     <h2>Cada renta, respaldada de principio a fin</h2>
     <p>Contratos digitales con validez legal, validación documental rigurosa y checklist fotográfico en Sucursal Plaza 450.</p>
   </section>
+  <aside>
+    <h3>¿Tienes un auto que no usas todos los días?</h3>
+    <p>Ponlo a trabajar en el marketplace de GALSA Rent. Conoce nuestro programa de anfitriones en <a href="/anfitriones">GALSA Anfitriones</a>.</p>
+  </aside>
   <section>
-    <h2>Gana dinero con tu auto en Durango</h2>
-    <p>Tú fijas precio y disponibilidad, y apruebas cada reserva. GALSA se encarga de verificar clientes, firmar contratos y cobrar. Recibes el 100% de tu tarifa.</p>
-  </section>
-  <section>
-    <h2>Preguntas frecuentes sobre renta de autos en Durango</h2>
+    <h2>Preguntas frecuentes sobre renta de autos</h2>
     <p>Por ahora operamos en Durango, con entrega en Sucursal Plaza 450. Requisitos: licencia vigente, INE, comprobante menor a 3 meses, 21 años o más, método de pago a nombre del cliente. Costo real: precio por día + tarifa de servicio de 33% (IVA incluido).</p>
   </section>
 </main>

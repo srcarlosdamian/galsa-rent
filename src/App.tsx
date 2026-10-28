@@ -7,6 +7,7 @@ import { VirtuoExperienceSection } from './components/VirtuoExperienceSection';
 import { FourStepProcess } from './components/FourStepProcess';
 import { UseCasesSection } from './components/UseCasesSection';
 import { TrustSafetySection } from './components/TrustSafetySection';
+import { HostBanner } from './components/HostBanner';
 import { HostSection } from './components/HostSection';
 import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
@@ -268,25 +269,25 @@ export const App: React.FC = () => {
                       </span>
                     </div>
 
-                    {/* CTAs as specified in Tarea 2 - CTA 2 en el Home con Primary 500 (#316AB5) */}
+                    {/* CTA en el Hero enfocado 100% en rentar */}
                     <div className="pt-4 flex flex-wrap items-center gap-3">
                       <a
                         href="#catalogo-home"
                         style={{ backgroundColor: '#316AB5' }}
-                        className="inline-flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
+                        className="inline-flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
                       >
                         <span>Ver autos disponibles</span>
                         <ArrowRight className="w-4 h-4" />
                       </a>
                       <a
-                        href="/anfitriones"
+                        href="/como-funciona"
                         onClick={(e) => {
                           e.preventDefault();
-                          navigateTo('/anfitriones');
+                          navigateTo('/como-funciona');
                         }}
                         className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full backdrop-blur-md transition-all"
                       >
-                        <span>Gana dinero con tu auto</span>
+                        <span>Cómo funciona</span>
                       </a>
                     </div>
                   </div>
@@ -395,10 +396,10 @@ export const App: React.FC = () => {
             {/* H2 ORDER 5: Cada renta, respaldada de principio a fin */}
             <TrustSafetySection />
 
-            {/* H2 ORDER 6: Gana dinero con tu auto en Durango */}
-            <HostSection isFullPage={false} />
+            {/* Banner Anuncio Programa de Anfitriones (Sin cotizador en Home) */}
+            <HostBanner onNavigate={navigateTo} />
 
-            {/* H2 ORDER 7: Preguntas frecuentes sobre renta de autos en Durango */}
+            {/* H2 ORDER 6: Preguntas frecuentes sobre renta de autos */}
             <FaqSection />
 
           </>
