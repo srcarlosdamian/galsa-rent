@@ -28,8 +28,6 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
   };
 
   const currentImg = vehicle.images[currentImageIdx];
-  const serviceFee = Math.round(vehicle.pricePerDay * 0.33);
-  const totalPerDay = vehicle.pricePerDay + serviceFee;
 
   return (
     <article
@@ -48,11 +46,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Top badge */}
+        {/* Top category badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold bg-white/95 text-neutral-900 px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm">
-            <Sparkles className="w-3 h-3 text-neutral-800" />
-            <span>Revisado y verificado</span>
+          <span className="inline-flex items-center text-[11px] font-semibold bg-white/95 text-neutral-900 px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm">
+            {vehicle.category}
           </span>
         </div>
 
@@ -107,17 +104,17 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
         )}
       </div>
 
-      {/* Card Body & Info */}
+      {/* Card Body & Info strictly matching live site */}
       <div className="p-4 flex flex-col flex-1 justify-between">
         <div>
-          {/* Header row: title and category */}
+          {/* Header row: title and model year */}
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-base font-bold text-neutral-900 tracking-tight leading-snug">
                 {vehicle.make} {vehicle.model}
               </h3>
               <p className="text-xs text-neutral-500 font-medium">
-                {vehicle.trim} · Modelo {vehicle.year}
+                Modelo {vehicle.year}
               </p>
             </div>
 
@@ -126,7 +123,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
             </span>
           </div>
 
-          {/* Quick specs pills */}
+          {/* Quick specs pills matching live site specifications */}
           <div className="mt-3 flex items-center gap-2 text-xs text-neutral-600">
             <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
               <Users className="w-3 h-3 text-neutral-500" />
@@ -143,22 +140,21 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
           </div>
 
           <p className="mt-2 text-xs text-neutral-500">
-            Entrega en {vehicle.location}
+            Durango · Plaza 450
           </p>
         </div>
 
-        {/* Pricing footer row */}
+        {/* Pricing footer row strictly matching live site */}
         <div className="mt-4 pt-3 border-t border-neutral-100 flex items-baseline justify-between">
           <div>
             <div className="flex items-baseline gap-1">
               <span className="text-lg font-black text-neutral-900">
                 ${vehicle.pricePerDay.toLocaleString('es-MX')}
               </span>
-              <span className="text-xs font-semibold text-neutral-600">MXN</span>
-              <span className="text-xs text-neutral-500">/ día</span>
+              <span className="text-xs text-neutral-500">por día · estimado</span>
             </div>
-            <p className="text-[10px] text-neutral-500">
-              Total con 33% servicio: <strong>${totalPerDay.toLocaleString('es-MX')} MXN/día</strong> (IVA inc.)
+            <p className="text-[10px] text-neutral-400">
+              Tarifa de servicio GALSA (33%) calculada al reservar
             </p>
           </div>
 

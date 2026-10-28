@@ -66,11 +66,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </p>
             <ul className="space-y-2 text-neutral-600">
               <li><a href="/catalogo" onClick={(e) => handleLink(e, '/catalogo')} className="hover:text-black transition-colors">Catálogo de autos</a></li>
-              <li><a href="/vehiculos/nissan-sentra-sense-2024-durango" onClick={(e) => handleLink(e, '/vehiculos/nissan-sentra-sense-2024-durango')} className="hover:text-black transition-colors">Nissan Sentra Sense 2024</a></li>
-              <li><a href="/vehiculos/volkswagen-virtus-trendline-2024-durango" onClick={(e) => handleLink(e, '/vehiculos/volkswagen-virtus-trendline-2024-durango')} className="hover:text-black transition-colors">Volkswagen Virtus 2024</a></li>
-              <li><a href="/vehiculos/jeep-wrangler-sport-unlimited-2011-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-sport-unlimited-2011-durango')} className="hover:text-black transition-colors">Jeep Wrangler Sport 4x4</a></li>
-              <li><a href="/vehiculos/jeep-wrangler-rubicon-unlimited-2021-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-rubicon-unlimited-2021-durango')} className="hover:text-black transition-colors">Jeep Wrangler Rubicon 2021</a></li>
-              <li><a href="/vehiculos/honda-civic-coupe-sport-2020-durango" onClick={(e) => handleLink(e, '/vehiculos/honda-civic-coupe-sport-2020-durango')} className="hover:text-black transition-colors">Honda Civic Coupé Sport</a></li>
+              <li><a href="/vehiculos/jeep-wrangler-rubicon-2018-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-rubicon-2018-durango')} className="hover:text-black transition-colors">Jeep Wrangler Rubicon 2018</a></li>
+              <li><a href="/vehiculos/jeep-wrangler-2011-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-2011-durango')} className="hover:text-black transition-colors">Jeep Wrangler 2011</a></li>
+              <li><a href="/vehiculos/nissan-sentra-sense-2026-durango" onClick={(e) => handleLink(e, '/vehiculos/nissan-sentra-sense-2026-durango')} className="hover:text-black transition-colors">Nissan Sentra Sense 2026</a></li>
+              <li><a href="/vehiculos/honda-civic-coupe-2019-durango" onClick={(e) => handleLink(e, '/vehiculos/honda-civic-coupe-2019-durango')} className="hover:text-black transition-colors">Honda Civic Coupé 2019</a></li>
+              <li><a href="/vehiculos/volkswagen-virtus-trendline-2026-durango" onClick={(e) => handleLink(e, '/vehiculos/volkswagen-virtus-trendline-2026-durango')} className="hover:text-black transition-colors">Volkswagen Virtus Trendline 2026</a></li>
             </ul>
           </div>
 

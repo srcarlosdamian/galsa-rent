@@ -7,7 +7,7 @@ export interface Vehicle {
   version: string;
   year: number;
   trim: string;
-  category: 'SUV / Aventura' | 'Sedán / Negocios' | 'Deportivo / Estilo' | 'Urbano / Eficiente';
+  category: 'SUV / Aventura' | 'Sedán / Negocios' | 'Deportivo / Estilo' | 'Urbano / Eficiente' | 'Sedán / Movilidad' | 'Sedán Premium / Negocios' | string;
   useCase: 'Turismo' | 'Negocios' | 'Aventura' | 'Movilidad general' | 'Conductores de apps de movilidad';
   seats: number;
   transmission: 'Automática' | 'Estándar';
