@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Menu, X, User, PhoneCall, ChevronRight } from 'lucide-react';
+import { 
+  Menu, X, User, Phone, MapPin, ChevronDown, 
+  HelpCircle, ShieldCheck, FileText, Sparkles 
+} from 'lucide-react';
 
 interface HeaderProps {
   currentPath?: string;
@@ -8,148 +11,262 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [nosotrosOpen, setNosotrosOpen] = useState(false);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     if (onNavigate) {
       e.preventDefault();
       onNavigate(path);
       setMobileMenuOpen(false);
+      setNosotrosOpen(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  const navLinks = [
-    { name: 'Autos', path: '/catalogo' },
-    { name: 'Cómo rentar', path: '/#como-rentar' },
-    { name: 'Anfitriones', path: '/anfitriones' },
-    { name: 'Seguridad', path: '/confianza' },
-    { name: 'Preguntas', path: '/faq' },
-    { name: 'Contacto', path: '/contacto' },
-  ];
-
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/90 transition-all">
-      {/* Top announcement bar - strictly Durango, no other cities */}
-      <div className="bg-neutral-900 text-white text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200 transition-all">
+      {/* Top micro-announcement bar */}
+      <div className="bg-neutral-900 text-white text-[11px] font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
         <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
         <span className="truncate">Renta 100% en línea en Durango · Firma digital desde tu celular · Entrega en Sucursal Plaza 450</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-18 py-2">
           
-          {/* Typographic Logo */}
-          <div className="flex items-center gap-6 lg:gap-8">
+          {/* Left: Logo & Core Action Navigation */}
+          <div className="flex items-center gap-8 lg:gap-10">
+            {/* Typographic Logo */}
             <a 
               href="/" 
               onClick={(e) => handleLinkClick(e, '/')}
-              className="group flex items-baseline tracking-tighter shrink-0"
+              className="group flex items-baseline tracking-tight shrink-0 focus:outline-none"
               aria-label="GALSA Rent - Inicio"
             >
-              <span className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900">
+              <span className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight">
                 galsa
               </span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-black ml-0.5 mb-0.5"></span>
-              <span className="ml-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded">
+              <span className="ml-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded">
                 Rent
               </span>
             </a>
 
-            {/* Desktop Navigation - Concise, single line, no wrapping */}
-            <nav className="hidden lg:flex items-center space-x-1" aria-label="Navegación principal">
-              {navLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.path}
-                  onClick={(e) => handleLinkClick(e, item.path)}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-colors whitespace-nowrap ${
-                    currentPath === item.path
-                      ? 'text-black bg-neutral-100'
-                      : 'text-neutral-600 hover:text-black hover:bg-neutral-50'
+            {/* Direct Action Links (Inspiración en la claridad de acción) */}
+            <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-semibold text-neutral-800" aria-label="Navegación principal">
+              <a
+                href="/catalogo"
+                onClick={(e) => handleLinkClick(e, '/catalogo')}
+                className={`transition-colors py-1 ${
+                  currentPath === '/catalogo' ? 'text-black font-bold' : 'hover:text-black'
+                }`}
+              >
+                Renta un auto
+              </a>
+
+              <a
+                href="/anfitriones"
+                onClick={(e) => handleLinkClick(e, '/anfitriones')}
+                className={`transition-colors py-1 ${
+                  currentPath === '/anfitriones' ? 'text-black font-bold' : 'hover:text-black'
+                }`}
+              >
+                Pon tu auto a trabajar
+              </a>
+
+              <a
+                href="/#como-rentar"
+                onClick={(e) => handleLinkClick(e, '/#como-rentar')}
+                className="transition-colors hover:text-black py-1"
+              >
+                Cómo funciona
+              </a>
+
+              {/* Dropdown "Nosotros" */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setNosotrosOpen(true)}
+                onMouseLeave={() => setNosotrosOpen(false)}
+              >
+                <button
+                  type="button"
+                  onClick={() => setNosotrosOpen(!nosotrosOpen)}
+                  className={`inline-flex items-center gap-1 transition-colors py-1 focus:outline-none ${
+                    nosotrosOpen || currentPath === '/confianza' || currentPath === '/faq' ? 'text-black font-bold' : 'hover:text-black'
                   }`}
                 >
-                  {item.name}
-                </a>
-              ))}
+                  <span>Nosotros</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${nosotrosOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {nosotrosOpen && (
+                  <div className="absolute top-full left-0 pt-2 w-56 z-50 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="bg-white rounded-2xl border border-neutral-200 shadow-dropdown p-2 text-xs space-y-1">
+                      <a
+                        href="/confianza"
+                        onClick={(e) => handleLinkClick(e, '/confianza')}
+                        className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-neutral-50 text-neutral-800 font-semibold transition-colors"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-neutral-600 shrink-0" />
+                        <div>
+                          <p className="font-bold text-neutral-900">Seguridad & Seguro</p>
+                          <p className="text-[10px] text-neutral-500 font-normal">Contratos y cobertura amplia</p>
+                        </div>
+                      </a>
+
+                      <a
+                        href="/faq"
+                        onClick={(e) => handleLinkClick(e, '/faq')}
+                        className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-neutral-50 text-neutral-800 font-semibold transition-colors"
+                      >
+                        <HelpCircle className="w-4 h-4 text-neutral-600 shrink-0" />
+                        <div>
+                          <p className="font-bold text-neutral-900">Preguntas frecuentes</p>
+                          <p className="text-[10px] text-neutral-500 font-normal">Tarifas, requisitos y depósitos</p>
+                        </div>
+                      </a>
+
+                      <a
+                        href="/terminos"
+                        onClick={(e) => handleLinkClick(e, '/terminos')}
+                        className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-neutral-50 text-neutral-800 font-semibold transition-colors"
+                      >
+                        <FileText className="w-4 h-4 text-neutral-600 shrink-0" />
+                        <div>
+                          <p className="font-bold text-neutral-900">Términos legales</p>
+                          <p className="text-[10px] text-neutral-500 font-normal">Contrato mercantil digital</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
             </nav>
           </div>
 
-          {/* Right Action buttons */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          {/* Right: Phone, Ubicación & Ingresar (Estilo limpio) */}
+          <div className="hidden lg:flex items-center space-x-5 text-sm font-semibold">
+            {/* Phone direct link */}
+            {/* TODO: Reemplazar con el número oficial de atención de GALSA Rent */}
             <a
-              href="/anfitriones"
-              onClick={(e) => handleLinkClick(e, '/anfitriones')}
-              className="text-xs font-bold text-neutral-900 px-3 py-2 rounded-full hover:bg-neutral-100 transition-colors whitespace-nowrap"
-            >
-              Gana con tu auto
-            </a>
-
-            {/* TODO: Reemplazar con el enlace oficial de WhatsApp de GALSA Rent Durango */}
-            <a
-              href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20tengo%20una%20consulta%20sobre%20la%20renta%20en%20Plaza%20450"
+              href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20tengo%20una%20consulta"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-700 hover:text-black border border-neutral-200 px-3 py-1.5 rounded-full hover:bg-neutral-50 transition-colors whitespace-nowrap"
-              title="Atención directa por WhatsApp"
+              className="inline-flex items-center gap-1.5 text-neutral-700 hover:text-black transition-colors"
+              title="Atención al cliente en Durango"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>Ayuda</span>
+              <Phone className="w-3.5 h-3.5 text-neutral-500" />
+              <span>618 000 0000</span>
             </a>
 
+            {/* Ubicación pill button */}
+            <a
+              href="/contacto"
+              onClick={(e) => handleLinkClick(e, '/contacto')}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all ${
+                currentPath === '/contacto'
+                  ? 'border-black bg-neutral-100 text-black'
+                  : 'border-neutral-200 text-neutral-700 hover:border-neutral-400 hover:text-black'
+              }`}
+            >
+              <MapPin className="w-3.5 h-3.5 text-neutral-500" />
+              <span>Sucursal Plaza 450</span>
+            </a>
+
+            {/* Ingresar / Mi cuenta */}
             <a
               href="/cuenta"
               onClick={(e) => handleLinkClick(e, '/cuenta')}
-              className="p-2 rounded-full border border-neutral-200 text-neutral-700 hover:text-black hover:bg-neutral-50 transition-colors"
-              aria-label="Acceso a cuenta"
+              className="inline-flex items-center gap-1.5 text-neutral-800 hover:text-black transition-colors"
             >
-              <User className="w-4 h-4" />
+              <div className="w-7 h-7 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-800">
+                <User className="w-4 h-4" />
+              </div>
+              <span>Ingresar</span>
             </a>
           </div>
 
-          {/* Mobile hamburger button */}
-          <div className="flex lg:hidden items-center">
+          {/* Mobile hamburger menu */}
+          <div className="flex md:hidden items-center">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-neutral-700 hover:text-black hover:bg-neutral-100 focus:outline-none"
-              aria-label="Menú móvil"
+              aria-label="Abrir menú"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
+
         </div>
       </div>
 
-      {/* Mobile menu dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-neutral-200 bg-white px-4 pt-3 pb-6 space-y-1.5 animate-in slide-in-from-top-2">
-          {navLinks.map((item) => (
+        <div className="md:hidden border-b border-neutral-200 bg-white px-5 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-2">
+          <div className="space-y-1">
             <a
-              key={item.name}
-              href={item.path}
-              onClick={(e) => handleLinkClick(e, item.path)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-800 hover:bg-neutral-100"
+              href="/catalogo"
+              onClick={(e) => handleLinkClick(e, '/catalogo')}
+              className="block px-3 py-2.5 rounded-xl text-base font-bold text-neutral-900 hover:bg-neutral-50"
             >
-              {item.name}
+              Renta un auto
             </a>
-          ))}
-          <div className="pt-3 border-t border-neutral-200 space-y-2">
             <a
               href="/anfitriones"
               onClick={(e) => handleLinkClick(e, '/anfitriones')}
-              className="block w-full py-2.5 text-center text-xs font-bold rounded-xl border border-neutral-300 text-neutral-900"
+              className="block px-3 py-2.5 rounded-xl text-base font-bold text-neutral-900 hover:bg-neutral-50"
             >
-              Gana dinero con tu auto
+              Pon tu auto a trabajar
             </a>
-            {/* TODO: Reemplazar con el número oficial de WhatsApp de GALSA Rent */}
             <a
-              href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20deseo%20rentar%20un%20auto%20en%20Durango"
+              href="/#como-rentar"
+              onClick={(e) => handleLinkClick(e, '/#como-rentar')}
+              className="block px-3 py-2 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50"
+            >
+              Cómo funciona
+            </a>
+            <a
+              href="/confianza"
+              onClick={(e) => handleLinkClick(e, '/confianza')}
+              className="block px-3 py-2 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50"
+            >
+              Seguridad y seguro
+            </a>
+            <a
+              href="/faq"
+              onClick={(e) => handleLinkClick(e, '/faq')}
+              className="block px-3 py-2 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50"
+            >
+              Preguntas frecuentes
+            </a>
+            <a
+              href="/contacto"
+              onClick={(e) => handleLinkClick(e, '/contacto')}
+              className="block px-3 py-2 rounded-xl text-sm font-semibold text-neutral-700 hover:bg-neutral-50"
+            >
+              Sucursal Plaza 450
+            </a>
+          </div>
+
+          <div className="pt-3 border-t border-neutral-200 space-y-2">
+            <a
+              href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2.5 text-center text-xs font-bold rounded-xl bg-black text-white"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-neutral-300 text-xs font-bold text-neutral-900"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>Contactar por WhatsApp</span>
+              <Phone className="w-3.5 h-3.5" />
+              <span>WhatsApp: 618 000 0000</span>
+            </a>
+            <a
+              href="/cuenta"
+              onClick={(e) => handleLinkClick(e, '/cuenta')}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-black text-white text-xs font-bold"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Ingresar a mi cuenta</span>
             </a>
           </div>
         </div>
