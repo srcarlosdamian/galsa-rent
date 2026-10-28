@@ -20,6 +20,8 @@ const templateHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
 const sitemapUrls = [
   { loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'daily' },
   { loc: `${SITE_URL}/catalogo`, priority: '0.9', changefreq: 'daily' },
+  { loc: `${SITE_URL}/como-funciona`, priority: '0.9', changefreq: 'monthly' },
+  { loc: `${SITE_URL}/nosotros`, priority: '0.8', changefreq: 'monthly' },
   { loc: `${SITE_URL}/anfitriones`, priority: '0.9', changefreq: 'weekly' },
   { loc: `${SITE_URL}/confianza`, priority: '0.8', changefreq: 'monthly' },
   { loc: `${SITE_URL}/faq`, priority: '0.8', changefreq: 'weekly' },
@@ -229,6 +231,8 @@ writeRouteFile('/', homeHtml);
 // 2. Render Static Pages
 const staticPages = [
   { route: '/catalogo', schema: null },
+  { route: '/como-funciona', schema: null },
+  { route: '/nosotros', schema: null },
   { route: '/anfitriones', schema: getHostSchemaJson() },
   { route: '/confianza', schema: null },
   { route: '/faq', schema: getFaqSchemaJson() },

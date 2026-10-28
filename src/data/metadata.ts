@@ -91,6 +91,26 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
       'Conoce cómo GALSA protege tus datos personales, identificaciones y licencias de conducir para la renta de autos y validación de anfitriones en Durango.',
     ogImage: DEFAULT_OG_IMAGE,
   },
+  '/como-funciona': {
+    title: 'Cómo Funciona la Renta de Autos 100% en Línea | GALSA',
+    description:
+      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge en Sucursal Plaza 450, Durango.',
+    canonical: `${SITE_URL}/como-funciona`,
+    ogTitle: 'Cómo Funciona la Renta de Autos 100% en Línea | GALSA',
+    ogDescription:
+      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge en Sucursal Plaza 450, Durango.',
+    ogImage: DEFAULT_OG_IMAGE,
+  },
+  '/nosotros': {
+    title: 'Sobre Nosotros — Movilidad Digital en Durango | GALSA Rent',
+    description:
+      'Conoce la historia, misión y estándares de GALSA Rent: renta de autos sin filas, tarifas transparentes y marketplace seguro en Durango y México.',
+    canonical: `${SITE_URL}/nosotros`,
+    ogTitle: 'Sobre Nosotros — Movilidad Digital en Durango | GALSA Rent',
+    ogDescription:
+      'Conoce la historia, misión y estándares de GALSA Rent: renta de autos sin filas, tarifas transparentes y marketplace seguro en Durango y México.',
+    ogImage: DEFAULT_OG_IMAGE,
+  },
   // Private routes with noindex
   '/cuenta': {
     title: 'Mi Cuenta | GALSA Rent Durango',

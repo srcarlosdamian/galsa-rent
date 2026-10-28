@@ -19,6 +19,8 @@ import { FaqPage } from './pages/FaqPage';
 import { TermsPage } from './pages/TermsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
+import { AboutPage } from './pages/AboutPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -182,6 +184,12 @@ export const App: React.FC = () => {
 
         {/* ROUTE 5: FAQ PAGE */}
         {currentPath === '/faq' && <FaqPage />}
+
+        {/* ROUTE 5.1: COMO FUNCIONA */}
+        {currentPath === '/como-funciona' && <HowItWorksPage onNavigate={navigateTo} />}
+
+        {/* ROUTE 5.2: NOSOTROS */}
+        {currentPath === '/nosotros' && <AboutPage onNavigate={navigateTo} />}
 
         {/* ROUTE 6: CONTACTO PAGE */}
         {currentPath === '/contacto' && <ContactPage />}
