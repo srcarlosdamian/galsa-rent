@@ -15,13 +15,13 @@ export const VirtuoExperienceSection: React.FC = () => {
             <div className="lg:col-span-7 space-y-8">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 block mb-3">
-                  Experiencia 100% en línea en Durango
+                  Experiencia de movilidad 100% digital en México
                 </span>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
                   Rentar con GALSA es así de simple
                 </h2>
                 <p className="mt-4 text-base sm:text-lg text-neutral-300 leading-relaxed max-w-xl">
-                  Sin traslados innecesarios ni papeleo en mostrador. Selecciona tu vehículo, valida tu identidad y firma tu contrato digital directamente desde tu celular.
+                  Sin filas interminables ni papeleo en mostrador. Selecciona tu vehículo, valida tu identificación oficial mexicana y firma tu contrato digital directamente desde tu celular.
                 </p>
               </div>
 
@@ -37,7 +37,7 @@ export const VirtuoExperienceSection: React.FC = () => {
                     Elige por día, semana o mes
                   </h3>
                   <p className="text-xs text-neutral-400 leading-relaxed">
-                    Planes flexibles adaptados a tus fechas de viaje, trabajo o compromisos familiares en Durango.
+                    Planes flexibles adaptados a tus fechas de viaje, trabajo o compromisos familiares en México.
                   </p>
                 </div>
 
@@ -76,7 +76,7 @@ export const VirtuoExperienceSection: React.FC = () => {
                     Ayuda cuando la necesitas
                   </h3>
                   <p className="text-xs text-neutral-400 leading-relaxed">
-                    Atención local directa en Durango vía WhatsApp para asistirte antes, durante y al devolver tu auto.
+                    Atención directa vía WhatsApp y en sucursal oficial para asistirte antes, durante y al devolver tu auto en México.
                   </p>
                 </div>
 

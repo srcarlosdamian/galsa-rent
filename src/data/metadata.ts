@@ -12,13 +12,13 @@ export const DEFAULT_OG_IMAGE = {
 
 export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
   '/': {
-    title: 'Renta de Autos en Durango — Reserva en Línea | GALSA',
+    title: 'Renta de Autos en México — Reserva en Línea | GALSA Rent',
     description:
-      'Renta autos en Durango desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, firma digital y kilometraje libre. Entrega en Plaza 450.',
+      'Renta autos en México desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, contrato digital y kilometraje libre. Entrega en Sucursal Plaza 450.',
     canonical: `${SITE_URL}/`,
-    ogTitle: 'Renta de Autos en Durango — Reserva en Línea | GALSA',
+    ogTitle: 'Renta de Autos en México — Reserva en Línea | GALSA Rent',
     ogDescription:
-      'Renta autos en Durango desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, firma digital y kilometraje libre. Entrega en Plaza 450.',
+      'Renta autos en México desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, contrato digital y kilometraje libre. Entrega en Sucursal Plaza 450.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/anfitriones': {

@@ -228,20 +228,20 @@ export const App: React.FC = () => {
 
                   {/* Top Notification Badge */}
                   <div>
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
                       <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                      <span>Operando en Durango · Entrega en Sucursal Plaza 450</span>
+                      <span>Renta de autos en México · Flota verificada con entrega en Durango</span>
                     </span>
                   </div>
 
-                  {/* Main Copy (TAREA 2 EXACT COPY) */}
+                  {/* Main Copy (Enfocado a México y expansión nacional) */}
                   <div className="max-w-3xl space-y-4 my-auto py-8">
                     <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08]">
-                      Renta de autos en Durango, 100% en línea
+                      Renta de autos en México, 100% en línea
                     </h1>
                     
                     <p className="text-sm sm:text-base md:text-lg text-neutral-200 font-normal leading-relaxed max-w-2xl">
-                      Elige tu auto, sube tus documentos y firma el contrato desde tu celular. Unidades revisadas una por una, con entrega en Sucursal Plaza 450. Desde $1,100 al día + tarifa de servicio.
+                      Elige tu auto, sube tus documentos y firma el contrato digital desde tu celular con validez legal en todo México. Unidades revisadas una por una, con punto de entrega en Sucursal Plaza 450, Durango. Desde $1,100 al día + tarifa de servicio transparente.
                     </p>
 
                     {/* Chips as specified in Tarea 2 */}
@@ -305,13 +305,13 @@ export const App: React.FC = () => {
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-neutral-200">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-1">
-                      Catálogo de flota ({VEHICLES.length} unidades revisadas)
+                      Catálogo oficial en México ({VEHICLES.length} unidades revisadas)
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900">
-                      Autos disponibles hoy en Durango
+                      Autos disponibles hoy en México
                     </h2>
                     <p className="mt-2 text-xs sm:text-sm text-neutral-600 max-w-xl">
-                      Entrega directa en Sucursal Plaza 450. Contrato digital firmado desde tu celular y depósito en garantía 100% reembolsable.
+                      Punto oficial de entrega en Sucursal Plaza 450, Durango. Contrato digital firmado desde tu celular y depósito en garantía 100% reembolsable.
                     </p>
                   </div>
 
