@@ -3,7 +3,6 @@ import { Header } from './components/Header';
 import { SearchContainer } from './components/SearchContainer';
 import { VehicleCard } from './components/VehicleCard';
 import { VehicleDetailView } from './components/VehicleDetailView';
-import { VehicleDetailModal } from './components/VehicleDetailModal';
 import { VirtuoExperienceSection } from './components/VirtuoExperienceSection';
 import { FourStepProcess } from './components/FourStepProcess';
 import { UseCasesSection } from './components/UseCasesSection';
@@ -39,9 +38,6 @@ export const App: React.FC = () => {
     }
     return '/';
   });
-
-  // Selected vehicle for modal or direct page view
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
   // Search state
   const [searchState, setSearchState] = useState<SearchState>({
@@ -344,7 +340,7 @@ export const App: React.FC = () => {
                     <VehicleCard
                       key={vehicle.id}
                       vehicle={vehicle}
-                      onSelect={(v) => setSelectedVehicle(v)}
+                      onSelect={(v) => navigateTo(`/vehiculos/${v.slug}`)}
                       priority={idx === 0}
                     />
                   ))}
@@ -404,13 +400,6 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <Footer onNavigate={navigateTo} />
-
-      {/* Detail Modal */}
-      <VehicleDetailModal
-        vehicle={selectedVehicle}
-        onClose={() => setSelectedVehicle(null)}
-        onNavigate={navigateTo}
-      />
     </div>
   );
 };

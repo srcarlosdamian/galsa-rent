@@ -8,16 +8,12 @@ import { VEHICLES } from '../data/vehicles';
 
 interface VehicleDetailViewProps {
   vehicle: Vehicle;
-  onClose?: () => void;
   onNavigate?: (path: string) => void;
-  isModal?: boolean;
 }
 
 export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   vehicle,
-  onClose,
   onNavigate,
-  isModal = false,
 }) => {
   const [rentalDays, setRentalDays] = useState(3);
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
@@ -60,7 +56,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   };
 
   return (
-    <div className={`w-full ${isModal ? 'max-h-[90vh] overflow-y-auto' : 'py-6 md:py-8'}`}>
+    <div className="w-full py-4 md:py-8">
       
       {/* Top Header / Breadcrumbs Bar */}
       <div className="pb-4 border-b border-neutral-200 flex items-center justify-between gap-4">
@@ -97,17 +93,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
               Enlace copiado
             </span>
-          )}
-
-          {isModal && onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-2 rounded-full border border-neutral-200 hover:bg-neutral-50 text-neutral-700 transition-colors"
-              aria-label="Cerrar ventana"
-            >
-              <X className="w-4 h-4" />
-            </button>
           )}
         </div>
       </div>
