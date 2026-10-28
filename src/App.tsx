@@ -264,11 +264,12 @@ export const App: React.FC = () => {
                       </span>
                     </div>
 
-                    {/* CTAs as specified in Tarea 2 */}
+                    {/* CTAs as specified in Tarea 2 - CTA 2 en el Home con Primary 500 (#316AB5) */}
                     <div className="pt-4 flex flex-wrap items-center gap-3">
                       <a
                         href="#catalogo-home"
-                        className="inline-flex items-center gap-2 bg-white text-neutral-900 hover:bg-neutral-100 text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full transition-all shadow-md active:scale-[0.98]"
+                        style={{ backgroundColor: '#316AB5' }}
+                        className="inline-flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
                       >
                         <span>Ver autos disponibles</span>
                         <ArrowRight className="w-4 h-4" />
@@ -279,7 +280,7 @@ export const App: React.FC = () => {
                           e.preventDefault();
                           navigateTo('/anfitriones');
                         }}
-                        className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/20 text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full backdrop-blur-md transition-all"
+                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full backdrop-blur-md transition-all"
                       >
                         <span>Gana dinero con tu auto</span>
                       </a>

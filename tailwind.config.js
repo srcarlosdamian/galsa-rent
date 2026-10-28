@@ -7,10 +7,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        cta: '#1F34F2',
-        'cta-hover': '#1629c4',
+        // Palette Primary from design system
+        cta: {
+          50: '#F3F6FC',
+          100: '#E5ECF9',
+          200: '#C6D7F1',
+          300: '#93B6E6',
+          400: '#5A90D6',
+          500: '#316AB5', // Official CTA color requested
+          600: '#2558A4',
+          700: '#1F4785',
+          800: '#1D3D6F',
+          900: '#1D355D',
+          950: '#13223E',
+          DEFAULT: '#316AB5',
+        },
         surface: '#FFFFFF',
-        subtle: '#FBFBFB',
+        subtle: '#FAFAFA',
         edge: '#EBEBEB',
         'edge-light': '#F0F0F0',
         ink: {
@@ -35,9 +48,9 @@ export default {
         ],
       },
       boxShadow: {
-        'search': '0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.05)',
-        'dropdown': '0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-        'float': '0 24px 48px -12px rgba(0, 0, 0, 0.14)',
+        'search': '0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.04)',
+        'dropdown': '0 16px 36px -8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05)',
+        'float': '0 20px 40px -10px rgba(0, 0, 0, 0.12)',
       }
     },
   },

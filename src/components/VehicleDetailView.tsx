@@ -357,12 +357,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Booking Button */}
+            {/* Booking / Checkout Button: CTA 500 (#316AB5) - Solo aquí donde se inicia la reserva/pago */}
             <div className="mt-6">
               <button
                 type="button"
                 onClick={handleBooking}
-                className="w-full py-3.5 px-5 rounded-2xl bg-neutral-900 hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-[0.98]"
+                style={{ backgroundColor: '#316AB5' }}
+                className="w-full py-3.5 px-5 rounded-2xl text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
               >
                 Reservar en línea
               </button>
