@@ -62,12 +62,13 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           type="button"
           onClick={toggleFavorite}
           aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-          className="absolute top-2.5 right-2.5 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 backdrop-blur-sm transition-all z-10"
+          className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/40 hover:bg-white/60 text-slate-800 backdrop-blur-md transition-all z-10 shadow-sm"
         >
           <Heart
-            className={`w-4 h-4 transition-colors ${
-              isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-700'
+            className={`w-3.5 h-3.5 transition-colors ${
+              isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-800'
             }`}
+            strokeWidth={1.4}
           />
         </button>
       </div>
