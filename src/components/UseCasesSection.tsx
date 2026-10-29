@@ -143,9 +143,9 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
                     onFilterCategory(item.filter);
                   }
                 }}
-                className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-neutral-200/80 transition-all duration-300 hover:shadow-2xl hover:scale-[1.015]"
+                className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-neutral-200/80"
               >
-                {/* Imagen de fondo a pantalla completa dentro de la tarjeta */}
+                {/* Imagen de fondo: solo la imagen hace zoom suave al hover */}
                 <img
                   src={item.image}
                   alt={item.alt}
