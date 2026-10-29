@@ -220,10 +220,10 @@ export const App: React.FC = () => {
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
                 {/* Hero Card Container (Figma: rounded-[24px], min-h-[480px], p-[30px] sm:px-[64px], sin sombras) */}
-                <div className="relative rounded-[24px] overflow-hidden min-h-[480px] flex flex-col justify-between p-6 sm:px-12 sm:py-8 lg:px-16 lg:py-10">
+                <div className="relative rounded-[24px] min-h-[480px] flex flex-col justify-between p-6 sm:px-12 sm:py-8 lg:px-16 lg:py-10">
                   
                   {/* Background Image & Overlay */}
-                  <div className="absolute inset-0 -z-10 overflow-hidden">
+                  <div className="absolute inset-0 -z-10 rounded-[24px] overflow-hidden">
                     <img
                       src="/images/figma-hero.png"
                       alt="Carretera y viaje en auto en México — GALSA Rent"
