@@ -73,7 +73,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   const [typeOpen, setTypeOpen] = useState(false);
 
   return (
-    <div className="w-full bg-white rounded-[16px] p-3 sm:p-5 shadow-lg border border-slate-100">
+    <div className="w-full bg-white rounded-[16px] p-3 sm:p-5 border border-slate-100">
       <form
         onSubmit={(e) => {
           e.preventDefault();

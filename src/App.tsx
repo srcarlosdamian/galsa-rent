@@ -219,8 +219,8 @@ export const App: React.FC = () => {
             <section className="pt-4 pb-12 md:pt-6 md:pb-16 bg-white">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
-                {/* Hero Card Container (Figma: rounded-[24px], min-h-[480px], p-[30px] sm:px-[64px]) */}
-                <div className="relative rounded-[24px] overflow-hidden min-h-[480px] flex flex-col justify-between p-6 sm:px-12 sm:py-8 lg:px-16 lg:py-10 shadow-sm">
+                {/* Hero Card Container (Figma: rounded-[24px], min-h-[480px], p-[30px] sm:px-[64px], sin sombras) */}
+                <div className="relative rounded-[24px] overflow-hidden min-h-[480px] flex flex-col justify-between p-6 sm:px-12 sm:py-8 lg:px-16 lg:py-10">
                   
                   {/* Background Image & Overlay */}
                   <div className="absolute inset-0 -z-10 overflow-hidden">
