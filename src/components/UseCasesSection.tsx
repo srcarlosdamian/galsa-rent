@@ -13,7 +13,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Explora México con total autonomía',
       filter: 'Todos los vehículos',
       description: 'Descubre destinos coloniales, parajes cinematográficos, playas y rutas emblemáticas de México a tu propio ritmo.',
-      image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&h=1100&q=85',
+      video: 'https://videos.pexels.com/video-files/35078421/14859894_1440_2560_30fps.mp4',
       alt: 'Explora México con total autonomía',
     },
     {
@@ -21,31 +21,31 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Sedanes ejecutivos con factura inmediata',
       filter: 'Sedán / Negocios',
       description: 'Sedanes ejecutivos confortables, con aire acondicionado y factura fiscal inmediata para tus reuniones de negocios en México.',
-      image: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&h=1100&q=85',
+      video: 'https://videos.pexels.com/video-files/40496294/17306086_2560_1440_25fps.mp4',
       alt: 'Sedanes ejecutivos con factura inmediata',
     },
     {
-      id: 'aventura',
-      title: 'Camionetas 4×4 para sierras y carreteras',
+      id: 'camioneta',
+      title: 'Camionetas para sierras y carreteras',
       filter: 'SUV / Aventura',
-      description: 'Camionetas Jeep y SUV 4×4 equipadas para rutas montañosas, terracería y cabañas ecoturísticas en cualquier rincón del país.',
-      image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&h=1100&q=85',
-      alt: 'Camionetas 4×4 para sierras y carreteras de México',
+      description: 'Camionetas y SUVs equipadas para rutas montañosas, terracería y cabañas ecoturísticas en cualquier rincón del país.',
+      video: 'https://videos.pexels.com/video-files/16017194/16017194-hd_1920_1080_60fps.mp4',
+      alt: 'Camionetas para sierras y carreteras de México',
+    },
+    {
+      id: 'deportivo',
+      title: 'Autos deportivos de alto rendimiento',
+      filter: 'Deportivo',
+      description: 'Potencia, aerodinámica y diseño imponente para disfrutar la carretera con una experiencia de manejo inigualable.',
+      video: 'https://videos.pexels.com/video-files/39140749/16655563_1440_2560_60fps.mp4',
+      alt: 'Autos deportivos en México',
     },
     {
       id: 'movilidad',
-      title: 'Autos eficientes de bajo consumo',
-      filter: 'Sedán / Negocios',
-      description: 'Autos eficientes y compactos para resolver trámites, traslados personales y visitas familiares en la ciudad con ahorro de gasolina.',
-      image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&h=1100&q=85',
-      alt: 'Autos eficientes de bajo consumo en México',
-    },
-    {
-      id: 'apps',
       title: 'Unidades para conductores de apps de movilidad',
       filter: 'Sedán / Negocios',
       description: 'Unidades verificadas con esquemas semanales flexibles para trabajar en las principales plataformas de movilidad de México.',
-      image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&h=1100&q=85',
+      video: 'https://videos.pexels.com/video-files/11760018/11760018-uhd_1440_2732_30fps.mp4',
       alt: 'Unidades para conductores de apps de movilidad en México',
     },
   ];
@@ -143,14 +143,16 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
                     onFilterCategory(item.filter);
                   }
                 }}
-                className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-neutral-200/80"
+                className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-neutral-200/80 bg-neutral-900"
               >
-                {/* Imagen de fondo: solo la imagen hace zoom suave al hover */}
-                <img
-                  src={item.image}
-                  alt={item.alt}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                {/* Video de fondo en bucle silencioso */}
+                <video
+                  src={item.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
                 />
 
                 {/* Degradado oscuro progresivo hacia abajo */}
