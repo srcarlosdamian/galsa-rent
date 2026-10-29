@@ -3,7 +3,7 @@ import { ShieldCheck, FileCheck, Camera, Lock } from 'lucide-react';
 
 export const TrustSafetySection: React.FC = () => {
   return (
-    <section id="seguridad" className="py-16 md:py-24 bg-white border-b border-neutral-200">
+    <section id="seguridad" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="max-w-3xl mx-auto text-center mb-16">

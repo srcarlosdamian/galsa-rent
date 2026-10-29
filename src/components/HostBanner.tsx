@@ -15,7 +15,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
   };
 
   return (
-    <section className="py-12 bg-white border-b border-neutral-200">
+    <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-neutral-200 bg-neutral-50/70 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 transition-all hover:border-neutral-300">
           
