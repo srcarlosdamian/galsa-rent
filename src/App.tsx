@@ -10,6 +10,7 @@ import { TrustSafetySection } from './components/TrustSafetySection';
 import { HostBanner } from './components/HostBanner';
 import { HostSection } from './components/HostSection';
 import { FaqSection } from './components/FaqSection';
+import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
 
 // Pages
@@ -483,6 +484,9 @@ export const App: React.FC = () => {
 
             {/* H2 ORDER 6: Preguntas frecuentes sobre renta de autos */}
             <FaqSection />
+
+            {/* SECCIÓN FINAL TIPO TESLA: Título, descripción, CTA principal y segundo CTA con imagen a la derecha */}
+            <FinalCtaSection onNavigate={navigateTo} />
 
           </>
         )}
