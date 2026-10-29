@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 
 interface UseCasesSectionProps {
@@ -11,7 +10,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
     {
       id: 'turismo',
       title: 'Explora México con total autonomía',
-      filter: 'Todos los vehículos',
+      filter: 'Todos',
       description: 'Descubre destinos coloniales, parajes cinematográficos, playas y rutas emblemáticas de México a tu propio ritmo.',
       video: 'https://videos.pexels.com/video-files/35078421/14859894_1440_2560_30fps.mp4',
       alt: 'Explora México con total autonomía',
@@ -19,7 +18,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
     {
       id: 'negocios',
       title: 'Sedanes ejecutivos con factura inmediata',
-      filter: 'Sedán / Negocios',
+      filter: 'Sedán',
       description: 'Sedanes ejecutivos confortables, con aire acondicionado y factura fiscal inmediata para tus reuniones de negocios en México.',
       video: 'https://videos.pexels.com/video-files/40496294/17306086_2560_1440_25fps.mp4',
       alt: 'Sedanes ejecutivos con factura inmediata',
@@ -27,7 +26,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
     {
       id: 'camioneta',
       title: 'Camionetas para sierras y carreteras',
-      filter: 'SUV / Aventura',
+      filter: 'SUV',
       description: 'Camionetas y SUVs equipadas para rutas montañosas, terracería y cabañas ecoturísticas en cualquier rincón del país.',
       video: 'https://videos.pexels.com/video-files/16017194/16017194-hd_1920_1080_60fps.mp4',
       alt: 'Camionetas para sierras y carreteras de México',
@@ -43,7 +42,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
     {
       id: 'movilidad',
       title: 'Unidades para conductores de apps de movilidad',
-      filter: 'Sedán / Negocios',
+      filter: 'Económicos',
       description: 'Unidades verificadas con esquemas semanales flexibles para trabajar en las principales plataformas de movilidad de México.',
       video: 'https://videos.pexels.com/video-files/11760018/11760018-uhd_1440_2732_30fps.mp4',
       alt: 'Unidades para conductores de apps de movilidad en México',
@@ -159,19 +158,14 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent pointer-events-none" />
 
                 {/* Contenido textual en la parte inferior */}
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7 flex flex-col justify-end text-left z-10 space-y-2.5">
-                  <h3 className="text-white text-xl sm:text-2xl font-bold font-heading leading-tight tracking-tight">
+                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7 flex flex-col justify-end text-left z-10 space-y-2">
+                  <h3 className="text-white text-xl sm:text-2xl font-bold font-heading leading-tight tracking-tight line-clamp-2">
                     {item.title}
                   </h3>
                   
                   <p className="text-neutral-300 text-xs sm:text-[13px] font-normal font-sans leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
-
-                  <div className="pt-2 flex items-center gap-1.5 text-xs font-semibold text-white/90 group-hover:text-white transition-colors">
-                    <span>Ver catálogo</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" strokeWidth={1.4} />
-                  </div>
                 </div>
               </article>
             ))}

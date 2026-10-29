@@ -18,12 +18,30 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   onNavigate,
   searchState 
 }) => {
+  // Normalizar filtro inicial si viene de searchState (ej: 'SUV / Aventura' -> 'SUV', 'Sedán / Negocios' -> 'Sedán')
+  const getInitialTypeFilter = (cat?: string) => {
+    if (!cat) return 'Todos';
+    if (cat.includes('SUV')) return 'SUV';
+    if (cat.includes('Sedán')) return 'Sedán';
+    if (cat.includes('Deportivo')) return 'Deportivo';
+    if (cat.includes('Económico')) return 'Económicos';
+    if (['SUV', 'Sedán', 'Deportivo', 'Económicos'].includes(cat)) return cat;
+    return 'Todos';
+  };
+
   // Filtros interactivos de barra superior
-  const [vehicleTypeFilter, setVehicleTypeFilter] = useState<string>(searchState?.category || 'Todos');
+  const [vehicleTypeFilter, setVehicleTypeFilter] = useState<string>(() => getInitialTypeFilter(searchState?.category));
   const [seatsFilter, setSeatsFilter] = useState<string>('Todos');
   const [transmissionFilter, setTransmissionFilter] = useState<string>('Todos');
   const [priceMaxFilter, setPriceMaxFilter] = useState<number>(3500);
   const [sortBy, setSortBy] = useState<'recommended' | 'price-asc' | 'price-desc' | 'year-desc'>('recommended');
+
+  // Mantener sincronizado si searchState.category cambia
+  React.useEffect(() => {
+    if (searchState?.category) {
+      setVehicleTypeFilter(getInitialTypeFilter(searchState.category));
+    }
+  }, [searchState?.category]);
 
   // Paginación
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -105,6 +123,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               AUTOS DISPONIBLES ({filteredVehicles.length})
             </h1>
             <p className="text-xs text-slate-500 font-heading mt-0.5">
+              {searchState?.location ? `Ubicación: ${searchState.location} · ` : ''}
+              {searchState?.startDate && searchState?.endDate ? `Fechas: ${searchState.startDate} al ${searchState.endDate} · ` : ''}
               Tarifas finales por día con kilometraje libre e impuestos incluidos
             </p>
           </div>

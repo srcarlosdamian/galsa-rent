@@ -468,9 +468,11 @@ export const App: React.FC = () => {
 
             {/* H2 ORDER 4: Un auto para cada necesidad */}
             <UseCasesSection onFilterCategory={(cat) => {
-              setActiveCategory(cat);
-              const el = document.getElementById('catalogo-home');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
+              setSearchState((prev) => ({
+                ...prev,
+                category: cat,
+              }));
+              navigateTo('/catalogo');
             }} />
 
             {/* H2 ORDER 5: Cada renta, respaldada de principio a fin */}
