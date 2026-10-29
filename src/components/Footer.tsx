@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { GalsaLogo } from './GalsaLogo';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
@@ -23,10 +24,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-baseline tracking-tighter">
-              <span className="text-2xl font-black tracking-tight text-black">galsa</span>
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-black ml-0.5 mb-0.5"></span>
-              <span className="ml-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded">
+            <div className="flex items-center gap-2">
+              <GalsaLogo className="h-6 w-auto text-neutral-900" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 border border-neutral-200 px-1.5 py-0.5 rounded">
                 Rent
               </span>
             </div>

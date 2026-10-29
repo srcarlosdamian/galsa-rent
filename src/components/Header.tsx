@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  Menu, X, User, Phone, MapPin, ChevronDown 
+  Menu, X, User, Phone, MapPin 
 } from 'lucide-react';
+import { GalsaLogo } from './GalsaLogo';
 
 interface HeaderProps {
   currentPath?: string;
@@ -33,18 +34,15 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           
           {/* Left: Logo & Direct Action Navigation (Kavak/Direct Style) */}
           <div className="flex items-center gap-8 lg:gap-10">
-            {/* Typographic Logo */}
+            {/* SVG Logo exacto de Figma */}
             <a 
               href="/" 
               onClick={(e) => handleLinkClick(e, '/')}
-              className="group flex items-baseline tracking-tight shrink-0 focus:outline-none"
+              className="flex items-center gap-2 shrink-0 focus:outline-none transition-opacity hover:opacity-90 py-1"
               aria-label="GALSA Rent - Inicio"
             >
-              <span className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight">
-                galsa
-              </span>
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-black ml-0.5 mb-0.5"></span>
-              <span className="ml-2 text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 border border-neutral-200 px-1.5 py-0.5 rounded">
+              <GalsaLogo className="h-6 sm:h-7 w-auto text-neutral-900" />
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-neutral-500 border border-neutral-200 px-1.5 py-0.5 rounded">
                 Rent
               </span>
             </a>
