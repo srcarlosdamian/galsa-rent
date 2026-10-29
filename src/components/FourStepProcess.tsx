@@ -1,12 +1,15 @@
 import React from 'react';
-import { Search, UploadCloud, FileSignature, KeyRound, ArrowRight } from 'lucide-react';
+import { Search, UploadCloud, FileSignature, KeyRound } from 'lucide-react';
 
 export const FourStepProcess: React.FC = () => {
+  const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
+  const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
+
   const steps = [
     {
       number: '01',
       title: 'Elige tu auto',
-      description: 'Explora nuestra flota de sedanes, SUVs y camionetas Jeep en Durango y selecciona tus fechas de viaje.',
+      description: 'Explora nuestra flota de sedanes, SUVs y camionetas en México y selecciona tus fechas de viaje.',
       icon: Search,
     },
     {
@@ -23,67 +26,63 @@ export const FourStepProcess: React.FC = () => {
     },
     {
       number: '04',
-      title: 'Recibe en Plaza 450',
-      description: 'Acude a Sucursal Plaza 450 en Durango, realiza la revisión fotográfica de entrega en minutos y ponte al volante.',
+      title: 'Recibe tu unidad',
+      description: 'Acude a tu punto de entrega oficial o terminal, realiza la revisión fotográfica en minutos y ponte al volante.',
       icon: KeyRound,
     },
   ];
 
   return (
-    <section id="como-rentar" className="py-16 md:py-24 bg-white">
+    <section id="como-rentar" className="py-12 md:py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-            Proceso 100% en línea
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900">
+        {/* Header alineado a la izquierda con el mismo diseño del sitio */}
+        <div className="mb-10 sm:mb-12 text-left">
+          <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-slate-900 tracking-tight">
             Cómo rentar un auto en 4 pasos
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600">
-            Diseñamos un flujo simple y transparente para que no pierdas tiempo en filas ni papeleo tradicional en Durango.
+          <p className="mt-2 text-sm sm:text-base font-sans text-slate-600 max-w-2xl leading-relaxed">
+            Diseñamos un flujo simple y transparente para que no pierdas tiempo en filas ni papeleo tradicional.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {steps.map((s, idx) => {
+        {/* Grid de 4 pasos estilo Uber en Modo Claro */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          {steps.map((s) => {
             const Icon = s.icon;
             return (
-              <div key={s.number} className="relative flex flex-col justify-between p-6 rounded-2xl border border-neutral-200 bg-white hover:border-black transition-colors">
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-3xl font-black text-neutral-900 tracking-tighter">
-                      {s.number}
-                    </span>
-                    <div className="w-10 h-10 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-800">
-                      <Icon className="w-5 h-5" />
+              <div key={s.number} className="flex flex-col items-start group">
+                
+                {/* Contenedor de Imagen con el badge flotante */}
+                <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 mb-6">
+                  <img
+                    src={heroCarImg}
+                    alt={s.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+
+                  {/* Badge cuadrado flotante en esquina inferior izquierda (estilo Uber) */}
+                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-white rounded-xl shadow-md border border-slate-100 flex items-center justify-center z-10 transition-transform group-hover:translate-y-[-2px]">
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700">
+                      <Icon className="w-4 h-4 text-slate-700" strokeWidth={1.4} />
                     </div>
                   </div>
-                  <h3 className="text-base font-bold text-neutral-900 mb-2">
+                </div>
+
+                {/* Textos del paso */}
+                <div className="pt-2 flex flex-col items-start text-left">
+                  <h3 className="text-base sm:text-lg font-heading font-semibold text-slate-900 mb-1.5 leading-snug">
                     {s.title}
                   </h3>
-                  <p className="text-xs text-neutral-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
                     {s.description}
                   </p>
                 </div>
-                {idx < 3 && (
-                  <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 text-neutral-300 pointer-events-none">
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                )}
+
               </div>
             );
           })}
-        </div>
-
-        <div className="mt-12 text-center">
-          <a
-            href="#catalogo"
-            className="inline-flex items-center gap-2 bg-neutral-900 hover:bg-black text-white text-xs font-bold px-6 py-3.5 rounded-full transition-all"
-          >
-            <span>Ver autos disponibles hoy</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
         </div>
 
       </div>
