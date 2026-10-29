@@ -93,9 +93,9 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     const days = Array.from({ length: totalDays }, (_, i) => i + 1);
 
     return (
-      <div className="flex-1 min-w-[280px]">
+      <div className="flex-1 min-w-[260px] sm:min-w-[280px]">
         {/* Month Header */}
-        <div className="flex items-center justify-between mb-4 h-9">
+        <div className="flex items-center justify-between mb-3 sm:mb-4 h-9">
           {showLeftArrow ? (
             <button
               type="button"
@@ -109,7 +109,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <div className="w-7" />
           )}
 
-          <h3 className="font-heading font-bold text-[18px] text-slate-900 tracking-tight">
+          <h3 className="font-heading font-bold text-[16px] sm:text-[18px] text-slate-900 tracking-tight">
             {MONTH_NAMES[month]} {year}
           </h3>
 
@@ -128,9 +128,9 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         </div>
 
         {/* Days of Week Header */}
-        <div className="grid grid-cols-7 gap-1 text-center mb-2">
+        <div className="grid grid-cols-7 gap-1 text-center mb-1 sm:mb-2">
           {DAYS_HEADER.map((day) => (
-            <span key={day} className="text-[12px] font-heading font-medium text-slate-400 py-1">
+            <span key={day} className="text-[11px] sm:text-[12px] font-heading font-medium text-slate-400 py-0.5 sm:py-1">
               {day}
             </span>
           ))}
@@ -139,7 +139,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         {/* Day Grid */}
         <div className="grid grid-cols-7 gap-y-1 text-center">
           {blanks.map((_, i) => (
-            <div key={`blank-${i}`} className="h-9 w-9" />
+            <div key={`blank-${i}`} className="h-8 w-8 sm:h-9 sm:w-9" />
           ))}
 
           {days.map((day) => {
@@ -149,7 +149,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             const isEnd = endDate === dateStr;
             const inRange = startDate && endDate && dateStr > startDate && dateStr < endDate;
 
-            let buttonClass = 'h-9 w-9 mx-auto rounded-full text-[14px] font-heading flex items-center justify-center transition-colors ';
+            let buttonClass = 'h-8 w-8 sm:h-9 sm:w-9 mx-auto rounded-full text-[13px] sm:text-[14px] font-heading flex items-center justify-center transition-colors ';
             let containerClass = 'relative flex items-center justify-center ';
 
             if (isPast) {
@@ -183,42 +183,44 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
 
   return (
     <div 
-      className="bg-white rounded-[24px] p-6 shadow-2xl border border-slate-200/80 animate-in fade-in-50 zoom-in-95 duration-150 select-none"
+      className="bg-white rounded-[20px] sm:rounded-[24px] p-4 sm:p-6 shadow-2xl border border-slate-200/80 animate-in fade-in-50 zoom-in-95 duration-150 select-none max-w-[calc(100vw-32px)] overflow-hidden"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
         {renderMonth(currentYear, currentMonth, true, false)}
-        {renderMonth(nextMonthYear, nextMonth, false, true)}
+        <div className="hidden md:block">
+          {renderMonth(nextMonthYear, nextMonth, false, true)}
+        </div>
       </div>
 
       {/* Footer info & acciones */}
-      <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 text-slate-600">
-          <span className="font-heading font-medium">Selección:</span>
-          <span className="bg-slate-100 px-2 py-1 rounded-md text-slate-900 font-semibold">
-            {startDate ? startDate : 'Fecha de inicio'}
+      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-1.5 sm:gap-2 text-slate-600 flex-wrap">
+          <span className="font-heading font-medium">Rango:</span>
+          <span className="bg-slate-100 px-2 py-0.5 sm:py-1 rounded-md text-slate-900 font-semibold text-[11px] sm:text-xs">
+            {startDate ? startDate : 'Inicio'}
           </span>
           <span>→</span>
-          <span className="bg-slate-100 px-2 py-1 rounded-md text-slate-900 font-semibold">
-            {endDate ? endDate : 'Fecha de devolución'}
+          <span className="bg-slate-100 px-2 py-0.5 sm:py-1 rounded-md text-slate-900 font-semibold text-[11px] sm:text-xs">
+            {endDate ? endDate : 'Devolución'}
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2">
           {(startDate || endDate) && (
             <button
               type="button"
               onClick={() => onChange('', '')}
-              className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-heading font-medium hover:bg-slate-100 transition-colors"
+              className="px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-heading font-medium hover:bg-slate-100 transition-colors"
             >
-              Borrar fechas
+              Borrar
             </button>
           )}
           {onClose && (
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-1.5 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors"
+              className="px-4 py-1.5 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors text-xs"
             >
               Aplicar
             </button>
