@@ -93,8 +93,8 @@ export const FourStepProcess: React.FC = () => {
                         className="w-full h-full object-cover object-center"
                       />
                     </div>
-                    <div className="absolute -bottom-3 left-3 w-12 h-12 bg-[#F3F4F6] rounded-xl flex items-center justify-center z-10 shadow-xs">
-                      <Icon className="w-5 h-5 text-slate-800" strokeWidth={1.4} />
+                    <div className="absolute -bottom-3 left-3 w-12 h-12 bg-black rounded-xl flex items-center justify-center z-10 shadow-xs">
+                      <Icon className="w-5 h-5 text-white" strokeWidth={1.4} />
                     </div>
                   </div>
                   <div className="pt-2 flex flex-col items-start text-left">
@@ -135,8 +135,8 @@ export const FourStepProcess: React.FC = () => {
                   </div>
 
                   {/* Badge cuadrado flotante en esquina inferior izquierda */}
-                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-[#F3F4F6] rounded-xl flex items-center justify-center z-10 transition-transform group-hover:translate-y-[-2px]">
-                    <Icon className="w-5 h-5 text-slate-800" strokeWidth={1.4} />
+                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-black rounded-xl flex items-center justify-center z-10 transition-transform group-hover:translate-y-[-2px]">
+                    <Icon className="w-5 h-5 text-white" strokeWidth={1.4} />
                   </div>
                 </div>
 
