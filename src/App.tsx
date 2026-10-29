@@ -128,9 +128,9 @@ export const App: React.FC = () => {
     return null;
   }, [currentPath]);
 
-  // Filtered vehicles for Home
+  // Filtered vehicles for Home (2 filas de 4 columnas = 8 autos por página)
   const [homePage, setHomePage] = useState(1);
-  const homeItemsPerPage = 4;
+  const homeItemsPerPage = 8;
 
   const filteredVehicles = useMemo(() => {
     return VEHICLES.filter((v) => {
