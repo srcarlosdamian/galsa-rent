@@ -25,6 +25,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2">
+              <img 
+                src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/favicon.png`} 
+                alt="GALSA Icon" 
+                className="w-6 h-6 rounded-md object-contain" 
+              />
               <GalsaLogo className="h-6 w-auto text-neutral-900" />
               <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 border border-neutral-200 px-1.5 py-0.5 rounded">
                 Rent
@@ -123,8 +128,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
           <div className="flex items-center gap-3 text-white">
-            <span>Última actualización: <strong>28 Oct 2026, 22:09 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.5.2</span>
+            <span>Última actualización: <strong>28 Oct 2026, 22:12 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.5.3</span>
           </div>
         </div>
       </div>
