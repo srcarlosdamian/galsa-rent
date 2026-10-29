@@ -173,7 +173,7 @@ const homeInitialHtml = `
   </section>
   <footer>
     <div style="background:#000;color:#fff;padding:8px;font-size:11px;font-family:monospace;text-align:center;">
-      [ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final] Última actualización: 28 Oct 2026, 20:44 hrs | v1.2.7
+      [ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final] Última actualización: 28 Oct 2026, 20:45 hrs | v1.2.8
     </div>
   </footer>
 </main>

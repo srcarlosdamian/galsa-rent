@@ -193,25 +193,27 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         </div>
       </div>
 
-      {/* Footer info & acciones */}
-      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-1.5 sm:gap-2 text-slate-600 flex-wrap">
-          <span className="font-heading font-medium">Rango:</span>
-          <span className="bg-slate-100 px-2 py-0.5 sm:py-1 rounded-md text-slate-900 font-semibold text-[11px] sm:text-xs">
-            {startDate ? startDate : 'Inicio'}
+      {/* Footer info & acciones: Rango en 1 línea completa, y botones Borrar/Aplicar en otra línea */}
+      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100 flex flex-col gap-3 text-xs">
+        {/* Línea 1: Rango completo */}
+        <div className="flex items-center gap-2 text-slate-600 whitespace-nowrap">
+          <span className="font-heading font-medium text-slate-500">Rango:</span>
+          <span className="bg-slate-100 px-2.5 py-1 rounded-md text-slate-900 font-semibold text-xs font-mono">
+            {startDate ? startDate : 'Fecha inicio'}
           </span>
-          <span>→</span>
-          <span className="bg-slate-100 px-2 py-0.5 sm:py-1 rounded-md text-slate-900 font-semibold text-[11px] sm:text-xs">
-            {endDate ? endDate : 'Devolución'}
+          <span className="text-slate-400">→</span>
+          <span className="bg-slate-100 px-2.5 py-1 rounded-md text-slate-900 font-semibold text-xs font-mono">
+            {endDate ? endDate : 'Fecha devolución'}
           </span>
         </div>
 
-        <div className="flex items-center justify-end gap-2">
+        {/* Línea 2: Botones Borrar y Aplicar alineados a la derecha */}
+        <div className="flex items-center justify-end gap-3 pt-1">
           {(startDate || endDate) && (
             <button
               type="button"
               onClick={() => onChange('', '')}
-              className="px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-heading font-medium hover:bg-slate-100 transition-colors"
+              className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-heading font-medium hover:bg-slate-100 transition-colors text-xs"
             >
               Borrar
             </button>
@@ -220,7 +222,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-1.5 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors text-xs"
+              className="px-5 py-2 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors text-xs"
             >
               Aplicar
             </button>
