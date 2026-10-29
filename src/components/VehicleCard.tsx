@@ -3,38 +3,57 @@ import { Heart } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 
 interface VehicleCardProps {
-  vehicle: Vehicle;
-  onSelect: (vehicle: Vehicle) => void;
+  vehicle?: Vehicle;
+  onSelect?: (vehicle: Vehicle) => void;
   priority?: boolean;
+  isLoading?: boolean;
 }
 
-export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, priority = false }) => {
+export const VehicleCard: React.FC<VehicleCardProps> = ({ 
+  vehicle, 
+  onSelect, 
+  priority = false,
+  isLoading = false,
+}) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const toggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsFavorite(!isFavorite);
   };
 
-  // Display image requested for all car cards
-  const displayImage = '/images/figma-jeep.png';
+  // Modo Skeleton explícito o si no viene el vehículo aún
+  if (isLoading || !vehicle) {
+    return <VehicleCardSkeleton />;
+  }
 
-  // Fuel type mapper
+  // Imagen asignada para tarjetas
+  const displayImage = '/images/figma-jeep.png';
   const fuelType = vehicle.fuel || 'Gasolina';
 
   return (
     <article
-      onClick={() => onSelect(vehicle)}
+      onClick={() => onSelect && onSelect(vehicle)}
       className="group cursor-pointer bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] transition-all duration-200 hover:shadow-md border border-transparent hover:border-slate-200"
     >
-      {/* Vehicle Image (aspect 1:1 rounded-[8px]) */}
+      {/* Vehicle Image (aspect 1:1 rounded-[8px]) con Skeleton integrado mientras carga */}
       <div className="relative aspect-square w-full rounded-[8px] overflow-hidden bg-slate-100">
+        
+        {/* Skeleton Shimmer visible hasta que la imagen termine de cargar */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse" />
+        )}
+
         <img
           src={displayImage}
           alt={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          onLoad={() => setImageLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
         />
 
         {/* Favorite Heart Icon Button */}
@@ -56,7 +75,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
       <div className="flex flex-col gap-[10px] w-full pt-1">
         {/* Information Group */}
         <div className="flex flex-col gap-[4px] w-full">
-          {/* Metadata Row: Type, Year, Location/Style */}
+          {/* Metadata Row: Type, Year, Category */}
           <div className="flex items-center gap-[8px] text-[12px] font-heading font-medium text-slate-500 leading-[20px] whitespace-nowrap">
             <span>{vehicle.category.split('/')[0].trim() || 'SUV'}</span>
             <span>{vehicle.year}</span>
@@ -68,7 +87,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
             {vehicle.make} {vehicle.model}
           </h3>
 
-          {/* Vehicle Features Pills (Sin saturación de iconos - exacto Figma: 5 plazas, Automático, Gasolina) */}
+          {/* Vehicle Features Pills */}
           <div className="flex flex-wrap items-center gap-[8px] pt-1">
             <span className="bg-slate-50 text-slate-700 text-[12px] font-heading font-normal px-[6px] py-[4px] rounded-[6px] leading-[20px]">
               {vehicle.seats} plazas
@@ -82,7 +101,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
           </div>
         </div>
 
-        {/* Pickup Location Row (Figma: Location Icon + City + Branch) */}
+        {/* Pickup Location Row */}
         <div className="flex items-center gap-[6px] text-[12px] font-heading font-normal text-black leading-[20px]">
           <svg
             className="w-4 h-4 text-black shrink-0"
@@ -118,5 +137,42 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
         </div>
       </div>
     </article>
+  );
+};
+
+// Componente Skeleton independiente con animación pulse para precargas y estados de carga
+export const VehicleCardSkeleton: React.FC = () => {
+  return (
+    <div className="bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] border border-slate-100 animate-pulse">
+      {/* Image Skeleton */}
+      <div className="aspect-square w-full rounded-[8px] bg-slate-200" />
+
+      {/* Details Skeleton */}
+      <div className="flex flex-col gap-[10px] w-full pt-1">
+        <div className="flex flex-col gap-[6px] w-full">
+          {/* Metadata pill */}
+          <div className="h-3.5 bg-slate-200 rounded w-28" />
+          {/* Title */}
+          <div className="h-5 bg-slate-200 rounded w-44" />
+          {/* Features pills */}
+          <div className="flex items-center gap-2 pt-1">
+            <div className="h-6 bg-slate-100 rounded-[6px] w-16" />
+            <div className="h-6 bg-slate-100 rounded-[6px] w-20" />
+            <div className="h-6 bg-slate-100 rounded-[6px] w-16" />
+          </div>
+        </div>
+
+        {/* Location row */}
+        <div className="h-4 bg-slate-100 rounded w-36" />
+
+        <div className="h-px bg-slate-100 w-full" />
+
+        {/* Price row */}
+        <div className="flex items-center gap-2">
+          <div className="h-6 bg-slate-200 rounded w-20" />
+          <div className="h-3.5 bg-slate-100 rounded w-24" />
+        </div>
+      </div>
+    </div>
   );
 };
