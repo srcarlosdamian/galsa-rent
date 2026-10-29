@@ -45,13 +45,13 @@ export const FaqSection: React.FC = () => {
     <section id="faq" className="py-12 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Título y descripción alineados a la izquierda */}
-        <div className="text-left mb-10 sm:mb-12 max-w-3xl">
+        {/* Título y descripción alineados a la izquierda sin Durango ni dirección */}
+        <div className="text-left mb-10 sm:mb-12 max-w-2xl">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-slate-900 tracking-tight leading-tight">
-            Preguntas frecuentes sobre renta de autos en Durango
+            Preguntas frecuentes
           </h2>
-          <p className="mt-3 text-sm sm:text-base font-sans text-slate-600 leading-relaxed">
-            Todo lo que necesitas saber sobre requisitos, costos con tarifa de servicio, anfitriones y entrega en Plaza 450.
+          <p className="mt-2 text-sm sm:text-base font-sans text-slate-600 leading-relaxed">
+            Resolvemos tus dudas sobre requisitos, costos, contrato digital y entregas.
           </p>
         </div>
 
