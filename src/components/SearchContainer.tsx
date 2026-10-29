@@ -155,8 +155,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                       }}
                       className="w-full text-left p-2.5 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3.5 group"
                     >
-                      {/* Icon Container: Gray circle background */}
-                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
+                      {/* Icon Container: Cuadrado con el mismo border radius de los botones (rounded-[8px]) */}
+                      <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
                         <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} />
                       </div>
 
@@ -282,8 +282,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                         isSelected ? 'bg-slate-50/80' : ''
                       }`}
                     >
-                      {/* Icon Container: Gray circle background */}
-                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
+                      {/* Icon Container: Cuadrado con el mismo border radius de los botones (rounded-[8px]) */}
+                      <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
                         <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} />
                       </div>
 
