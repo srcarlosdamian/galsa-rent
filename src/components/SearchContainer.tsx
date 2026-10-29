@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
   MapPin, Calendar, Search, ChevronDown, 
-  Navigation, Globe, Plane, Building2, Train, Hotel 
+  Navigation, Globe, Plane, Building2, Train, Hotel,
+  CarFront, Compass, Briefcase, Zap, Sparkles
 } from 'lucide-react';
 import { SearchState } from '../types/vehicle';
 import { DateRangePicker } from './DateRangePicker';
@@ -59,10 +60,34 @@ const LOCATION_OPTIONS = [
 ];
 
 const VEHICLE_TYPES = [
-  'Todos los vehículos',
-  'SUV / Aventura',
-  'Sedán / Negocios',
-  'Deportivo / Estilo',
+  {
+    id: 'all',
+    title: 'Todos los vehículos',
+    subtitle: 'Ver toda la flota disponible',
+    icon: Sparkles,
+    value: '',
+  },
+  {
+    id: 'suv',
+    title: 'SUV / Aventura',
+    subtitle: 'Camionetas y espacio para viajes',
+    icon: Compass,
+    value: 'SUV / Aventura',
+  },
+  {
+    id: 'sedan',
+    title: 'Sedán / Negocios',
+    subtitle: 'Confort ejecutivo y traslados urbanos',
+    icon: Briefcase,
+    value: 'Sedán / Negocios',
+  },
+  {
+    id: 'deportivo',
+    title: 'Deportivo / Estilo',
+    subtitle: 'Diseño prémium y alta gama',
+    icon: Zap,
+    value: 'Deportivo / Estilo',
+  },
 ];
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
@@ -214,39 +239,69 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         </div>
 
         {/* Field 4: Tipo de vehículo */}
-        <div className="relative w-full lg:w-[190px]">
+        <div className="relative w-full lg:w-[220px]">
           <button
             type="button"
             onClick={() => {
               setTypeOpen(!typeOpen);
               setLocationOpen(false);
+              setCalendarOpen(false);
             }}
-            className="w-full flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+            className="w-full flex items-center justify-between gap-2.5 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
-            <span className="font-heading text-[14px] text-slate-900 truncate">
-              {searchState.category || 'Tipo de vehículo'}
-            </span>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <CarFront className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
+              <span className="font-heading text-[14px] text-slate-900 truncate">
+                {searchState.category || 'Tipo de vehículo'}
+              </span>
+            </div>
             <ChevronDown className="w-[18px] h-[18px] text-slate-500 shrink-0" strokeWidth={1.4} />
           </button>
 
           {typeOpen && (
-            <div className="absolute top-full left-0 mt-2 w-full bg-white rounded-xl border border-slate-200 shadow-xl p-2 z-50">
-              {VEHICLE_TYPES.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => {
-                    onSearchChange({
-                      ...searchState,
-                      category: type === 'Todos los vehículos' ? '' : type,
-                    });
-                    setTypeOpen(false);
-                  }}
-                  className="w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium hover:bg-slate-100 transition-colors text-slate-900"
-                >
-                  {type}
-                </button>
-              ))}
+            <div 
+              className="absolute top-full left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-[320px] bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="space-y-1">
+                {VEHICLE_TYPES.map((typeItem) => {
+                  const Icon = typeItem.icon;
+                  const isSelected = (!searchState.category && typeItem.value === '') || searchState.category === typeItem.value;
+                  return (
+                    <button
+                      key={typeItem.id}
+                      type="button"
+                      onClick={() => {
+                        onSearchChange({
+                          ...searchState,
+                          category: typeItem.value,
+                        });
+                        setTypeOpen(false);
+                      }}
+                      className={`w-full text-left p-2.5 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3.5 group ${
+                        isSelected ? 'bg-slate-50/80' : ''
+                      }`}
+                    >
+                      {/* Icon Container: Gray circle background */}
+                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
+                        <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} />
+                      </div>
+
+                      {/* Text info */}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[14px] font-heading font-medium text-slate-900 truncate">
+                          {typeItem.title}
+                        </p>
+                        {typeItem.subtitle && (
+                          <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">
+                            {typeItem.subtitle}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
