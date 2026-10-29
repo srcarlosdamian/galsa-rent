@@ -90,7 +90,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = false }) 
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ backgroundColor: '#3D63FF' }}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white text-xs font-bold px-7 py-4 rounded-2xl transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white text-xs font-bold px-7 py-4 rounded-2xl transition-all hover:brightness-105 active:scale-[0.98]"
               >
                 <span>Publicar mi auto en GALSA</span>
                 <ArrowRight className="w-4 h-4" />

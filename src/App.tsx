@@ -284,7 +284,7 @@ export const App: React.FC = () => {
                       e.preventDefault();
                       navigateTo('/catalogo');
                     }}
-                    className="self-start md:self-auto inline-flex items-center justify-center px-4 py-2 rounded-[6px] border border-slate-200 bg-white text-slate-900 text-[14px] font-heading font-medium hover:bg-slate-50 transition-colors shadow-sm"
+                    className="self-start md:self-auto inline-flex items-center justify-center px-4 py-2 rounded-[6px] border border-slate-200 bg-white text-slate-900 text-[14px] font-heading font-medium hover:bg-slate-50 transition-colors"
                   >
                     Ver más
                   </a>

@@ -16,10 +16,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
     setIsFavorite(!isFavorite);
   };
 
-  // Determine primary display image (use figma-jeep.png if it's the Rubicon or first fallback, else vehicle image)
-  const displayImage = vehicle.slug.includes('rubicon') || vehicle.id === '1844af7f-5e42-4de0-afe2-505dbe0d46cc'
-    ? '/images/figma-jeep.png'
-    : (vehicle.images[0]?.url || '/images/figma-jeep.png');
+  // Display image requested for all car cards
+  const displayImage = '/images/figma-jeep.png';
 
   // Fuel type mapper
   const fuelType = vehicle.fuel || 'Gasolina';
@@ -44,7 +42,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, pri
           type="button"
           onClick={toggleFavorite}
           aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-          className="absolute top-2.5 right-2.5 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 backdrop-blur-sm transition-all z-10 shadow-sm"
+          className="absolute top-2.5 right-2.5 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 backdrop-blur-sm transition-all z-10"
         >
           <Heart
             className={`w-4 h-4 transition-colors ${

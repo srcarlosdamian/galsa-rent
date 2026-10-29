@@ -164,7 +164,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         <button
           type="submit"
           style={{ backgroundColor: '#3D63FF' }}
-          className="w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center text-white shrink-0 hover:brightness-105 active:scale-95 transition-all shadow-sm"
+          className="w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center text-white shrink-0 hover:brightness-105 active:scale-95 transition-all"
           aria-label="Buscar vehículos"
         >
           <Search className="w-[18px] h-[18px]" />

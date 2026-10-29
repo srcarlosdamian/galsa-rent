@@ -32,7 +32,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
             <a
               href="/anfitriones"
               onClick={handleClick}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-neutral-900 hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm active:scale-[0.98]"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-neutral-900 hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all active:scale-[0.98]"
             >
               <span>Conocer programa de anfitriones</span>
               <ArrowRight className="w-4 h-4" />
