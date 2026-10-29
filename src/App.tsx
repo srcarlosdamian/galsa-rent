@@ -215,133 +215,112 @@ export const App: React.FC = () => {
         {/* ROUTE 9: HOME (TAREA 2 COPY & VIRTUO DESIGN) */}
         {currentPath === '/' && (
           <>
-            {/* HERO SECTION INSPIRED BY VIRTUO (Screenshot 1) */}
-            <section className="pt-6 pb-16 md:pt-10 md:pb-24 bg-white border-b border-neutral-200">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* HERO SECTION EXACTO DE FIGMA */}
+            <section className="pt-4 pb-12 md:pt-6 md:pb-16 bg-white">
+              <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
-                {/* Cinematic Rounded Container Card */}
-                <div className="relative rounded-[32px] overflow-hidden bg-neutral-900 text-white min-h-[460px] md:min-h-[500px] flex flex-col justify-between p-6 sm:p-10 md:p-14 shadow-dropdown">
+                {/* Hero Card Container (Figma: rounded-[24px], min-h-[480px], p-[30px] sm:px-[64px]) */}
+                <div className="relative rounded-[24px] overflow-hidden min-h-[480px] flex flex-col justify-between p-6 sm:px-12 sm:py-8 lg:px-16 lg:py-10 shadow-sm">
                   
-                  {/* Background High-res Vehicle Image & Gradient Overlay */}
+                  {/* Background Image & Overlay */}
                   <div className="absolute inset-0 -z-10 overflow-hidden">
                     <img
-                      src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=80"
-                      alt="Carretera y auto en renta en Durango — GALSA Rent"
-                      width={1800}
-                      height={900}
-                      className="w-full h-full object-cover object-center brightness-50"
+                      src="/images/figma-hero.png"
+                      alt="Carretera y viaje en auto en México — GALSA Rent"
+                      className="w-full h-full object-cover object-center"
                       fetchPriority="high"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30"></div>
+                    <div className="absolute inset-0 bg-black/40"></div>
                   </div>
 
-                  {/* Top Notification Badge */}
-                  <div>
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                      <span>Renta de autos en México · Flota verificada con entrega en Durango</span>
-                    </span>
-                  </div>
-
-                  {/* Main Copy (Enfocado a México y expansión nacional) */}
-                  <div className="max-w-3xl space-y-4 my-auto py-8">
-                    <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08]">
+                  {/* Hero Title */}
+                  <div className="w-full">
+                    <h1 className="text-3xl sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.1] max-w-[680px]">
                       Renta de autos en México, 100% en línea
                     </h1>
-                    
-                    <p className="text-sm sm:text-base md:text-lg text-neutral-200 font-normal leading-relaxed max-w-2xl">
-                      Elige tu auto, sube tus documentos y firma el contrato digital desde tu celular con validez legal en todo México. Unidades revisadas una por una, con punto de entrega en Sucursal Plaza 450, Durango. Desde $1,100 al día + tarifa de servicio transparente.
-                    </p>
-
-                    {/* Chips as specified in Tarea 2 */}
-                    <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-neutral-200">
-                      <span className="bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1 rounded-full">
-                        Kilometraje libre
-                      </span>
-                      <span className="bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1 rounded-full">
-                        Contrato digital
-                      </span>
-                      <span className="bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1 rounded-full">
-                        Depósito reembolsable
-                      </span>
-                      <span className="bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1 rounded-full">
-                        Sin cargos hasta confirmar
-                      </span>
-                    </div>
-
-                    {/* CTA en el Hero enfocado 100% en rentar */}
-                    <div className="pt-4 flex flex-wrap items-center gap-3">
-                      <a
-                        href="#catalogo-home"
-                        style={{ backgroundColor: '#3D63FF' }}
-                        className="inline-flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
-                      >
-                        <span>Ver autos disponibles</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </a>
-                      <a
-                        href="/como-funciona"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigateTo('/como-funciona');
-                        }}
-                        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs sm:text-sm font-bold px-6 py-3.5 rounded-full backdrop-blur-md transition-all"
-                      >
-                        <span>Cómo funciona</span>
-                      </a>
-                    </div>
                   </div>
 
-                </div>
+                  {/* Search Bar Embedded in Hero */}
+                  <div className="my-6 w-full">
+                    <SearchContainer
+                      searchState={searchState}
+                      onSearchChange={setSearchState}
+                      onExecuteSearch={handleExecuteSearch}
+                      totalResultsCount={VEHICLES.length}
+                    />
+                  </div>
 
-                {/* DOCKED HORIZONTAL SEARCH CONTAINER (Overlapping Virtuo Style) */}
-                <div className="-mt-8 sm:-mt-10 relative z-20 px-2 sm:px-6">
-                  <SearchContainer
-                    searchState={searchState}
-                    onSearchChange={setSearchState}
-                    onExecuteSearch={handleExecuteSearch}
-                    totalResultsCount={VEHICLES.length}
-                  />
+                  {/* Hero Description Footer */}
+                  <div className="w-full">
+                    <p className="font-heading font-normal text-white text-[15px] sm:text-[16px] leading-[1.3] max-w-[720px]">
+                      Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales. Desde $1,100 MXN al día, sin cargos ocultos.
+                    </p>
+                  </div>
+
                 </div>
 
               </div>
             </section>
 
-            {/* H2 ORDER 1: Autos disponibles hoy en Durango */}
-            <section id="catalogo-home" className="py-16 md:py-24 bg-white border-b border-neutral-200">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* AVAILABLE CARS SECTION EXACTO DE FIGMA */}
+            <section id="catalogo-home" className="py-12 md:py-16 bg-white border-b border-slate-100">
+              <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-neutral-200">
+                {/* Section Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
                   <div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900">
+                    <h2 className="text-[28px] sm:text-[32px] font-heading font-semibold tracking-[-0.192px] text-black leading-[1.1]">
                       Autos disponibles hoy en México
                     </h2>
-                    <p className="mt-2 text-xs sm:text-sm text-neutral-600 max-w-xl">
-                      {VEHICLES.length} unidades revisadas listas para entrega física en Sucursal Plaza 450, Durango. Contrato digital firmado desde tu celular y depósito en garantía 100% reembolsable.
+                    <p className="mt-2 text-[15px] sm:text-[16px] font-heading font-normal text-black leading-[1.3]">
+                      Contrato firmado digitalmente y depósito en garantía 100% reembolsable
                     </p>
                   </div>
 
-                  {/* Filter Pills */}
-                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-                    {['Todos los vehículos', 'SUV / Aventura', 'Sedán / Negocios', 'Deportivo / Estilo'].map((cat) => (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => setActiveCategory(cat)}
-                        className={`text-xs font-bold px-4 py-2 rounded-full transition-all whitespace-nowrap border ${
-                          activeCategory === cat
-                            ? 'bg-neutral-900 text-white border-neutral-900'
-                            : 'bg-white text-neutral-700 border-neutral-200 hover:border-black'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
+                  {/* Button 'Ver más' (Figma: rounded-[6px], border slate-200, px-4 py-2, text 14px medium) */}
+                  <a
+                    href="/catalogo"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo('/catalogo');
+                    }}
+                    className="self-start md:self-auto inline-flex items-center justify-center px-4 py-2 rounded-[6px] border border-slate-200 bg-white text-slate-900 text-[14px] font-heading font-medium hover:bg-slate-50 transition-colors shadow-sm"
+                  >
+                    Ver más
+                  </a>
                 </div>
 
-                {/* Vehicle Grid */}
-                <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Filter Pills (Figma exact tags: Destacados, Nuevos, Económicos, Cerca de ti, Negocios, Aventura, Movilidad) */}
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2">
+                  {[
+                    'Destacados',
+                    'Nuevos',
+                    'Económicos',
+                    'Cerca de ti',
+                    'Negocios',
+                    'Aventura',
+                    'Movilidad',
+                  ].map((filterName) => {
+                    const isSelected = activeCategory === filterName || (activeCategory === 'Todos los vehículos' && filterName === 'Destacados');
+                    return (
+                      <button
+                        key={filterName}
+                        type="button"
+                        onClick={() => setActiveCategory(filterName)}
+                        className={`text-[14px] font-heading font-medium px-3 py-1.5 rounded-[6px] transition-colors whitespace-nowrap ${
+                          isSelected
+                            ? 'bg-slate-100 text-slate-900'
+                            : 'bg-white text-slate-900 hover:bg-slate-50'
+                        }`}
+                      >
+                        {filterName}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Vehicle Grid (Figma: 4 columnas en desktop, gap-4) */}
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {filteredVehicles.map((vehicle, idx) => (
                     <VehicleCard
                       key={vehicle.id}

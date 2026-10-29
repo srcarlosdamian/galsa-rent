@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, ChevronLeft, ChevronRight, Users, Gauge, Shield, Sparkles } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 
 interface VehicleCardProps {
@@ -9,165 +9,114 @@ interface VehicleCardProps {
 }
 
 export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect, priority = false }) => {
-  const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImageIdx((prev) => (prev + 1) % vehicle.images.length);
-  };
-
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImageIdx((prev) => (prev - 1 + vehicle.images.length) % vehicle.images.length);
-  };
 
   const toggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsFavorite(!isFavorite);
   };
 
-  const currentImg = vehicle.images[currentImageIdx];
+  // Determine primary display image (use figma-jeep.png if it's the Rubicon or first fallback, else vehicle image)
+  const displayImage = vehicle.slug.includes('rubicon') || vehicle.id === '1844af7f-5e42-4de0-afe2-505dbe0d46cc'
+    ? '/images/figma-jeep.png'
+    : (vehicle.images[0]?.url || '/images/figma-jeep.png');
+
+  // Fuel type mapper
+  const fuelType = vehicle.fuel || 'Gasolina';
 
   return (
     <article
       onClick={() => onSelect(vehicle)}
-      className="group cursor-pointer bg-white rounded-2xl border border-neutral-200/90 overflow-hidden transition-all duration-300 hover:border-neutral-400 hover:shadow-sm flex flex-col"
+      className="group cursor-pointer bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] transition-all duration-200 hover:shadow-md border border-transparent hover:border-slate-200"
     >
-      {/* Photo carousel container */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
+      {/* Vehicle Image (aspect 1:1 rounded-[8px]) */}
+      <div className="relative aspect-square w-full rounded-[8px] overflow-hidden bg-slate-100">
         <img
-          src={currentImg.url}
-          alt={currentImg.alt}
-          width={currentImg.width}
-          height={currentImg.height}
+          src={displayImage}
+          alt={`${vehicle.make} ${vehicle.model} ${vehicle.year}`}
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
-        {/* Top category badge */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-          <span className="inline-flex items-center text-[11px] font-semibold bg-white/95 text-neutral-900 px-2.5 py-1 rounded-full shadow-sm backdrop-blur-sm">
-            {vehicle.category}
-          </span>
-        </div>
-
-        {/* Favorite heart button */}
+        {/* Favorite Heart Icon Button */}
         <button
           type="button"
           onClick={toggleFavorite}
           aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white text-neutral-800 backdrop-blur-sm transition-all z-10 shadow-sm"
+          className="absolute top-2.5 right-2.5 p-2 rounded-full bg-white/90 hover:bg-white text-slate-800 backdrop-blur-sm transition-all z-10 shadow-sm"
         >
           <Heart
-            className={`w-3.5 h-3.5 transition-colors ${
-              isFavorite ? 'fill-rose-500 text-rose-500' : 'text-neutral-700'
+            className={`w-4 h-4 transition-colors ${
+              isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-700'
             }`}
           />
         </button>
-
-        {/* Arrow navigators */}
-        {vehicle.images.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={prevImage}
-              aria-label="Foto anterior"
-              className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 hover:bg-white text-neutral-800 opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-md"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={nextImage}
-              aria-label="Siguiente foto"
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 hover:bg-white text-neutral-800 opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-md"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </>
-        )}
-
-        {/* Carousel indicator dots */}
-        {vehicle.images.length > 1 && (
-          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
-            {vehicle.images.map((_, idx) => (
-              <span
-                key={idx}
-                className={`h-1.5 rounded-full transition-all ${
-                  idx === currentImageIdx ? 'w-3.5 bg-white' : 'w-1.5 bg-white/60'
-                }`}
-              />
-            ))}
-          </div>
-        )}
       </div>
 
-      {/* Card Body & Info strictly matching live site */}
-      <div className="p-4 flex flex-col flex-1 justify-between">
-        <div>
-          {/* Header row: title and model year */}
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <h3 className="text-base font-bold text-neutral-900 tracking-tight leading-snug">
-                {vehicle.make} {vehicle.model}
-              </h3>
-              <p className="text-xs text-neutral-500 font-medium">
-                Modelo {vehicle.year}
-              </p>
-            </div>
-
-            <span className="text-[11px] font-semibold text-neutral-700 bg-neutral-100 px-2 py-0.5 rounded-md shrink-0">
-              {vehicle.category}
-            </span>
+      {/* Vehicle Details */}
+      <div className="flex flex-col gap-[10px] w-full pt-1">
+        {/* Information Group */}
+        <div className="flex flex-col gap-[4px] w-full">
+          {/* Metadata Row: Type, Year, Location/Style */}
+          <div className="flex items-center gap-[8px] text-[12px] font-heading font-medium text-slate-500 leading-[20px] whitespace-nowrap">
+            <span>{vehicle.category.split('/')[0].trim() || 'SUV'}</span>
+            <span>{vehicle.year}</span>
+            <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
           </div>
 
-          {/* Quick specs pills matching live site specifications */}
-          <div className="mt-3 flex items-center gap-2 text-xs text-neutral-600">
-            <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
-              <Users className="w-3 h-3 text-neutral-500" />
-              <span>{vehicle.seats} plazas</span>
+          {/* Vehicle Name */}
+          <h3 className="font-heading font-normal text-[18px] text-black leading-[28px] truncate">
+            {vehicle.make} {vehicle.model}
+          </h3>
+
+          {/* Vehicle Features Pills (Sin saturación de iconos - exacto Figma: 5 plazas, Automático, Gasolina) */}
+          <div className="flex flex-wrap items-center gap-[8px] pt-1">
+            <span className="bg-slate-50 text-slate-700 text-[12px] font-heading font-normal px-[6px] py-[4px] rounded-[6px] leading-[20px]">
+              {vehicle.seats} plazas
             </span>
-            <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
-              <Gauge className="w-3 h-3 text-neutral-500" />
-              <span>{vehicle.transmission}</span>
+            <span className="bg-slate-50 text-slate-700 text-[12px] font-heading font-normal px-[6px] py-[4px] rounded-[6px] leading-[20px]">
+              {vehicle.transmission}
             </span>
-            <span className="inline-flex items-center gap-1 bg-neutral-100/80 px-2 py-0.5 rounded-md">
-              <Shield className="w-3 h-3 text-neutral-500" />
-              <span>Libre km</span>
+            <span className="bg-slate-50 text-slate-700 text-[12px] font-heading font-normal px-[6px] py-[4px] rounded-[6px] leading-[20px]">
+              {fuelType}
             </span>
           </div>
-
-          <p className="mt-2 text-xs text-neutral-500">
-            Durango · Plaza 450
-          </p>
         </div>
 
-        {/* Pricing footer row strictly matching live site */}
-        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-baseline justify-between">
-          <div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black text-neutral-900">
-                ${vehicle.pricePerDay.toLocaleString('es-MX')}
-              </span>
-              <span className="text-xs text-neutral-500">por día · estimado</span>
-            </div>
-            <p className="text-[10px] text-neutral-400">
-              Tarifa de servicio GALSA (33%) calculada al reservar
-            </p>
-          </div>
-
-          <a
-            href={`/vehiculos/${vehicle.slug}`}
-            onClick={(e) => {
-              e.preventDefault();
-              onSelect(vehicle);
-            }}
-            className="text-xs font-bold text-neutral-900 underline group-hover:no-underline"
+        {/* Pickup Location Row (Figma: Location Icon + City + Branch) */}
+        <div className="flex items-center gap-[6px] text-[12px] font-heading font-normal text-black leading-[20px]">
+          <svg
+            className="w-4 h-4 text-black shrink-0"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Ver ficha
-          </a>
+            <path
+              d="M13.3333 6.66667C13.3333 9.99533 9.64067 13.462 8.40067 14.5327C8.28515 14.6195 8.14453 14.6665 8 14.6665C7.85547 14.6665 7.71485 14.6195 7.59933 14.5327C6.35933 13.462 2.66667 9.99533 2.66667 6.66667C2.66667 5.25218 3.22857 3.89562 4.22876 2.89543C5.22896 1.89524 6.58551 1.33333 8 1.33333C9.41449 1.33333 10.771 1.89524 11.7712 2.89543C12.7714 3.89562 13.3333 5.25218 13.3333 6.66667ZM10 6.66667C10 7.77124 9.10457 8.66667 8 8.66667C6.89543 8.66667 6 7.77124 6 6.66667C6 5.5621 6.89543 4.66667 8 4.66667C9.10457 4.66667 10 5.5621 10 6.66667Z"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="truncate">Durango</span>
+          <span className="text-slate-500 truncate">Plaza 450</span>
+        </div>
+
+        {/* Separator Line */}
+        <div className="h-px bg-slate-100 w-full" />
+
+        {/* Price Divider & Daily Rate */}
+        <div className="flex items-center justify-between w-full pt-0.5">
+          <div className="flex items-baseline gap-[8px] whitespace-nowrap">
+            <span className="font-heading font-normal text-[18px] text-black leading-[28px]">
+              ${vehicle.pricePerDay.toLocaleString('es-MX')}
+            </span>
+            <span className="font-heading font-normal text-[12px] text-slate-500 leading-[20px]">
+              Por día, estimado
+            </span>
+          </div>
         </div>
       </div>
     </article>
