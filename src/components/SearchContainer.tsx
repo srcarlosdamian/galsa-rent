@@ -4,6 +4,7 @@ import {
   Navigation, Globe, Plane, Building2, Train, Hotel 
 } from 'lucide-react';
 import { SearchState } from '../types/vehicle';
+import { DateRangePicker } from './DateRangePicker';
 
 interface SearchContainerProps {
   searchState: SearchState;
@@ -71,6 +72,16 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
 }) => {
   const [locationOpen, setLocationOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
+  // Formateador amigable de fechas en español
+  const formatDisplayDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    const [y, m, d] = dateStr.split('-');
+    if (!y || !m || !d) return dateStr;
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    return `${d} ${months[parseInt(m, 10) - 1]}`;
+  };
 
   return (
     <div className="w-full bg-white rounded-[16px] p-3 sm:p-5 border border-slate-100">
@@ -149,40 +160,57 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           )}
         </div>
 
-        {/* Field 2: Fecha de inicio */}
-        <div className="relative w-full lg:w-[190px]">
-          <div className="relative flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white">
-            <input
-              type="text"
-              placeholder="Fecha de inicio"
-              value={searchState.startDate}
-              onChange={(e) => onSearchChange({ ...searchState, startDate: e.target.value })}
-              onFocus={(e) => (e.target.type = 'date')}
-              onBlur={(e) => {
-                if (!e.target.value) e.target.type = 'text';
-              }}
-              className="w-full font-heading text-[14px] text-slate-900 placeholder:text-slate-900 focus:outline-none bg-transparent relative z-10 cursor-pointer"
-            />
-            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0 pointer-events-none relative z-0" strokeWidth={1.4} />
-          </div>
-        </div>
+        {/* Field 2 & 3: Selector de Fechas (Rango con calendario Airbnb/Virtuo interactivo) */}
+        <div className="relative flex flex-col sm:flex-row items-center gap-3 sm:gap-2">
+          {/* Fecha de inicio button */}
+          <button
+            type="button"
+            onClick={() => {
+              setCalendarOpen(!calendarOpen);
+              setLocationOpen(false);
+              setTypeOpen(false);
+            }}
+            className="w-full sm:w-[170px] lg:w-[165px] flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+          >
+            <span className="font-heading text-[14px] text-slate-900 truncate">
+              {searchState.startDate ? formatDisplayDate(searchState.startDate) : 'Fecha de inicio'}
+            </span>
+            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
+          </button>
 
-        {/* Field 3: Fecha de devolución */}
-        <div className="relative w-full lg:w-[190px]">
-          <div className="relative flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white">
-            <input
-              type="text"
-              placeholder="Fecha de devolución"
-              value={searchState.endDate}
-              onChange={(e) => onSearchChange({ ...searchState, endDate: e.target.value })}
-              onFocus={(e) => (e.target.type = 'date')}
-              onBlur={(e) => {
-                if (!e.target.value) e.target.type = 'text';
-              }}
-              className="w-full font-heading text-[14px] text-slate-900 placeholder:text-slate-900 focus:outline-none bg-transparent relative z-10 cursor-pointer"
-            />
-            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0 pointer-events-none relative z-0" strokeWidth={1.4} />
-          </div>
+          {/* Fecha de devolución button */}
+          <button
+            type="button"
+            onClick={() => {
+              setCalendarOpen(!calendarOpen);
+              setLocationOpen(false);
+              setTypeOpen(false);
+            }}
+            className="w-full sm:w-[170px] lg:w-[165px] flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+          >
+            <span className="font-heading text-[14px] text-slate-900 truncate">
+              {searchState.endDate ? formatDisplayDate(searchState.endDate) : 'Fecha de devolución'}
+            </span>
+            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
+          </button>
+
+          {/* Modal flotante de Calendario (Doble mes, estilo Airbnb/Virtuo en español) */}
+          {calendarOpen && (
+            <div className="absolute top-full left-0 sm:left-auto sm:right-0 lg:left-0 mt-3 z-50 max-w-[95vw] sm:max-w-none">
+              <DateRangePicker
+                startDate={searchState.startDate}
+                endDate={searchState.endDate}
+                onChange={(start, end) => {
+                  onSearchChange({
+                    ...searchState,
+                    startDate: start,
+                    endDate: end,
+                  });
+                }}
+                onClose={() => setCalendarOpen(false)}
+              />
+            </div>
+          )}
         </div>
 
         {/* Field 4: Tipo de vehículo */}

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { 
   X, Check, ShieldCheck, Share2, ChevronRight, ChevronLeft,
-  MapPin, Info, ArrowLeft
+  MapPin, Info, ArrowLeft, Calendar
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
+import { DateRangePicker } from './DateRangePicker';
 
 interface VehicleDetailViewProps {
   vehicle: Vehicle;
@@ -15,9 +16,37 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   vehicle,
   onNavigate,
 }) => {
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const [rentalDays, setRentalDays] = useState(3);
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [copied, setCopied] = useState(false);
+
+  // Calcula días entre fechas seleccionadas
+  const calculateDays = (start: string, end: string) => {
+    if (!start || !end) return 3;
+    const s = new Date(start + 'T00:00:00');
+    const e = new Date(end + 'T00:00:00');
+    const diff = Math.round((e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 1;
+  };
+
+  const handleDateRangeChange = (start: string, end: string) => {
+    setStartDate(start);
+    setEndDate(end);
+    if (start && end) {
+      setRentalDays(calculateDays(start, end));
+    }
+  };
+
+  const formatDisplayDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    const [y, m, d] = dateStr.split('-');
+    if (!y || !m || !d) return dateStr;
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    return `${d} ${months[parseInt(m, 10) - 1]}`;
+  };
 
   // Exact 33% service fee strictly paid by customer
   const baseSubtotal = vehicle.pricePerDay * rentalDays;
@@ -296,19 +325,59 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </span>
             </div>
 
-            {/* Days selector */}
-            <div className="mt-5 space-y-3">
+            {/* Selector de Fechas interactivo con DateRangePicker (estilo Airbnb / Virtuo) */}
+            <div className="mt-5 space-y-2 relative">
               <label className="block text-xs font-bold uppercase tracking-wider text-neutral-500">
-                Duración de la renta
+                Fechas del viaje
+              </label>
+              
+              <button
+                type="button"
+                onClick={() => setCalendarOpen(!calendarOpen)}
+                className="w-full flex items-center justify-between p-3 rounded-2xl border border-neutral-300 hover:border-black transition-colors text-left bg-neutral-50 hover:bg-white"
+              >
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-neutral-600" strokeWidth={1.4} />
+                  <span className="text-xs font-semibold text-neutral-900">
+                    {startDate && endDate 
+                      ? `${formatDisplayDate(startDate)} - ${formatDisplayDate(endDate)} (${rentalDays} ${rentalDays === 1 ? 'día' : 'días'})`
+                      : 'Seleccionar fechas de inicio y fin'}
+                  </span>
+                </div>
+                <span className="text-[11px] font-bold text-blue-600 underline">
+                  {calendarOpen ? 'Cerrar' : 'Cambiar'}
+                </span>
+              </button>
+
+              {calendarOpen && (
+                <div className="absolute right-0 top-full mt-2 z-50 shadow-2xl max-w-[95vw]">
+                  <DateRangePicker
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={handleDateRangeChange}
+                    onClose={() => setCalendarOpen(false)}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Days quick buttons selector */}
+            <div className="mt-4 space-y-2">
+              <label className="block text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+                O elegir duración rápida
               </label>
               <div className="grid grid-cols-4 gap-2">
                 {[1, 2, 3, 7].map((days) => (
                   <button
                     key={days}
                     type="button"
-                    onClick={() => setRentalDays(days)}
+                    onClick={() => {
+                      setRentalDays(days);
+                      setStartDate('');
+                      setEndDate('');
+                    }}
                     className={`py-2 rounded-xl text-xs font-bold transition-all border ${
-                      rentalDays === days
+                      rentalDays === days && !startDate
                         ? 'bg-neutral-900 text-white border-neutral-900'
                         : 'bg-white text-neutral-800 border-neutral-200 hover:border-neutral-400'
                     }`}
