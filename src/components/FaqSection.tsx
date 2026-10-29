@@ -42,29 +42,27 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-12 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-            Transparencia y respuestas
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900">
+        {/* Título y descripción alineados a la izquierda */}
+        <div className="text-left mb-10 sm:mb-12 max-w-3xl">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-slate-900 tracking-tight leading-tight">
             Preguntas frecuentes sobre renta de autos en Durango
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600">
+          <p className="mt-3 text-sm sm:text-base font-sans text-slate-600 leading-relaxed">
             Todo lo que necesitas saber sobre requisitos, costos con tarifa de servicio, anfitriones y entrega en Plaza 450.
           </p>
         </div>
 
-        {/* Accordion container */}
-        <div className="space-y-3">
+        {/* Accordion en Grid de 2 columnas llenando hasta max-w-7xl */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
           {FAQ_ITEMS.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
               <div
                 key={faq.question}
-                className="rounded-2xl border border-neutral-200 bg-white overflow-hidden transition-all duration-200"
+                className="rounded-2xl border border-neutral-200/90 bg-white overflow-hidden transition-all duration-200"
               >
                 <button
                   type="button"
@@ -72,7 +70,7 @@ export const FaqSection: React.FC = () => {
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-neutral-50/50 transition-colors"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-base sm:text-lg font-bold text-neutral-900 tracking-tight">
+                  <span className="text-base font-heading font-semibold text-slate-900 tracking-tight leading-snug">
                     {faq.question}
                   </span>
                   <div className="w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center shrink-0 text-neutral-700">
@@ -81,7 +79,7 @@ export const FaqSection: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm text-neutral-600 leading-relaxed border-t border-neutral-100 animate-in fade-in-50 duration-200">
+                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm font-sans text-slate-600 leading-relaxed border-t border-neutral-100">
                     <p>{faq.answer}</p>
                   </div>
                 )}
@@ -90,20 +88,19 @@ export const FaqSection: React.FC = () => {
           })}
         </div>
 
-        {/* Contact banner */}
-        <div className="mt-12 p-6 rounded-2xl border border-neutral-200 bg-neutral-50/70 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Contact banner en ancho completo hasta max-w-7xl */}
+        <div className="mt-10 p-6 sm:p-7 rounded-2xl border border-neutral-200 bg-neutral-50/70 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-left">
-            <h3 className="text-sm font-bold text-neutral-900">¿Tienes dudas adicionales sobre tu renta?</h3>
-            <p className="text-xs text-neutral-500">Atención local directa en Sucursal Plaza 450, Durango.</p>
+            <h3 className="text-sm sm:text-base font-heading font-semibold text-slate-900">¿Tienes dudas adicionales sobre tu renta?</h3>
+            <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">Atención local directa en Sucursal Plaza 450, Durango.</p>
           </div>
-          {/* TODO: Reemplazar con el enlace de WhatsApp oficial de atención a clientes */}
           <a
-            href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20tengo%20una%20pregunta%20sobre%20mi%20renta"
+            href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20la%20renta%20de%20un%20auto"
             target="_blank"
             rel="noopener noreferrer"
-            className="whitespace-nowrap inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-black text-white text-xs font-bold hover:bg-neutral-800 transition-colors"
+            className="inline-flex items-center gap-2 bg-black hover:bg-neutral-900 text-white font-heading font-semibold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all shrink-0 active:scale-95"
           >
-            <PhoneCall className="w-3.5 h-3.5" />
+            <PhoneCall className="w-4 h-4" strokeWidth={1.4} />
             <span>Hablar por WhatsApp</span>
           </a>
         </div>
