@@ -151,7 +151,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
 
         {/* Field 2: Fecha de inicio */}
         <div className="relative w-full lg:w-[190px]">
-          <div className="flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white">
+          <div className="relative flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white">
             <input
               type="text"
               placeholder="Fecha de inicio"
@@ -161,15 +161,15 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               onBlur={(e) => {
                 if (!e.target.value) e.target.type = 'text';
               }}
-              className="w-full font-heading text-[14px] text-slate-900 placeholder:text-slate-900 focus:outline-none bg-transparent"
+              className="w-full font-heading text-[14px] text-slate-900 placeholder:text-slate-900 focus:outline-none bg-transparent relative z-10 cursor-pointer"
             />
-            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0 pointer-events-none" strokeWidth={1.4} />
+            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0 pointer-events-none relative z-0" strokeWidth={1.4} />
           </div>
         </div>
 
         {/* Field 3: Fecha de devolución */}
         <div className="relative w-full lg:w-[190px]">
-          <div className="flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white">
+          <div className="relative flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white">
             <input
               type="text"
               placeholder="Fecha de devolución"
@@ -179,9 +179,9 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               onBlur={(e) => {
                 if (!e.target.value) e.target.type = 'text';
               }}
-              className="w-full font-heading text-[14px] text-slate-900 placeholder:text-slate-900 focus:outline-none bg-transparent"
+              className="w-full font-heading text-[14px] text-slate-900 placeholder:text-slate-900 focus:outline-none bg-transparent relative z-10 cursor-pointer"
             />
-            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0 pointer-events-none" strokeWidth={1.4} />
+            <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0 pointer-events-none relative z-0" strokeWidth={1.4} />
           </div>
         </div>
 

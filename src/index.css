@@ -62,3 +62,17 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Ocultar el icono por defecto del navegador en inputs date para usar siempre el icono Lucide (strokeWidth=1.4) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+  cursor: pointer;
+}
