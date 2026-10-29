@@ -327,10 +327,10 @@ export const App: React.FC = () => {
                     <div className="absolute inset-0 bg-black/40"></div>
                   </div>
 
-                  {/* Hero Title alineado a la izquierda con el padding del contenedor */}
+                  {/* Hero Title alineado a la izquierda con el padding del contenedor y ancho ajustado para que quiebre exactamente en 2 líneas */}
                   <div className="w-full relative z-10 flex flex-col items-start text-left">
-                    <h1 className="text-[30px] sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.12] sm:leading-[1.1] max-w-[800px]">
-                      Renta de autos en México, 100% en línea
+                    <h1 className="text-[30px] sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.12] sm:leading-[1.1] max-w-[620px]">
+                      Renta de autos en México,<br className="hidden sm:inline" /> 100% en línea
                     </h1>
                   </div>
 
