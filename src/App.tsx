@@ -246,7 +246,7 @@ export const App: React.FC = () => {
                   {/* Background Image & Overlay */}
                   <div className="absolute inset-0 -z-10 rounded-[24px] overflow-hidden">
                     <img
-                      src="/images/figma-hero.webp"
+                      src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/images/figma-hero.webp`}
                       alt="Carretera y viaje en auto en México — GALSA Rent"
                       className="w-full h-full object-cover object-center"
                       fetchPriority="high"

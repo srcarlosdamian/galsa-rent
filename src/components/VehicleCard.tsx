@@ -28,8 +28,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
     return <VehicleCardSkeleton />;
   }
 
-  // Imagen asignada para tarjetas (Supabase WebP oficial)
-  const displayImage = '/images/figma-car.webp';
+  // Imagen asignada para tarjetas (compatible con base path en GitHub Pages y local)
+  const basePrefix = ((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '');
+  const displayImage = `${basePrefix}/images/figma-car.webp`;
   const fuelType = vehicle.fuel || 'Gasolina';
 
   return (
