@@ -40,8 +40,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             <GalsaLogo className="h-6 w-auto text-black" />
           </a>
 
-          {/* Right Group: Navigation links aligned next to Account buttons */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8">
+          {/* Right Group: Navigation links aligned next to Account buttons (visible only on desktop lg+) */}
+          <div className="hidden lg:flex items-center gap-6 lg:gap-8">
             {/* Desktop Navigation Links (Figma: text-[14px], font-heading, font-semibold) */}
             <nav className="flex items-center space-x-6 text-[14px] leading-none font-heading font-semibold tracking-normal" aria-label="Navegación principal">
               {navLinks.map((item) => {
@@ -83,8 +83,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             </div>
           </div>
 
-          {/* Mobile Menu Toggle Button */}
-          <div className="flex md:hidden items-center space-x-2">
+          {/* Mobile & Tablet Menu Toggle Button (visible up to lg) */}
+          <div className="flex lg:hidden items-center space-x-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -98,9 +98,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile & Tablet Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-5 pt-4 pb-6 space-y-4">
+        <div className="lg:hidden border-t border-slate-200 bg-white px-5 pt-4 pb-6 space-y-4">
           <div className="space-y-1">
             {navLinks.map((item) => {
               const isActive = currentPath === item.path;
