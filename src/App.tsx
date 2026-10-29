@@ -129,21 +129,41 @@ export const App: React.FC = () => {
   }, [currentPath]);
 
   // Filtered vehicles for Home
+  const [homePage, setHomePage] = useState(1);
+  const homeItemsPerPage = 4;
+
   const filteredVehicles = useMemo(() => {
     return VEHICLES.filter((v) => {
-      if (activeCategory !== 'Todos los vehículos' && v.category !== activeCategory) {
-        return false;
+      if (activeCategory === 'Todos los vehículos' || activeCategory === 'Destacados') {
+        return true;
       }
-      if (searchState.category && searchState.category !== 'Todos los vehículos' && v.category !== searchState.category) {
-        return false;
+      if (activeCategory === 'Nuevos') {
+        return v.year >= 2024;
       }
-      return true;
+      if (activeCategory === 'Económicos') {
+        return v.pricePerDay <= 1500;
+      }
+      if (activeCategory === 'Aventura') {
+        return v.category.includes('SUV') || v.category.includes('Aventura');
+      }
+      if (activeCategory === 'Negocios') {
+        return v.category.includes('Negocios') || v.category.includes('Sedán');
+      }
+      if (activeCategory === 'Movilidad' || activeCategory === 'Cerca de ti') {
+        return true;
+      }
+      return v.category.includes(activeCategory);
     });
-  }, [activeCategory, searchState.category]);
+  }, [activeCategory]);
+
+  const homeTotalPages = Math.ceil(filteredVehicles.length / homeItemsPerPage) || 1;
+  const paginatedHomeVehicles = useMemo(() => {
+    const start = (homePage - 1) * homeItemsPerPage;
+    return filteredVehicles.slice(start, start + homeItemsPerPage);
+  }, [filteredVehicles, homePage]);
 
   const handleExecuteSearch = () => {
-    const el = document.getElementById('catalogo-home');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    navigateTo('/catalogo');
   };
 
   return (
@@ -172,6 +192,7 @@ export const App: React.FC = () => {
           <CatalogPage
             onSelectVehicle={(v) => navigateTo(`/vehiculos/${v.slug}`)}
             onNavigate={navigateTo}
+            searchState={searchState}
           />
         )}
 
@@ -225,7 +246,7 @@ export const App: React.FC = () => {
                   {/* Background Image & Overlay */}
                   <div className="absolute inset-0 -z-10 rounded-[24px] overflow-hidden">
                     <img
-                      src="/images/figma-hero.png"
+                      src="/images/figma-hero.webp"
                       alt="Carretera y viaje en auto en México — GALSA Rent"
                       className="w-full h-full object-cover object-center"
                       fetchPriority="high"
@@ -306,10 +327,13 @@ export const App: React.FC = () => {
                       <button
                         key={filterName}
                         type="button"
-                        onClick={() => setActiveCategory(filterName)}
+                        onClick={() => {
+                          setActiveCategory(filterName);
+                          setHomePage(1);
+                        }}
                         className={`text-[14px] font-heading font-medium px-3 py-1.5 rounded-[6px] transition-colors whitespace-nowrap ${
                           isSelected
-                            ? 'bg-slate-100 text-slate-900'
+                            ? 'bg-slate-100 text-slate-900 font-semibold'
                             : 'bg-white text-slate-900 hover:bg-slate-50'
                         }`}
                       >
@@ -321,7 +345,7 @@ export const App: React.FC = () => {
 
                 {/* Vehicle Grid (Figma: 4 columnas en desktop, gap-4) */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {filteredVehicles.map((vehicle, idx) => (
+                  {paginatedHomeVehicles.map((vehicle, idx) => (
                     <VehicleCard
                       key={vehicle.id}
                       vehicle={vehicle}
@@ -330,6 +354,36 @@ export const App: React.FC = () => {
                     />
                   ))}
                 </div>
+
+                {/* Paginador Home (Limpio y sutil) */}
+                {homeTotalPages > 1 && (
+                  <div className="mt-8 flex items-center justify-between text-xs text-slate-500 font-heading pt-4 border-t border-slate-100">
+                    <span>
+                      Mostrando {paginatedHomeVehicles.length} de {filteredVehicles.length} autos disponibles
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={homePage === 1}
+                        onClick={() => setHomePage(homePage - 1)}
+                        className="px-3 py-1.5 rounded-[6px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        Anterior
+                      </button>
+                      <span className="font-semibold text-slate-900">
+                        {homePage} / {homeTotalPages}
+                      </span>
+                      <button
+                        type="button"
+                        disabled={homePage === homeTotalPages}
+                        onClick={() => setHomePage(homePage + 1)}
+                        className="px-3 py-1.5 rounded-[6px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        Siguiente
+                      </button>
+                    </div>
+                  </div>
+                )}
 
                 {/* Transparent Total Pricing & Deposit Guarantee Example Box */}
                 <div className="mt-12 p-5 sm:p-6 rounded-2xl border border-neutral-200 bg-neutral-50/60 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-700">
