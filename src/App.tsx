@@ -324,7 +324,7 @@ export const App: React.FC = () => {
                       className="w-full h-full object-cover object-center"
                       fetchPriority="high"
                     />
-                    <div className="absolute inset-0 bg-black/40"></div>
+                    <div className="absolute inset-0 bg-black/25"></div>
                   </div>
 
                   {/* Hero Title alineado a la izquierda con el padding del contenedor y ancho ajustado para que quiebre exactamente en 2 líneas */}
