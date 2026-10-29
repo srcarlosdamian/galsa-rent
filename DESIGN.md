@@ -14,19 +14,19 @@ colors:
   text-muted: "#6B7280"
 typography:
   display:
-    fontFamily: '"Google Sans", system-ui, sans-serif'
+    fontFamily: '"Google Sans", "Google Sans Display", system-ui, sans-serif'
     fontSize: "3.75rem"
     fontWeight: 900
     lineHeight: 1.08
     letterSpacing: "-0.03em"
   heading:
-    fontFamily: '"Google Sans", system-ui, sans-serif'
+    fontFamily: '"Google Sans", "Google Sans Display", system-ui, sans-serif'
     fontSize: "2.25rem"
     fontWeight: 800
     lineHeight: 1.2
     letterSpacing: "-0.02em"
   body:
-    fontFamily: '"Google Sans", system-ui, sans-serif'
+    fontFamily: '"Inter", system-ui, sans-serif'
     fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.6

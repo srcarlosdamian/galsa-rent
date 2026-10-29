@@ -42,10 +42,10 @@
     <meta name="twitter:description" content="Renta autos en Durango desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, firma digital y kilometraje libre. Entrega en Plaza 450." />
     <meta name="twitter:image" content="https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg" />
 
-    <!-- Google Sans Web Font with font-display: swap -->
+    <!-- Google Fonts: Inter (Cuerpo) + Google Sans preloaded -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
       @font-face {
@@ -67,17 +67,44 @@
       @font-face {
         font-family: 'Google Sans';
         font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: local('Google Sans SemiBold'), local('GoogleSans-SemiBold'),
+             url('https://fonts.gstatic.com/s/googlesans/v58/4UabrEJv9VQZgwx6m452_73S7YVb.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
         font-weight: 700;
         font-display: swap;
         src: local('Google Sans Bold'), local('GoogleSans-Bold'),
              url('https://fonts.gstatic.com/s/googlesans/v58/4UabrEJv9VQZgwx6m452_73S7YVb.woff2') format('woff2');
       }
+      @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'),
+             url('https://fonts.gstatic.com/s/googlesans/v58/4UabrEJv9VQZgwx6m452_73S7YVb.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'),
+             url('https://fonts.gstatic.com/s/googlesans/v58/4UabrEJv9VQZgwx6m452_73S7YVb.woff2') format('woff2');
+      }
       body {
-        font-family: 'Google Sans', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background-color: #ffffff;
         color: #111827;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+      }
+      h1, h2, h3, h4, h5, h6, .font-heading {
+        font-family: 'Google Sans', 'Google Sans Display', 'Inter', system-ui, sans-serif;
       }
     </style>
 

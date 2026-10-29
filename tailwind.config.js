@@ -36,13 +36,19 @@ export default {
       },
       fontFamily: {
         sans: [
-          '"Google Sans"',
-          '"Google Sans Display"',
+          '"Inter"',
           'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
           'Roboto',
+          'sans-serif',
+        ],
+        heading: [
+          '"Google Sans"',
+          '"Google Sans Display"',
+          '"Inter"',
+          'system-ui',
           'sans-serif',
         ],
       },
