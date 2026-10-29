@@ -42,8 +42,8 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
         {/* Contenedor principal con 2 bloques lado a lado como el ejemplo */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          {/* Bloque Izquierdo: Cuadrado azul clarito con Título, Texto y CTA (sin ilustración) */}
-          <div className="lg:col-span-7 bg-[#94BDC9]/35 sm:bg-[#97C0CB]/40 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start border border-[#86B4C0]/30 min-h-[360px]">
+          {/* Bloque Izquierdo: Cuadrado azul clarito con Título, Texto y CTA (sin línea de borde) */}
+          <div className="lg:col-span-7 bg-[#94BDC9]/35 sm:bg-[#97C0CB]/40 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start min-h-[360px]">
             <div className="space-y-4 max-w-xl text-left">
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-slate-900 leading-tight tracking-tight">
                 ¿Tienes un auto que no usas todos los días?
@@ -58,7 +58,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
                 href="/anfitriones"
                 onClick={handleClick}
                 style={{ backgroundColor: '#3D63FF' }}
-                className="inline-flex items-center justify-center hover:opacity-95 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all active:scale-95"
+                className="inline-flex items-center justify-center hover:opacity-95 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all active:scale-95 border-0 outline-none shadow-none"
               >
                 <span>Conocer programa de anfitriones</span>
               </a>
