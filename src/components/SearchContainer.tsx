@@ -84,7 +84,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   };
 
   return (
-    <div className="w-full bg-white rounded-[16px] p-3 sm:p-5 border border-slate-100">
+    <div className="w-full bg-white rounded-[16px] p-3 sm:p-5">
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -284,7 +284,7 @@ export const App: React.FC = () => {
             </section>
 
             {/* AVAILABLE CARS SECTION EXACTO DE FIGMA */}
-            <section id="catalogo-home" className="py-12 md:py-16 bg-white border-b border-slate-100">
+            <section id="catalogo-home" className="py-12 md:py-16 bg-white">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
                 {/* Section Header */}
