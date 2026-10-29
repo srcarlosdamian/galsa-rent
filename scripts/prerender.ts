@@ -161,63 +161,22 @@ function writeRouteFile(route: string, content: string) {
 const homeInitialHtml = `
 <main>
   <header>
-    <p>Renta 100% en línea en Durango · Firma digital desde tu celular · Entrega en Sucursal Plaza 450</p>
-    <h1>Renta de autos en Durango, 100% en línea</h1>
-    <p>Elige tu auto, sube tus documentos y firma el contrato desde tu celular. Unidades revisadas una por una, con entrega en Sucursal Plaza 450. Desde $1,100 al día + tarifa de servicio.</p>
+    <h1>Renta de autos en México, 100% en línea</h1>
+    <p>Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales. Desde $1,100 MXN al día, sin cargos ocultos.</p>
   </header>
   <section>
-    <h2>Autos disponibles hoy en Durango</h2>
-    <p>Catálogo de flota: ${VEHICLES.length} unidades revisadas listas en Plaza 450.</p>
+    <h2>Autos disponibles hoy en México</h2>
+    <p>Contrato firmado digitalmente y depósito en garantía 100% reembolsable</p>
     <ul>
       ${VEHICLES.map(v => `<li><a href="/vehiculos/${v.slug}"><strong>${v.make} ${v.model} ${v.year}</strong> - $${v.pricePerDay} MXN/día (Depósito $${v.deposit} MXN)</a></li>`).join('\n      ')}
     </ul>
-    <p>Ejemplo: Tarifa de $1,100 MXN/día + 33% de tarifa de servicio ($363 MXN) = $1,463 MXN total/día (IVA incluido) + depósito en garantía 100% reembolsable.</p>
   </section>
-  <section>
-    <h2>Rentar con GALSA es así de simple</h2>
-    <ul>
-      <li><strong>Elige por día, semana o mes:</strong> Planes flexibles adaptados a tus fechas de viaje o trabajo en Durango.</li>
-      <li><strong>Autos revisados uno por uno:</strong> Inspección física, documental y fotográfica antes de publicar.</li>
-      <li><strong>Contrato digital con validez legal:</strong> Firma electrónica con certeza jurídica mercantil.</li>
-      <li><strong>Ayuda cuando la necesitas:</strong> Atención directa vía WhatsApp en Durango.</li>
-    </ul>
-  </section>
-  <section>
-    <h2>Cómo rentar un auto en 4 pasos</h2>
-    <ol>
-      <li><strong>01. Elige tu auto:</strong> Explora la flota en Durango.</li>
-      <li><strong>02. Sube tus documentos:</strong> Licencia vigente, INE y comprobante menor a 3 meses.</li>
-      <li><strong>03. Firma tu contrato digital:</strong> Firma electrónica sin letras chiquitas.</li>
-      <li><strong>04. Recibe en Plaza 450:</strong> Revisión fotográfica y entrega de llaves.</li>
-    </ol>
-  </section>
-  <section>
-    <h2>Un auto para cada necesidad</h2>
-    <ul>
-      <li><a href="/catalogo">Turismo: Explora el Centro Histórico y parajes de Durango.</a></li>
-      <li><a href="/catalogo">Negocios: Sedanes ejecutivos con aire acondicionado y factura fiscal.</a></li>
-      <li><a href="/catalogo">Aventura: Camionetas Jeep 4x4 para la Sierra de Durango.</a></li>
-      <li><a href="/catalogo">Movilidad general: Autos rendidores para trámites y visitas familiares.</a></li>
-      <li><a href="/catalogo">Conductores de apps de movilidad: Unidades verificadas para trabajar en plataformas.</a></li>
-    </ul>
-  </section>
-  <section>
-    <h2>Cada renta, respaldada de principio a fin</h2>
-    <p>Contratos digitales con validez legal, validación documental rigurosa y checklist fotográfico en Sucursal Plaza 450.</p>
-  </section>
-  <aside>
-    <h3>¿Tienes un auto que no usas todos los días?</h3>
-    <p>Ponlo a trabajar en el marketplace de GALSA Rent. Conoce nuestro programa de anfitriones en <a href="/anfitriones">GALSA Anfitriones</a>.</p>
-  </aside>
-  <section>
-    <h2>Preguntas frecuentes sobre renta de autos</h2>
-    <p>Por ahora operamos en Durango, con entrega en Sucursal Plaza 450. Requisitos: licencia vigente, INE, comprobante menor a 3 meses, 21 años o más, método de pago a nombre del cliente. Costo real: precio por día + tarifa de servicio de 33% (IVA incluido).</p>
-  </section>
+  <footer>
+    <div style="background:#000;color:#fff;padding:8px;font-size:11px;font-family:monospace;text-align:center;">
+      [ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final] Última actualización: 28 Oct 2026, 19:42 hrs | v1.1.1
+    </div>
+  </footer>
 </main>
-<footer>
-  <p>GALSA Rent: renta de autos en Durango, marketplace de anfitriones y unidades para conductores de apps de movilidad.</p>
-  <p>Sucursal Plaza 450, Blvd. Guadiana, Durango, Dgo., México.</p>
-</footer>
 `;
 
 const homeHtml = renderPage({
