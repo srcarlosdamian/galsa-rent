@@ -97,32 +97,6 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   return (
     <div className="py-6 sm:py-10 bg-white" onClick={() => setOpenDropdown(null)}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        
-        {/* Stepper Superior (1. Reserva -> 2. Elige tu auto -> 3. Contrato & Confirmación) */}
-        <div className="border-b border-slate-100 pb-6 mb-6">
-          <div className="flex items-center justify-center gap-3 sm:gap-10 text-[13px] font-heading">
-            <div className="flex items-center gap-2 text-slate-400">
-              <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-xs">
-                ✓
-              </span>
-              <span className="hidden sm:inline">Fechas y Lugar</span>
-            </div>
-            <div className="w-8 sm:w-16 h-[1px] bg-slate-200" />
-            <div className="flex items-center gap-2 text-black font-semibold">
-              <span className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center font-bold text-xs">
-                2
-              </span>
-              <span>Elige tu auto</span>
-            </div>
-            <div className="w-8 sm:w-16 h-[1px] bg-slate-200" />
-            <div className="flex items-center gap-2 text-slate-400">
-              <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center font-bold text-xs">
-                3
-              </span>
-              <span className="hidden sm:inline">Contrato digital</span>
-            </div>
-          </div>
-        </div>
 
         {/* Título y Conteo de Resultados */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
