@@ -42,8 +42,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
           {/* Right Group: Navigation links aligned next to Account buttons */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            {/* Desktop Navigation Links */}
-            <nav className="flex items-center space-x-6 text-[14px] font-heading font-semibold tracking-normal" aria-label="Navegación principal">
+            {/* Desktop Navigation Links (Figma: text-[14px], font-heading, font-semibold) */}
+            <nav className="flex items-center space-x-6 text-[14px] leading-none font-heading font-semibold tracking-normal" aria-label="Navegación principal">
               {navLinks.map((item) => {
                 const isActive = currentPath === item.path;
                 return (
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                     key={item.path}
                     href={item.path}
                     onClick={(e) => handleLinkClick(e, item.path)}
-                    className={`transition-colors py-1 whitespace-nowrap ${
+                    className={`text-[14px] transition-colors py-1 whitespace-nowrap ${
                       isActive 
                         ? 'text-black font-semibold' 
                         : 'text-slate-500 hover:text-black'
