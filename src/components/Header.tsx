@@ -30,18 +30,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-[74px]">
           
-          {/* Left: Brand Logo + Icon */}
+          {/* Left: Brand Logo */}
           <a 
             href="/" 
             onClick={(e) => handleLinkClick(e, '/')}
-            className="flex items-center gap-2.5 shrink-0 focus:outline-none transition-opacity hover:opacity-90"
+            className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
             aria-label="GALSA - Inicio"
           >
-            <img 
-              src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/favicon.png`} 
-              alt="GALSA Icon" 
-              className="w-7 h-7 rounded-lg object-contain shadow-xs" 
-            />
             <GalsaLogo className="h-6 w-auto text-black" />
           </a>
 
