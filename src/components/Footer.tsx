@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
             
             <p className="text-xs text-neutral-600 leading-relaxed max-w-sm">
-              GALSA Rent: renta de autos en Durango, marketplace de anfitriones y unidades para conductores de apps de movilidad.
+              GALSA Rent: renta de autos en México, marketplace de anfitriones y unidades verificadas para traslados y apps de movilidad.
             </p>
 
             {/* NAP Local Data (Idéntico a JSON-LD y Contacto) */}
@@ -62,14 +62,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Navigation Column 1: Flota */}
           <div className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-wider text-neutral-900">
-              Autos en Durango
+              Autos en México
             </p>
             <ul className="space-y-2 text-neutral-600">
               <li><a href="/catalogo" onClick={(e) => handleLink(e, '/catalogo')} className="hover:text-black transition-colors">Catálogo de autos</a></li>
               <li><a href="/vehiculos/jeep-wrangler-rubicon-2018-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-rubicon-2018-durango')} className="hover:text-black transition-colors">Jeep Wrangler Rubicon 2018</a></li>
-              <li><a href="/vehiculos/jeep-wrangler-2011-durango" onClick={(e) => handleLink(e, '/vehiculos/jeep-wrangler-2011-durango')} className="hover:text-black transition-colors">Jeep Wrangler 2011</a></li>
+              <li><a href="/vehiculos/audi-a4-sline-2024-durango" onClick={(e) => handleLink(e, '/vehiculos/audi-a4-sline-2024-durango')} className="hover:text-black transition-colors">Audi A4 S-Line 2024</a></li>
               <li><a href="/vehiculos/nissan-sentra-sense-2026-durango" onClick={(e) => handleLink(e, '/vehiculos/nissan-sentra-sense-2026-durango')} className="hover:text-black transition-colors">Nissan Sentra Sense 2026</a></li>
-              <li><a href="/vehiculos/honda-civic-coupe-2019-durango" onClick={(e) => handleLink(e, '/vehiculos/honda-civic-coupe-2019-durango')} className="hover:text-black transition-colors">Honda Civic Coupé 2019</a></li>
+              <li><a href="/vehiculos/toyota-rav4-xle-2024-durango" onClick={(e) => handleLink(e, '/vehiculos/toyota-rav4-xle-2024-durango')} className="hover:text-black transition-colors">Toyota RAV4 XLE 2024</a></li>
               <li><a href="/vehiculos/volkswagen-virtus-trendline-2026-durango" onClick={(e) => handleLink(e, '/vehiculos/volkswagen-virtus-trendline-2026-durango')} className="hover:text-black transition-colors">Volkswagen Virtus Trendline 2026</a></li>
             </ul>
           </div>
@@ -123,8 +123,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
           <div className="flex items-center gap-3 text-white">
-            <span>Última actualización: <strong>28 Oct 2026, 21:40 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.3.5</span>
+            <span>Última actualización: <strong>28 Oct 2026, 21:42 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.3.6</span>
           </div>
         </div>
       </div>
