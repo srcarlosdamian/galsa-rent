@@ -241,10 +241,10 @@ export const App: React.FC = () => {
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
                 {/* Hero Card Container (Figma: rounded-[24px], min-h-[480px], p-[30px] sm:px-[64px], sin sombras) */}
-                <div className="relative rounded-[24px] min-h-[440px] sm:min-h-[480px] flex flex-col justify-between p-5 sm:px-12 sm:py-8 lg:px-16 lg:py-10">
+                <div className="relative rounded-[24px] min-h-[440px] sm:min-h-[480px] flex flex-col justify-between p-5 sm:px-12 sm:py-8 lg:px-16 lg:py-10 bg-slate-900">
                   
                   {/* Background Image & Overlay */}
-                  <div className="absolute inset-0 -z-10 rounded-[24px] overflow-hidden">
+                  <div className="absolute inset-0 rounded-[24px] overflow-hidden pointer-events-none z-0">
                     <img
                       src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/images/figma-hero.webp`}
                       alt="Carretera y viaje en auto en México — GALSA Rent"
@@ -255,14 +255,14 @@ export const App: React.FC = () => {
                   </div>
 
                   {/* Hero Title */}
-                  <div className="w-full">
+                  <div className="w-full relative z-10">
                     <h1 className="text-2xl sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.15] max-w-[680px]">
                       Renta de autos en México, 100% en línea
                     </h1>
                   </div>
 
                   {/* Search Bar Embedded in Hero */}
-                  <div className="my-4 sm:my-6 w-full">
+                  <div className="my-4 sm:my-6 w-full relative z-20">
                     <SearchContainer
                       searchState={searchState}
                       onSearchChange={setSearchState}
@@ -272,7 +272,7 @@ export const App: React.FC = () => {
                   </div>
 
                   {/* Hero Description Footer */}
-                  <div className="w-full">
+                  <div className="w-full relative z-10">
                     <p className="font-heading font-normal text-white text-[13px] sm:text-[16px] leading-[1.35] max-w-[720px]">
                       Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales. Desde $1,100 MXN al día, sin cargos ocultos.
                     </p>
