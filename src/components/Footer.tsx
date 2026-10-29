@@ -118,6 +118,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
       </div>
 
+      {/* Listón de control interno de despliegue / QA (No forma parte del diseño final) */}
+      <div className="bg-black text-white text-[11px] font-mono py-2 px-4 border-t border-neutral-800 text-center tracking-wide">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-neutral-400">
+          <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
+          <div className="flex items-center gap-3 text-white">
+            <span>Última actualización: <strong>28 Oct 2026, 19:42 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.1.1</span>
+          </div>
+        </div>
+      </div>
+
     </footer>
   );
 };
