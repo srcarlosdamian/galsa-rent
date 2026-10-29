@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Car, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck, DollarSign, CalendarCheck } from 'lucide-react';
 
 interface HostBannerProps {
   onNavigate?: (path: string) => void;
@@ -14,32 +14,104 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
     }
   };
 
+  const VENTAJAS = [
+    {
+      id: 1,
+      title: 'Tú fijas tu tarifa diaria',
+      description: 'Control total de tus precios y disponibilidad de calendario sin intermediarios forzosos.',
+      icon: DollarSign,
+    },
+    {
+      id: 2,
+      title: 'Conductores 100% verificados',
+      description: 'Validación estricta de INE, licencia vigente y comprobante de domicilio antes de entregar la unidad.',
+      icon: ShieldCheck,
+    },
+    {
+      id: 3,
+      title: 'Contrato digital respaldado',
+      description: 'Firma electrónica legal mercantil con seguro y depósito en garantía para tu tranquilidad.',
+      icon: CalendarCheck,
+    },
+  ];
+
   return (
-    <section className="py-12 bg-white">
+    <section className="py-12 md:py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-neutral-200 bg-neutral-50/70 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 transition-all hover:border-neutral-300">
+        
+        {/* Contenedor principal con 2 bloques lado a lado como el ejemplo */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          <div className="space-y-2 text-center md:text-left max-w-2xl">
-            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900">
-              ¿Tienes un auto que no usas todos los días?
-            </h3>
-            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
-              Ponlo a trabajar en el marketplace de GALSA Rent. Tú fijas tu tarifa por día y recibes el 100% de tus ganancias con clientes verificados y contrato digital respaldado.
-            </p>
+          {/* Bloque Izquierdo: Cuadrado azul clarito con Título, Texto y CTA (sin ilustración) */}
+          <div className="lg:col-span-7 bg-[#94BDC9]/35 sm:bg-[#97C0CB]/40 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start border border-[#86B4C0]/30 min-h-[360px]">
+            <div className="space-y-4 max-w-xl text-left">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-slate-900 leading-tight tracking-tight">
+                ¿Tienes un auto que no usas todos los días?
+              </h3>
+              <p className="text-sm sm:text-base font-sans text-slate-700 leading-relaxed">
+                Ponlo a trabajar en el marketplace de GALSA Rent en México. Tú fijas tu tarifa por día y recibes el 100% de tus ganancias con clientes verificados y contrato digital respaldado.
+              </p>
+            </div>
+
+            <div className="pt-8">
+              <a
+                href="/anfitriones"
+                onClick={handleClick}
+                className="inline-flex items-center gap-2 bg-black hover:bg-neutral-900 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-sm active:scale-95"
+              >
+                <span>Conocer programa de anfitriones</span>
+                <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
+              </a>
+            </div>
           </div>
 
-          <div className="shrink-0">
-            <a
-              href="/anfitriones"
-              onClick={handleClick}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-neutral-900 hover:bg-black text-white font-bold text-xs uppercase tracking-wider transition-all active:scale-[0.98]"
-            >
-              <span>Conocer programa de anfitriones</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
+          {/* Bloque Derecho: Cuadrado blanco con bordes redondeados y Ventajas */}
+          <div className="lg:col-span-5 bg-white rounded-[28px] p-6 sm:p-8 border border-neutral-200/90 flex flex-col justify-between shadow-sm">
+            <div>
+              <h4 className="text-lg font-heading font-semibold text-slate-900 mb-6 text-left">
+                Ventajas
+              </h4>
+
+              <div className="divide-y divide-neutral-100">
+                {VENTAJAS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.id} className="py-4 first:pt-0 last:pb-0 flex items-start gap-4 text-left">
+                      <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-slate-700 mt-0.5">
+                        <Icon className="w-4 h-4 text-slate-700" strokeWidth={1.4} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-heading font-semibold text-slate-900 leading-snug">
+                          {item.title}
+                        </p>
+                        <p className="text-xs font-sans text-slate-500 leading-relaxed mt-1">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="pt-6 mt-4 border-t border-neutral-100 text-left">
+              <a
+                href="/terminos"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/terminos');
+                  }
+                }}
+                className="text-xs font-heading font-medium text-slate-500 hover:text-slate-900 underline underline-offset-4 transition-colors"
+              >
+                Consulta los Términos y Condiciones
+              </a>
+            </div>
           </div>
 
         </div>
+
       </div>
     </section>
   );
