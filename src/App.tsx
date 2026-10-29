@@ -312,8 +312,8 @@ export const App: React.FC = () => {
             <section className="pt-[19px] pb-12 md:pb-16 bg-white">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
-                {/* Hero Card Container centrado con 40px de separación entre elementos */}
-                <div className="relative rounded-[24px] border border-white/20 min-h-[440px] md:min-h-[500px] flex flex-col justify-center items-center py-10 md:py-[48px] px-6 sm:px-12 md:px-[64px] bg-slate-900 gap-[40px] text-center">
+                {/* Hero Card Container alineado a la izquierda con 40px de separación vertical */}
+                <div className="relative rounded-[24px] border border-white/20 min-h-[440px] md:min-h-[500px] flex flex-col justify-center items-start py-10 md:py-[48px] px-6 sm:px-12 md:px-[64px] bg-slate-900 gap-[40px] text-left">
                   
                   {/* Background Image & Overlay */}
                   <div className="absolute inset-0 rounded-[24px] overflow-hidden pointer-events-none z-0">
@@ -326,15 +326,15 @@ export const App: React.FC = () => {
                     <div className="absolute inset-0 bg-black/40"></div>
                   </div>
 
-                  {/* Hero Title centrado */}
-                  <div className="w-full relative z-10 flex flex-col items-center">
-                    <h1 className="text-2xl sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.1] max-w-[800px] mx-auto">
+                  {/* Hero Title alineado a la izquierda con el padding del contenedor */}
+                  <div className="w-full relative z-10 flex flex-col items-start text-left">
+                    <h1 className="text-2xl sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.1] max-w-[800px]">
                       Renta de autos en México, 100% en línea
                     </h1>
                   </div>
 
-                  {/* Search Bar Embedded in Hero centrada */}
-                  <div className="w-full relative z-20 flex justify-center">
+                  {/* Search Bar Embedded in Hero */}
+                  <div className="w-full relative z-20 flex justify-start">
                     <SearchContainer
                       searchState={searchState}
                       onSearchChange={setSearchState}
@@ -343,9 +343,9 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* Hero Description Footer centrado */}
-                  <div className="w-full relative z-10 flex flex-col items-center">
-                    <p className="font-heading font-normal text-white text-[13px] sm:text-[16px] leading-[1.4] max-w-[760px] mx-auto">
+                  {/* Hero Description Footer alineado a la izquierda */}
+                  <div className="w-full relative z-10 flex flex-col items-start text-left">
+                    <p className="font-heading font-normal text-white text-[13px] sm:text-[16px] leading-[1.4] max-w-[760px]">
                       Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales. Desde $1,100 MXN al día, sin cargos ocultos.
                     </p>
                   </div>
