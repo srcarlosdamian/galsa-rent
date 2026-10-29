@@ -172,6 +172,9 @@ export const App: React.FC = () => {
       const ogImg = document.querySelector('meta[property="og:image"]');
       if (ogImg) ogImg.setAttribute('content', meta.ogImage.url);
 
+      const twImg = document.querySelector('meta[name="twitter:image"]');
+      if (twImg) twImg.setAttribute('content', meta.ogImage.url);
+
       const robots = document.querySelector('meta[name="robots"]');
       if (robots) {
         robots.setAttribute('content', meta.noIndex ? 'noindex,nofollow' : 'index,follow');

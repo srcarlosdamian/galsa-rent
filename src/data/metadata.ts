@@ -4,8 +4,8 @@ import { VEHICLES } from './vehicles';
 export const SITE_URL = 'https://galsarent.com.mx';
 
 export const DEFAULT_OG_IMAGE = {
-  url: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
-  alt: 'Flota de autos en renta en Sucursal Plaza 450, Durango — GALSA Rent',
+  url: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793246469211-0-cover.webp',
+  alt: 'GALSA Rent — Renta de autos en México y Durango',
   width: 1200,
   height: 630,
 };
