@@ -44,13 +44,73 @@ export const App: React.FC = () => {
 
   // Search state
   const [searchState, setSearchState] = useState<SearchState>({
-    location: 'Sucursal Plaza 450, Durango',
+    location: '',
     startDate: '',
     startTime: '10:00',
     endDate: '',
     endTime: '10:00',
     category: '',
   });
+
+  // Autodetección de ubicación inteligente (Geolocalización del navegador + Reverse Geocoding)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !navigator.geolocation) {
+      // Fallback por defecto si no hay soporte de geolocalización
+      setSearchState((prev) => prev.location ? prev : { ...prev, location: 'México (Detectando...)' });
+      return;
+    }
+
+    // Intentar obtener la ubicación con timeout suave para no bloquear
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          // Reverse geocode gratuito con BigDataCloud o Nominatim
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`
+          );
+          if (res.ok) {
+            const data = await res.json();
+            const city = data.city || data.locality || data.principalSubdivision || '';
+            const state = data.principalSubdivision || '';
+            const country = data.countryName || 'México';
+            
+            let detectedStr = '';
+            if (city && state && city !== state) {
+              detectedStr = `${city}, ${state}`;
+            } else if (city || state) {
+              detectedStr = `${city || state}, ${country}`;
+            } else {
+              detectedStr = country;
+            }
+
+            setSearchState((prev) => ({
+              ...prev,
+              location: detectedStr || 'Mi ubicación actual',
+            }));
+          } else {
+            setSearchState((prev) => ({
+              ...prev,
+              location: 'Mi ubicación actual',
+            }));
+          }
+        } catch (e) {
+          setSearchState((prev) => ({
+            ...prev,
+            location: 'Mi ubicación actual',
+          }));
+        }
+      },
+      (_err) => {
+        // Si el usuario rechaza los permisos o falla, usar punto oficial o sugerencia general
+        setSearchState((prev) => ({
+          ...prev,
+          location: prev.location || 'Sucursal Plaza 450, Durango',
+        }));
+      },
+      { timeout: 8000, maximumAge: 600000 }
+    );
+  }, []);
 
   // Active filter tab on home
   const [activeCategory, setActiveCategory] = useState<string>('Todos los vehículos');

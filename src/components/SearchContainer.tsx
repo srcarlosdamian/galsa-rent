@@ -98,6 +98,58 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   const [locationOpen, setLocationOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [detectingLocation, setDetectingLocation] = useState(false);
+
+  // Función para autodetectar la ubicación al hacer clic en "Ubicación actual"
+  const handleDetectCurrentLocation = () => {
+    if (typeof window === 'undefined' || !navigator.geolocation) {
+      onSearchChange({ ...searchState, location: 'Mi ubicación actual' });
+      setLocationOpen(false);
+      return;
+    }
+
+    setDetectingLocation(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`
+          );
+          if (res.ok) {
+            const data = await res.json();
+            const city = data.city || data.locality || data.principalSubdivision || '';
+            const state = data.principalSubdivision || '';
+            const country = data.countryName || 'México';
+
+            let detectedStr = '';
+            if (city && state && city !== state) {
+              detectedStr = `${city}, ${state}`;
+            } else if (city || state) {
+              detectedStr = `${city || state}, ${country}`;
+            } else {
+              detectedStr = country;
+            }
+
+            onSearchChange({ ...searchState, location: detectedStr || 'Mi ubicación actual' });
+          } else {
+            onSearchChange({ ...searchState, location: 'Mi ubicación actual' });
+          }
+        } catch (e) {
+          onSearchChange({ ...searchState, location: 'Mi ubicación actual' });
+        } finally {
+          setDetectingLocation(false);
+          setLocationOpen(false);
+        }
+      },
+      (_err) => {
+        setDetectingLocation(false);
+        onSearchChange({ ...searchState, location: 'Mi ubicación actual' });
+        setLocationOpen(false);
+      },
+      { timeout: 8000, maximumAge: 600000 }
+    );
+  };
 
   // Formateador amigable de fechas en español
   const formatDisplayDate = (dateStr: string) => {
@@ -150,8 +202,12 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                       key={loc.id}
                       type="button"
                       onClick={() => {
-                        onSearchChange({ ...searchState, location: loc.value });
-                        setLocationOpen(false);
+                        if (loc.id === 'current') {
+                          handleDetectCurrentLocation();
+                        } else {
+                          onSearchChange({ ...searchState, location: loc.value });
+                          setLocationOpen(false);
+                        }
                       }}
                       className="w-full text-left p-2.5 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3.5 group"
                     >
@@ -162,8 +218,13 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
 
                       {/* Text info */}
                       <div className="min-w-0 flex-1">
-                        <p className="text-[14px] font-heading font-medium text-slate-900 truncate">
-                          {loc.title}
+                        <p className="text-[14px] font-heading font-medium text-slate-900 truncate flex items-center gap-2">
+                          <span>{loc.title}</span>
+                          {loc.id === 'current' && detectingLocation && (
+                            <span className="text-[11px] font-normal text-blue-600 animate-pulse">
+                              (Detectando...)
+                            </span>
+                          )}
                         </p>
                         {loc.subtitle && (
                           <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">
