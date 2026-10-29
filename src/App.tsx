@@ -385,28 +385,6 @@ export const App: React.FC = () => {
                   </div>
                 )}
 
-                {/* Transparent Total Pricing & Deposit Guarantee Example Box */}
-                <div className="mt-12 p-5 sm:p-6 rounded-2xl border border-neutral-200 bg-neutral-50/60 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-700">
-                  <div className="space-y-1 text-center md:text-left">
-                    <p className="font-bold text-neutral-900 text-sm">
-                      Ejemplo de total con tarifa de servicio transparente:
-                    </p>
-                    <p className="text-neutral-600">
-                      Tarifa de $1,100 MXN/día + 33% de tarifa de servicio ($363 MXN) = <strong>$1,463 MXN total/día</strong> (IVA incluido) + depósito en garantía 100% reembolsable al devolver la unidad.
-                    </p>
-                  </div>
-                  <a
-                    href="/faq"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateTo('/faq');
-                    }}
-                    className="whitespace-nowrap font-bold text-neutral-900 underline hover:no-underline"
-                  >
-                    Ver detalles de tarifas →
-                  </a>
-                </div>
-
               </div>
             </section>
 
