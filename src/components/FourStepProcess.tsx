@@ -53,20 +53,20 @@ export const FourStepProcess: React.FC = () => {
             return (
               <div key={s.number} className="flex flex-col items-start group">
                 
-                {/* Contenedor de Imagen con el badge flotante */}
-                <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 mb-6">
-                  <img
-                    src={heroCarImg}
-                    alt={s.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  />
+                {/* Contenedor de Imagen */}
+                <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
+                  <div className="w-full h-full rounded-2xl overflow-hidden">
+                    <img
+                      src={heroCarImg}
+                      alt={s.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
 
-                  {/* Badge cuadrado flotante en esquina inferior izquierda (estilo Uber) */}
-                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-white rounded-xl shadow-md border border-slate-100 flex items-center justify-center z-10 transition-transform group-hover:translate-y-[-2px]">
-                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700">
-                      <Icon className="w-4 h-4 text-slate-700" strokeWidth={1.4} />
-                    </div>
+                  {/* Badge cuadrado flotante en esquina inferior izquierda: un solo fondo gris claro, sin doble fondo */}
+                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-[#F3F4F6] rounded-xl flex items-center justify-center z-10 transition-transform group-hover:translate-y-[-2px]">
+                    <Icon className="w-5 h-5 text-slate-800" strokeWidth={1.4} />
                   </div>
                 </div>
 
