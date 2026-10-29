@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, DollarSign, CalendarCheck } from 'lucide-react';
+import { ShieldCheck, DollarSign, CalendarCheck } from 'lucide-react';
 
 interface HostBannerProps {
   onNavigate?: (path: string) => void;
@@ -57,10 +57,10 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
               <a
                 href="/anfitriones"
                 onClick={handleClick}
-                className="inline-flex items-center gap-2 bg-black hover:bg-neutral-900 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-sm active:scale-95"
+                style={{ backgroundColor: '#3D63FF' }}
+                className="inline-flex items-center justify-center hover:opacity-95 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all active:scale-95"
               >
                 <span>Conocer programa de anfitriones</span>
-                <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
               </a>
             </div>
           </div>
