@@ -3,7 +3,7 @@ import { CalendarRange, ClipboardCheck, FileCheck, ShieldCheck } from 'lucide-re
 
 export const VirtuoExperienceSection: React.FC = () => {
   const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
-  const rentalStepsImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-rental-steps.webp`;
+  const rentalStepsImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/renta-galsa.webp`;
 
   const STEPS = [
     {
