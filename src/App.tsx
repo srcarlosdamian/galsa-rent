@@ -254,7 +254,7 @@ export const App: React.FC = () => {
                     </p>
 
                     {/* Chips as specified in Tarea 2 */}
-                    <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] sm:text-xs text-neutral-200">
+                    <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-neutral-200">
                       <span className="bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-1 rounded-full">
                         Kilometraje libre
                       </span>
@@ -313,14 +313,11 @@ export const App: React.FC = () => {
                 
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-neutral-200">
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-1">
-                      Catálogo oficial en México ({VEHICLES.length} unidades revisadas)
-                    </span>
                     <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-900">
                       Autos disponibles hoy en México
                     </h2>
                     <p className="mt-2 text-xs sm:text-sm text-neutral-600 max-w-xl">
-                      Punto oficial de entrega en Sucursal Plaza 450, Durango. Contrato digital firmado desde tu celular y depósito en garantía 100% reembolsable.
+                      {VEHICLES.length} unidades revisadas listas para entrega física en Sucursal Plaza 450, Durango. Contrato digital firmado desde tu celular y depósito en garantía 100% reembolsable.
                     </p>
                   </div>
 

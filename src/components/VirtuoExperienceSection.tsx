@@ -14,9 +14,6 @@ export const VirtuoExperienceSection: React.FC = () => {
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-8">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 block mb-3">
-                  Experiencia de movilidad 100% digital en México
-                </span>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
                   Rentar con GALSA es así de simple
                 </h2>
@@ -91,13 +88,13 @@ export const VirtuoExperienceSection: React.FC = () => {
                     <Smartphone className="w-4 h-4 text-emerald-400" />
                     Reserva digital activa
                   </span>
-                  <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                  <span className="text-xs font-semibold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
                     Plaza 450
                   </span>
                 </div>
 
                 <div className="rounded-xl bg-neutral-900 p-3.5 border border-neutral-800 space-y-2">
-                  <p className="text-[11px] text-neutral-400 font-medium">Auto asignado para hoy</p>
+                  <p className="text-xs text-neutral-400 font-medium">Auto asignado para hoy</p>
                   <p className="text-sm font-bold text-white">Nissan Sentra Sense 2024</p>
                   <div className="flex justify-between text-xs text-neutral-400 pt-1">
                     <span>Tarifa día: $1,100 MXN</span>
