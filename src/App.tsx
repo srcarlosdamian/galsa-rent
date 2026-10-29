@@ -309,7 +309,7 @@ export const App: React.FC = () => {
         {currentPath === '/' && (
           <>
             {/* HERO SECTION EXACTO DE FIGMA */}
-            <section className="pt-[19px] pb-12 md:pb-16 bg-white">
+            <section className="pt-4 pb-10 md:pb-14 bg-white">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
                 {/* Hero Card Container alineado a la izquierda con 40px de separación vertical */}
@@ -356,7 +356,7 @@ export const App: React.FC = () => {
             </section>
 
             {/* AVAILABLE CARS SECTION EXACTO DE FIGMA */}
-            <section id="catalogo-home" className="py-12 md:py-16 bg-white">
+            <section id="catalogo-home" className="py-10 md:py-14 bg-white">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
                 
                 {/* Section Header */}

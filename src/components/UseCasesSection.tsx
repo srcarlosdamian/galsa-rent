@@ -106,9 +106,9 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
   };
 
   return (
-    <section className="py-12 md:py-16 bg-white overflow-hidden">
-      {/* Contenedor principal con max-w-7xl respetado para que no sea full width */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-10 md:py-14 bg-white overflow-hidden">
+      {/* Contenedor principal alineado a 1200px */}
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Header alineado a la izquierda */}
         <div className="mb-8 sm:mb-10 text-left">

@@ -33,9 +33,9 @@ export const VirtuoExperienceSection: React.FC = () => {
   ];
 
   return (
-    <section className="w-full py-10 px-4 sm:px-8 lg:px-12 flex justify-center items-center overflow-hidden bg-white">
-      {/* Contenedor exacto Figma Rental Steps: w-[1200px] max-w-[1280px] */}
-      <div className="w-full max-w-[1200px] flex flex-col justify-start items-start">
+    <section className="w-full py-10 md:py-14 bg-white overflow-hidden">
+      {/* Contenedor alineado a 1200px */}
+      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col justify-start items-start">
         <div className="w-full p-6 sm:p-10 bg-radial-[at_85%_50%] from-blue-500/10 to-blue-500/0 to-60% bg-[#111418] rounded-3xl outline outline-1 outline-offset-[-1px] outline-neutral-800 flex flex-col justify-start items-start overflow-hidden">
           <div className="w-full flex flex-col lg:flex-row justify-start items-stretch gap-10 lg:gap-16">
             

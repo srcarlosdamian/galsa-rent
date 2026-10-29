@@ -36,8 +36,8 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <section className="py-12 md:py-16 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-10 md:py-14 bg-white overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Contenedor principal con 2 bloques lado a lado como el ejemplo */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">

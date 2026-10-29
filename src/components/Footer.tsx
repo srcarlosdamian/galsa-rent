@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     <footer className="bg-[#F9FAFB] text-neutral-900 text-xs">
       
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
           {/* Brand Info */}
@@ -101,7 +101,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
       {/* Bottom Bar sin línea divisoria en gris claro continuo */}
       <div className="bg-[#F9FAFB] py-5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-neutral-500">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-neutral-500">
           <p>© 2026 GALSA Rent. Operando en Durango, México.</p>
 
           <div className="flex items-center space-x-5">
@@ -118,8 +118,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
           <div className="flex items-center gap-3 text-white">
-            <span>Última actualización: <strong>28 Oct 2026, 22:52 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.6.8</span>
+            <span>Última actualización: <strong>28 Oct 2026, 22:55 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.6.9</span>
           </div>
         </div>
       </div>

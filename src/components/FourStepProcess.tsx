@@ -33,8 +33,8 @@ export const FourStepProcess: React.FC = () => {
   ];
 
   return (
-    <section id="como-rentar" className="py-12 md:py-16 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="como-rentar" className="py-10 md:py-14 bg-white overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Header alineado a la izquierda con el mismo diseño del sitio */}
         <div className="mb-10 sm:mb-12 text-left">

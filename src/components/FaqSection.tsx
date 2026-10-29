@@ -42,8 +42,8 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-12 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-10 md:py-14 bg-white">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Título y descripción alineados a la izquierda sin Durango ni dirección */}
         <div className="text-left mb-10 sm:mb-12 max-w-2xl">

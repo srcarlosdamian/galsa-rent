@@ -5,8 +5,8 @@ export const TrustSafetySection: React.FC = () => {
   const trustImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/renta-galsa.webp`;
 
   return (
-    <section id="seguridad" className="w-full py-8 md:py-12 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="seguridad" className="w-full py-10 md:py-14 bg-white overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Tarjeta negra con max-width y bordes redondeados */}
         <div className="w-full bg-black text-white rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16">
