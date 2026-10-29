@@ -42,8 +42,8 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) 
                 Atención local directa y personalizada en México. Resolvemos tus preguntas sobre modelos, requisitos, depósitos en garantía y entregas oficiales.
               </p>
 
-              {/* Botón CTA Hablar por WhatsApp sin icono */}
-              <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6">
+              {/* Botón CTA único: Hablar por WhatsApp sin icono */}
+              <div className="pt-2">
                 <a
                   href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20la%20renta%20de%20un%20auto"
                   target="_blank"
@@ -52,14 +52,6 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) 
                   className="inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-none"
                 >
                   <span>Hablar por WhatsApp</span>
-                </a>
-
-                <a
-                  href="/faq"
-                  onClick={handleInfo}
-                  className="text-sm font-heading font-semibold text-[#3D63FF] hover:opacity-80 transition-opacity"
-                >
-                  Preguntas frecuentes
                 </a>
               </div>
             </div>
