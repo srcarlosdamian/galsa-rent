@@ -30,20 +30,20 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-[74px]">
           
-          {/* Logo & Navigation Links */}
-          <div className="flex items-center gap-10">
-            {/* SVG Logo exacto de Figma */}
-            <a 
-              href="/" 
-              onClick={(e) => handleLinkClick(e, '/')}
-              className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
-              aria-label="GALSA - Inicio"
-            >
-              <GalsaLogo className="h-7 w-auto text-black" />
-            </a>
+          {/* Left: Brand Logo only */}
+          <a 
+            href="/" 
+            onClick={(e) => handleLinkClick(e, '/')}
+            className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
+            aria-label="GALSA - Inicio"
+          >
+            <GalsaLogo className="h-7 w-auto text-black" />
+          </a>
 
+          {/* Right Group: Navigation links aligned next to Account buttons */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-6 text-[14px] font-heading font-semibold tracking-normal" aria-label="Navegación principal">
+            <nav className="flex items-center space-x-6 text-[14px] font-heading font-semibold tracking-normal" aria-label="Navegación principal">
               {navLinks.map((item) => {
                 const isActive = currentPath === item.path;
                 return (
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                     key={item.path}
                     href={item.path}
                     onClick={(e) => handleLinkClick(e, item.path)}
-                    className={`transition-colors py-1 ${
+                    className={`transition-colors py-1 whitespace-nowrap ${
                       isActive 
                         ? 'text-black font-semibold' 
                         : 'text-slate-500 hover:text-black'
@@ -62,25 +62,25 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 );
               })}
             </nav>
-          </div>
 
-          {/* Account & Register Actions (Figma specs: rounded-[6px], 14px medium, 16px gap) */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="/cuenta"
-              onClick={(e) => handleLinkClick(e, '/cuenta')}
-              className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] border border-slate-200 bg-white text-slate-900 text-[14px] font-medium hover:bg-slate-50 transition-colors shadow-sm"
-            >
-              Inicia sesión
-            </a>
+            {/* Account & Register Actions */}
+            <div className="flex items-center space-x-4 shrink-0">
+              <a
+                href="/cuenta"
+                onClick={(e) => handleLinkClick(e, '/cuenta')}
+                className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] border border-slate-200 bg-white text-slate-900 text-[14px] font-medium hover:bg-slate-50 transition-colors shadow-sm"
+              >
+                Inicia sesión
+              </a>
 
-            <a
-              href="/cuenta"
-              onClick={(e) => handleLinkClick(e, '/cuenta')}
-              className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] bg-slate-900 text-white text-[14px] font-medium hover:bg-slate-800 transition-colors shadow-sm"
-            >
-              Regístrate
-            </a>
+              <a
+                href="/cuenta"
+                onClick={(e) => handleLinkClick(e, '/cuenta')}
+                className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] bg-slate-900 text-white text-[14px] font-medium hover:bg-slate-800 transition-colors shadow-sm"
+              >
+                Regístrate
+              </a>
+            </div>
           </div>
 
           {/* Mobile Menu Toggle Button */}
