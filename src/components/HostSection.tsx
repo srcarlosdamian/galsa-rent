@@ -84,12 +84,12 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = false }) 
 
             <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
               {/* TODO: Reemplazar con el enlace directo al formulario o WhatsApp de anfitriones */}
-              {/* CTA 3 en el Home (y en Anfitriones): Primary 500 (#316AB5) */}
+              {/* CTA en Anfitriones: Figma CTA (#3D63FF) */}
               <a
                 href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ backgroundColor: '#316AB5' }}
+                style={{ backgroundColor: '#3D63FF' }}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white text-xs font-bold px-7 py-4 rounded-2xl transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
               >
                 <span>Publicar mi auto en GALSA</span>

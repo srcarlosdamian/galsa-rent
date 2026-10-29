@@ -226,7 +226,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
             )}
           </div>
 
-          {/* Search Button: Exact CTA Color 500 (#316AB5) as requested */}
+          {/* Search Button: Exact CTA Color from Figma (#3D63FF) */}
           <div className="md:col-span-2 p-2 sm:p-2.5 flex items-center justify-center">
             <button
               type="button"
@@ -234,7 +234,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                 setActiveTab(null);
                 onExecuteSearch();
               }}
-              style={{ backgroundColor: '#316AB5' }}
+              style={{ backgroundColor: '#3D63FF' }}
               className="w-full h-full min-h-[48px] text-white font-bold text-xs uppercase tracking-wider rounded-xl px-4 py-3 hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
               aria-label="Buscar autos disponibles en GALSA"
             >

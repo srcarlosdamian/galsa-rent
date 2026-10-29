@@ -273,7 +273,7 @@ export const App: React.FC = () => {
                     <div className="pt-4 flex flex-wrap items-center gap-3">
                       <a
                         href="#catalogo-home"
-                        style={{ backgroundColor: '#316AB5' }}
+                        style={{ backgroundColor: '#3D63FF' }}
                         className="inline-flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
                       >
                         <span>Ver autos disponibles</span>

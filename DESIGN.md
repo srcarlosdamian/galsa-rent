@@ -2,8 +2,8 @@
 name: GALSA Rent Design System
 description: Minimalist, clean, premium digital mobility platform inspired by Virtuo and Airbnb
 colors:
-  primary: "#316AB5"
-  primary-hover: "#2558A4"
+  primary: "#3D63FF"
+  primary-hover: "#2A4EEB"
   neutral-bg: "#FFFFFF"
   neutral-surface: "#FFFFFF"
   neutral-subtle: "#FAFAFA"
@@ -58,6 +58,6 @@ components:
 
 ## 1. Design Principles
 - **Clarity over Clutter**: Extreme minimalism inspired by Airbnb and Virtuo. Generous white space, clear contrast, flat design without heavy muddy gray backgrounds or stacked drop shadows.
-- **Sparing Color Usage**: Primary 500 (`#316AB5`) is strictly reserved for primary call-to-actions (hero action, checkout/pay button). Everything else is pristine black, white, and subtle edge borders.
+- **Sparing Color Usage**: Primary CTA (`#3D63FF` de Figma) is strictly reserved for primary call-to-actions (hero action, checkout/pay button). Everything else is pristine black, white, and subtle edge borders.
 - **Micro-Delight & Finish**: Browser custom scrollbars, cohesive selection highlight, interactive carousels with smooth easing, and tabular numerals.
 - **Typography**: Google Sans / Plus Jakarta Sans with crisp hierarchy and tight tracking for headings.
