@@ -132,10 +132,11 @@ function renderPage({ routePath, metadata, schemaJson, initialContentHtml }: any
   }
 
   // Inject initial HTML into root so crawlers without JS have complete content!
+  // Uses .prerender-fallback so it is visually hidden from human users before React hydration
   if (initialContentHtml) {
     html = html.replace(
       '<div id="root"></div>',
-      `<div id="root">${initialContentHtml}</div>`
+      `<div id="root"><div class="prerender-fallback" aria-hidden="true">${initialContentHtml}</div></div>`
     );
   }
 
