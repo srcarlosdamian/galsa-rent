@@ -61,6 +61,30 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://galsarent.com.mx/blog</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://galsarent.com.mx/blog/guia-renta-autos-mexico-requisitos</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://galsarent.com.mx/blog/como-ganar-dinero-rentando-tu-auto-anfitrion</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://galsarent.com.mx/blog/rutas-imperdibles-por-carretera-en-durango-y-mexico</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://galsarent.com.mx/vehiculos/jeep-wrangler-rubicon-2018-durango</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>

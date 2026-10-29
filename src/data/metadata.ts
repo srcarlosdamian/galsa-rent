@@ -41,6 +41,16 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
       'Explora autos verificados en Durango: sedanes económicos, SUVs y 4x4 de flota propia y anfitriones. Contrato digital y entrega en Plaza 450.',
     ogImage: DEFAULT_OG_IMAGE,
   },
+  '/blog': {
+    title: 'Blog de Movilidad, Consejos y Rutas | GALSA Rent',
+    description:
+      'Artículos, guías sobre requisitos de renta de autos, rutas en México y consejos para anfitriones en GALSA Rent.',
+    canonical: `${SITE_URL}/blog`,
+    ogTitle: 'Blog de Movilidad, Consejos y Rutas | GALSA Rent',
+    ogDescription:
+      'Artículos, guías sobre requisitos de renta de autos, rutas en México y consejos para anfitriones en GALSA Rent.',
+    ogImage: DEFAULT_OG_IMAGE,
+  },
   '/confianza': {
     title: 'Seguridad y Confianza en Renta de Autos | GALSA Durango',
     description:

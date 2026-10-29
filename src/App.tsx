@@ -22,6 +22,7 @@ import { PrivacyPage } from './pages/PrivacyPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { AboutPage } from './pages/AboutPage';
+import { BlogPage } from './pages/BlogPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -278,6 +279,14 @@ export const App: React.FC = () => {
 
         {/* ROUTE 6: CONTACTO PAGE */}
         {currentPath === '/contacto' && <ContactPage />}
+
+        {/* ROUTE 6.5: BLOG PAGE & ARTICULOS */}
+        {(currentPath === '/blog' || currentPath.startsWith('/blog/')) && (
+          <BlogPage
+            onNavigate={navigateTo}
+            selectedSlug={currentPath.startsWith('/blog/') ? currentPath.replace('/blog/', '') : undefined}
+          />
+        )}
 
         {/* ROUTE 7: TERMINOS & PRIVACIDAD */}
         {currentPath === '/terminos' && <TermsPage />}

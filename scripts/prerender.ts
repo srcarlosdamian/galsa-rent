@@ -9,6 +9,7 @@ const distDir = path.resolve(rootDir, 'dist');
 
 // Read source data directly from TS
 import { VEHICLES } from '../src/data/vehicles';
+import { BLOG_POSTS } from '../src/data/blog';
 import { STATIC_ROUTES_METADATA, getVehicleMetadata, SITE_URL } from '../src/data/metadata';
 import { getHomeSchemaJson, getVehicleSchemaJson, getFaqSchemaJson, getHostSchemaJson } from '../src/data/schema';
 
@@ -28,7 +29,16 @@ const sitemapUrls = [
   { loc: `${SITE_URL}/contacto`, priority: '0.8', changefreq: 'monthly' },
   { loc: `${SITE_URL}/terminos`, priority: '0.5', changefreq: 'monthly' },
   { loc: `${SITE_URL}/privacidad`, priority: '0.5', changefreq: 'monthly' },
+  { loc: `${SITE_URL}/blog`, priority: '0.8', changefreq: 'weekly' },
 ];
+
+BLOG_POSTS.forEach((post) => {
+  sitemapUrls.push({
+    loc: `${SITE_URL}/blog/${post.slug}`,
+    priority: '0.7',
+    changefreq: 'monthly',
+  });
+});
 
 VEHICLES.forEach((v) => {
   sitemapUrls.push({
@@ -200,6 +210,7 @@ const staticPages = [
   { route: '/terminos', schema: null },
   { route: '/privacidad', schema: null },
   { route: '/cuenta', schema: null },
+  { route: '/blog', schema: null },
   { route: '/404', schema: null },
 ];
 
@@ -275,6 +286,38 @@ VEHICLES.forEach((v) => {
 </body>
 </html>`;
   writeRouteFile(`/vehiculos/${v.uuid}`, redirectHtml);
+});
+
+// 4. Render Blog Articles
+BLOG_POSTS.forEach((post) => {
+  const meta = {
+    title: `${post.title} | Blog GALSA Rent`,
+    description: post.excerpt,
+    canonical: `${SITE_URL}/blog/${post.slug}`,
+    ogTitle: `${post.title} | Blog GALSA Rent`,
+    ogDescription: post.excerpt,
+    ogImage: {
+      url: post.image,
+      alt: post.title,
+      width: 1200,
+      height: 630,
+    },
+  };
+
+  const articleHtml = renderPage({
+    routePath: `/blog/${post.slug}`,
+    metadata: meta,
+    schemaJson: null,
+    initialContentHtml: `
+      <article>
+        <h1>${post.title}</h1>
+        <p>${post.excerpt}</p>
+        <p>Publicado el ${post.date} por ${post.author}</p>
+      </article>
+    `,
+  });
+
+  writeRouteFile(`/blog/${post.slug}`, articleHtml);
 });
 
 console.log('🎉 Prerendering complete! All static HTML pages, schemas, and sitemap generated successfully.');
