@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
 
 export const TrustSafetySection: React.FC = () => {
   const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
@@ -35,11 +34,11 @@ export const TrustSafetySection: React.FC = () => {
 
             <div className="pt-2">
               <a
-                href="/confianza"
-                className="inline-flex items-center gap-2 bg-white text-black hover:bg-neutral-100 font-heading font-semibold text-sm px-6 py-3.5 rounded-xl transition-all"
+                href="/catalogo"
+                style={{ backgroundColor: '#3D63FF' }}
+                className="inline-flex items-center justify-center text-white hover:brightness-105 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all"
               >
-                <span>Obtén más información</span>
-                <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
+                <span>Renta tu primer auto</span>
               </a>
             </div>
           </div>
