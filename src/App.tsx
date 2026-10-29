@@ -328,7 +328,7 @@ export const App: React.FC = () => {
 
                   {/* Hero Title alineado a la izquierda con el padding del contenedor */}
                   <div className="w-full relative z-10 flex flex-col items-start text-left">
-                    <h1 className="text-2xl sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.1] max-w-[800px]">
+                    <h1 className="text-[30px] sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.12] sm:leading-[1.1] max-w-[800px]">
                       Renta de autos en México, 100% en línea
                     </h1>
                   </div>
