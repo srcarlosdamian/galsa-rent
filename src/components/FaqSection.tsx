@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Minus, HelpCircle, PhoneCall } from 'lucide-react';
+import { Plus, Minus, HelpCircle } from 'lucide-react';
 
 export const FAQ_ITEMS = [
   {
@@ -86,23 +86,6 @@ export const FaqSection: React.FC = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Contact banner en ancho completo hasta max-w-7xl */}
-        <div className="mt-10 p-6 sm:p-7 rounded-2xl border border-neutral-200 bg-neutral-50/70 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-left">
-            <h3 className="text-sm sm:text-base font-heading font-semibold text-slate-900">¿Tienes dudas adicionales sobre tu renta?</h3>
-            <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">Atención local directa en Sucursal Plaza 450, Durango.</p>
-          </div>
-          <a
-            href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20la%20renta%20de%20un%20auto"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-black hover:bg-neutral-900 text-white font-heading font-semibold text-xs sm:text-sm px-6 py-3 rounded-xl transition-all shrink-0 active:scale-95"
-          >
-            <PhoneCall className="w-4 h-4" strokeWidth={1.4} />
-            <span>Hablar por WhatsApp</span>
-          </a>
         </div>
 
       </div>
