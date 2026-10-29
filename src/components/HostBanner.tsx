@@ -42,8 +42,11 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
         {/* Contenedor principal con 2 bloques lado a lado como el ejemplo */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          {/* Bloque Izquierdo: Cuadrado azul clarito con Título, Texto y CTA (sin línea de borde) */}
-          <div className="lg:col-span-7 bg-[#94BDC9]/35 sm:bg-[#97C0CB]/40 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start min-h-[360px]">
+          {/* Bloque Izquierdo: Cuadrado azul derivado directamente del CTA (#3D63FF en tono 200 / #D8E8FF) */}
+          <div 
+            style={{ backgroundColor: '#D8E8FF' }}
+            className="lg:col-span-7 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start min-h-[360px]"
+          >
             <div className="space-y-4 max-w-xl text-left">
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-slate-900 leading-tight tracking-tight">
                 ¿Tienes un auto que no usas todos los días?
