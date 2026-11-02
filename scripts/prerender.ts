@@ -219,6 +219,8 @@ const staticPages = [
   { route: '/confianza', schema: null },
   { route: '/faq', schema: getFaqSchemaJson() },
   { route: '/contacto', schema: getHomeSchemaJson() },
+  { route: '/login', schema: null },
+  { route: '/registro', schema: null },
   { route: '/terminos', schema: null },
   { route: '/privacidad', schema: null },
   { route: '/cuenta', schema: null },
@@ -400,5 +402,12 @@ BLOG_POSTS.forEach((post) => {
 
   writeRouteFile(`/blog/${post.slug}`, articleHtml);
 });
+
+// Ensure 404.html is present at root of dist for GitHub Pages routing fallback
+if (fs.existsSync(path.join(distDir, '404', 'index.html'))) {
+  const notFoundHtml = fs.readFileSync(path.join(distDir, '404', 'index.html'), 'utf8');
+  fs.writeFileSync(path.join(distDir, '404.html'), notFoundHtml);
+  console.log('  📄 GitHub Pages fallback: created 404.html');
+}
 
 console.log('🎉 Prerendering complete! All static HTML pages, schemas, and sitemap generated successfully.');
