@@ -162,12 +162,18 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
     return `${d} ${months[parseInt(m, 10) - 1]}`;
   };
 
+  const hasLocation = Boolean(searchState.location && searchState.location.trim().length > 0);
+
   return (
     <div className={`w-full bg-white rounded-[16px] p-[20px] ${className}`}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          onExecuteSearch();
+          if (hasLocation) {
+            onExecuteSearch();
+          } else {
+            setLocationOpen(true);
+          }
         }}
         className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4"
       >
@@ -178,13 +184,14 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
             onClick={() => {
               setLocationOpen(!locationOpen);
               setTypeOpen(false);
+              setCalendarOpen(false);
             }}
             className="w-full flex items-center justify-between gap-2.5 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <MapPin className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
-              <span className="font-heading text-[14px] text-slate-900 truncate">
-                {searchState.location || 'Dirección, cuidad o aeropuerto'}
+              <span className={`font-heading text-[14px] truncate ${searchState.location ? 'text-slate-900 font-medium' : 'text-slate-500'}`}>
+                {searchState.location || 'Dirección, ciudad o aeropuerto'}
               </span>
             </div>
             <ChevronDown className="w-[18px] h-[18px] text-slate-500 shrink-0" strokeWidth={1.4} />
@@ -248,8 +255,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           )}
         </div>
 
-        {/* Field 2 & 3: Selector de Fechas (Rango con calendario Airbnb/Virtuo interactivo) */}
-        <div className="relative flex flex-col sm:flex-row items-center gap-3 sm:gap-2 shrink-0">
+        {/* Field 2 & 3: Selector de Fechas (Responsivo en mobile, tableta y desktop) */}
+        <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-2 w-full lg:w-auto shrink-0">
           {/* Fecha de inicio button */}
           <button
             type="button"
@@ -258,9 +265,9 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               setLocationOpen(false);
               setTypeOpen(false);
             }}
-            className="w-full sm:w-[155px] flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+            className="w-full sm:flex-1 lg:w-[155px] lg:flex-none flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
-            <span className="font-heading text-[14px] text-slate-900 truncate">
+            <span className={`font-heading text-[14px] truncate ${searchState.startDate ? 'text-slate-900 font-medium' : 'text-slate-500'}`}>
               {searchState.startDate ? formatDisplayDate(searchState.startDate) : 'Fecha de inicio'}
             </span>
             <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
@@ -274,9 +281,9 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               setLocationOpen(false);
               setTypeOpen(false);
             }}
-            className="w-full sm:w-[170px] flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+            className="w-full sm:flex-1 lg:w-[170px] lg:flex-none flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
-            <span className="font-heading text-[14px] text-slate-900 truncate">
+            <span className={`font-heading text-[14px] truncate ${searchState.endDate ? 'text-slate-900 font-medium' : 'text-slate-500'}`}>
               {searchState.endDate ? formatDisplayDate(searchState.endDate) : 'Fecha de devolución'}
             </span>
             <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
@@ -314,7 +321,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           >
             <div className="flex items-center gap-2 min-w-0 flex-1">
               <CarFront className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
-              <span className="font-heading text-[14px] text-slate-900 truncate">
+              <span className={`font-heading text-[14px] truncate ${searchState.category ? 'text-slate-900 font-medium' : 'text-slate-500'}`}>
                 {searchState.category || 'Tipo de vehículo'}
               </span>
             </div>
@@ -369,13 +376,20 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           )}
         </div>
 
-        {/* Search Submit Button (blue-500) */}
+        {/* Search Submit Button: se ilumina cuando hay ubicación; en desktop es solo icono, en mobile/tableta tiene texto "Buscar" */}
         <button
           type="submit"
-          className="w-full lg:w-[48px] h-[48px] rounded-[8px] bg-blue-500 flex items-center justify-center text-white shrink-0 hover:bg-blue-600 active:scale-95 transition-all"
+          disabled={!hasLocation}
+          className={`w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center gap-2 shrink-0 transition-all font-heading font-semibold text-[14px] ${
+            hasLocation
+              ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-sm active:scale-95 cursor-pointer'
+              : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-80'
+          }`}
           aria-label="Buscar vehículos"
+          title={hasLocation ? 'Buscar vehículos disponibles' : 'Selecciona una ubicación para buscar'}
         >
-          <Search className="w-[18px] h-[18px]" strokeWidth={1.4} />
+          <Search className={`w-[18px] h-[18px] shrink-0 ${hasLocation ? 'text-white' : 'text-slate-400'}`} strokeWidth={1.4} />
+          <span className="lg:hidden">Buscar</span>
         </button>
       </form>
     </div>

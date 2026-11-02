@@ -59,17 +59,15 @@ export const App: React.FC = () => {
   // Autodetección de ubicación inteligente (Geolocalización del navegador + Reverse Geocoding)
   useEffect(() => {
     if (typeof window === 'undefined' || !navigator.geolocation) {
-      // Fallback por defecto si no hay soporte de geolocalización
-      setSearchState((prev) => prev.location ? prev : { ...prev, location: 'México (Detectando...)' });
       return;
     }
 
-    // Intentar obtener la ubicación con timeout suave para no bloquear
+    // Solicitar permiso de ubicación para autorrellenar por defecto
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
           const { latitude, longitude } = pos.coords;
-          // Reverse geocode gratuito con BigDataCloud o Nominatim
+          // Reverse geocode gratuito con BigDataCloud
           const res = await fetch(
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`
           );
@@ -106,11 +104,7 @@ export const App: React.FC = () => {
         }
       },
       (_err) => {
-        // Si el usuario rechaza los permisos o falla, usar punto oficial o sugerencia general
-        setSearchState((prev) => ({
-          ...prev,
-          location: prev.location || 'Sucursal Plaza 450, Durango',
-        }));
+        // Si el usuario no otorga permiso, se mantiene sin autorrellenar para que seleccione manualmente
       },
       { timeout: 8000, maximumAge: 600000 }
     );
