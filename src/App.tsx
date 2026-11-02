@@ -303,7 +303,7 @@ export const App: React.FC = () => {
         {currentPath === '/' && (
           <>
             {/* HERO SECTION REDISEÑADO CON LÍNEA AZUL Y BARRA DE BÚSQUEDA CENTRADA */}
-            <section className="pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28 bg-white overflow-hidden">
+            <section className="relative z-30 pt-12 pb-28 sm:pt-16 sm:pb-36 lg:pt-20 lg:pb-44 bg-white overflow-visible">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
                 
                 {/* Bloque de Título y Subtítulo centrado */}
@@ -334,13 +334,13 @@ export const App: React.FC = () => {
                   </div>
 
                   {/* Search Container interactivo superpuesto sin sombras */}
-                  <div className="w-full relative z-10 flex justify-center">
+                  <div className="w-full relative z-20 flex justify-center overflow-visible">
                     <SearchContainer
                       searchState={searchState}
                       onSearchChange={setSearchState}
                       onExecuteSearch={handleExecuteSearch}
                       totalResultsCount={VEHICLES.length}
-                      className="shadow-none border border-slate-200/80"
+                      className="shadow-none border border-slate-200/80 overflow-visible"
                     />
                   </div>
                 </div>

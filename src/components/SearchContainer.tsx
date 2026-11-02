@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   MapPin, Calendar, Search, ChevronDown, 
   Navigation, Globe, Plane, Building2, Train, Hotel,
@@ -101,6 +101,24 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   const [typeOpen, setTypeOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [detectingLocation, setDetectingLocation] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Cerrar dropdowns al hacer clic fuera del buscador
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setLocationOpen(false);
+        setTypeOpen(false);
+        setCalendarOpen(false);
+      }
+    };
+    if (locationOpen || typeOpen || calendarOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [locationOpen, typeOpen, calendarOpen]);
 
   // Función para autodetectar la ubicación al hacer clic en "Ubicación actual"
   const handleDetectCurrentLocation = () => {
@@ -165,7 +183,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   const hasLocation = Boolean(searchState.location && searchState.location.trim().length > 0);
 
   return (
-    <div className={`w-full bg-white rounded-[16px] p-[20px] ${className}`}>
+    <div ref={containerRef} className={`w-full bg-white rounded-[16px] p-[20px] overflow-visible ${className}`}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -175,7 +193,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
             setLocationOpen(true);
           }
         }}
-        className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4"
+        className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4 overflow-visible"
       >
         {/* Field 1: Selecciona un lugar (Con dropdown inspirado en Turo / Google Places) */}
         <div className="relative flex-1 min-w-0">
@@ -200,7 +218,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           {/* Dropdown flotante con iconos en cápsula gris y strokeWidth=1.4 */}
           {locationOpen && (
             <div 
-              className="absolute top-full left-0 mt-2 w-full sm:w-[380px] bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150"
+              className="absolute top-full left-0 mt-2 w-full sm:w-[380px] bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2.5 z-[60] max-h-[75vh] overflow-y-auto animate-in fade-in-50 zoom-in-95 duration-150"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="space-y-1">
@@ -291,7 +309,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
 
           {/* Modal flotante de Calendario (Doble mes, estilo Airbnb/Virtuo en español) */}
           {calendarOpen && (
-            <div className="absolute top-full left-0 sm:left-auto sm:right-0 lg:left-0 mt-3 z-50 max-w-[95vw] sm:max-w-none">
+            <div className="absolute top-full left-0 sm:left-auto sm:right-0 lg:left-0 mt-3 z-[60] max-w-[95vw] sm:max-w-none">
               <DateRangePicker
                 startDate={searchState.startDate}
                 endDate={searchState.endDate}
@@ -330,7 +348,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
 
           {typeOpen && (
             <div 
-              className="absolute top-full left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-[320px] bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150"
+              className="absolute top-full left-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-[320px] bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2.5 z-[60] max-h-[75vh] overflow-y-auto animate-in fade-in-50 zoom-in-95 duration-150"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="space-y-1">
