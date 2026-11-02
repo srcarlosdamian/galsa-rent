@@ -5,8 +5,18 @@ interface UseCasesSectionProps {
   onFilterCategory: (category: string) => void;
 }
 
+interface UseCaseItem {
+  id: string;
+  title: string;
+  filter: string;
+  description: string;
+  image?: string;
+  video?: string;
+  alt: string;
+}
+
 export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCategory }) => {
-  const lines = [
+  const lines: UseCaseItem[] = [
     {
       id: 'turismo',
       title: 'Explora México con total autonomía',
@@ -28,7 +38,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Camionetas para sierras y carreteras',
       filter: 'SUV',
       description: 'Camionetas y SUVs equipadas para rutas montañosas, terracería y cabañas ecoturísticas en cualquier rincón del país.',
-      video: 'https://videos.pexels.com/video-files/16017194/16017194-hd_1920_1080_60fps.mp4',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603187098-0-gemini_generated_image_z997uoz997uoz997.webp',
       alt: 'Camionetas para sierras y carreteras de México',
     },
     {
