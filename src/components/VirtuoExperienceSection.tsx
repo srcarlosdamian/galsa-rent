@@ -2,39 +2,38 @@ import React from 'react';
 import { CalendarRange, ClipboardCheck, FileCheck, ShieldCheck } from 'lucide-react';
 
 export const VirtuoExperienceSection: React.FC = () => {
-  const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
-  const rentalStepsImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/renta-galsa.webp`;
-
   const STEPS = [
     {
       id: 1,
       title: 'Elige por día, semana o mes',
       description: 'Planes flexibles adaptados a tus fechas de viaje, trabajo o compromisos familiares en México.',
       icon: CalendarRange,
-      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-1.webp`,
+      imageIcon: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600346395-4-background-border-shadow.webp',
     },
     {
       id: 2,
       title: 'Autos revisados uno por uno',
       description: 'Inspección física, documental y fotográfica rigurosa antes de publicar cada unidad en la plataforma.',
       icon: ClipboardCheck,
-      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-2.webp`,
+      imageIcon: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600346030-3-background-border-shadow-1.webp',
     },
     {
       id: 3,
       title: 'Contrato digital con validez legal',
       description: 'Firma electrónica segura con sellado de tiempo, certeza jurídica mercantil y sin letras chiquitas.',
       icon: FileCheck,
-      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-3.webp`,
+      imageIcon: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600345607-2-background-border-shadow-2.webp',
     },
     {
       id: 4,
       title: 'Ayuda cuando la necesitas',
       description: 'Atención directa vía WhatsApp y en sucursal oficial para asistirte antes, durante y al devolver tu auto en México.',
       icon: ShieldCheck,
-      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-4.webp`,
+      imageIcon: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600345205-1-background-border-shadow-3.webp',
     },
   ];
+
+  const rightMockupImg = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600344534-0-rightmockupcolumn.webp';
 
   return (
     <section className="w-full py-10 md:py-14 bg-white overflow-hidden">
@@ -64,16 +63,19 @@ export const VirtuoExperienceSection: React.FC = () => {
                   const Icon = step.icon;
                   return (
                     <div key={step.id} className="w-full flex items-center gap-4">
-                      {/* Icon container: estilo cápsula blanca redondeada con sombra suave o imagen 3D */}
-                      <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-white/80 overflow-hidden p-1.5">
+                      {/* Icon container: estilo cápsula blanca redondeada con sombra suave o imagen 3D sin padding para aprovechar todo el espacio */}
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
                         {step.imageIcon ? (
                           <img
                             src={step.imageIcon}
                             alt={step.title}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-cover"
+                            loading="lazy"
                           />
                         ) : (
-                          <Icon className="w-7 h-7 text-blue-600" strokeWidth={1.4} />
+                          <div className="w-full h-full bg-white rounded-2xl flex items-center justify-center border border-white/80">
+                            <Icon className="w-7 h-7 text-blue-600" strokeWidth={1.4} />
+                          </div>
                         )}
                       </div>
 
@@ -96,7 +98,7 @@ export const VirtuoExperienceSection: React.FC = () => {
             <div className="flex-1 flex items-center justify-center">
               <div className="w-full h-full min-h-[380px] sm:min-h-[480px] rounded-[24px] overflow-hidden bg-blue-700/30">
                 <img
-                  src={rentalStepsImg}
+                  src={rightMockupImg}
                   alt="Experiencia de renta digital GALSA Rent"
                   className="w-full h-full object-cover object-center"
                   loading="lazy"
