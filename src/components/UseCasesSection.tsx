@@ -20,7 +20,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Sedanes ejecutivos con factura inmediata',
       filter: 'Sedán',
       description: 'Sedanes ejecutivos confortables, con aire acondicionado y factura fiscal inmediata para tus reuniones de negocios en México.',
-      video: 'https://videos.pexels.com/video-files/40496294/17306086_2560_1440_25fps.mp4',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793602082204-0-gemini_generated_image_kx2nzjkx2nzjkx2n.webp',
       alt: 'Sedanes ejecutivos con factura inmediata',
     },
     {
