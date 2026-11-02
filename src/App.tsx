@@ -329,8 +329,8 @@ export const App: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Card con Barra de Búsqueda sobre Fondo */}
-                <div className="w-full max-w-[960px] relative rounded-2xl border border-slate-200 overflow-hidden p-4 sm:p-5 bg-slate-100 flex flex-col justify-center items-center min-h-[140px] sm:min-h-[160px]">
+                {/* Card con Barra de Búsqueda sobre Fondo con exactamente 20px de padding tanto en altura como en anchura */}
+                <div className="w-full max-w-[944px] relative rounded-2xl border border-slate-200 overflow-hidden p-[20px] bg-slate-100 flex flex-col justify-center items-center">
                   {/* Imagen de fondo / vehículo en la parte posterior */}
                   <div className="absolute inset-0 pointer-events-none z-0">
                     <img
