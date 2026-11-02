@@ -172,7 +172,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4"
       >
         {/* Field 1: Selecciona un lugar (Con dropdown inspirado en Turo / Google Places) */}
-        <div className="relative flex-1">
+        <div className="relative flex-1 min-w-0">
           <button
             type="button"
             onClick={() => {
@@ -181,7 +181,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
             }}
             className="w-full flex items-center justify-between gap-2.5 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
-            <div className="flex items-center gap-2.5 min-w-0">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <MapPin className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
               <span className="font-heading text-[14px] text-slate-900 truncate">
                 {searchState.location || 'Dirección, cuidad o aeropuerto'}
@@ -249,7 +249,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         </div>
 
         {/* Field 2 & 3: Selector de Fechas (Rango con calendario Airbnb/Virtuo interactivo) */}
-        <div className="relative flex flex-col sm:flex-row items-center gap-3 sm:gap-2">
+        <div className="relative flex flex-col sm:flex-row items-center gap-3 sm:gap-2 shrink-0">
           {/* Fecha de inicio button */}
           <button
             type="button"
@@ -258,7 +258,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               setLocationOpen(false);
               setTypeOpen(false);
             }}
-            className="w-full sm:w-[170px] lg:w-[165px] flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+            className="w-full sm:w-[155px] flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
             <span className="font-heading text-[14px] text-slate-900 truncate">
               {searchState.startDate ? formatDisplayDate(searchState.startDate) : 'Fecha de inicio'}
@@ -274,7 +274,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               setLocationOpen(false);
               setTypeOpen(false);
             }}
-            className="w-full sm:w-[170px] lg:w-[165px] flex items-center justify-between gap-2 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+            className="w-full sm:w-[170px] flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
             <span className="font-heading text-[14px] text-slate-900 truncate">
               {searchState.endDate ? formatDisplayDate(searchState.endDate) : 'Fecha de devolución'}
@@ -302,7 +302,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
         </div>
 
         {/* Field 4: Tipo de vehículo */}
-        <div className="relative w-full lg:w-[220px]">
+        <div className="relative w-full lg:w-[190px] shrink-0">
           <button
             type="button"
             onClick={() => {
@@ -310,9 +310,9 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               setLocationOpen(false);
               setCalendarOpen(false);
             }}
-            className="w-full flex items-center justify-between gap-2.5 px-4 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
+            className="w-full flex items-center justify-between gap-2 px-3.5 py-3.5 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 transition-colors text-left"
           >
-            <div className="flex items-center gap-2.5 min-w-0">
+            <div className="flex items-center gap-2 min-w-0 flex-1">
               <CarFront className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
               <span className="font-heading text-[14px] text-slate-900 truncate">
                 {searchState.category || 'Tipo de vehículo'}
