@@ -44,7 +44,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Unidades para conductores de apps de movilidad',
       filter: 'Económicos',
       description: 'Unidades verificadas con esquemas semanales flexibles para trabajar en las principales plataformas de movilidad de México.',
-      video: 'https://videos.pexels.com/video-files/11760018/11760018-uhd_1440_2732_30fps.mp4',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793602006658-0-gemini_generated_image_kd1vz2kd1vz2kd1v.webp',
       alt: 'Unidades para conductores de apps de movilidad en México',
     },
   ];
@@ -144,15 +144,24 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
                 }}
                 className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-neutral-200/80 bg-neutral-900"
               >
-                {/* Video de fondo en bucle silencioso */}
-                <video
-                  src={item.video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
-                />
+                {/* Media de fondo: Video o Imagen en alta definición */}
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
+                  />
+                ) : (
+                  <video
+                    src={item.video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
+                  />
+                )}
 
                 {/* Degradado oscuro progresivo hacia abajo */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent pointer-events-none" />
