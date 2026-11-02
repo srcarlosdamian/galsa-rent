@@ -84,10 +84,13 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
           </div>
 
-          {/* Vehicle Name */}
-          <h3 className="font-heading font-normal text-[18px] text-black leading-[28px] truncate">
-            {vehicle.make} {vehicle.model}
-          </h3>
+          {/* Vehicle Name con subrayado azul 300 en hover */}
+          <div className="relative inline-block self-start">
+            <h3 className="relative z-10 font-heading font-bold text-[18px] text-black leading-[28px] truncate">
+              {vehicle.make} {vehicle.model}
+            </h3>
+            <span className="absolute left-0 bottom-0.5 w-0 h-2 bg-blue-300 rounded-sm -z-0 transition-all duration-200 group-hover:w-full" />
+          </div>
 
           {/* Vehicle Features Pills */}
           <div className="flex flex-wrap items-center gap-[8px] pt-1">
@@ -129,7 +132,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         {/* Price Divider & Daily Rate */}
         <div className="flex items-center justify-between w-full pt-0.5">
           <div className="flex items-baseline gap-[8px] whitespace-nowrap">
-            <span className="font-heading font-normal text-[18px] text-black leading-[28px]">
+            <span className="font-heading font-bold text-[20px] text-black leading-[28px]">
               ${vehicle.pricePerDay.toLocaleString('es-MX')}
             </span>
             <span className="font-heading font-normal text-[12px] text-slate-500 leading-[20px]">
