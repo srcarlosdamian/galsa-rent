@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, KeyRound, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, CheckCircle2 } from 'lucide-react';
 
 interface LoginPageProps {
   onNavigate: (path: string) => void;
@@ -145,10 +145,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
               <>
                 {/* Recuperar contraseña */}
                 <div className="text-left mb-6">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-heading font-semibold mb-3">
-                    <KeyRound className="w-3.5 h-3.5" strokeWidth={1.4} />
-                    <span>Recuperación de acceso</span>
-                  </div>
+                  {/* Breadcrumb: Inicio / Recuperación de acceso */}
+                  <nav aria-label="Miga de pan" className="flex items-center gap-2 text-xs font-heading text-slate-400 mb-5">
+                    <button
+                      type="button"
+                      onClick={() => setShowForgot(false)}
+                      className="hover:text-black transition-colors text-slate-500 font-medium"
+                    >
+                      Inicio
+                    </button>
+                    <span className="text-slate-300">/</span>
+                    <span className="text-slate-900 font-semibold">Recuperación de acceso</span>
+                  </nav>
+
                   <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-tight">
                     ¿Olvidaste tu contraseña?
                   </h2>
@@ -181,14 +190,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                       className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 text-white text-sm font-heading font-semibold transition-all shadow-none"
                     >
                       Enviar instrucciones
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setShowForgot(false)}
-                      className="w-full py-2.5 text-xs font-heading font-semibold text-slate-600 hover:text-slate-900"
-                    >
-                      Regresar a Iniciar sesión
                     </button>
                   </form>
                 ) : (
