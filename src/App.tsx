@@ -330,7 +330,7 @@ export const App: React.FC = () => {
                 </div>
 
                 {/* Card con Barra de Búsqueda sobre Fondo */}
-                <div className="w-full max-w-[960px] relative rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-4 sm:p-5 bg-slate-100 flex flex-col justify-center items-center min-h-[140px] sm:min-h-[160px]">
+                <div className="w-full max-w-[960px] relative rounded-2xl border border-slate-200 overflow-hidden p-4 sm:p-5 bg-slate-100 flex flex-col justify-center items-center min-h-[140px] sm:min-h-[160px]">
                   {/* Imagen de fondo / vehículo en la parte posterior */}
                   <div className="absolute inset-0 pointer-events-none z-0">
                     <img
@@ -340,14 +340,14 @@ export const App: React.FC = () => {
                     />
                   </div>
 
-                  {/* Search Container interactivo superpuesto */}
+                  {/* Search Container interactivo superpuesto sin sombras */}
                   <div className="w-full relative z-10 flex justify-center">
                     <SearchContainer
                       searchState={searchState}
                       onSearchChange={setSearchState}
                       onExecuteSearch={handleExecuteSearch}
                       totalResultsCount={VEHICLES.length}
-                      className="shadow-md border border-slate-200/80"
+                      className="shadow-none border border-slate-200/80"
                     />
                   </div>
                 </div>
