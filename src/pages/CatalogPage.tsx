@@ -200,14 +200,24 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     setOpenDropdown(null);
   };
 
-  // Filtrado reactivo
+  // Filtrado reactivo con garantía de prototipo (siempre debe salir al menos un automóvil)
   const filteredVehicles = useMemo(() => {
-    return VEHICLES.filter((v) => {
+    let matches = VEHICLES.filter((v) => {
       // Ubicación
-      if (selectedLocation && selectedLocation !== 'Mi ubicación actual') {
-        const normLoc = selectedLocation.toLowerCase();
+      if (selectedLocation && selectedLocation !== 'Mi ubicación actual' && selectedLocation !== '') {
+        const normLoc = selectedLocation.toLowerCase().trim();
         const vLoc = (v.location + ' ' + v.city).toLowerCase();
-        if (!vLoc.includes(normLoc) && !normLoc.includes('durango')) return false;
+        const directMatch = vLoc.includes(normLoc) || 
+          normLoc.includes(v.location.toLowerCase()) || 
+          (normLoc.includes('aeropuerto') && v.location.toLowerCase().includes('aeropuerto')) ||
+          (normLoc.includes('centro') && v.location.toLowerCase().includes('centro')) ||
+          (normLoc.includes('plaza 450') && v.location.toLowerCase().includes('plaza 450')) ||
+          (normLoc.includes('central') && v.location.toLowerCase().includes('central'));
+        if (!directMatch) {
+          // Si no es una de las sucursales de Durango, pero es una ubicación geolocalizada o personalizada,
+          // permitimos que los autos se muestren adaptados para que SIEMPRE haya disponibilidad en ese prototipo
+          if (normLoc.includes('durango')) return false;
+        }
       }
 
       // Tipo de vehículo
@@ -233,7 +243,30 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
       if (v.pricePerDay > priceMaxFilter) return false;
 
       return true;
-    }).sort((a, b) => {
+    });
+
+    // REGLA DEL PROTOTIPO: Siempre debe salir al menos un automóvil, pase lo que pase
+    if (matches.length === 0) {
+      // Si la combinación de filtros fue muy estricta y dejó 0 autos, tomamos autos de la flota
+      // y los adaptamos dinámicamente como prototipo fake para cumplir la regla
+      matches = VEHICLES.slice(0, 4).map((car, idx) => ({
+        ...car,
+        id: `${car.id}-proto-${idx}`,
+        location: (selectedLocation && selectedLocation !== 'Mi ubicación actual') ? selectedLocation : car.location,
+        seats: seatsFilter !== 'Todos' ? parseInt(seatsFilter, 10) : car.seats,
+        transmission: transmissionFilter !== 'Todos' ? (transmissionFilter as any) : car.transmission,
+        pricePerDay: Math.min(car.pricePerDay, priceMaxFilter),
+        category: vehicleTypeFilter !== 'Todos' ? vehicleTypeFilter : car.category,
+      }));
+    } else if (selectedLocation && selectedLocation !== 'Mi ubicación actual' && !selectedLocation.toLowerCase().includes('durango')) {
+      // Si el usuario seleccionó una ubicación externa (ej. CDMX, Zapopan, etc.), reflejamos esa ubicación en los autos devueltos
+      matches = matches.map(car => ({
+        ...car,
+        location: selectedLocation,
+      }));
+    }
+
+    return matches.sort((a, b) => {
       if (sortBy === 'price-asc') return a.pricePerDay - b.pricePerDay;
       if (sortBy === 'price-desc') return b.pricePerDay - a.pricePerDay;
       if (sortBy === 'year-desc') return b.year - a.year;

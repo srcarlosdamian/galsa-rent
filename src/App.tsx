@@ -194,7 +194,7 @@ export const App: React.FC = () => {
   const homeItemsPerPage = 8;
 
   const filteredVehicles = useMemo(() => {
-    return VEHICLES.filter((v) => {
+    const list = VEHICLES.filter((v) => {
       if (activeCategory === 'Todos los vehículos' || activeCategory === 'Destacados') {
         return true;
       }
@@ -215,6 +215,12 @@ export const App: React.FC = () => {
       }
       return v.category.includes(activeCategory);
     });
+
+    // En modo prototipo garantizamos que siempre haya vehículos disponibles
+    if (list.length === 0) {
+      return VEHICLES.slice(0, 4);
+    }
+    return list;
   }, [activeCategory]);
 
   const homeTotalPages = Math.ceil(filteredVehicles.length / homeItemsPerPage) || 1;
