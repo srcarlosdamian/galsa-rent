@@ -7,13 +7,13 @@ export const TrustSafetySection: React.FC = () => {
     <section id="seguridad" className="w-full py-10 md:py-14 bg-white overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
-        {/* Contenedor gris con max-width y bordes redondeados */}
-        <div className="w-full bg-[#18181b] sm:bg-[#202024] text-white rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16">
+        {/* Contenedor gris 100 con max-width y bordes redondeados */}
+        <div className="w-full bg-gray-100 rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16 border border-gray-200/80">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
             
             {/* Lado Izquierdo: Imagen cuadrada con bordes redondeados */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-neutral-900 border border-neutral-800/80 shadow-none">
+              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-white border border-gray-200/70 shadow-none">
                 <img
                   src={trustImg}
                   alt="Cada renta respaldada de principio a fin con GALSA"
@@ -23,13 +23,13 @@ export const TrustSafetySection: React.FC = () => {
               </div>
             </div>
 
-            {/* Lado Derecho: Título, subtítulo y botón nada más */}
+            {/* Lado Derecho: Título, subtítulo y botón */}
             <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-6">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-white tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-neutral-900 tracking-tight leading-tight">
                 Cada renta, respaldada de principio a fin
               </h2>
 
-              <p className="text-sm sm:text-base font-sans text-neutral-300 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base font-sans text-neutral-600 leading-relaxed max-w-xl">
                 En GALSA cuidamos la tranquilidad del cliente y del anfitrión mediante verificación digital, contratos formales y seguro durante todo el trayecto en México.
               </p>
 
