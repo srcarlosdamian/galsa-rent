@@ -491,10 +491,8 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Footer (oculto en páginas de autenticación: login y registro) */}
-      {currentPath !== '/login' && currentPath !== '/registro' && currentPath !== '/cuenta' && (
-        <Footer onNavigate={navigateTo} />
-      )}
+      {/* Footer corporativo GALSA */}
+      <Footer onNavigate={navigateTo} />
     </div>
   );
 };
