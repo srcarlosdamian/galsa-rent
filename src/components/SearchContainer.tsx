@@ -12,6 +12,7 @@ interface SearchContainerProps {
   onSearchChange: (newSearch: SearchState) => void;
   onExecuteSearch: () => void;
   totalResultsCount: number;
+  className?: string;
 }
 
 const LOCATION_OPTIONS = [
@@ -94,6 +95,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   searchState,
   onSearchChange,
   onExecuteSearch,
+  className = '',
 }) => {
   const [locationOpen, setLocationOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
@@ -161,7 +163,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
   };
 
   return (
-    <div className="w-full bg-white rounded-[16px] p-3 sm:p-5">
+    <div className={`w-full bg-white rounded-[16px] p-3 sm:p-5 ${className}`}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -182,7 +184,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
             <div className="flex items-center gap-2.5 min-w-0">
               <MapPin className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
               <span className="font-heading text-[14px] text-slate-900 truncate">
-                {searchState.location || 'Selecciona un lugar'}
+                {searchState.location || 'Dirección, cuidad o aeropuerto'}
               </span>
             </div>
             <ChevronDown className="w-[18px] h-[18px] text-slate-500 shrink-0" strokeWidth={1.4} />
@@ -367,11 +369,10 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           )}
         </div>
 
-        {/* Search Submit Button (Figma: size-[48px] rounded-[8px] bg-[#3d63ff], sin sombra) */}
+        {/* Search Submit Button (blue-500) */}
         <button
           type="submit"
-          style={{ backgroundColor: '#3D63FF' }}
-          className="w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center text-white shrink-0 hover:brightness-105 active:scale-95 transition-all"
+          className="w-full lg:w-[48px] h-[48px] rounded-[8px] bg-blue-500 flex items-center justify-center text-white shrink-0 hover:bg-blue-600 active:scale-95 transition-all"
           aria-label="Buscar vehículos"
         >
           <Search className="w-[18px] h-[18px]" strokeWidth={1.4} />

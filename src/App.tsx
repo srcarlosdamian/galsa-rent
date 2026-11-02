@@ -309,48 +309,48 @@ export const App: React.FC = () => {
         {/* ROUTE 9: HOME (TAREA 2 COPY & VIRTUO DESIGN) */}
         {currentPath === '/' && (
           <>
-            {/* HERO SECTION EXACTO DE FIGMA */}
-            <section className="pt-4 pb-10 md:pb-14 bg-white">
-              <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+            {/* HERO SECTION REDISEÑADO CON LÍNEA AZUL Y BARRA DE BÚSQUEDA CENTRADA */}
+            <section className="pt-6 pb-12 md:pt-10 md:pb-16 bg-white overflow-hidden">
+              <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
                 
-                {/* Hero Card Container alineado a la izquierda con 40px de separación vertical */}
-                <div className="relative rounded-[24px] border border-white/20 min-h-[440px] md:min-h-[500px] flex flex-col justify-center items-start py-10 md:py-[48px] px-6 sm:px-12 md:px-[64px] bg-slate-900 gap-[40px] text-left">
-                  
-                  {/* Background Image & Overlay */}
-                  <div className="absolute inset-0 rounded-[24px] overflow-hidden pointer-events-none z-0">
+                {/* Bloque de Título y Subtítulo centrado */}
+                <div className="w-full max-w-[820px] relative flex flex-col items-center gap-5 sm:gap-6 text-center">
+                  <h1 className="relative self-stretch text-neutral-900 text-[36px] sm:text-5xl lg:text-[56px] font-bold font-heading leading-[1.12] sm:leading-[1.15] tracking-tight">
+                    Renta de autos en México,{' '}
+                    <span className="relative inline-block whitespace-nowrap">
+                      <span className="relative z-10">100 % en línea</span>
+                      <span className="absolute left-0 bottom-1 sm:bottom-1.5 w-full h-2.5 sm:h-3 bg-blue-300 rounded-sm -z-0" />
+                    </span>{' '}
+                    y al instante
+                  </h1>
+
+                  <p className="self-stretch text-neutral-600 text-base sm:text-lg font-normal font-heading leading-relaxed max-w-[760px] mx-auto">
+                    Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales.
+                  </p>
+                </div>
+
+                {/* Card con Barra de Búsqueda sobre Fondo */}
+                <div className="w-full max-w-[960px] relative rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-4 sm:p-5 bg-slate-100 flex flex-col justify-start items-start gap-4">
+                  {/* Imagen de fondo / vehículo en la parte posterior */}
+                  <div className="absolute inset-0 pointer-events-none z-0">
                     <img
                       src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/images/figma-hero.webp`}
-                      alt="Viaje familiar por carretera en México — GALSA Rent"
-                      className="w-full h-full object-cover object-center"
-                      fetchPriority="high"
+                      alt="Renta de autos en México — GALSA Rent"
+                      className="w-full h-full object-cover object-bottom opacity-90"
                     />
-                    <div className="absolute inset-0 bg-black/25"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-white/20"></div>
                   </div>
 
-                  {/* Hero Title alineado a la izquierda con el padding del contenedor y ancho ajustado para que quiebre exactamente en 2 líneas */}
-                  <div className="w-full relative z-10 flex flex-col items-start text-left">
-                    <h1 className="text-[30px] sm:text-5xl lg:text-[48px] font-heading font-extrabold tracking-[-0.576px] text-white leading-[1.12] sm:leading-[1.1] max-w-[620px]">
-                      Renta de autos en México,<br className="hidden sm:inline" /> 100% en línea
-                    </h1>
-                  </div>
-
-                  {/* Search Bar Embedded in Hero */}
-                  <div className="w-full relative z-20 flex justify-start">
+                  {/* Search Container interactivo superpuesto */}
+                  <div className="w-full relative z-10">
                     <SearchContainer
                       searchState={searchState}
                       onSearchChange={setSearchState}
                       onExecuteSearch={handleExecuteSearch}
                       totalResultsCount={VEHICLES.length}
+                      className="shadow-md border border-slate-200/80"
                     />
                   </div>
-
-                  {/* Hero Description Footer alineado a la izquierda */}
-                  <div className="w-full relative z-10 flex flex-col items-start text-left">
-                    <p className="font-heading font-normal text-white text-[13px] sm:text-[16px] leading-[1.4] max-w-[760px]">
-                      Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales. Desde $1,100 MXN al día, sin cargos ocultos.
-                    </p>
-                  </div>
-
                 </div>
 
               </div>
