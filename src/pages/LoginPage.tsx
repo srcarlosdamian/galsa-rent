@@ -42,22 +42,25 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* Tarjeta de Inicio de Sesión */}
-        <div className="bg-white rounded-[24px] border border-slate-200/80 p-7 sm:p-9 shadow-xs">
+        {/* Tarjeta de Inicio de Sesión (sin borde ni sombra) */}
+        <div className="bg-white rounded-[24px] p-7 sm:p-9 border-0 shadow-none">
           
           {!showForgot ? (
             <>
-              {/* Header */}
+              {/* Header con icono 3D oficial */}
               <div className="text-left mb-7">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-heading font-semibold mb-3">
-                  <Sparkles className="w-3.5 h-3.5" strokeWidth={1.4} />
-                  <span>Tu cuenta GALSA</span>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[18px] overflow-hidden mb-4 bg-transparent">
+                  <img
+                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793605709248-0-gemini_generated_image_vkzt4nvkzt4nvkzt.webp"
+                    alt="Acceso GALSA"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-heading font-bold text-slate-900 tracking-tight leading-tight">
                   Inicia sesión
                 </h1>
                 <p className="mt-2 text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-                  Con tu cuenta de GALSA —la misma de la app— reservas en línea y firmas tu contrato digital al instante.
+                  Con tu cuenta de GALSA reservas en línea y firmas tu contrato digital al instante.
                 </p>
               </div>
 
@@ -91,7 +94,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         setShowForgot(true);
                         setForgotSent(false);
                       }}
-                      className="text-xs font-heading font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                      className="text-xs font-heading font-medium text-slate-500 hover:text-slate-800 hover:underline transition-colors"
                     >
                       ¿Olvidaste tu contraseña?
                     </button>
@@ -112,10 +115,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all flex items-center justify-center gap-2 shadow-xs"
+                    className="w-full py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all flex items-center justify-center shadow-none"
                   >
                     <span>Iniciar sesión</span>
-                    <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
                   </button>
                 </div>
               </form>

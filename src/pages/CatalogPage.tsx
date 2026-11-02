@@ -267,8 +267,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
           {/* Selector de ordenamiento */}
           <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center gap-2">
-              <span className="text-[13px] font-heading text-slate-500">Ordenar por:</span>
+            <div className="flex items-center">
               <button
                 type="button"
                 onClick={() => toggleDropdown('sort')}

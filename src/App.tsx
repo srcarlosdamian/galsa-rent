@@ -491,8 +491,10 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Footer */}
-      <Footer onNavigate={navigateTo} />
+      {/* Footer (oculto en páginas de autenticación: login y registro) */}
+      {currentPath !== '/login' && currentPath !== '/registro' && currentPath !== '/cuenta' && (
+        <Footer onNavigate={navigateTo} />
+      )}
     </div>
   );
 };
