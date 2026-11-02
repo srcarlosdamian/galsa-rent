@@ -7,13 +7,13 @@ export const TrustSafetySection: React.FC = () => {
     <section id="seguridad" className="w-full py-10 md:py-14 bg-white overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
-        {/* Contenedor gris 100 con max-width y bordes redondeados */}
-        <div className="w-full bg-gray-100 rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16 border border-gray-200/80">
+        {/* Contenedor gris 100 con max-width y bordes redondeados sin bordes */}
+        <div className="w-full bg-gray-100 rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16 border-0 shadow-none">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
             
-            {/* Lado Izquierdo: Imagen cuadrada con bordes redondeados */}
+            {/* Lado Izquierdo: Imagen cuadrada con bordes redondeados sin borde */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-white border border-gray-200/70 shadow-none">
+              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-transparent border-0 shadow-none">
                 <img
                   src={trustImg}
                   alt="Cada renta respaldada de principio a fin con GALSA"
