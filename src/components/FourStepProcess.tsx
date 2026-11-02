@@ -95,7 +95,7 @@ export const FourStepProcess: React.FC = () => {
               type="button"
               disabled={activeSlide === 0}
               onClick={() => setActiveSlide((prev) => Math.max(0, prev - 1))}
-              className="px-3 py-1.5 rounded-[6px] border border-slate-200 text-slate-700 text-xs font-heading hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 rounded-[8px] border border-slate-200 text-slate-700 text-xs font-heading hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Paso anterior"
             >
               Anterior
@@ -107,7 +107,7 @@ export const FourStepProcess: React.FC = () => {
               type="button"
               disabled={activeSlide === steps.length - 1}
               onClick={() => setActiveSlide((prev) => Math.min(steps.length - 1, prev + 1))}
-              className="px-3 py-1.5 rounded-[6px] border border-slate-200 text-slate-700 text-xs font-heading hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 rounded-[8px] border border-slate-200 text-slate-700 text-xs font-heading hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Siguiente paso"
             >
               Siguiente

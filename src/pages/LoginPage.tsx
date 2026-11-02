@@ -48,18 +48,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                   <GalsaLogo className="h-6 w-auto text-blue-500" />
                 </div>
 
-                {/* Pill selector INSIDE el contenedor, ARRIBA del título */}
-                <div className="bg-slate-100 p-1 rounded-full inline-flex items-center mb-6 w-full max-w-[280px]">
+                {/* Field selector Iniciar sesión / Crear cuenta (homologado con borde de botones rounded-[8px]) */}
+                <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center mb-6 w-full max-w-[280px]">
                   <button
                     type="button"
-                    className="flex-1 py-1.5 px-3 rounded-full text-xs sm:text-sm font-heading font-semibold bg-white text-slate-900 shadow-xs transition-all"
+                    className="flex-1 py-2 px-3 rounded-[8px] text-xs sm:text-sm font-heading font-semibold bg-white text-slate-900 shadow-xs transition-all"
                   >
                     Iniciar sesión
                   </button>
                   <button
                     type="button"
                     onClick={() => onNavigate('/registro')}
-                    className="flex-1 py-1.5 px-3 rounded-full text-xs sm:text-sm font-heading font-medium text-slate-600 hover:text-slate-900 transition-all"
+                    className="flex-1 py-2 px-3 rounded-[8px] text-xs sm:text-sm font-heading font-medium text-slate-600 hover:text-slate-900 transition-all"
                   >
                     Crear cuenta
                   </button>
@@ -88,7 +88,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
-                        className="w-full px-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <Mail className="absolute right-3.5 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -117,7 +117,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full px-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <Lock className="absolute right-3.5 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -126,7 +126,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all flex items-center justify-center shadow-none"
+                      className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all flex items-center justify-center shadow-none"
                     >
                       <span>Iniciar sesión</span>
                     </button>
@@ -175,13 +175,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
-                        className="w-full px-4 py-3 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-sm font-heading font-semibold transition-all shadow-none"
+                      className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 text-white text-sm font-heading font-semibold transition-all shadow-none"
                     >
                       Enviar instrucciones
                     </button>
@@ -211,7 +211,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         setShowForgot(false);
                         setForgotSent(false);
                       }}
-                      className="px-5 py-2.5 rounded-xl bg-blue-500 text-white text-xs font-heading font-semibold hover:bg-blue-600 transition-colors"
+                      className="px-5 py-2.5 rounded-[8px] bg-blue-500 text-white text-xs font-heading font-semibold hover:bg-blue-600 transition-colors"
                     >
                       Volver a iniciar sesión
                     </button>

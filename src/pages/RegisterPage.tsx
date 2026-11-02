@@ -49,18 +49,18 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                   <GalsaLogo className="h-6 w-auto text-blue-500" />
                 </div>
 
-                {/* Pill selector INSIDE el contenedor, ARRIBA del título */}
-                <div className="bg-slate-100 p-1 rounded-full inline-flex items-center mb-6 w-full max-w-[280px]">
+                {/* Field selector Iniciar sesión / Crear cuenta (homologado con borde de botones rounded-[8px]) */}
+                <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center mb-6 w-full max-w-[280px]">
                   <button
                     type="button"
                     onClick={() => onNavigate('/login')}
-                    className="flex-1 py-1.5 px-3 rounded-full text-xs sm:text-sm font-heading font-medium text-slate-600 hover:text-slate-900 transition-all"
+                    className="flex-1 py-2 px-3 rounded-[8px] text-xs sm:text-sm font-heading font-medium text-slate-600 hover:text-slate-900 transition-all"
                   >
                     Iniciar sesión
                   </button>
                   <button
                     type="button"
-                    className="flex-1 py-1.5 px-3 rounded-full text-xs sm:text-sm font-heading font-semibold bg-white text-slate-900 shadow-xs transition-all"
+                    className="flex-1 py-2 px-3 rounded-[8px] text-xs sm:text-sm font-heading font-semibold bg-white text-slate-900 shadow-xs transition-all"
                   >
                     Crear cuenta
                   </button>
@@ -91,7 +91,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="Ej. Edgar Sierra"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-2.5 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <User className="absolute right-3.5 top-3 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -109,7 +109,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-2.5 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <Mail className="absolute right-3.5 top-3 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -127,7 +127,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+52 55 0000 0000"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-2.5 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <Phone className="absolute right-3.5 top-3 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -146,7 +146,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mínimo 8 caracteres"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-2.5 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <Lock className="absolute right-3.5 top-3 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -165,7 +165,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Repite tu contraseña"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-2.5 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                       <Lock className="absolute right-3.5 top-3 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
                     </div>
@@ -174,7 +174,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-none"
+                      className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-none"
                     >
                       Crear cuenta
                     </button>

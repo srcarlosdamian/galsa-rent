@@ -431,7 +431,7 @@ export const App: React.FC = () => {
                         type="button"
                         disabled={homePage === 1}
                         onClick={() => setHomePage(homePage - 1)}
-                        className="px-3 py-1.5 rounded-[6px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="px-3 py-1.5 rounded-[8px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         Anterior
                       </button>
@@ -442,7 +442,7 @@ export const App: React.FC = () => {
                         type="button"
                         disabled={homePage === homeTotalPages}
                         onClick={() => setHomePage(homePage + 1)}
-                        className="px-3 py-1.5 rounded-[6px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="px-3 py-1.5 rounded-[8px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         Siguiente
                       </button>
