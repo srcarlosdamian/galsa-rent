@@ -7,8 +7,8 @@ export const TrustSafetySection: React.FC = () => {
     <section id="seguridad" className="w-full py-10 md:py-14 bg-white overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
-        {/* Contenedor gris 100 con max-width y bordes redondeados sin bordes */}
-        <div className="w-full bg-gray-100 rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16 border-0 shadow-none">
+        {/* Contenedor gris 50 con max-width y bordes redondeados sin bordes */}
+        <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16 border-0 shadow-none">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
             
             {/* Lado Izquierdo: Imagen cuadrada con bordes redondeados sin borde */}

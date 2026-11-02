@@ -248,11 +248,11 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     <div className="py-6 sm:py-10 bg-white" onClick={() => setOpenDropdown(null)}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
-        {/* Título y Conteo de Resultados (sin texto redundante abajo) */}
+        {/* Título y Conteo de Resultados (sin texto redundante abajo, en minúsculas capitalizadas) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
           <div>
             <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
-              AUTOS DISPONIBLES ({filteredVehicles.length})
+              Autos disponibles ({filteredVehicles.length})
             </h1>
           </div>
 

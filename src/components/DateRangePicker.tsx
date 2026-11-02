@@ -74,13 +74,11 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         // Si selecciona una fecha previa a la de inicio, se vuelve la nueva fecha de inicio
         onChange(dateStr, '');
       } else if (dateStr === startDate) {
-        // Mismo día
+        // Mismo día (no auto-cerrar, el usuario debe pulsar "Aplicar")
         onChange(dateStr, dateStr);
-        if (onClose) onClose();
       } else {
-        // Cierra el rango
+        // Cierra el rango seleccionando ambas fechas (no auto-cerrar, el usuario debe pulsar "Aplicar")
         onChange(startDate, dateStr);
-        if (onClose) onClose();
       }
     }
   };
