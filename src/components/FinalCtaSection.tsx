@@ -5,8 +5,7 @@ interface FinalCtaSectionProps {
 }
 
 export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) => {
-  const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
-  const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
+  const dudasImg = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603668301-1-348389.webp';
 
   const handleCatalog = (e: React.MouseEvent) => {
     if (onNavigate) {
@@ -56,11 +55,11 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) 
               </div>
             </div>
 
-            {/* Lado Derecho: Imagen del hero con esquinas redondeadas igual al mockup */}
+            {/* Lado Derecho: Imagen de dudas con esquinas redondeadas igual al mockup */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-slate-200">
                 <img
-                  src={heroCarImg}
+                  src={dudasImg}
                   alt="Atención y renta de autos en México con GALSA Rent"
                   loading="lazy"
                   className="w-full h-full object-cover object-center"
