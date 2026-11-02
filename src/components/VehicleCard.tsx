@@ -129,10 +129,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         {/* Separator Line */}
         <div className="h-px bg-slate-100 w-full" />
 
-        {/* Price Divider & Daily Rate */}
+        {/* Price Divider & Daily Rate con hover a blue-500 */}
         <div className="flex items-center justify-between w-full pt-0.5">
           <div className="flex items-baseline gap-[8px] whitespace-nowrap">
-            <span className="font-heading font-bold text-[20px] text-black leading-[28px]">
+            <span className="font-heading font-bold text-[20px] text-black group-hover:text-blue-500 transition-colors leading-[28px]">
               ${vehicle.pricePerDay.toLocaleString('es-MX')}
             </span>
             <span className="font-heading font-normal text-[12px] text-slate-500 leading-[20px]">

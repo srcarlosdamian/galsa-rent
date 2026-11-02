@@ -18,18 +18,21 @@ export const VirtuoExperienceSection: React.FC = () => {
       title: 'Autos revisados uno por uno',
       description: 'Inspección física, documental y fotográfica rigurosa antes de publicar cada unidad en la plataforma.',
       icon: ClipboardCheck,
+      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-2.webp`,
     },
     {
       id: 3,
       title: 'Contrato digital con validez legal',
       description: 'Firma electrónica segura con sellado de tiempo, certeza jurídica mercantil y sin letras chiquitas.',
       icon: FileCheck,
+      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-3.webp`,
     },
     {
       id: 4,
       title: 'Ayuda cuando la necesitas',
       description: 'Atención directa vía WhatsApp y en sucursal oficial para asistirte antes, durante y al devolver tu auto en México.',
       icon: ShieldCheck,
+      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-4.webp`,
     },
   ];
 
