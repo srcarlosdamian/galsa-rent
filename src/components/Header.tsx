@@ -64,21 +64,21 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             </nav>
 
             {/* Account & Register Actions */}
-            <div className="flex items-center space-x-4 shrink-0">
+            <div className="flex items-center space-x-3 shrink-0">
               <a
-                href="/cuenta"
-                onClick={(e) => handleLinkClick(e, '/cuenta')}
+                href="/login"
+                onClick={(e) => handleLinkClick(e, '/login')}
                 className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] border border-slate-200 bg-white text-slate-900 text-[14px] font-medium hover:bg-slate-50 transition-colors"
               >
                 Inicia sesión
               </a>
 
               <a
-                href="/cuenta"
-                onClick={(e) => handleLinkClick(e, '/cuenta')}
+                href="/registro"
+                onClick={(e) => handleLinkClick(e, '/registro')}
                 className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] bg-slate-900 text-white text-[14px] font-medium hover:bg-slate-800 transition-colors"
               >
-                Regístrate
+                Crear cuenta
               </a>
             </div>
           </div>
@@ -121,18 +121,18 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
 
           <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-3">
             <a
-              href="/cuenta"
-              onClick={(e) => handleLinkClick(e, '/cuenta')}
+              href="/login"
+              onClick={(e) => handleLinkClick(e, '/login')}
               className="flex items-center justify-center text-center py-2.5 rounded-[6px] border border-slate-200 bg-white text-slate-900 font-medium text-sm hover:bg-slate-50"
             >
               Inicia sesión
             </a>
             <a
-              href="/cuenta"
-              onClick={(e) => handleLinkClick(e, '/cuenta')}
+              href="/registro"
+              onClick={(e) => handleLinkClick(e, '/registro')}
               className="flex items-center justify-center text-center py-2.5 rounded-[6px] bg-slate-900 text-white font-medium text-sm hover:bg-slate-800"
             >
-              Regístrate
+              Crear cuenta
             </a>
           </div>
         </div>

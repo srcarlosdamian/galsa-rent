@@ -24,6 +24,8 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { AboutPage } from './pages/AboutPage';
 import { BlogPage } from './pages/BlogPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -294,17 +296,13 @@ export const App: React.FC = () => {
         {currentPath === '/terminos' && <TermsPage />}
         {currentPath === '/privacidad' && <PrivacyPage />}
 
+        {/* ROUTE 7.5: INICIAR SESIÓN Y REGISTRO */}
+        {currentPath === '/login' && <LoginPage onNavigate={navigateTo} />}
+        {currentPath === '/registro' && <RegisterPage onNavigate={navigateTo} />}
+
         {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR) */}
         {currentPath === '/cuenta' && (
-          <div className="py-20 text-center max-w-md mx-auto px-4">
-            <h1 className="text-2xl font-bold text-neutral-900 mb-2">Mi Cuenta</h1>
-            <p className="text-xs text-neutral-500 mb-6">Accede a tus contratos digitales y comprobantes de renta en Durango.</p>
-            <div className="p-6 rounded-2xl border border-neutral-200 bg-neutral-50 text-left space-y-3">
-              <label className="text-xs font-bold text-neutral-700 block">Número de teléfono registrado</label>
-              <input type="tel" placeholder="+52 618..." className="w-full text-xs p-2.5 rounded-xl border border-neutral-300" />
-              <button type="button" className="w-full py-2.5 rounded-xl bg-black text-white text-xs font-bold">Enviar código de acceso</button>
-            </div>
-          </div>
+          <LoginPage onNavigate={navigateTo} />
         )}
 
         {/* ROUTE 9: HOME (TAREA 2 COPY & VIRTUO DESIGN) */}

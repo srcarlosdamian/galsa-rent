@@ -131,6 +131,22 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
+  '/login': {
+    title: 'Iniciar Sesión | GALSA Rent México',
+    description: 'Accede a tu cuenta de GALSA Rent para gestionar tus rentas y firmar contratos digitales.',
+    canonical: `${SITE_URL}/login`,
+    ogTitle: 'Iniciar Sesión | GALSA Rent México',
+    ogDescription: 'Accede a tu cuenta de GALSA Rent para gestionar tus rentas y firmar contratos digitales.',
+    ogImage: DEFAULT_OG_IMAGE,
+  },
+  '/registro': {
+    title: 'Crear Cuenta | GALSA Rent México',
+    description: 'Crea tu cuenta en GALSA Rent en un minuto y reserva autos 100% en línea.',
+    canonical: `${SITE_URL}/registro`,
+    ogTitle: 'Crear Cuenta | GALSA Rent México',
+    ogDescription: 'Crea tu cuenta en GALSA Rent en un minuto y reserva autos 100% en línea.',
+    ogImage: DEFAULT_OG_IMAGE,
+  },
 };
 
 export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {

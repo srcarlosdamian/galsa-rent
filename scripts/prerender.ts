@@ -27,6 +27,8 @@ const sitemapUrls = [
   { loc: `${SITE_URL}/confianza`, priority: '0.8', changefreq: 'monthly' },
   { loc: `${SITE_URL}/faq`, priority: '0.8', changefreq: 'weekly' },
   { loc: `${SITE_URL}/contacto`, priority: '0.8', changefreq: 'monthly' },
+  { loc: `${SITE_URL}/login`, priority: '0.7', changefreq: 'monthly' },
+  { loc: `${SITE_URL}/registro`, priority: '0.7', changefreq: 'monthly' },
   { loc: `${SITE_URL}/terminos`, priority: '0.5', changefreq: 'monthly' },
   { loc: `${SITE_URL}/privacidad`, priority: '0.5', changefreq: 'monthly' },
   { loc: `${SITE_URL}/blog`, priority: '0.8', changefreq: 'weekly' },
