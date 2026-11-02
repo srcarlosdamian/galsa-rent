@@ -5,7 +5,7 @@ interface FinalCtaSectionProps {
 }
 
 export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) => {
-  const dudasImg = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603668301-1-348389.webp';
+  const dudasImg = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793605036943-0-gemini_generated_image_udcky4udcky4udck.webp';
 
   const handleCatalog = (e: React.MouseEvent) => {
     if (onNavigate) {
@@ -27,8 +27,8 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) 
     <section className="py-10 md:py-14 bg-white overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
-        {/* Card Contenedor con fondo gris claro sin borde, bordes redondeados y padding idéntico a la referencia */}
-        <div className="w-full bg-[#F3F4F6] rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 lg:p-14">
+        {/* Card Contenedor con fondo gris 50 sin borde, bordes redondeados y padding idéntico a la referencia */}
+        <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 lg:p-14 border-0 shadow-none">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
             
             {/* Lado Izquierdo: Título, Descripción y CTA Hablar por WhatsApp sin icono */}
@@ -57,7 +57,7 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) 
 
             {/* Lado Derecho: Imagen de dudas con esquinas redondeadas igual al mockup */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-slate-200">
+              <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-transparent border-0 shadow-none">
                 <img
                   src={dudasImg}
                   alt="Atención y renta de autos en México con GALSA Rent"

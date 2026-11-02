@@ -11,7 +11,7 @@ const distDir = path.resolve(rootDir, 'dist');
 import { VEHICLES } from '../src/data/vehicles';
 import { BLOG_POSTS } from '../src/data/blog';
 import { STATIC_ROUTES_METADATA, getVehicleMetadata, SITE_URL } from '../src/data/metadata';
-import { getHomeSchemaJson, getVehicleSchemaJson, getFaqSchemaJson, getHostSchemaJson } from '../src/data/schema';
+import { getHomeSchemaJson, getVehicleSchemaJson, getFaqSchemaJson, getHostSchemaJson, getCatalogSchemaJson } from '../src/data/schema';
 
 console.log('⚡ Starting Prerendering / SSG for GALSA Rent...');
 
@@ -89,6 +89,16 @@ function renderPage({ routePath, metadata, schemaJson, initialContentHtml }: any
   html = html.replace(
     /<link rel="canonical" href=".*?" \/>/i,
     `<link rel="canonical" href="${metadata.canonical}" />`
+  );
+
+  // Replace Alternate / Hreflang links
+  html = html.replace(
+    /<link rel="alternate" hreflang="es-MX" href=".*?" \/>/i,
+    `<link rel="alternate" hreflang="es-MX" href="${metadata.canonical}" />`
+  );
+  html = html.replace(
+    /<link rel="alternate" hreflang="x-default" href=".*?" \/>/i,
+    `<link rel="alternate" hreflang="x-default" href="${metadata.canonical}" />`
   );
 
   // Replace OpenGraph Title & Description
@@ -202,7 +212,7 @@ writeRouteFile('/', homeHtml);
 
 // 2. Render Static Pages
 const staticPages = [
-  { route: '/catalogo', schema: null },
+  { route: '/catalogo', schema: getCatalogSchemaJson(VEHICLES), initialHtml: getCatalogInitialHtml() },
   { route: '/como-funciona', schema: null },
   { route: '/nosotros', schema: null },
   { route: '/anfitriones', schema: getHostSchemaJson() },
@@ -216,7 +226,76 @@ const staticPages = [
   { route: '/404', schema: null },
 ];
 
-staticPages.forEach(({ route, schema }) => {
+function getCatalogInitialHtml() {
+  return `
+  <main>
+    <nav aria-label="Miga de pan" style="margin-bottom:1rem;font-size:14px;">
+      <a href="/">Inicio</a> &gt; <span>Catálogo de autos en Durango</span>
+    </nav>
+    <header style="margin-bottom:2rem;">
+      <h1>Catálogo de autos en renta en Durango | GALSA Rent</h1>
+      <p>Explora autos verificados en Durango: sedanes económicos, SUVs familiares y camionetas 4x4 todo terreno de flota propia y anfitriones locales. Reserva 100% en línea con contrato digital, kilometraje libre y entrega inmediata en Sucursal Plaza 450 o Aeropuerto de Durango.</p>
+    </header>
+
+    <section aria-label="Listado de autos disponibles en Durango">
+      <h2>Autos disponibles en Durango (${VEHICLES.length} unidades verificadas)</h2>
+      <ul style="list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;">
+        ${VEHICLES.map((v) => `
+          <li style="border:1px solid #e2e8f0;border-radius:12px;padding:16px;">
+            <a href="/vehiculos/${v.slug}" style="text-decoration:none;color:inherit;">
+              <img src="${v.images[0]?.url || 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793239505248-1-car.webp'}" alt="${v.make} ${v.model} ${v.year} en Durango" width="300" height="200" loading="lazy" style="border-radius:8px;width:100%;object-fit:cover;" />
+              <h3 style="font-size:18px;margin:8px 0 4px 0;">${v.make} ${v.model} ${v.year}</h3>
+              <p style="font-size:13px;color:#64748b;margin:0 0 8px 0;">${v.category} · ${v.transmission} · ${v.seats} plazas · ${v.fuel}</p>
+              <p style="font-size:16px;font-weight:bold;color:#0f172a;margin:0;">$${v.pricePerDay.toLocaleString('es-MX')} MXN <span style="font-size:12px;font-weight:normal;color:#64748b;">/ día</span></p>
+              <p style="font-size:12px;color:#64748b;margin:4px 0 0 0;">Depósito reembolsable: $${v.deposit.toLocaleString('es-MX')} MXN · Entrega en Plaza 450</p>
+            </a>
+          </li>
+        `).join('\n        ')}
+      </ul>
+    </section>
+
+    <section style="margin-top:3rem;padding-top:2rem;border-top:1px solid #e2e8f0;">
+      <h2>Guía de renta de autos en Durango: consejos, requisitos y categorías</h2>
+      <p>Rentar un auto en Durango con GALSA Rent es rápido, transparente y 100% digital. Ya sea que viajes por negocios a la zona industrial de Durango, estés de vacaciones familiares o visites la ciudad para una boda o convención, en nuestro catálogo encontrarás el vehículo adecuado a tu presupuesto y necesidades.</p>
+      
+      <h3>Variedad de modelos en nuestro catálogo de autos</h3>
+      <p>Contamos con una amplia gama de vehículos en Durango para satisfacer todas las preferencias de manejo:</p>
+      <ul>
+        <li><strong>Sedanes económicos y compactos:</strong> Ideales para traslados urbanos diarios con bajo consumo de gasolina. Opciones como Nissan Sentra, Nissan Versa y Volkswagen Virtus cuentan con aire acondicionado, cajuela espaciosa y conectividad Bluetooth.</li>
+        <li><strong>Camionetas SUV familiares:</strong> Diseñadas para grupos y viajes de fin de semana con amplio confort, como Toyota RAV4 y Audi Q5, equipadas con sistemas avanzados de seguridad y asistencia de manejo.</li>
+        <li><strong>Camionetas 4x4 todoterreno:</strong> Modelos emblemáticos como el Jeep Wrangler Rubicon y Jeep Wrangler Sahara, listos para caminos empedrados, excursiones a la Sierra Madre Occidental, cabañas en Mexiquillo o paseos ecoturísticos.</li>
+      </ul>
+
+      <h3>Requisitos claros para rentar un auto en Durango</h3>
+      <p>Nuestro proceso de contratación es digital y libre de fricciones. Solo necesitas:</p>
+      <ol>
+        <li>Edad mínima de 21 años cumplidos.</li>
+        <li>Identificación oficial vigente (INE para nacionales o pasaporte vigente para turistas internacionales).</li>
+        <li>Licencia de conducir vigente (nacional o extranjera).</li>
+        <li>Tarjeta bancaria para la retención del depósito en garantía (reembolsado íntegramente tras devolver la unidad).</li>
+      </ol>
+
+      <h3>Entrega en Plaza 450 y Aeropuerto Internacional de Durango (DGO)</h3>
+      <p>Todas nuestras unidades se entregan con inspección mecánica previa, limpieza profesional y tanque de combustible verificado. Recoge tu vehículo directamente en nuestra sucursal de Plaza 450 sobre Boulevard Guadiana, o coordina la entrega en el Aeropuerto Internacional General Guadalupe Victoria de Durango.</p>
+
+      <h3>Navegación y enlaces útiles</h3>
+      <nav aria-label="Enlaces rápidos">
+        <ul>
+          <li><a href="/">Inicio y reservaciones en línea</a></li>
+          <li><a href="/como-funciona">Cómo funciona el proceso de reserva digital</a></li>
+          <li><a href="/anfitriones">Gana dinero rentando tu propio auto con GALSA</a></li>
+          <li><a href="/confianza">Garantía, cobertura y protección a usuarios</a></li>
+          <li><a href="/faq">Preguntas frecuentes sobre depósitos y pólizas</a></li>
+          <li><a href="/contacto">Sucursales, ubicación y contacto</a></li>
+          <li><a href="/blog">Blog con rutas en carretera y consejos de viaje</a></li>
+        </ul>
+      </nav>
+    </section>
+  </main>
+  `;
+}
+
+staticPages.forEach(({ route, schema, initialHtml }: any) => {
   const meta = STATIC_ROUTES_METADATA[route] || {
     title: 'GALSA Rent Durango',
     description: 'Renta de autos 100% en línea en Durango.',
@@ -230,7 +309,7 @@ staticPages.forEach(({ route, schema }) => {
     routePath: route,
     metadata: meta,
     schemaJson: schema,
-    initialContentHtml: `
+    initialContentHtml: initialHtml || `
       <main>
         <h1>${meta.title}</h1>
         <p>${meta.description}</p>

@@ -83,10 +83,19 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
           </div>
 
-          {/* Vehicle Name con subrayado azul 300 en hover */}
+          {/* Vehicle Name con subrayado azul 300 en hover y enlace accesible */}
           <div className="relative inline-block self-start">
             <h3 className="relative z-10 font-heading font-bold text-[18px] text-black leading-[28px] truncate">
-              {vehicle.make} {vehicle.model}
+              <a
+                href={`/vehiculos/${vehicle.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onSelect) onSelect(vehicle);
+                }}
+                className="text-black hover:text-blue-600 transition-colors"
+              >
+                {vehicle.make} {vehicle.model}
+              </a>
             </h3>
             <span className="absolute left-0 bottom-0.5 w-0 h-2 bg-blue-300 rounded-sm -z-0 transition-all duration-200 group-hover:w-full" />
           </div>

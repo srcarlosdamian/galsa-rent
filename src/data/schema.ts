@@ -138,6 +138,61 @@ export function getFaqSchemaJson() {
   };
 }
 
+export function getCatalogSchemaJson(vehicles: Vehicle[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${SITE_URL}/catalogo#webpage`,
+        url: `${SITE_URL}/catalogo`,
+        name: 'Catálogo de autos en renta en Durango | GALSA Rent',
+        description:
+          'Explora autos verificados en Durango: sedanes económicos, SUVs y 4x4 de flota propia y anfitriones. Contrato digital y entrega en Plaza 450.',
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': `${SITE_URL}/#website`,
+          name: 'GALSA Rent',
+          url: `${SITE_URL}/`,
+        },
+        about: {
+          '@type': 'AutoRental',
+          name: 'GALSA Rent Durango',
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Inicio',
+            item: `${SITE_URL}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Catálogo de autos en Durango',
+            item: `${SITE_URL}/catalogo`,
+          },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Autos disponibles para renta en Durango',
+        numberOfItems: vehicles.length,
+        itemListElement: vehicles.map((v, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: `${v.make} ${v.model} ${v.year}`,
+          url: `${SITE_URL}/vehiculos/${v.slug}`,
+          image: v.images[0]?.url,
+        })),
+      },
+    ],
+  };
+}
+
 export function getHostSchemaJson() {
   return {
     '@context': 'https://schema.org',

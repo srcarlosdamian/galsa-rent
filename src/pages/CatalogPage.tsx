@@ -5,7 +5,7 @@ import { Vehicle, SearchState } from '../types/vehicle';
 import { DateRangePicker } from '../components/DateRangePicker';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
-  ArrowLeft, ArrowRight, ShieldCheck, Tag, Info,
+  ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
   MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train
 } from 'lucide-react';
 
@@ -168,6 +168,15 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
   // Dropdowns abiertos
   const [openDropdown, setOpenDropdown] = useState<'location' | 'dates' | 'type' | 'seats' | 'trans' | 'price' | 'sort' | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
   // Toggle dropdown
   const toggleDropdown = (name: 'location' | 'dates' | 'type' | 'seats' | 'trans' | 'price' | 'sort') => {
@@ -654,6 +663,194 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             </div>
           </div>
         )}
+
+        {/* Barra Social / Compartir Catálogo */}
+        <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-slate-600 text-sm font-heading font-medium">
+            <Share2 className="w-4 h-4 text-blue-600" strokeWidth={1.4} />
+            <span>¿Planeas tu viaje en grupo? Comparte estas opciones de autos:</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="https://api.whatsapp.com/send?text=Checa%20las%20opciones%20de%20autos%20en%20renta%20en%20Durango%20con%20GALSA%20Rent%3A%20https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Compartir en WhatsApp"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+            >
+              <span>WhatsApp</span>
+            </a>
+
+            <a
+              href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Compartir en Facebook"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+            >
+              <span>Facebook</span>
+            </a>
+
+            <a
+              href="https://twitter.com/intent/tweet?text=Renta%20de%20autos%20en%20Durango%20100%25%20en%20l%C3%ADnea%20con%20GALSA%20Rent&url=https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Compartir en X / Twitter"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+            >
+              <span>X (Twitter)</span>
+            </a>
+
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+            >
+              <Copy className="w-3.5 h-3.5 text-slate-500" strokeWidth={1.4} />
+              <span>{copied ? '¡Copiado!' : 'Copiar enlace'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Sección de Contenido e Información SEO para el Catálogo */}
+        <section className="mt-10 bg-gray-50 rounded-[24px] p-6 sm:p-10 border-0">
+          <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight mb-4">
+            Guía de renta de autos en Durango: consejos, requisitos y categorías
+          </h2>
+          
+          <p className="text-sm font-sans text-slate-600 leading-relaxed mb-6">
+            Rentar un auto en Durango con GALSA Rent es rápido, transparente y 100% digital. Ya sea que viajes por negocios a la capital duranguense, disfrutes de unas vacaciones familiares o asistas a un evento especial, en nuestro catálogo encontrarás el vehículo ideal con entrega en Sucursal Plaza 450 o en el Aeropuerto Internacional General Guadalupe Victoria (DGO).
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm">
+              <h3 className="text-sm font-heading font-bold text-slate-900 mb-2">
+                Sedanes, SUVs y 4x4
+              </h3>
+              <p className="text-xs font-sans text-slate-600 leading-relaxed">
+                Contamos con sedanes económicos (Nissan Sentra, Versa, Virtus) de gran rendimiento urbano, SUVs familiares (Toyota RAV4, Audi Q5) para confort en carretera y camionetas 4x4 todo terreno (Jeep Wrangler Rubicon) para la sierra y cabañas en Mexiquillo.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm">
+              <h3 className="text-sm font-heading font-bold text-slate-900 mb-2">
+                Requisitos claros y sin sorpresas
+              </h3>
+              <p className="text-xs font-sans text-slate-600 leading-relaxed">
+                Solo requieres ser mayor de 21 años, presentar identificación oficial vigente (INE o pasaporte), licencia de conducir vigente y tarjeta bancaria para depósito en garantía 100% reembolsable al entregar la unidad.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm">
+              <h3 className="text-sm font-heading font-bold text-slate-900 mb-2">
+                Entrega oficial y asistencia 24/7
+              </h3>
+              <p className="text-xs font-sans text-slate-600 leading-relaxed">
+                Recoge tu vehículo inspeccionado y con tanque listo en Sucursal Plaza 450 (Boulevard Guadiana). Todas nuestras rentas incluyen seguro de cobertura y asistencia vial continua en Durango y carreteras de México.
+              </p>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-200 pt-6">
+            <span className="text-xs font-heading font-semibold text-slate-500 uppercase tracking-wider block mb-3">
+              Enlaces útiles de navegación
+            </span>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-heading font-medium text-blue-600">
+              <a
+                href="/"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                Inicio y reservaciones
+              </a>
+              <a
+                href="/como-funciona"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/como-funciona');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                ¿Cómo funciona la renta digital?
+              </a>
+              <a
+                href="/anfitriones"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/anfitriones');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                Gana dinero como anfitrión
+              </a>
+              <a
+                href="/confianza"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/confianza');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                Garantía y seguridad digital
+              </a>
+              <a
+                href="/faq"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/faq');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                Preguntas frecuentes
+              </a>
+              <a
+                href="/contacto"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/contacto');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                Sucursal Plaza 450 y contacto
+              </a>
+              <a
+                href="/blog"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('/blog');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="hover:underline text-slate-700 hover:text-blue-600"
+              >
+                Blog de rutas y viajes
+              </a>
+            </div>
+          </div>
+        </section>
 
       </div>
     </div>

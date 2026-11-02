@@ -77,8 +77,8 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Bloque Derecho: Cuadrado blanco con bordes redondeados y Ventajas */}
-          <div className="lg:col-span-5 bg-white rounded-[28px] p-6 sm:p-8 border border-neutral-200/90 flex flex-col justify-between shadow-sm">
+          {/* Bloque Derecho: Cuadrado blanco con bordes redondeados y Ventajas (sin sombra) */}
+          <div className="lg:col-span-5 bg-white rounded-[28px] p-6 sm:p-8 border border-neutral-200/90 flex flex-col justify-between shadow-none">
             <div>
               <h4 className="text-lg font-heading font-semibold text-slate-900 mb-6 text-left">
                 Ventajas
