@@ -51,7 +51,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
               {/* Icono 3D mediano arriba del título */}
               <div className="w-16 h-16 sm:w-20 sm:h-20 mb-2">
                 <img
-                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603667514-0-348390.webp"
+                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603910333-0-348390.webp"
                   alt="Programa Anfitriones GALSA"
                   className="w-full h-full object-contain"
                 />
