@@ -11,6 +11,7 @@ export const VirtuoExperienceSection: React.FC = () => {
       title: 'Elige por día, semana o mes',
       description: 'Planes flexibles adaptados a tus fechas de viaje, trabajo o compromisos familiares en México.',
       icon: CalendarRange,
+      imageIcon: `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/icon-step-1.webp`,
     },
     {
       id: 2,
@@ -60,9 +61,17 @@ export const VirtuoExperienceSection: React.FC = () => {
                   const Icon = step.icon;
                   return (
                     <div key={step.id} className="w-full flex items-center gap-4">
-                      {/* Icon container: estilo cápsula blanca redondeada con sombra suave */}
-                      <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-white/80">
-                        <Icon className="w-7 h-7 text-blue-600" strokeWidth={1.4} />
+                      {/* Icon container: estilo cápsula blanca redondeada con sombra suave o imagen 3D */}
+                      <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-white/80 overflow-hidden p-1.5">
+                        {step.imageIcon ? (
+                          <img
+                            src={step.imageIcon}
+                            alt={step.title}
+                            className="w-full h-full object-contain"
+                          />
+                        ) : (
+                          <Icon className="w-7 h-7 text-blue-600" strokeWidth={1.4} />
+                        )}
                       </div>
 
                       {/* Info texto */}
