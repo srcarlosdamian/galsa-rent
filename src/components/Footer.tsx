@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center">
-              <GalsaLogo className="h-6 w-auto text-neutral-900" />
+              <GalsaLogo className="h-6 w-auto text-blue-500" />
             </div>
             
             <p className="text-xs text-neutral-600 leading-relaxed max-w-sm">
@@ -118,8 +118,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
           <div className="flex items-center gap-3 text-white">
-            <span>Última actualización: <strong>02 Nov 2026, 00:40 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.8.8</span>
+            <span>Última actualización: <strong>02 Nov 2026, 00:42 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v1.8.9</span>
           </div>
         </div>
       </div>

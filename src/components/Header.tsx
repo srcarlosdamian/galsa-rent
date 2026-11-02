@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
             aria-label="GALSA - Inicio"
           >
-            <GalsaLogo className="h-6 w-auto text-black" />
+            <GalsaLogo className="h-6 w-auto text-blue-500" />
           </a>
 
           {/* Right Group: Navigation links aligned next to Account buttons (visible only on desktop lg+) */}
