@@ -88,9 +88,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
-                        className="w-full px-4 py-3 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
                       />
-                      <Mail className="absolute right-3.5 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
+                      <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-700 pointer-events-none" strokeWidth={1.4} />
                     </div>
                   </div>
 
@@ -117,9 +117,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full px-4 py-3 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
                       />
-                      <Lock className="absolute right-3.5 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" strokeWidth={1.4} />
+                      <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-700 pointer-events-none" strokeWidth={1.4} />
                     </div>
                   </div>
 
@@ -169,14 +169,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                       <label className="block text-xs font-heading font-semibold text-slate-800">
                         Correo electrónico registrado
                       </label>
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="tucorreo@ejemplo.com"
-                        className="w-full px-4 py-3 rounded-[8px] bg-slate-50/80 border border-slate-200 text-sm font-sans text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                      />
+                      <div className="relative">
+                        <input
+                          type="email"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="tucorreo@ejemplo.com"
+                          className="w-full px-4 py-3 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
+                        />
+                        <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-700 pointer-events-none" strokeWidth={1.4} />
+                      </div>
                     </div>
 
                     <button

@@ -105,61 +105,63 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 <button
                   type="button"
                   onClick={() => setLangOpen(!langOpen)}
-                  className="flex items-center gap-1.5 p-1.5 -my-1 rounded-md text-slate-600 hover:text-black hover:bg-slate-100 transition-colors focus:outline-none"
+                  className="group flex items-center gap-1.5 py-1 text-[14px] leading-none font-heading font-semibold text-slate-500 hover:text-black transition-colors focus:outline-none"
                   aria-label="Seleccionar idioma y moneda"
                   title="Idioma y moneda"
                 >
-                  <Globe className="w-[18px] h-[18px] text-slate-700" strokeWidth={1.4} />
-                  <span className="text-[12px] font-bold uppercase tracking-wider text-slate-700">
+                  <Globe className="w-[18px] h-[18px] text-slate-500 group-hover:text-black transition-colors" strokeWidth={1.4} />
+                  <span className="text-slate-500 group-hover:text-black transition-colors">
                     {selectedLang === 'es' ? 'MXN' : 'USD'}
                   </span>
                 </button>
 
                 {langOpen && (
-                  <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <div className="px-3.5 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                      Idioma y Moneda
-                    </div>
-                    
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedLang('es');
-                        setLangOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left text-sm hover:bg-slate-50 transition-colors ${
-                        selectedLang === 'es' ? 'bg-slate-50/70 text-slate-900 font-medium' : 'text-slate-700'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <MexicoFlag />
-                        <div className="flex flex-col">
-                          <span className="text-[13px] font-semibold text-slate-900">Español</span>
-                          <span className="text-[11px] text-slate-500">MXN · Pesos mexicanos ($)</span>
+                  <div className="absolute right-0 mt-3 w-72 bg-white rounded-[16px] border border-slate-200/80 shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="space-y-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedLang('es');
+                          setLangOpen(false);
+                        }}
+                        className={`w-full text-left p-2.5 rounded-[10px] hover:bg-slate-50 transition-colors flex items-center justify-between group ${
+                          selectedLang === 'es' ? 'bg-slate-50/80' : ''
+                        }`}
+                      >
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 group-hover:bg-slate-200 transition-colors">
+                            <MexicoFlag />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-[14px] font-heading font-medium text-slate-900 truncate">Español</p>
+                            <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">MXN · Pesos mexicanos ($)</p>
+                          </div>
                         </div>
-                      </div>
-                      {selectedLang === 'es' && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />}
-                    </button>
+                        {selectedLang === 'es' && <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" strokeWidth={1.4} />}
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedLang('en');
-                        setLangOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left text-sm hover:bg-slate-50 transition-colors ${
-                        selectedLang === 'en' ? 'bg-slate-50/70 text-slate-900 font-medium' : 'text-slate-700'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <UsaFlag />
-                        <div className="flex flex-col">
-                          <span className="text-[13px] font-semibold text-slate-900">English</span>
-                          <span className="text-[11px] text-slate-500">USD · US Dollars ($)</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedLang('en');
+                          setLangOpen(false);
+                        }}
+                        className={`w-full text-left p-2.5 rounded-[10px] hover:bg-slate-50 transition-colors flex items-center justify-between group ${
+                          selectedLang === 'en' ? 'bg-slate-50/80' : ''
+                        }`}
+                      >
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 group-hover:bg-slate-200 transition-colors">
+                            <UsaFlag />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-[14px] font-heading font-medium text-slate-900 truncate">English</p>
+                            <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">USD · US Dollars ($)</p>
+                          </div>
                         </div>
-                      </div>
-                      {selectedLang === 'en' && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />}
-                    </button>
+                        {selectedLang === 'en' && <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" strokeWidth={1.4} />}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
