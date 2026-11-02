@@ -12,24 +12,28 @@ export const FourStepProcess: React.FC = () => {
       title: 'Elige tu auto',
       description: 'Explora nuestra flota de sedanes, SUVs y camionetas en México y selecciona tus fechas de viaje.',
       icon: Search,
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601314858-3-348387.webp',
     },
     {
       number: '02',
       title: 'Sube tus documentos',
       description: 'Carga tu licencia de conducir vigente, INE y comprobante de domicilio directamente desde tu teléfono celular.',
       icon: UploadCloud,
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601314439-2-348385.webp',
     },
     {
       number: '03',
       title: 'Firma tu contrato digital',
       description: 'Firma electrónicamente el contrato con validez legal mercantil. Sin letras chiquitas ni cláusulas ocultas.',
       icon: FileSignature,
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601313796-1-348386.webp',
     },
     {
       number: '04',
       title: 'Recibe tu unidad',
       description: 'Acude a tu punto de entrega oficial o terminal, realiza la revisión fotográfica en minutos y ponte al volante.',
       icon: KeyRound,
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601312824-0-348388.webp',
     },
   ];
 
@@ -87,7 +91,7 @@ export const FourStepProcess: React.FC = () => {
                   <div className="relative w-full aspect-[16/10] rounded-2xl overflow-visible bg-slate-100 mb-6">
                     <div className="w-full h-full rounded-2xl overflow-hidden">
                       <img
-                        src={heroCarImg}
+                        src={s.image}
                         alt={s.title}
                         loading="lazy"
                         className="w-full h-full object-cover object-center"
@@ -127,7 +131,7 @@ export const FourStepProcess: React.FC = () => {
                 <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
                   <div className="w-full h-full rounded-2xl overflow-hidden">
                     <img
-                      src={heroCarImg}
+                      src={s.image}
                       alt={s.title}
                       loading="lazy"
                       className="w-full h-full object-cover object-center"
