@@ -309,7 +309,7 @@ export const App: React.FC = () => {
         {currentPath === '/' && (
           <>
             {/* HERO SECTION REDISEÑADO CON LÍNEA AZUL Y BARRA DE BÚSQUEDA CENTRADA */}
-            <section className="pt-8 pb-14 md:pt-12 md:pb-20 bg-white overflow-hidden">
+            <section className="pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28 bg-white overflow-hidden">
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
                 
                 {/* Bloque de Título y Subtítulo centrado */}
@@ -328,8 +328,8 @@ export const App: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Card con Barra de Búsqueda sobre Fondo con mayor padding arriba y abajo para darle altura al hero */}
-                <div className="w-full max-w-[944px] relative rounded-2xl border border-slate-200 overflow-visible py-12 sm:py-16 px-5 bg-slate-100 flex flex-col justify-center items-center">
+                {/* Card con Barra de Búsqueda sobre Fondo con exactamente 20px de padding */}
+                <div className="w-full max-w-[944px] relative rounded-2xl border border-slate-200 overflow-visible p-[20px] bg-slate-100 flex flex-col justify-center items-center">
                   {/* Imagen de fondo / vehículo en la parte posterior contenida con bordes redondeados */}
                   <div className="absolute inset-0 pointer-events-none z-0 rounded-2xl overflow-hidden">
                     <img
