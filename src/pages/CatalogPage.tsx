@@ -2,22 +2,141 @@ import React, { useState, useMemo } from 'react';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
 import { Vehicle, SearchState } from '../types/vehicle';
+import { DateRangePicker } from '../components/DateRangePicker';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
-  ArrowLeft, ArrowRight, ShieldCheck, Tag, Info
+  ArrowLeft, ArrowRight, ShieldCheck, Tag, Info,
+  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train
 } from 'lucide-react';
 
 interface CatalogPageProps {
   onSelectVehicle: (v: Vehicle) => void;
   onNavigate?: (path: string) => void;
   searchState?: SearchState;
+  onSearchChange?: (newSearch: SearchState) => void;
 }
+
+const LOCATION_OPTIONS = [
+  {
+    id: 'current',
+    title: 'Ubicación actual',
+    subtitle: null,
+    icon: Navigation,
+    value: 'Mi ubicación actual',
+  },
+  {
+    id: 'anywhere',
+    title: 'Cualquier lugar',
+    subtitle: 'Ver todos los autos',
+    icon: Globe,
+    value: '',
+  },
+  {
+    id: 'durango-main',
+    title: 'Sucursal Plaza 450, Durango',
+    subtitle: 'Punto oficial de entrega · Blvd. Guadiana',
+    icon: Building2,
+    value: 'Sucursal Plaza 450, Durango',
+  },
+  {
+    id: 'dgo-airport',
+    title: 'DGO – Aeropuerto Internacional de Durango',
+    subtitle: 'Entrega programada en terminal aérea',
+    icon: Plane,
+    value: 'Aeropuerto Internacional de Durango (DGO)',
+  },
+  {
+    id: 'centro-durango',
+    title: 'Centro Histórico, Durango',
+    subtitle: 'Zona turística y comercial',
+    icon: Hotel,
+    value: 'Centro Histórico, Durango',
+  },
+  {
+    id: 'central-camionera',
+    title: 'Central de Autobuses de Durango',
+    subtitle: 'Terminal terrestre Blvd. Francisco Villa',
+    icon: Train,
+    value: 'Central de Autobuses de Durango',
+  },
+];
 
 export const CatalogPage: React.FC<CatalogPageProps> = ({ 
   onSelectVehicle, 
   onNavigate,
-  searchState 
+  searchState,
+  onSearchChange 
 }) => {
+  // Ubicación y fechas locales/sincronizadas
+  const [selectedLocation, setSelectedLocation] = useState<string>(searchState?.location || '');
+  const [startDate, setStartDate] = useState<string>(searchState?.startDate || '');
+  const [endDate, setEndDate] = useState<string>(searchState?.endDate || '');
+  const [detectingLocation, setDetectingLocation] = useState(false);
+
+  // Sincronizar si cambia searchState externo
+  React.useEffect(() => {
+    if (searchState?.location !== undefined) setSelectedLocation(searchState.location);
+    if (searchState?.startDate !== undefined) setStartDate(searchState.startDate);
+    if (searchState?.endDate !== undefined) setEndDate(searchState.endDate);
+  }, [searchState?.location, searchState?.startDate, searchState?.endDate]);
+
+  // Manejador de cambio de ubicación
+  const handleLocationSelect = (locVal: string) => {
+    setSelectedLocation(locVal);
+    if (onSearchChange && searchState) {
+      onSearchChange({ ...searchState, location: locVal });
+    }
+    setOpenDropdown(null);
+  };
+
+  // Manejador de detección de ubicación actual
+  const handleDetectCurrentLocation = () => {
+    if (typeof window === 'undefined' || !navigator.geolocation) {
+      handleLocationSelect('Mi ubicación actual');
+      return;
+    }
+
+    setDetectingLocation(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`
+          );
+          if (res.ok) {
+            const data = await res.json();
+            const city = data.city || data.locality || data.principalSubdivision || '';
+            const state = data.principalSubdivision || '';
+            const country = data.countryName || 'México';
+            let detectedStr = city && state && city !== state ? `${city}, ${state}` : (city || state ? `${city || state}, ${country}` : country);
+            handleLocationSelect(detectedStr || 'Mi ubicación actual');
+          } else {
+            handleLocationSelect('Mi ubicación actual');
+          }
+        } catch {
+          handleLocationSelect('Mi ubicación actual');
+        } finally {
+          setDetectingLocation(false);
+        }
+      },
+      () => {
+        setDetectingLocation(false);
+        handleLocationSelect('Mi ubicación actual');
+      },
+      { timeout: 8000, maximumAge: 600000 }
+    );
+  };
+
+  // Formato legible de fechas
+  const formatDisplayDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    const [y, m, d] = dateStr.split('-');
+    if (!y || !m || !d) return dateStr;
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    return `${d} ${months[parseInt(m, 10) - 1]}`;
+  };
+
   // Normalizar filtro inicial si viene de searchState (ej: 'SUV / Aventura' -> 'SUV', 'Sedán / Negocios' -> 'Sedán')
   const getInitialTypeFilter = (cat?: string) => {
     if (!cat) return 'Todos';
@@ -48,15 +167,21 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   const itemsPerPage = 6;
 
   // Dropdowns abiertos
-  const [openDropdown, setOpenDropdown] = useState<'type' | 'seats' | 'trans' | 'price' | 'sort' | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<'location' | 'dates' | 'type' | 'seats' | 'trans' | 'price' | 'sort' | null>(null);
 
   // Toggle dropdown
-  const toggleDropdown = (name: 'type' | 'seats' | 'trans' | 'price' | 'sort') => {
+  const toggleDropdown = (name: 'location' | 'dates' | 'type' | 'seats' | 'trans' | 'price' | 'sort') => {
     setOpenDropdown(prev => prev === name ? null : name);
   };
 
   // Reset all
   const resetFilters = () => {
+    handleLocationSelect('');
+    setStartDate('');
+    setEndDate('');
+    if (onSearchChange && searchState) {
+      onSearchChange({ ...searchState, location: '', startDate: '', endDate: '' });
+    }
     setVehicleTypeFilter('Todos');
     setSeatsFilter('Todos');
     setTransmissionFilter('Todos');
@@ -69,6 +194,13 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   // Filtrado reactivo
   const filteredVehicles = useMemo(() => {
     return VEHICLES.filter((v) => {
+      // Ubicación
+      if (selectedLocation && selectedLocation !== 'Mi ubicación actual') {
+        const normLoc = selectedLocation.toLowerCase();
+        const vLoc = (v.location + ' ' + v.city).toLowerCase();
+        if (!vLoc.includes(normLoc) && !normLoc.includes('durango')) return false;
+      }
+
       // Tipo de vehículo
       if (vehicleTypeFilter !== 'Todos') {
         if (vehicleTypeFilter === 'SUV' && !v.category.includes('SUV')) return false;
@@ -98,7 +230,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
       if (sortBy === 'year-desc') return b.year - a.year;
       return 0; // recomendado (orden original)
     });
-  }, [vehicleTypeFilter, seatsFilter, transmissionFilter, priceMaxFilter, sortBy]);
+  }, [selectedLocation, vehicleTypeFilter, seatsFilter, transmissionFilter, priceMaxFilter, sortBy]);
 
   // Paginación cálculos
   const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage) || 1;
@@ -116,17 +248,12 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     <div className="py-6 sm:py-10 bg-white" onClick={() => setOpenDropdown(null)}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
-        {/* Título y Conteo de Resultados */}
+        {/* Título y Conteo de Resultados (sin texto redundante abajo) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
           <div>
             <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
               AUTOS DISPONIBLES ({filteredVehicles.length})
             </h1>
-            <p className="text-xs text-slate-500 font-heading mt-0.5">
-              {searchState?.location ? `Ubicación: ${searchState.location} · ` : ''}
-              {searchState?.startDate && searchState?.endDate ? `Fechas: ${searchState.startDate} al ${searchState.endDate} · ` : ''}
-              Tarifas finales por día con kilometraje libre e impuestos incluidos
-            </p>
           </div>
 
           {/* Selector de ordenamiento */}
@@ -175,8 +302,114 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         </div>
 
-        {/* Barra de Filtros interactivos horizontales (Formato exacto de la referencia) */}
+        {/* Barra de Filtros interactivos con Ubicación, Fechas y Filtros horizontales */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 py-2 border-b border-slate-100 mb-6" onClick={(e) => e.stopPropagation()}>
+          
+          {/* Input/Dropdown de Ubicación (Idéntico a Home) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => toggleDropdown('location')}
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+                selectedLocation
+                  ? 'border-black bg-black text-white'
+                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+              }`}
+            >
+              <MapPin className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+              <span className="max-w-[160px] sm:max-w-[200px] truncate">
+                {selectedLocation || 'Ubicación'}
+              </span>
+              <ChevronDown className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+            </button>
+
+            {openDropdown === 'location' && (
+              <div 
+                className="absolute top-full left-0 mt-2 w-[320px] sm:w-[360px] bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2.5 z-50 animate-in fade-in-50 zoom-in-95 duration-150"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="space-y-1">
+                  {LOCATION_OPTIONS.map((loc) => {
+                    const Icon = loc.icon;
+                    return (
+                      <button
+                        key={loc.id}
+                        type="button"
+                        onClick={() => {
+                          if (loc.id === 'current') {
+                            handleDetectCurrentLocation();
+                          } else {
+                            handleLocationSelect(loc.value);
+                          }
+                        }}
+                        className="w-full text-left p-2 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3 group"
+                      >
+                        <div className="w-8 h-8 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
+                          <Icon className="w-4 h-4" strokeWidth={1.4} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[13px] font-heading font-medium text-slate-900 truncate flex items-center gap-1.5">
+                            <span>{loc.title}</span>
+                            {loc.id === 'current' && detectingLocation && (
+                              <span className="text-[10px] font-normal text-blue-600 animate-pulse">
+                                (Detectando...)
+                              </span>
+                            )}
+                          </p>
+                          {loc.subtitle && (
+                            <p className="text-[11px] font-heading font-normal text-slate-500 truncate">
+                              {loc.subtitle}
+                            </p>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Selector de Fechas (Rango con DateRangePicker idéntico a Home) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => toggleDropdown('dates')}
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+                startDate && endDate
+                  ? 'border-black bg-black text-white'
+                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+              }`}
+            >
+              <Calendar className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+              <span>
+                {startDate && endDate 
+                  ? `${formatDisplayDate(startDate)} - ${formatDisplayDate(endDate)}` 
+                  : 'Fechas'}
+              </span>
+              <ChevronDown className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+            </button>
+
+            {openDropdown === 'dates' && (
+              <div 
+                className="absolute top-full left-0 sm:left-auto mt-2 z-50 max-w-[95vw] sm:max-w-none"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DateRangePicker
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={(start, end) => {
+                    setStartDate(start);
+                    setEndDate(end);
+                    if (onSearchChange && searchState) {
+                      onSearchChange({ ...searchState, startDate: start, endDate: end });
+                    }
+                  }}
+                  onClose={() => setOpenDropdown(null)}
+                />
+              </div>
+            )}
+          </div>
           
           {/* 1. Tipo de Vehículo */}
           <div className="relative">
@@ -333,7 +566,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
 
           {/* Botón Reset */}
-          {(vehicleTypeFilter !== 'Todos' || seatsFilter !== 'Todos' || transmissionFilter !== 'Todos' || priceMaxFilter < 3500) && (
+          {(selectedLocation || (startDate && endDate) || vehicleTypeFilter !== 'Todos' || seatsFilter !== 'Todos' || transmissionFilter !== 'Todos' || priceMaxFilter < 3500) && (
             <button
               type="button"
               onClick={resetFilters}

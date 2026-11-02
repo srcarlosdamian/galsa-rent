@@ -258,6 +258,7 @@ export const App: React.FC = () => {
             onSelectVehicle={(v) => navigateTo(`/vehiculos/${v.slug}`)}
             onNavigate={navigateTo}
             searchState={searchState}
+            onSearchChange={setSearchState}
           />
         )}
 
