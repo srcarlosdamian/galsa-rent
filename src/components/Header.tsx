@@ -185,15 +185,15 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             </div>
           </div>
 
-          {/* Mobile & Tablet Menu Toggle Button (visible up to lg) */}
+          {/* Mobile & Tablet Menu Toggle Button (visible up to lg) con borde redondeado gris claro */}
           <div className="flex lg:hidden items-center space-x-2">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-black focus:outline-none rounded-lg"
+              className="p-2 rounded-[8px] border border-slate-200 bg-white text-slate-700 hover:text-black hover:bg-slate-50 transition-colors focus:outline-none"
               aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5 text-slate-800" strokeWidth={1.5} /> : <Menu className="w-5 h-5 text-slate-800" strokeWidth={1.5} />}
             </button>
           </div>
 
