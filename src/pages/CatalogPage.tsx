@@ -272,7 +272,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               <button
                 type="button"
                 onClick={() => toggleDropdown('sort')}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-slate-200 bg-white text-[13px] font-heading font-semibold text-slate-900 hover:border-slate-300 transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors"
               >
                 <span>
                   {sortBy === 'recommended' && 'Recomendados'}
@@ -319,17 +319,17 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={() => toggleDropdown('location')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading transition-colors ${
                 selectedLocation
-                  ? 'border-black bg-black text-white'
-                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+                  ? 'border-slate-800 text-slate-900 bg-white font-semibold'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 font-medium'
               }`}
             >
-              <MapPin className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+              <MapPin className={`w-4 h-4 shrink-0 ${selectedLocation ? 'text-slate-900' : 'text-slate-500'}`} strokeWidth={1.4} />
               <span className="max-w-[160px] sm:max-w-[200px] truncate">
                 {selectedLocation || 'Ubicación'}
               </span>
-              <ChevronDown className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+              <ChevronDown className={`w-4 h-4 shrink-0 ${selectedLocation ? 'text-slate-900' : 'text-slate-400'}`} strokeWidth={1.4} />
             </button>
 
             {openDropdown === 'location' && (
@@ -384,19 +384,19 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={() => toggleDropdown('dates')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading transition-colors ${
                 startDate && endDate
-                  ? 'border-black bg-black text-white'
-                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+                  ? 'border-slate-800 text-slate-900 bg-white font-semibold'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 font-medium'
               }`}
             >
-              <Calendar className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+              <Calendar className={`w-4 h-4 shrink-0 ${startDate && endDate ? 'text-slate-900' : 'text-slate-500'}`} strokeWidth={1.4} />
               <span>
                 {startDate && endDate 
                   ? `${formatDisplayDate(startDate)} - ${formatDisplayDate(endDate)}` 
                   : 'Fechas'}
               </span>
-              <ChevronDown className="w-4 h-4 shrink-0" strokeWidth={1.4} />
+              <ChevronDown className={`w-4 h-4 shrink-0 ${startDate && endDate ? 'text-slate-900' : 'text-slate-400'}`} strokeWidth={1.4} />
             </button>
 
             {openDropdown === 'dates' && (
@@ -425,10 +425,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={() => toggleDropdown('type')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading transition-colors ${
                 vehicleTypeFilter !== 'Todos'
-                  ? 'border-black bg-black text-white'
-                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+                  ? 'border-slate-800 text-slate-900 bg-white font-semibold'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 font-medium'
               }`}
             >
               <span>Tipo: {vehicleTypeFilter}</span>
@@ -462,10 +462,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={() => toggleDropdown('seats')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading transition-colors ${
                 seatsFilter !== 'Todos'
-                  ? 'border-black bg-black text-white'
-                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+                  ? 'border-slate-800 text-slate-900 bg-white font-semibold'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 font-medium'
               }`}
             >
               <span>Asientos: {seatsFilter !== 'Todos' ? `${seatsFilter}+` : 'Todos'}</span>
@@ -499,10 +499,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={() => toggleDropdown('trans')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading transition-colors ${
                 transmissionFilter !== 'Todos'
-                  ? 'border-black bg-black text-white'
-                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+                  ? 'border-slate-800 text-slate-900 bg-white font-semibold'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 font-medium'
               }`}
             >
               <span>Transmisión: {transmissionFilter}</span>
@@ -536,10 +536,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={() => toggleDropdown('price')}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border text-[13px] font-heading transition-colors ${
                 priceMaxFilter < 3500
-                  ? 'border-black bg-black text-white'
-                  : 'border-slate-300 bg-white text-slate-800 hover:border-slate-400'
+                  ? 'border-slate-800 text-slate-900 bg-white font-semibold'
+                  : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 font-medium'
               }`}
             >
               <span>Hasta ${priceMaxFilter.toLocaleString('es-MX')} MXN</span>
