@@ -36,7 +36,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Autos deportivos de alto rendimiento',
       filter: 'Deportivo',
       description: 'Potencia, aerodinámica y diseño imponente para disfrutar la carretera con una experiencia de manejo inigualable.',
-      video: 'https://videos.pexels.com/video-files/39140749/16655563_1440_2560_60fps.mp4',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793602112331-0-gemini_generated_image_e6ioffe6ioffe6io.webp',
       alt: 'Autos deportivos en México',
     },
     {
