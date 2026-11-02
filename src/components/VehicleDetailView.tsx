@@ -691,56 +691,42 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         </div>
 
         {/* ========================================================
-            4. BANNER FINAL TIPO HOME: INVITACIÓN A EMPEZAR CONVERSACIÓN
+            4. BANNER FINAL: ¿TIENES DUDAS? (Formato idéntico al Home: fondo 50, sin línea, imagen 3D)
            ======================================================== */}
         <div className="mt-12 sm:mt-16">
-          <div className="w-full bg-[#F9FAFB] border border-slate-200/60 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12">
+          <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 lg:p-14 border-0 shadow-none">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
               
-              {/* Lado Izquierdo */}
-              <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
-                    ¿Tienes dudas sobre esta unidad o requieres cotización especial?
-                  </h3>
-                  <p className="text-sm font-sans text-slate-600 leading-relaxed">
-                    Inicia una conversación directa con nuestro equipo. Te asesoramos sobre requisitos, contratos para empresas y entregas personalizadas en terminales aéreas.
-                  </p>
-                </div>
+              {/* Lado Izquierdo: Título, Descripción y CTA */}
+              <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-4 sm:space-y-5">
+                <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
+                  ¿Tienes dudas sobre esta unidad?
+                </h3>
 
-                <div className="pt-2 flex flex-wrap items-center gap-4">
+                <p className="text-sm sm:text-[15px] font-sans text-slate-600 leading-relaxed max-w-lg">
+                  Atención local directa y personalizada en México. Resolvemos tus preguntas sobre modelos, requisitos, depósitos en garantía y entregas oficiales.
+                </p>
+
+                {/* Botón CTA único: Hablar por WhatsApp sin icono */}
+                <div className="pt-2">
                   <a
-                    href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent%2C%20tengo%20preguntas%20sobre%20una%20unidad"
+                    href={`https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20el%20vehículo%20${encodeURIComponent(vehicle.make + ' ' + vehicle.model)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ backgroundColor: '#4F46E5' }}
-                    className="inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-6 py-3 rounded-xl transition-all shadow-xs gap-2"
+                    style={{ backgroundColor: '#3D63FF' }}
+                    className="inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-none"
                   >
-                    <span>Empezar conversación</span>
-                    <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
-                  </a>
-
-                  <a
-                    href="/faq"
-                    onClick={(e) => {
-                      if (onNavigate) {
-                        e.preventDefault();
-                        onNavigate('/faq');
-                      }
-                    }}
-                    className="text-sm font-heading font-semibold text-[#4F46E5] hover:text-[#4338CA] transition-colors"
-                  >
-                    Ver preguntas frecuentes
+                    <span>Hablar por WhatsApp</span>
                   </a>
                 </div>
               </div>
 
-              {/* Lado Derecho: Imagen del hero redondeada */}
+              {/* Lado Derecho: Imagen de dudas con esquinas redondeadas igual al Home */}
               <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[460px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-slate-200 shadow-sm border border-slate-200/80">
+                <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-transparent border-0 shadow-none">
                   <img
-                    src={heroCarImg}
-                    alt="Atención personalizada GALSA Rent"
+                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793605036943-0-gemini_generated_image_udcky4udcky4udck.webp"
+                    alt={`Atención y dudas sobre ${vehicle.make} ${vehicle.model} - GALSA Rent`}
                     loading="lazy"
                     className="w-full h-full object-cover object-center"
                   />
