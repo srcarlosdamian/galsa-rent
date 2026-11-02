@@ -1,20 +1,19 @@
 import React from 'react';
 
 export const TrustSafetySection: React.FC = () => {
-  const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
-  const trustImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/renta-galsa.webp`;
+  const trustImg = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793602180349-0-gemini_generated_image_jh5gb1jh5gb1jh5g-2.webp';
 
   return (
     <section id="seguridad" className="w-full py-10 md:py-14 bg-white overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
-        {/* Tarjeta negra con max-width y bordes redondeados */}
-        <div className="w-full bg-black text-white rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16">
+        {/* Contenedor gris con max-width y bordes redondeados */}
+        <div className="w-full bg-[#18181b] sm:bg-[#202024] text-white rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
             
             {/* Lado Izquierdo: Imagen cuadrada con bordes redondeados */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-neutral-900 border border-neutral-800 shadow-2xl">
+              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-neutral-900 border border-neutral-800/80 shadow-none">
                 <img
                   src={trustImg}
                   alt="Cada renta respaldada de principio a fin con GALSA"
