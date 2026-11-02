@@ -331,9 +331,9 @@ export const App: React.FC = () => {
                 </div>
 
                 {/* Card con Barra de Búsqueda sobre Fondo con exactamente 20px de padding tanto en altura como en anchura */}
-                <div className="w-full max-w-[944px] relative rounded-2xl border border-slate-200 overflow-hidden p-[20px] bg-slate-100 flex flex-col justify-center items-center">
-                  {/* Imagen de fondo / vehículo en la parte posterior */}
-                  <div className="absolute inset-0 pointer-events-none z-0">
+                <div className="w-full max-w-[944px] relative rounded-2xl border border-slate-200 overflow-visible p-[20px] bg-slate-100 flex flex-col justify-center items-center">
+                  {/* Imagen de fondo / vehículo en la parte posterior contenida con bordes redondeados */}
+                  <div className="absolute inset-0 pointer-events-none z-0 rounded-2xl overflow-hidden">
                     <img
                       src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/images/figma-hero.webp`}
                       alt="Renta de autos en México — GALSA Rent"
