@@ -121,21 +121,21 @@ export const FourStepProcess: React.FC = () => {
           {steps.map((s) => {
             const Icon = s.icon;
             return (
-              <div key={s.number} className="flex flex-col items-start group">
+              <div key={s.number} className="flex flex-col items-start">
                 
-                {/* Contenedor de Imagen */}
+                {/* Contenedor de Imagen estático sin efectos de zoom ni traslación */}
                 <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
                   <div className="w-full h-full rounded-2xl overflow-hidden">
                     <img
                       src={heroCarImg}
                       alt={s.title}
                       loading="lazy"
-                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover object-center"
                     />
                   </div>
 
-                  {/* Badge cuadrado flotante en esquina inferior izquierda */}
-                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-black rounded-xl flex items-center justify-center z-10 transition-transform group-hover:translate-y-[-2px]">
+                  {/* Badge cuadrado flotante en esquina inferior izquierda estático */}
+                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-black rounded-xl flex items-center justify-center z-10">
                     <Icon className="w-5 h-5 text-white" strokeWidth={1.4} />
                   </div>
                 </div>
