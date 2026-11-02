@@ -12,7 +12,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
       title: 'Explora México con total autonomía',
       filter: 'Todos',
       description: 'Descubre destinos coloniales, parajes cinematográficos, playas y rutas emblemáticas de México a tu propio ritmo.',
-      video: 'https://videos.pexels.com/video-files/35078421/14859894_1440_2560_30fps.mp4',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793602007603-1-gemini_generated_image_wosvacwosvacwosv.webp',
       alt: 'Explora México con total autonomía',
     },
     {
