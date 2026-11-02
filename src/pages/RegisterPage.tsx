@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, Lock, CheckCircle2 } from 'lucide-react';
-import { GalsaLogo } from '../components/GalsaLogo';
 
 interface RegisterPageProps {
   onNavigate: (path: string) => void;
@@ -44,11 +43,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
             
             {!isSuccess ? (
               <>
-                {/* Logo GALSA */}
-                <div className="mb-5 flex items-center">
-                  <GalsaLogo className="h-6 w-auto text-blue-500" />
-                </div>
-
                 {/* Field selector Iniciar sesión / Crear cuenta (homologado con borde de botones rounded-[8px]) */}
                 <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center mb-6 w-full max-w-[280px]">
                   <button

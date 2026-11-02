@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mail, Lock, KeyRound, CheckCircle2 } from 'lucide-react';
-import { GalsaLogo } from '../components/GalsaLogo';
 
 interface LoginPageProps {
   onNavigate: (path: string) => void;
@@ -43,11 +42,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
             
             {!showForgot ? (
               <>
-                {/* Logo GALSA */}
-                <div className="mb-5 flex items-center">
-                  <GalsaLogo className="h-6 w-auto text-blue-500" />
-                </div>
-
                 {/* Field selector Iniciar sesión / Crear cuenta (homologado con borde de botones rounded-[8px]) */}
                 <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center mb-6 w-full max-w-[280px]">
                   <button
