@@ -30,12 +30,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
       <div className="w-full max-w-[1020px] bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-6 lg:p-8 border-0 shadow-none">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 items-stretch">
           
-          {/* Columna Izquierda: Imagen en contenedor redondeado */}
-          <div className="hidden md:flex flex-col justify-center items-center bg-[#F3F5F9] rounded-[22px] p-6 lg:p-8 min-h-[480px] overflow-hidden">
+          {/* Columna Izquierda: Imagen full bleed en contenedor redondeado */}
+          <div className="hidden md:block relative rounded-[22px] overflow-hidden min-h-[520px]">
             <img
               src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793605709248-0-gemini_generated_image_vkzt4nvkzt4nvkzt.webp"
               alt="Registro GALSA Rent"
-              className="w-full h-auto max-h-[420px] object-contain drop-shadow-sm"
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
 
