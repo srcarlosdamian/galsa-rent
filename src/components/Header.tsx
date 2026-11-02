@@ -1,6 +1,26 @@
-import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Menu, X, Globe, Check } from 'lucide-react';
 import { GalsaLogo } from './GalsaLogo';
+
+// Banderas en SVG de alta fidelidad
+const MexicoFlag = () => (
+  <svg className="w-5 h-3.5 rounded-[2px] shadow-xs shrink-0 object-cover" viewBox="0 0 640 480" aria-hidden="true">
+    <path fill="#006847" d="M0 0h213.3v480H0z"/>
+    <path fill="#fff" d="M213.3 0h213.4v480H213.3z"/>
+    <path fill="#ce1126" d="M426.7 0H640v480H426.7z"/>
+    <circle cx="320" cy="240" r="28" fill="#8c6239" opacity="0.85"/>
+  </svg>
+);
+
+const UsaFlag = () => (
+  <svg className="w-5 h-3.5 rounded-[2px] shadow-xs shrink-0 object-cover" viewBox="0 0 640 480" aria-hidden="true">
+    <g fill="#b22234">
+      <path d="M0 0h640v37H0zm0 74h640v37H0zm0 74h640v37H0zm0 74h640v37H0zm0 73h640v37H0zm0 74h640v37H0zm0 74h640v37H0z"/>
+    </g>
+    <path fill="#fff" d="M0 37h640v37H0zm0 74h640v37H0zm0 74h640v37H0zm0 74h640v37H0zm0 73h640v37H0zm0 74h640v37H0z"/>
+    <path fill="#3c3b6e" d="M0 0h256v259H0z"/>
+  </svg>
+);
 
 interface HeaderProps {
   currentPath?: string;
@@ -9,6 +29,24 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [selectedLang, setSelectedLang] = useState<'es' | 'en'>('es');
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Cerrar dropdown al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    if (langOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [langOpen]);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     if (onNavigate) {
@@ -61,6 +99,70 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                   </a>
                 );
               })}
+
+              {/* Selector de Idioma y Moneda (después de NOSOTROS) */}
+              <div className="relative" ref={langDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setLangOpen(!langOpen)}
+                  className="flex items-center gap-1.5 p-1.5 -my-1 rounded-md text-slate-600 hover:text-black hover:bg-slate-100 transition-colors focus:outline-none"
+                  aria-label="Seleccionar idioma y moneda"
+                  title="Idioma y moneda"
+                >
+                  <Globe className="w-[18px] h-[18px] text-slate-700" strokeWidth={1.4} />
+                  <span className="text-[12px] font-bold uppercase tracking-wider text-slate-700">
+                    {selectedLang === 'es' ? 'MXN' : 'USD'}
+                  </span>
+                </button>
+
+                {langOpen && (
+                  <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="px-3.5 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                      Idioma y Moneda
+                    </div>
+                    
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedLang('es');
+                        setLangOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left text-sm hover:bg-slate-50 transition-colors ${
+                        selectedLang === 'es' ? 'bg-slate-50/70 text-slate-900 font-medium' : 'text-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <MexicoFlag />
+                        <div className="flex flex-col">
+                          <span className="text-[13px] font-semibold text-slate-900">Español</span>
+                          <span className="text-[11px] text-slate-500">MXN · Pesos mexicanos ($)</span>
+                        </div>
+                      </div>
+                      {selectedLang === 'es' && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedLang('en');
+                        setLangOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 text-left text-sm hover:bg-slate-50 transition-colors ${
+                        selectedLang === 'en' ? 'bg-slate-50/70 text-slate-900 font-medium' : 'text-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <UsaFlag />
+                        <div className="flex flex-col">
+                          <span className="text-[13px] font-semibold text-slate-900">English</span>
+                          <span className="text-[11px] text-slate-500">USD · US Dollars ($)</span>
+                        </div>
+                      </div>
+                      {selectedLang === 'en' && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />}
+                    </button>
+                  </div>
+                )}
+              </div>
             </nav>
 
             {/* Account & Register Actions */}
@@ -117,6 +219,45 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 </a>
               );
             })}
+          </div>
+
+          {/* Selector de idioma mobile */}
+          <div className="pt-2 pb-1 border-t border-slate-100">
+            <div className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+              Idioma y moneda
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedLang('es')}
+                className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
+                  selectedLang === 'es'
+                    ? 'border-blue-500 bg-blue-50/50 text-slate-900 font-medium'
+                    : 'border-slate-200 bg-white text-slate-700'
+                }`}
+              >
+                <MexicoFlag />
+                <div className="flex flex-col leading-tight">
+                  <span className="text-[12px] font-semibold">Español</span>
+                  <span className="text-[10px] text-slate-500">MXN ($)</span>
+                </div>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedLang('en')}
+                className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
+                  selectedLang === 'en'
+                    ? 'border-blue-500 bg-blue-50/50 text-slate-900 font-medium'
+                    : 'border-slate-200 bg-white text-slate-700'
+                }`}
+              >
+                <UsaFlag />
+                <div className="flex flex-col leading-tight">
+                  <span className="text-[12px] font-semibold">English</span>
+                  <span className="text-[10px] text-slate-500">USD ($)</span>
+                </div>
+              </button>
+            </div>
           </div>
 
           <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-3">
