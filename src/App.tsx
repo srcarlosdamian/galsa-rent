@@ -330,15 +330,14 @@ export const App: React.FC = () => {
                 </div>
 
                 {/* Card con Barra de Búsqueda sobre Fondo */}
-                <div className="w-full max-w-[960px] relative rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-4 sm:p-5 bg-slate-100 flex flex-col justify-center items-center">
+                <div className="w-full max-w-[960px] relative rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-4 sm:p-5 bg-slate-100 flex flex-col justify-center items-center min-h-[140px] sm:min-h-[160px]">
                   {/* Imagen de fondo / vehículo en la parte posterior */}
                   <div className="absolute inset-0 pointer-events-none z-0">
                     <img
                       src={`${((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '')}/images/figma-hero.webp`}
                       alt="Renta de autos en México — GALSA Rent"
-                      className="w-full h-full object-cover object-bottom opacity-90"
+                      className="w-full h-full object-cover object-center"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-white/20"></div>
                   </div>
 
                   {/* Search Container interactivo superpuesto */}
