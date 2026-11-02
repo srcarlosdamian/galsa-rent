@@ -35,7 +35,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   return (
     <article
       onClick={() => onSelect && onSelect(vehicle)}
-      className="group cursor-pointer bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] transition-all duration-200 hover:shadow-md border border-transparent hover:border-slate-200"
+      className="group cursor-pointer bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] transition-all duration-200 md:hover:shadow-md border border-transparent md:hover:border-slate-200"
     >
       {/* Vehicle Image (aspect 1:1 rounded-[8px]) con Skeleton integrado mientras carga */}
       <div className="relative aspect-square w-full rounded-[8px] overflow-hidden bg-slate-100">
@@ -51,7 +51,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
           onLoad={() => setImageLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 md:group-hover:scale-105 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         />
@@ -83,7 +83,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
           </div>
 
-          {/* Vehicle Name con subrayado azul 300 en hover y enlace accesible */}
+          {/* Vehicle Name: texto siempre negro, línea azul 300 solo en desktop hover */}
           <div className="relative inline-block self-start">
             <h3 className="relative z-10 font-heading font-bold text-[18px] text-black leading-[28px] truncate">
               <a
@@ -92,12 +92,12 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
                   e.preventDefault();
                   if (onSelect) onSelect(vehicle);
                 }}
-                className="text-black hover:text-blue-600 transition-colors"
+                className="text-black"
               >
                 {vehicle.make} {vehicle.model}
               </a>
             </h3>
-            <span className="absolute left-0 bottom-0.5 w-0 h-2 bg-blue-300 rounded-sm -z-0 transition-all duration-200 group-hover:w-full" />
+            <span className="hidden md:block absolute left-0 bottom-0.5 w-0 h-2 bg-blue-300 rounded-sm -z-0 transition-all duration-200 md:group-hover:w-full" />
           </div>
 
           {/* Vehicle Features Pills */}
@@ -137,10 +137,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         {/* Separator Line */}
         <div className="h-px bg-slate-100 w-full" />
 
-        {/* Price Divider & Daily Rate con hover a blue-500 */}
+        {/* Price Divider & Daily Rate con hover a blue-500 solo en desktop */}
         <div className="flex items-center justify-between w-full pt-0.5">
           <div className="flex items-baseline gap-[8px] whitespace-nowrap">
-            <span className="font-heading font-bold text-[20px] text-black group-hover:text-blue-500 transition-colors leading-[28px]">
+            <span className="font-heading font-bold text-[20px] text-black md:group-hover:text-blue-500 transition-colors leading-[28px]">
               ${vehicle.pricePerDay.toLocaleString('es-MX')}
             </span>
             <span className="font-heading font-normal text-[12px] text-slate-500 leading-[20px]">
