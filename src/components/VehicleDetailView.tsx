@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   ShieldCheck, Share2, ChevronRight, ChevronLeft,
-  MapPin, ArrowLeft, Calendar, CarFront, Sparkles,
+  MapPin, Calendar, CarFront, Sparkles,
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight
 } from 'lucide-react';
@@ -109,6 +109,19 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <div className="pb-4 mb-4 flex items-center justify-between gap-4">
           <nav aria-label="Breadcrumb" className="text-xs font-heading font-medium text-slate-500 flex items-center gap-1.5 flex-wrap">
             <a
+              href="/"
+              onClick={(e) => {
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate('/');
+                }
+              }}
+              className="text-slate-600 hover:text-black transition-colors"
+            >
+              Inicio
+            </a>
+            <span className="text-slate-300">/</span>
+            <a
               href="/catalogo"
               onClick={(e) => {
                 if (onNavigate) {
@@ -116,22 +129,21 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   onNavigate('/catalogo');
                 }
               }}
-              className="inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors"
+              className="text-slate-600 hover:text-black transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
-              <span>Volver al catálogo</span>
+              Vehículos
             </a>
             <span className="text-slate-300">/</span>
-            <span className="text-slate-500">{vehicle.category}</span>
-            <span className="text-slate-300">/</span>
-            <span className="text-slate-900 font-semibold truncate max-w-[200px]">{vehicle.make} {vehicle.model}</span>
+            <span className="text-slate-900 font-semibold truncate max-w-[280px]">
+              {vehicle.make} {vehicle.model}
+            </span>
           </nav>
 
           <button
             type="button"
             onClick={handleShare}
             aria-label="Compartir este vehículo"
-            className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-700 hover:text-black px-3.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200"
+            className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-700 hover:text-black px-3.5 py-1.5 rounded-[8px] bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200"
           >
             <Share2 className="w-3.5 h-3.5" strokeWidth={1.4} />
             <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
