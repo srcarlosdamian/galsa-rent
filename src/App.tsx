@@ -315,12 +315,12 @@ export const App: React.FC = () => {
               <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
                 
                 {/* Bloque de Título y Subtítulo centrado */}
-                <div className="w-full max-w-[820px] relative flex flex-col items-center gap-5 sm:gap-6 text-center">
-                  <h1 className="relative self-stretch text-neutral-900 text-[36px] sm:text-5xl lg:text-[56px] font-bold font-heading leading-[1.12] sm:leading-[1.15] tracking-tight">
-                    Renta de autos en México,{' '}
+                <div className="w-full max-w-[940px] relative flex flex-col items-center gap-5 sm:gap-6 text-center">
+                  <h1 className="relative self-stretch text-neutral-900 text-[40px] sm:text-[54px] lg:text-[64px] font-bold font-heading leading-[1.12] sm:leading-[1.14] tracking-tight">
+                    Renta de autos en México,<br className="hidden sm:inline" />{' '}
                     <span className="relative inline-block whitespace-nowrap">
                       <span className="relative z-10">100 % en línea</span>
-                      <span className="absolute left-0 bottom-1 sm:bottom-1.5 w-full h-2.5 sm:h-3 bg-blue-300 rounded-sm -z-0" />
+                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-blue-300 rounded-sm -z-0" />
                     </span>{' '}
                     y al instante
                   </h1>
