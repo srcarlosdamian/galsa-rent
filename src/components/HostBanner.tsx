@@ -48,6 +48,15 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
             className="lg:col-span-7 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start min-h-[360px]"
           >
             <div className="space-y-4 max-w-xl text-left">
+              {/* Icono 3D mediano arriba del título */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mb-2">
+                <img
+                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603667514-0-348390.webp"
+                  alt="Programa Anfitriones GALSA"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-slate-900 leading-tight tracking-tight">
                 ¿Tienes un auto que no usas todos los días?
               </h3>
