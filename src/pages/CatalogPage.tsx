@@ -384,56 +384,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
         {/* Título y Conteo de Resultados */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <div>
-            <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
-              Autos disponibles ({filteredVehicles.length})
-            </h1>
-          </div>
-
-          {/* Selector de ordenamiento en Desktop */}
-          <div className="hidden md:inline-block relative" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center">
-              <button
-                type="button"
-                onClick={() => toggleDropdown('sort')}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors"
-              >
-                <span>
-                  {sortBy === 'recommended' && 'Recomendados'}
-                  {sortBy === 'price-asc' && 'Precio: menor a mayor'}
-                  {sortBy === 'price-desc' && 'Precio: mayor a menor'}
-                  {sortBy === 'year-desc' && 'Año más reciente'}
-                </span>
-                <ChevronDown className="w-4 h-4 text-slate-500" strokeWidth={1.4} />
-              </button>
-            </div>
-
-            {openDropdown === 'sort' && (
-              <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
-                {[
-                  { id: 'recommended', label: 'Recomendados' },
-                  { id: 'price-asc', label: 'Precio: menor a mayor' },
-                  { id: 'price-desc', label: 'Precio: mayor a menor' },
-                  { id: 'year-desc', label: 'Año más reciente' },
-                ].map((opt) => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => {
-                      setSortBy(opt.id as any);
-                      setOpenDropdown(null);
-                    }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
-                      sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        <div className="mb-4">
+          <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
+            Autos disponibles ({filteredVehicles.length})
+          </h1>
         </div>
 
         {/* Barra de Controles en Mobile (md:hidden): Botón 'Filtros' con Badge + Selector de Orden */}
@@ -791,17 +745,61 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             )}
           </div>
 
-          {/* Botón Reset */}
-          {(selectedLocation || (startDate && endDate) || vehicleTypeFilter !== 'Todos' || seatsFilter !== 'Todos' || transmissionFilter !== 'Todos' || priceMaxFilter < 3500) && (
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-heading font-medium text-slate-500 hover:text-black hover:bg-slate-100 rounded-lg transition-colors ml-auto"
-            >
-              <RotateCcw className="w-3.5 h-3.5" strokeWidth={1.4} />
-              <span>Limpiar filtros</span>
-            </button>
-          )}
+          {/* Zona derecha: Botón Limpiar filtros + Selector de ordenamiento (Recomendados) pegado a la derecha */}
+          <div className="ml-auto flex items-center gap-3">
+            {(selectedLocation || (startDate && endDate) || vehicleTypeFilter !== 'Todos' || seatsFilter !== 'Todos' || transmissionFilter !== 'Todos' || priceMaxFilter < 3500) && (
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-heading font-medium text-slate-500 hover:text-black hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                <RotateCcw className="w-3.5 h-3.5" strokeWidth={1.4} />
+                <span>Limpiar filtros</span>
+              </button>
+            )}
+
+            {/* Selector de ordenamiento pegado a la derecha */}
+            <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                onClick={() => toggleDropdown('sort')}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors"
+              >
+                <span>
+                  {sortBy === 'recommended' && 'Recomendados'}
+                  {sortBy === 'price-asc' && 'Precio: menor a mayor'}
+                  {sortBy === 'price-desc' && 'Precio: mayor a menor'}
+                  {sortBy === 'year-desc' && 'Año más reciente'}
+                </span>
+                <ChevronDown className="w-4 h-4 text-slate-500" strokeWidth={1.4} />
+              </button>
+
+              {openDropdown === 'sort' && (
+                <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
+                  {[
+                    { id: 'recommended', label: 'Recomendados' },
+                    { id: 'price-asc', label: 'Precio: menor a mayor' },
+                    { id: 'price-desc', label: 'Precio: mayor a menor' },
+                    { id: 'year-desc', label: 'Año más reciente' },
+                  ].map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => {
+                        setSortBy(opt.id as any);
+                        setOpenDropdown(null);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
+                        sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
 
         </div>
 
