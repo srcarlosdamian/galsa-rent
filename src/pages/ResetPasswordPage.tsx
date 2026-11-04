@@ -12,16 +12,16 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const isFilled = password.trim().length > 0 && confirmPassword.trim().length > 0;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password.length < 8) {
-      setError('La contraseña debe tener al menos 8 caracteres.');
-      return;
-    }
-    if (password !== confirmPassword) {
+    // Si se llenaron ambos pero no coinciden, mostrar advertencia
+    if (password && confirmPassword && password !== confirmPassword) {
       setError('Las contraseñas no coinciden. Verifícalas e intenta nuevamente.');
       return;
     }
+    // Permite avanzar incluso si no se llenan porque es un prototipo interactivo
     setError(null);
     setSubmitted(true);
   };
@@ -59,7 +59,6 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Mínimo 8 caracteres"
@@ -83,7 +82,6 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Repite tu contraseña"
@@ -96,7 +94,11 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-xs"
+                  className={`w-full py-3.5 rounded-[10px] text-sm font-heading font-semibold transition-all shadow-xs cursor-pointer active:scale-[0.99] ${
+                    isFilled
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                  }`}
                 >
                   Restablecer contraseña
                 </button>

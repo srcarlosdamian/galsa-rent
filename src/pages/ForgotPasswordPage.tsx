@@ -8,11 +8,14 @@ interface ForgotPasswordPageProps {
 export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNavigate }) => {
   const [email, setEmail] = useState('');
 
+  const isFilled = email.trim().length > 0;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (typeof window !== 'undefined') {
-      sessionStorage.setItem('galsa_recovery_email', email);
+      sessionStorage.setItem('galsa_recovery_email', email.trim() || 'cliente@galsa.com');
     }
+    // Permite avanzar a la siguiente pantalla incluso si no se llena (prototipo interactivo)
     onNavigate('/recuperar-password/enviado');
   };
 
@@ -67,7 +70,6 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
                 <div className="relative">
                   <input
                     type="email"
-                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="tucorreo@ejemplo.com"
@@ -80,7 +82,11 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-none"
+                  className={`w-full py-3.5 rounded-[8px] text-sm font-heading font-semibold transition-all shadow-none cursor-pointer active:scale-[0.99] ${
+                    isFilled
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                  }`}
                 >
                   Enviar instrucciones
                 </button>

@@ -13,12 +13,15 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const isFilled = fullName.trim().length > 0 && email.trim().length > 0 && password.trim().length > 0;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (password && confirmPassword && password !== confirmPassword) {
       alert('Las contraseñas no coinciden. Por favor verifícalas.');
       return;
     }
+    // Permite avanzar incluso si no se llenaron todos los datos por ser prototipo interactivo
     setIsSuccess(true);
   };
 
@@ -81,7 +84,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="text"
-                        required
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="Ej. Edgar Sierra"
@@ -99,7 +101,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="email"
-                        required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
@@ -117,7 +118,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="tel"
-                        required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+52 55 0000 0000"
@@ -135,8 +135,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="password"
-                        required
-                        minLength={8}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mínimo 8 caracteres"
@@ -154,8 +152,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="password"
-                        required
-                        minLength={8}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Repite tu contraseña"
@@ -168,7 +164,11 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-none"
+                      className={`w-full py-3.5 rounded-[8px] text-sm font-heading font-semibold transition-all shadow-none cursor-pointer active:scale-[0.99] ${
+                        isFilled
+                          ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                          : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                      }`}
                     >
                       Crear cuenta
                     </button>

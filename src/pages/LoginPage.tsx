@@ -11,9 +11,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
   const [showForgot, setShowForgot] = useState(false);
   const [forgotSent, setForgotSent] = useState(false);
 
+  const isFilled = email.trim().length > 0 && password.trim().length > 0;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Iniciando sesión como ${email}...`);
+    // Permite avanzar incluso si no se llena porque es un prototipo interactivo
+    onNavigate('/cuenta');
   };
 
   const handleForgotSubmit = (e: React.FormEvent) => {
@@ -78,7 +81,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="email"
-                        required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
@@ -104,7 +106,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                     <div className="relative">
                       <input
                         type="password"
-                        required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
@@ -117,7 +118,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-[8px] bg-blue-500 hover:bg-blue-600 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all flex items-center justify-center shadow-none"
+                      className={`w-full py-3.5 rounded-[8px] text-sm font-heading font-semibold transition-all flex items-center justify-center shadow-none cursor-pointer active:scale-[0.99] ${
+                        isFilled
+                          ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                          : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                      }`}
                     >
                       <span>Iniciar sesión</span>
                     </button>

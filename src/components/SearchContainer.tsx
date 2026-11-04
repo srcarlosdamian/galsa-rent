@@ -187,11 +187,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (hasLocation) {
-            onExecuteSearch();
-          } else {
-            setLocationOpen(true);
-          }
+          // Permite avanzar al catálogo incluso si no se llenaron los inputs (prototipo interactivo)
+          onExecuteSearch();
         }}
         className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4 overflow-visible"
       >
@@ -394,19 +391,18 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           )}
         </div>
 
-        {/* Search Submit Button: se ilumina cuando hay ubicación; en desktop es solo icono, en mobile/tableta tiene texto "Buscar" */}
+        {/* Search Submit Button: se ilumina azul cuando hay ubicación; gris si no está llena, pero siempre permite avanzar al catálogo */}
         <button
           type="submit"
-          disabled={!hasLocation}
-          className={`w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center gap-2 shrink-0 transition-all font-heading font-semibold text-[14px] ${
+          className={`w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center gap-2 shrink-0 transition-all font-heading font-semibold text-[14px] cursor-pointer ${
             hasLocation
-              ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-sm active:scale-95 cursor-pointer'
-              : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-80'
+              ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm active:scale-95'
+              : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-300 active:scale-95'
           }`}
           aria-label="Buscar vehículos"
-          title={hasLocation ? 'Buscar vehículos disponibles' : 'Selecciona una ubicación para buscar'}
+          title="Buscar vehículos disponibles"
         >
-          <Search className={`w-[18px] h-[18px] shrink-0 ${hasLocation ? 'text-white' : 'text-slate-400'}`} strokeWidth={1.4} />
+          <Search className={`w-[18px] h-[18px] shrink-0 ${hasLocation ? 'text-white' : 'text-slate-600'}`} strokeWidth={1.8} />
           <span className="lg:hidden">Buscar</span>
         </button>
       </form>
