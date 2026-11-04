@@ -78,7 +78,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           >
             <Heart
               className={`w-3.5 h-3.5 transition-colors ${
-                isFavorite ? 'fill-purple-500 text-purple-500' : 'text-slate-800'
+                isFavorite ? 'fill-blue-500 text-blue-500' : 'text-slate-800'
               }`}
               strokeWidth={1.4}
             />
@@ -204,7 +204,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         >
           <Heart
             className={`w-3.5 h-3.5 transition-colors ${
-              isFavorite ? 'fill-purple-500 text-purple-500' : 'text-slate-800'
+              isFavorite ? 'fill-blue-500 text-blue-500' : 'text-slate-800'
             }`}
             strokeWidth={1.4}
           />
