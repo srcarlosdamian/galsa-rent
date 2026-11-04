@@ -161,7 +161,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Durango, Dgo.',
       date: 'Octubre 2026',
       rating: 5,
-      avatarColor: 'bg-slate-800',
+      avatarColor: 'bg-slate-100 text-black',
       comment: `Excelente experiencia rentando el ${vehicle.make} ${vehicle.model}. El auto estaba impecable, con olor a nuevo, tanque lleno y entrega súper puntual en Plaza 450. El contrato digital se firmó en menos de 2 minutos sin filas ni burocracia.`,
     },
     {
@@ -170,7 +170,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Ciudad de México',
       date: 'Octubre 2026',
       rating: 5,
-      avatarColor: 'bg-slate-800',
+      avatarColor: 'bg-slate-100 text-black',
       comment: `Viajé por trabajo y carretera en Durango. La unidad se comportó de maravilla, aire acondicionado al 100 y el kilometraje libre te da total tranquilidad para moverte sin preocupaciones. Muy recomendado.`,
     },
     {
@@ -179,7 +179,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Monterrey, N.L.',
       date: 'Septiembre 2026',
       rating: 4,
-      avatarColor: 'bg-slate-800',
+      avatarColor: 'bg-slate-100 text-black',
       comment: `El mejor servicio de renta que he probado en México. Cero sorpresas con el precio, depósito en garantía devuelto íntegro y sin demoras a las 24 hrs de la entrega. La atención por WhatsApp fue de 10.`,
     },
     {
@@ -188,7 +188,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Guadalajara, Jal.',
       date: 'Septiembre 2026',
       rating: 5,
-      avatarColor: 'bg-slate-800',
+      avatarColor: 'bg-slate-100 text-black',
       comment: `Súper fácil el proceso con el checklist digital al recibir y entregar el auto con fotos. Todo transparente y seguro. El ${vehicle.model} muy cómodo y espacioso para la familia. Definitivamente volveré a rentar aquí.`,
     },
     {
@@ -197,7 +197,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Mazatlán, Sin.',
       date: 'Agosto 2026',
       rating: 5,
-      avatarColor: 'bg-slate-800',
+      avatarColor: 'bg-slate-100 text-black',
       comment: `Renta rápida y confiable. El auto en óptimas condiciones mecánicas, suspensión perfecta para carretera y frenos impecables. La coordinación de entrega fue rápida y puntual en sucursal.`,
     },
     {
@@ -206,7 +206,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Torreón, Coah.',
       date: 'Agosto 2026',
       rating: 4,
-      avatarColor: 'bg-slate-800',
+      avatarColor: 'bg-slate-100 text-black',
       comment: `Increíble servicio. Tenía dudas sobre los requisitos pero en WhatsApp me atendieron de inmediato. Auto muy limpio, seguro vigente y contrato con validez legal. 100% recomendable.`,
     },
   ];
@@ -1011,9 +1011,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 className="rounded-2xl border-0 bg-white p-5 sm:p-6 flex flex-col justify-between space-y-4"
               >
                 <div>
-                  {/* Autor y Avatar gris oscuro */}
+                  {/* Autor y Avatar gris 100 con texto negro */}
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-slate-800 text-white font-heading font-bold text-sm flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 text-black font-heading font-bold text-sm flex items-center justify-center shrink-0">
                       {rev.author.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
