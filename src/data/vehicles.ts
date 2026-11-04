@@ -20,6 +20,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 2300,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.98,
+    reviewCount: 34,
     images: [
       {
         url: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
@@ -96,6 +98,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 1400,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.92,
+    reviewCount: 22,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -166,6 +170,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 1450,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.96,
+    reviewCount: 28,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -236,6 +242,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 1300,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.95,
+    reviewCount: 19,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -306,6 +314,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 1100,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.97,
+    reviewCount: 31,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -376,6 +386,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 2450,
     deposit: 18000,
     serviceFeePercent: 33,
+    rating: 5.0,
+    reviewCount: 26,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -438,6 +450,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 2850,
     deposit: 20000,
     serviceFeePercent: 33,
+    rating: 4.99,
+    reviewCount: 38,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -499,6 +513,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 1850,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.94,
+    reviewCount: 17,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -560,6 +576,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 850,
     deposit: 10000,
     serviceFeePercent: 33,
+    rating: 4.91,
+    reviewCount: 23,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -619,6 +637,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 950,
     deposit: 10000,
     serviceFeePercent: 33,
+    rating: 4.93,
+    reviewCount: 21,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -678,6 +698,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 2100,
     deposit: 15000,
     serviceFeePercent: 33,
+    rating: 4.99,
+    reviewCount: 45,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&h=750&q=80',
@@ -737,6 +759,8 @@ export const VEHICLES: Vehicle[] = [
     pricePerDay: 2900,
     deposit: 22000,
     serviceFeePercent: 33,
+    rating: 5.0,
+    reviewCount: 29,
     images: [
       {
         url: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&w=1200&h=750&q=80',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
+import { Heart, Star } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 
 interface VehicleCardProps {
@@ -76,11 +76,17 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       <div className="flex flex-col gap-[10px] w-full pt-1">
         {/* Information Group */}
         <div className="flex flex-col gap-[4px] w-full">
-          {/* Metadata Row: Type, Year, Category */}
-          <div className="flex items-center gap-[8px] text-[12px] font-heading font-medium text-slate-500 leading-[20px] whitespace-nowrap">
-            <span>{vehicle.category.split('/')[0].trim() || 'SUV'}</span>
-            <span>{vehicle.year}</span>
-            <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
+          {/* Metadata Row: Type, Year, Category + Calificación */}
+          <div className="flex items-center justify-between text-[12px] font-heading font-medium text-slate-500 leading-[20px]">
+            <div className="flex items-center gap-[8px] whitespace-nowrap">
+              <span>{vehicle.category.split('/')[0].trim() || 'SUV'}</span>
+              <span>{vehicle.year}</span>
+              <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
+            </div>
+            <div className="flex items-center gap-1 text-slate-900 font-semibold text-[12px]">
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0" />
+              <span>{vehicle.rating || 4.9}</span>
+            </div>
           </div>
 
           {/* Vehicle Name: texto siempre negro, línea azul 300 solo en desktop hover */}
