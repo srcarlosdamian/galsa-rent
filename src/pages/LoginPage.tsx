@@ -15,8 +15,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Permite avanzar incluso si no se llena porque es un prototipo interactivo
-    onNavigate('/cuenta');
+    if (typeof window !== 'undefined') {
+      if (email.trim()) {
+        sessionStorage.setItem('galsa_user_email', email.trim());
+      }
+      sessionStorage.setItem('galsa_logged_in', 'true');
+      // Si no ha completado el perfil, activa el menú flotante de completar información
+      const hasName = sessionStorage.getItem('galsa_user_name');
+      if (!hasName) {
+        sessionStorage.setItem('galsa_first_login', 'true');
+      }
+    }
+    // Redirige a la cuenta con el menú flotante activo para primer inicio
+    onNavigate('/cuenta?completar=1');
   };
 
   const handleForgotSubmit = (e: React.FormEvent) => {

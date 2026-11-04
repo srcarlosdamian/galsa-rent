@@ -26,6 +26,7 @@ import { AboutPage } from './pages/AboutPage';
 import { BlogPage } from './pages/BlogPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { AccountPage } from './pages/AccountPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { PasswordSentPage } from './pages/PasswordSentPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
@@ -312,9 +313,16 @@ export const App: React.FC = () => {
         {/* ROUTE 7.7: VISOR Y AUDITOR SEO */}
         {currentPath === '/seo' && <SeoPage onNavigate={navigateTo} />}
 
-        {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR) */}
-        {currentPath === '/cuenta' && (
-          <LoginPage onNavigate={navigateTo} />
+        {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR / COMPLETAR PERFIL) */}
+        {(currentPath.startsWith('/cuenta') || currentPath === '/completar-perfil' || currentPath === '/cuenta/completar') && (
+          <AccountPage 
+            onNavigate={navigateTo} 
+            initialOpenCompleteModal={
+              currentPath === '/completar-perfil' || 
+              currentPath === '/cuenta/completar' || 
+              currentPath.includes('completar')
+            }
+          />
         )}
 
         {/* ROUTE 9: HOME (TAREA 2 COPY & VIRTUO DESIGN) */}

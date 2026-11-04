@@ -228,6 +228,8 @@ const staticPages = [
   { route: '/terminos', schema: null },
   { route: '/privacidad', schema: null },
   { route: '/cuenta', schema: null },
+  { route: '/cuenta/completar', schema: null },
+  { route: '/completar-perfil', schema: null },
   { route: '/blog', schema: null },
   { route: '/404', schema: null },
 ];

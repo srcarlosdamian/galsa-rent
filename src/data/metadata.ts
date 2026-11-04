@@ -221,7 +221,7 @@ export function getRouteMetadata(path: string): RouteMetadata {
   const cleanPath = path.replace(/\/+$/, '') || '/';
 
   // Check noindex prefixes
-  if (cleanPath.startsWith('/admin') || cleanPath.startsWith('/reservar') || cleanPath === '/cuenta') {
+  if (cleanPath.startsWith('/admin') || cleanPath.startsWith('/reservar') || cleanPath.startsWith('/cuenta') || cleanPath === '/completar-perfil') {
     return {
       title: 'Área Privada | GALSA Rent',
       description: 'Acceso privado para gestión de reservas y contratos digitales en Durango.',
