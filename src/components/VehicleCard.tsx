@@ -96,7 +96,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
                 <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
               </div>
               <div className="flex items-center gap-1 text-slate-900 font-semibold text-[12px]">
-                <Star className="w-3.5 h-3.5 fill-purple-300 text-purple-300 shrink-0" />
+                <Star className="w-3.5 h-3.5 fill-blue-300 text-blue-300 shrink-0" />
                 <span>{vehicle.rating || 4.9}</span>
               </div>
             </div>
@@ -223,7 +223,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
               <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
             </div>
             <div className="flex items-center gap-1 text-slate-900 font-semibold text-[12px]">
-              <Star className="w-3.5 h-3.5 fill-purple-300 text-purple-300 shrink-0" />
+              <Star className="w-3.5 h-3.5 fill-blue-300 text-blue-300 shrink-0" />
               <span>{vehicle.rating || 4.9}</span>
             </div>
           </div>
