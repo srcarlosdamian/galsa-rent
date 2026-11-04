@@ -552,14 +552,14 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               {/* Fechas de viaje (Inicio y Fin como en el mockup) */}
               <div className="space-y-3">
                 <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-900 block">
-                  Tu viaje
+                  TU VIAJE
                 </span>
 
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   <button
                     type="button"
                     onClick={() => setCalendarOpen(!calendarOpen)}
-                    className="w-full px-4 py-3 rounded-[8px] border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
                   >
                     <div>
                       <span className="block text-[11px] font-heading font-medium text-slate-500 mb-0.5">Inicio del viaje</span>
@@ -567,13 +567,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                         {startDate ? formatDisplayDate(startDate) : 'Elegir fecha de inicio'} · 10:00 a.m.
                       </span>
                     </div>
-                    <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
+                    <Calendar className="w-[18px] h-[18px] text-slate-600 shrink-0" strokeWidth={1.4} />
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setCalendarOpen(!calendarOpen)}
-                    className="w-full px-4 py-3 rounded-[8px] border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
                   >
                     <div>
                       <span className="block text-[11px] font-heading font-medium text-slate-500 mb-0.5">Fin del viaje</span>
@@ -581,7 +581,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                         {endDate ? formatDisplayDate(endDate) : 'Elegir fecha de devolución'} · 10:00 a.m.
                       </span>
                     </div>
-                    <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
+                    <Calendar className="w-[18px] h-[18px] text-slate-600 shrink-0" strokeWidth={1.4} />
                   </button>
 
                   {calendarOpen && (
@@ -597,14 +597,16 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
               </div>
 
-              {/* Ubicación de recogida y devolución */}
-              <div className="pt-2 border-t border-slate-100 space-y-1">
-                <span className="text-xs font-heading font-bold text-slate-900 block">
-                  Ubicación de recogida y devolución
-                </span>
-                <p className="text-xs font-sans text-slate-600 flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.4} />
-                  <span className="font-medium text-slate-800">{vehicle.location || 'Sucursal Plaza 450, Durango'}</span>
+              {/* Punto de entrega (Exacto de la captura) */}
+              <div className="pt-4 border-t border-slate-100 space-y-1">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />
+                  <span className="text-sm font-heading font-bold text-slate-900">
+                    Punto de entrega
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm font-sans font-normal text-slate-500">
+                  {vehicle.location ? (vehicle.location.endsWith('.') ? vehicle.location : `${vehicle.location}.`) : 'Sucursal Plaza 450, Durango.'}
                 </p>
               </div>
 
