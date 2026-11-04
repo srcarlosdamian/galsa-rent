@@ -487,37 +487,6 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         </div>
 
-        {/* Badges de Filtros Activos con '✕' para descartar cada uno */}
-        {activeFiltersList.length > 0 && (
-          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-4">
-            <span className="text-[11px] uppercase tracking-wider font-heading font-bold text-slate-400 mr-0.5">Filtros:</span>
-            {activeFiltersList.map((f) => (
-              <span
-                key={f.id}
-                className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-900 text-[12px] font-heading font-semibold"
-              >
-                <span>{f.label}</span>
-                <button
-                  type="button"
-                  onClick={f.onClear}
-                  className="w-4 h-4 rounded-full flex items-center justify-center hover:bg-blue-200 text-blue-700 transition-colors"
-                  title="Eliminar filtro"
-                  aria-label={`Eliminar filtro ${f.label}`}
-                >
-                  <X className="w-3 h-3" strokeWidth={2.2} />
-                </button>
-              </span>
-            ))}
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="text-[12px] font-heading font-semibold text-slate-500 hover:text-black underline ml-1 transition-colors"
-            >
-              Limpiar todo
-            </button>
-          </div>
-        )}
-
         {/* Barra de Filtros interactivos con Ubicación, Fechas y Filtros horizontales (Desktop) */}
         <div className="hidden md:flex flex-wrap items-center gap-2 sm:gap-3 py-2 border-b border-slate-100 mb-6" onClick={(e) => e.stopPropagation()}>
           
