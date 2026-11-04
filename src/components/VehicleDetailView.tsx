@@ -392,14 +392,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 <span>·</span>
                 <span className="text-slate-500">{vehicle.location || 'Sucursal Plaza 450, Durango'}</span>
               </div>
-            </div>
 
-            {/* Sección: Clase / Categoría del Vehículo */}
-            <div className="pt-2 border-t border-slate-100 space-y-2">
-              <h3 className="text-lg font-heading font-bold text-slate-900">
-                {vehicle.category}
-              </h3>
-              <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
+              {/* Descripción del vehículo en fuente de 16px sin título repetido ni línea divisoria */}
+              <p className="mt-4 text-[16px] font-sans font-normal text-slate-600 leading-relaxed">
                 {vehicle.description || 'Unidad inspeccionada mecánicamente con contrato mercantil digital y entrega rápida en nuestras ubicaciones oficiales.'}
               </p>
             </div>
