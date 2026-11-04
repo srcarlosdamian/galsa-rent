@@ -438,6 +438,69 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
+            {/* Sección: Reglas y condiciones (Exacto de la captura) */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+                Reglas y condiciones
+              </h3>
+
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-xs space-y-3.5">
+                <div className="space-y-3.5">
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Documentación verificada antes de la entrega (licencia, identificación y comprobante).
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Contrato digital firmado por ambas partes con validez legal.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Cancelaciones: Las cancelaciones realizadas con más de 48 horas de anticipación reciben reembolso completo. Cancelaciones posteriores están sujetas a cargos parciales según el tiempo restante para el inicio de la renta.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Multas y peajes durante la renta corren por cuenta del cliente.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Cualquier daño se documenta con evidencia fotográfica en la devolución.
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm font-sans text-slate-500 pt-3 border-t border-slate-100">
+                  Consulta los{' '}
+                  <a
+                    href="/terminos"
+                    onClick={(e) => {
+                      if (onNavigate) {
+                        e.preventDefault();
+                        onNavigate('/terminos');
+                      }
+                    }}
+                    className="text-blue-600 font-medium hover:underline"
+                  >
+                    términos y condiciones
+                  </a>{' '}
+                  completos.
+                </p>
+              </div>
+            </div>
+
           </div>
 
           {/* COLUMNA DERECHA: Sticky Card Checkout Exacto Mockup Turo */}
