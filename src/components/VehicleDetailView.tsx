@@ -371,18 +371,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
-                  <Zap className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">{vehicle.specs?.mpgOrFuelEconomy || 'Rendimiento eficiente'}</span>
-                </div>
-
-                <div className="flex items-center gap-4 text-slate-800">
                   <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
                   <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Aire acondicionado A/C</span>
-                </div>
-
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Smartphone className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Apple CarPlay & Android Auto</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
