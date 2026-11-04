@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  ShieldCheck, Share2, ChevronRight, ChevronLeft,
+  ShieldCheck, Share2, ChevronRight, ChevronLeft, ChevronDown,
   MapPin, Calendar, CarFront, Sparkles,
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
@@ -17,12 +17,20 @@ interface VehicleDetailViewProps {
   onNavigate?: (path: string) => void;
 }
 
+const TIME_OPTIONS = [
+  '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
+  '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
+  '19:00', '20:00', '21:00'
+];
+
 export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   vehicle,
   onNavigate,
 }) => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState('2026-11-04');
+  const [endDate, setEndDate] = useState('2026-11-07');
+  const [pickupTime, setPickupTime] = useState('08:00');
+  const [returnTime, setReturnTime] = useState('18:00');
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [rentalDays, setRentalDays] = useState(3);
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
@@ -76,12 +84,34 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     }
   };
 
+  const handleStartDateChange = (val: string) => {
+    setStartDate(val);
+    if (val && endDate) {
+      setRentalDays(calculateDays(val, endDate));
+    }
+  };
+
+  const handleEndDateChange = (val: string) => {
+    setEndDate(val);
+    if (startDate && val) {
+      setRentalDays(calculateDays(startDate, val));
+    }
+  };
+
   const formatDisplayDate = (dateStr: string) => {
     if (!dateStr) return '';
     const [y, m, d] = dateStr.split('-');
     if (!y || !m || !d) return dateStr;
     const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
     return `${d}/${m}/${y}`;
+  };
+
+  const formatRangeSummary = (s: string, e: string) => {
+    if (!s || !e) return '4 nov — 7 nov';
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const sDate = new Date(s + 'T00:00:00');
+    const eDate = new Date(e + 'T00:00:00');
+    return `${sDate.getDate()} ${months[sDate.getMonth()]} — ${eDate.getDate()} ${months[eDate.getMonth()]}`;
   };
 
   // Cálculo de precios exactos
@@ -105,7 +135,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
   const handleBooking = () => {
     const msg = encodeURIComponent(
-      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} por ${rentalDays} días con entrega en México. ¿Está disponible?`
+      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${startDate} (${pickupTime}) al ${endDate} (${returnTime}) por ${rentalDays} días. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
     );
     window.open(`https://wa.me/526180000000?text=${msg}`, '_blank');
   };
@@ -622,65 +652,120 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
               </div>
 
-              {/* Fechas de viaje (Inicio y Fin como en el mockup) */}
-              <div className="space-y-3">
-                <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-900 block">
-                  TU VIAJE
-                </span>
-
-                <div className="space-y-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setCalendarOpen(!calendarOpen)}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
-                  >
-                    <div>
-                      <span className="block text-[11px] font-heading font-medium text-slate-500 mb-0.5">Inicio del viaje</span>
-                      <span className="text-[14px] font-heading font-semibold text-slate-900">
-                        {startDate ? formatDisplayDate(startDate) : 'Elegir fecha de inicio'} · 10:00 a.m.
-                      </span>
-                    </div>
-                    <Calendar className="w-[18px] h-[18px] text-slate-600 shrink-0" strokeWidth={1.4} />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setCalendarOpen(!calendarOpen)}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
-                  >
-                    <div>
-                      <span className="block text-[11px] font-heading font-medium text-slate-500 mb-0.5">Fin del viaje</span>
-                      <span className="text-[14px] font-heading font-semibold text-slate-900">
-                        {endDate ? formatDisplayDate(endDate) : 'Elegir fecha de devolución'} · 10:00 a.m.
-                      </span>
-                    </div>
-                    <Calendar className="w-[18px] h-[18px] text-slate-600 shrink-0" strokeWidth={1.4} />
-                  </button>
-
-                  {calendarOpen && (
-                    <div className="relative z-50">
-                      <DateRangePicker
-                        startDate={startDate}
-                        endDate={endDate}
-                        onChange={handleDateRangeChange}
-                        onClose={() => setCalendarOpen(false)}
-                      />
-                    </div>
-                  )}
+              {/* Fechas y sucursal (Exacto de la captura de referencia) */}
+              <div className="space-y-4 pt-2">
+                <div>
+                  <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 tracking-tight">
+                    Fechas y sucursal
+                  </h3>
+                  <p className="text-xs font-sans text-slate-500 mt-0.5">
+                    Elige dónde y cuándo recoges el vehículo
+                  </p>
                 </div>
-              </div>
 
-              {/* Punto de entrega (Exacto de la captura) */}
-              <div className="pt-4 border-t border-slate-100 space-y-1">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />
-                  <span className="text-sm font-heading font-bold text-slate-900">
-                    Punto de entrega
-                  </span>
+                {/* Fila 1: Ciudad y Sucursal bloqueadas van juntas como en el home */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Ciudad
+                    </label>
+                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none">
+                      Durango
+                    </div>
+                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                      Ubicación del vehículo
+                    </span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Sucursal
+                    </label>
+                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none truncate">
+                      Plaza 450
+                    </div>
+                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                      Recogida y devolución
+                    </span>
+                  </div>
                 </div>
-                <p className="text-xs sm:text-sm font-sans font-normal text-slate-500">
-                  {vehicle.location ? (vehicle.location.endsWith('.') ? vehicle.location : `${vehicle.location}.`) : 'Sucursal Plaza 450, Durango.'}
-                </p>
+
+                {/* Fila 2: Fecha de recogida y Hora de entrega */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Fecha de recogida
+                    </label>
+                    <input
+                      type="date"
+                      value={startDate}
+                      min={new Date().toISOString().split('T')[0]}
+                      onChange={(e) => handleStartDateChange(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Hora de entrega
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={pickupTime}
+                        onChange={(e) => setPickupTime(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
+                      >
+                        {TIME_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                      Horario de atención
+                    </span>
+                  </div>
+                </div>
+
+                {/* Fila 3: Fecha de devolución y Hora de devolución */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Fecha de devolución
+                    </label>
+                    <input
+                      type="date"
+                      value={endDate}
+                      min={startDate || new Date().toISOString().split('T')[0]}
+                      onChange={(e) => handleEndDateChange(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Hora de devolución
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={returnTime}
+                        onChange={(e) => setReturnTime(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
+                      >
+                        {TIME_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Nota de disponibilidad */}
+                <div className="flex items-center gap-2 text-xs font-heading font-medium text-emerald-700 bg-emerald-50/70 border border-emerald-200/60 px-3 py-2 rounded-xl">
+                  <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Disponible del {formatRangeSummary(startDate, endDate)}</span>
+                </div>
               </div>
 
               {/* Desglose y Resumen de Precios (Exacto de la captura) */}
