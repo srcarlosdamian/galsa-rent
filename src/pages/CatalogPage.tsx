@@ -6,7 +6,7 @@ import { DateRangePicker } from '../components/DateRangePicker';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
   ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
-  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train
+  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X
 } from 'lucide-react';
 
 interface CatalogPageProps {
@@ -192,6 +192,90 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     setOpenDropdown(prev => prev === name ? null : name);
   };
 
+  // Modal de filtros en vista móvil
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  // Lista de badges de filtros activos
+  const activeFiltersList = useMemo(() => {
+    const list: { id: string; label: string; onClear: () => void }[] = [];
+    if (selectedLocation && selectedLocation !== 'Mi ubicación actual') {
+      const shortLoc = selectedLocation.split(',')[0].replace('Sucursal ', '').trim();
+      list.push({
+        id: 'location',
+        label: shortLoc,
+        onClear: () => handleLocationSelect(''),
+      });
+    } else if (selectedLocation === 'Mi ubicación actual') {
+      list.push({
+        id: 'location',
+        label: 'Mi ubicación',
+        onClear: () => handleLocationSelect(''),
+      });
+    }
+
+    if (startDate && endDate) {
+      list.push({
+        id: 'dates',
+        label: `${formatDisplayDate(startDate)} - ${formatDisplayDate(endDate)}`,
+        onClear: () => {
+          setStartDate('');
+          setEndDate('');
+          if (onSearchChange && searchState) {
+            onSearchChange({ ...searchState, startDate: '', endDate: '' });
+          }
+        },
+      });
+    }
+
+    if (vehicleTypeFilter !== 'Todos') {
+      list.push({
+        id: 'type',
+        label: `Tipo: ${vehicleTypeFilter}`,
+        onClear: () => {
+          setVehicleTypeFilter('Todos');
+          setCurrentPage(1);
+        },
+      });
+    }
+
+    if (seatsFilter !== 'Todos') {
+      list.push({
+        id: 'seats',
+        label: `${seatsFilter}+ asientos`,
+        onClear: () => {
+          setSeatsFilter('Todos');
+          setCurrentPage(1);
+        },
+      });
+    }
+
+    if (transmissionFilter !== 'Todos') {
+      list.push({
+        id: 'trans',
+        label: transmissionFilter,
+        onClear: () => {
+          setTransmissionFilter('Todos');
+          setCurrentPage(1);
+        },
+      });
+    }
+
+    if (priceMaxFilter < 3500) {
+      list.push({
+        id: 'price',
+        label: `Hasta $${priceMaxFilter.toLocaleString('es-MX')}`,
+        onClear: () => {
+          setPriceMaxFilter(3500);
+          setCurrentPage(1);
+        },
+      });
+    }
+
+    return list;
+  }, [selectedLocation, startDate, endDate, vehicleTypeFilter, seatsFilter, transmissionFilter, priceMaxFilter, searchState, onSearchChange]);
+
+  const activeFiltersCount = activeFiltersList.length;
+
   // Reset all
   const resetFilters = () => {
     handleLocationSelect('');
@@ -299,16 +383,16 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     <div className="py-6 sm:py-10 bg-white" onClick={() => setOpenDropdown(null)}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
-        {/* Título y Conteo de Resultados (sin texto redundante abajo, en minúsculas capitalizadas) */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+        {/* Título y Conteo de Resultados */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
             <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
               Autos disponibles ({filteredVehicles.length})
             </h1>
           </div>
 
-          {/* Selector de ordenamiento */}
-          <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
+          {/* Selector de ordenamiento en Desktop */}
+          <div className="hidden md:inline-block relative" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center">
               <button
                 type="button"
@@ -352,8 +436,100 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         </div>
 
-        {/* Barra de Filtros interactivos con Ubicación, Fechas y Filtros horizontales */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 py-2 border-b border-slate-100 mb-6" onClick={(e) => e.stopPropagation()}>
+        {/* Barra de Controles en Mobile (md:hidden): Botón 'Filtros' con Badge + Selector de Orden */}
+        <div className="md:hidden flex items-center justify-between gap-2.5 mb-3.5">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setMobileFiltersOpen(true);
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-semibold text-slate-800 shadow-xs hover:bg-slate-50 active:bg-slate-100 transition-colors"
+          >
+            <SlidersHorizontal className="w-4 h-4 text-slate-700" strokeWidth={1.8} />
+            <span>Filtros</span>
+            {activeFiltersCount > 0 && (
+              <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-blue-600 text-white text-[11px] font-bold">
+                {activeFiltersCount}
+              </span>
+            )}
+          </button>
+
+          {/* Selector de ordenamiento en mobile */}
+          <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              onClick={() => toggleDropdown('sort')}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 transition-colors"
+            >
+              <span className="truncate max-w-[150px]">
+                {sortBy === 'recommended' && 'Recomendados'}
+                {sortBy === 'price-asc' && 'Precio: menor'}
+                {sortBy === 'price-desc' && 'Precio: mayor'}
+                {sortBy === 'year-desc' && 'Año reciente'}
+              </span>
+              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.4} />
+            </button>
+            {openDropdown === 'sort' && (
+              <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
+                {[
+                  { id: 'recommended', label: 'Recomendados' },
+                  { id: 'price-asc', label: 'Precio: menor a mayor' },
+                  { id: 'price-desc', label: 'Precio: mayor a menor' },
+                  { id: 'year-desc', label: 'Año más reciente' },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => {
+                      setSortBy(opt.id as any);
+                      setOpenDropdown(null);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
+                      sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Badges de Filtros Activos con '✕' para descartar cada uno */}
+        {activeFiltersList.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-4">
+            <span className="text-[11px] uppercase tracking-wider font-heading font-bold text-slate-400 mr-0.5">Filtros:</span>
+            {activeFiltersList.map((f) => (
+              <span
+                key={f.id}
+                className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-900 text-[12px] font-heading font-semibold"
+              >
+                <span>{f.label}</span>
+                <button
+                  type="button"
+                  onClick={f.onClear}
+                  className="w-4 h-4 rounded-full flex items-center justify-center hover:bg-blue-200 text-blue-700 transition-colors"
+                  title="Eliminar filtro"
+                  aria-label={`Eliminar filtro ${f.label}`}
+                >
+                  <X className="w-3 h-3" strokeWidth={2.2} />
+                </button>
+              </span>
+            ))}
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="text-[12px] font-heading font-semibold text-slate-500 hover:text-black underline ml-1 transition-colors"
+            >
+              Limpiar todo
+            </button>
+          </div>
+        )}
+
+        {/* Barra de Filtros interactivos con Ubicación, Fechas y Filtros horizontales (Desktop) */}
+        <div className="hidden md:flex flex-wrap items-center gap-2 sm:gap-3 py-2 border-b border-slate-100 mb-6" onClick={(e) => e.stopPropagation()}>
           
           {/* Input/Dropdown de Ubicación (Idéntico a Home) */}
           <div className="relative">
@@ -894,6 +1070,266 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
         </section>
 
       </div>
+
+      {/* Modal / Bottom Sheet de Filtros para Mobile */}
+      {mobileFiltersOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col justify-end md:hidden animate-in fade-in duration-200"
+          onClick={() => setMobileFiltersOpen(false)}
+        >
+          <div 
+            className="bg-white w-full rounded-t-[24px] max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-250"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-5 h-5 text-slate-800" strokeWidth={1.8} />
+                <h2 className="text-lg font-heading font-extrabold text-slate-900">
+                  Filtros
+                </h2>
+                {activeFiltersCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold">
+                    {activeFiltersCount} activo{activeFiltersCount > 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileFiltersOpen(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
+                aria-label="Cerrar modal"
+              >
+                <X className="w-4 h-4" strokeWidth={2} />
+              </button>
+            </div>
+
+            {/* Modal Body (Scrollable) */}
+            <div className="p-5 space-y-6 overflow-y-auto">
+              {/* 1. Ubicación */}
+              <div>
+                <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Ubicación de entrega
+                </label>
+                <div className="space-y-1.5">
+                  {LOCATION_OPTIONS.map((loc) => {
+                    const isSelected = (!selectedLocation && loc.value === '') || selectedLocation === loc.value;
+                    const Icon = loc.icon;
+                    return (
+                      <button
+                        key={loc.id}
+                        type="button"
+                        onClick={() => {
+                          if (loc.id === 'current') {
+                            handleDetectCurrentLocation();
+                          } else {
+                            handleLocationSelect(loc.value);
+                          }
+                        }}
+                        className={`w-full text-left p-2.5 rounded-[12px] border transition-colors flex items-center gap-3 ${
+                          isSelected
+                            ? 'border-blue-600 bg-blue-50/60 text-blue-950 font-semibold'
+                            : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                        }`}
+                      >
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'}`}>
+                          <Icon className="w-4 h-4" strokeWidth={1.5} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[13px] font-heading font-medium truncate">
+                            {loc.title}
+                          </p>
+                          {loc.subtitle && (
+                            <p className="text-[11px] font-heading text-slate-400 truncate">
+                              {loc.subtitle}
+                            </p>
+                          )}
+                        </div>
+                        {isSelected && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 2. Fechas */}
+              <div>
+                <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Fechas del viaje
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50">
+                    <span className="block text-[10px] font-heading uppercase text-slate-400 font-bold mb-1">Recogida</span>
+                    <input
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setStartDate(val);
+                        if (onSearchChange && searchState) {
+                          onSearchChange({ ...searchState, startDate: val });
+                        }
+                      }}
+                      className="w-full bg-transparent text-[13px] font-heading font-semibold text-slate-800 outline-none"
+                    />
+                  </div>
+                  <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50">
+                    <span className="block text-[10px] font-heading uppercase text-slate-400 font-bold mb-1">Devolución</span>
+                    <input
+                      type="date"
+                      value={endDate}
+                      min={startDate}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setEndDate(val);
+                        if (onSearchChange && searchState) {
+                          onSearchChange({ ...searchState, endDate: val });
+                        }
+                      }}
+                      className="w-full bg-transparent text-[13px] font-heading font-semibold text-slate-800 outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Tipo de vehículo */}
+              <div>
+                <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Tipo de vehículo
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['Todos', 'SUV', 'Sedán', 'Deportivo', 'Económicos'].map((type) => {
+                    const isSelected = vehicleTypeFilter === type;
+                    return (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => {
+                          setVehicleTypeFilter(type);
+                          setCurrentPage(1);
+                        }}
+                        className={`px-3.5 py-2 rounded-[10px] text-xs font-heading font-semibold border transition-colors ${
+                          isSelected
+                            ? 'bg-slate-900 text-white border-slate-900'
+                            : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                        }`}
+                      >
+                        {type === 'Todos' ? 'Todos los tipos' : type}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 4. Asientos */}
+              <div>
+                <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Capacidad de asientos
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['Todos', '4', '5', '7'].map((s) => {
+                    const isSelected = seatsFilter === s;
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => {
+                          setSeatsFilter(s);
+                          setCurrentPage(1);
+                        }}
+                        className={`px-3.5 py-2 rounded-[10px] text-xs font-heading font-semibold border transition-colors ${
+                          isSelected
+                            ? 'bg-slate-900 text-white border-slate-900'
+                            : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                        }`}
+                      >
+                        {s === 'Todos' ? 'Cualquiera' : `${s}+ plazas`}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 5. Transmisión */}
+              <div>
+                <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
+                  Transmisión
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['Todos', 'Automática', 'Estándar'].map((t) => {
+                    const isSelected = transmissionFilter === t;
+                    return (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => {
+                          setTransmissionFilter(t);
+                          setCurrentPage(1);
+                        }}
+                        className={`px-3.5 py-2 rounded-[10px] text-xs font-heading font-semibold border transition-colors ${
+                          isSelected
+                            ? 'bg-slate-900 text-white border-slate-900'
+                            : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                        }`}
+                      >
+                        {t === 'Todos' ? 'Cualquiera' : t}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 6. Precio máximo */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-heading font-bold text-slate-900 uppercase tracking-wider">
+                    Precio máximo por día
+                  </label>
+                  <span className="text-sm font-heading font-extrabold text-blue-600">
+                    ${priceMaxFilter.toLocaleString('es-MX')} MXN
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="850"
+                  max="3500"
+                  step="100"
+                  value={priceMaxFilter}
+                  onChange={(e) => {
+                    setPriceMaxFilter(parseInt(e.target.value, 10));
+                    setCurrentPage(1);
+                  }}
+                  className="w-full accent-blue-600 cursor-pointer"
+                />
+                <div className="flex justify-between text-[11px] text-slate-400 font-heading mt-1">
+                  <span>$850</span>
+                  <span>$3,500</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 border-t border-slate-100 bg-white flex items-center gap-3">
+              {activeFiltersCount > 0 && (
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="px-4 py-3 rounded-xl border border-slate-200 text-xs font-heading font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                >
+                  Limpiar
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setMobileFiltersOpen(false)}
+                className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-heading font-bold transition-colors shadow-md text-center"
+              >
+                Mostrar {filteredVehicles.length} {filteredVehicles.length === 1 ? 'auto' : 'autos'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
