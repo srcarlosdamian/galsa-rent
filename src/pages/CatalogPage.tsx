@@ -164,7 +164,16 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
   // Paginación
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 6;
+  // 8 autos por página en mobile/tableta (1-2 columnas), 6 en desktop (3 columnas)
+  const [isCompact, setIsCompact] = useState<boolean>(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  );
+  React.useEffect(() => {
+    const onResize = () => setIsCompact(window.innerWidth < 1024);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  const itemsPerPage = isCompact ? 8 : 6;
 
   // Dropdowns abiertos
   const [openDropdown, setOpenDropdown] = useState<'location' | 'dates' | 'type' | 'seats' | 'trans' | 'price' | 'sort' | null>(null);
