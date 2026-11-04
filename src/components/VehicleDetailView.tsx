@@ -5,7 +5,7 @@ import {
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
   X, Briefcase, Wind, Smartphone, Camera, Car, Zap, Check,
-  ClipboardCheck, Star
+  ClipboardCheck, Star, Copy, Mail
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
@@ -38,6 +38,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [isFav, setIsFav] = useState(false);
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   // Bloquear scroll y permitir cerrar modales con tecla Escape
   useEffect(() => {
@@ -45,9 +47,10 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       if (e.key === 'Escape') {
         setGalleryModalOpen(false);
         setMobileSheetOpen(false);
+        setShareModalOpen(false);
       }
     };
-    if (galleryModalOpen || mobileSheetOpen) {
+    if (galleryModalOpen || mobileSheetOpen || shareModalOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
@@ -57,7 +60,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [galleryModalOpen, mobileSheetOpen]);
+  }, [galleryModalOpen, mobileSheetOpen, shareModalOpen]);
 
   const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
   const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
@@ -124,17 +127,17 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const total = baseSubtotal + serviceFee;
   const originalSubtotal = Math.round(baseSubtotal * 1.12);
 
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://galsarent.com.mx/vehiculos/${vehicle.slug}`;
+  const shareText = `Renta este ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango con GALSA Rent`;
+
   const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: `${vehicle.make} ${vehicle.model} ${vehicle.year} | GALSA RENT`,
-        url: window.location.href,
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+    setShareModalOpen(true);
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(shareUrl);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
   };
 
   const handleBooking = () => {
@@ -261,7 +264,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-700 hover:text-black px-2.5 py-1.5 rounded-[8px] hover:bg-slate-100 transition-colors"
           >
             <Share2 className="w-3.5 h-3.5" strokeWidth={1.4} />
-            <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
+            <span>Compartir</span>
           </button>
         </div>
 
@@ -392,6 +395,162 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================
+            MODAL MINIMALISTA Y NEUTRAL DE COMPARTIR
+           ======================================================== */}
+        {shareModalOpen && (
+          <div 
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150"
+            onClick={() => setShareModalOpen(false)}
+          >
+            <div 
+              className="relative w-full max-w-md bg-white rounded-[24px] shadow-2xl p-6 border border-slate-100 text-left animate-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Barra superior */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900 leading-tight">
+                    Compartir vehículo
+                  </h3>
+                  <p className="text-xs text-slate-500 font-sans mt-0.5">
+                    Envía este modelo o cópialo para más tarde
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShareModalOpen(false)}
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors shrink-0 ml-2"
+                  aria-label="Cerrar modal"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Ficha previa compacta del vehículo */}
+              <div className="my-5 p-3 rounded-2xl bg-slate-50 border border-slate-200/70 flex items-center gap-3.5">
+                <img 
+                  src={mainPhoto} 
+                  alt={`${vehicle.make} ${vehicle.model}`}
+                  className="w-16 h-14 rounded-xl object-cover bg-white border border-slate-200/80 shrink-0"
+                />
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
+                    {vehicle.make} {vehicle.model} {vehicle.year}
+                  </h4>
+                  <p className="text-xs text-slate-500 truncate mt-0.5">
+                    {vehicle.location || 'Sucursal Plaza 450, Durango'}
+                  </p>
+                  <p className="text-xs font-heading font-semibold text-slate-800 mt-1">
+                    ${vehicle.pricePerDay.toLocaleString('es-MX')} <span className="text-[11px] font-normal text-slate-500">/ día</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Botones de Redes Sociales en diseño neutro y minimalista */}
+              <div className="mb-5">
+                <span className="block text-xs font-heading font-medium text-slate-600 mb-2.5">
+                  Compartir en redes
+                </span>
+                <div className="grid grid-cols-4 gap-2.5 text-center">
+                  {/* WhatsApp */}
+                  <a
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' - ' + shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
+                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                      </svg>
+                    </div>
+                    <span className="text-[11px] font-heading font-medium text-slate-700">WhatsApp</span>
+                  </a>
+
+                  {/* X (Twitter) */}
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </div>
+                    <span className="text-[11px] font-heading font-medium text-slate-700">X</span>
+                  </a>
+
+                  {/* Facebook */}
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
+                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </div>
+                    <span className="text-[11px] font-heading font-medium text-slate-700">Facebook</span>
+                  </a>
+
+                  {/* Correo */}
+                  <a
+                    href={`mailto:?subject=${encodeURIComponent(shareText)}&body=${encodeURIComponent('Hola, mira este auto en renta que encontré:\n\n' + shareUrl)}`}
+                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
+                      <Mail className="w-4 h-4 text-slate-800" />
+                    </div>
+                    <span className="text-[11px] font-heading font-medium text-slate-700">Correo</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Copiar enlace */}
+              <div>
+                <span className="block text-xs font-heading font-medium text-slate-600 mb-1.5">
+                  Copiar enlace directo
+                </span>
+                <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl border border-slate-200 bg-slate-50">
+                  <input
+                    type="text"
+                    readOnly
+                    value={shareUrl}
+                    className="w-full bg-transparent text-xs text-slate-700 font-mono focus:outline-none select-all truncate"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleCopyLink}
+                    className={`px-3.5 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all shrink-0 flex items-center gap-1.5 ${
+                      linkCopied
+                        ? 'bg-slate-900 text-white'
+                        : 'bg-white border border-slate-200 text-slate-800 hover:bg-slate-100'
+                    }`}
+                  >
+                    {linkCopied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>¡Copiado!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5 text-slate-700" />
+                        <span>Copiar</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
             </div>
           </div>
         )}
