@@ -946,20 +946,21 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         )}
 
-        {/* Barra Social / Compartir Catálogo */}
-        <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-slate-600 text-sm font-heading font-medium">
-            <Share2 className="w-4 h-4 text-blue-600" strokeWidth={1.4} />
-            <span>¿Planeas tu viaje en grupo? Comparte estas opciones de autos:</span>
+        {/* Contenedor Social / Compartir Catálogo */}
+        <div className="mt-10 bg-slate-50 rounded-2xl border border-slate-200/80 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-heading font-semibold text-slate-800">
+              Comparte estas opciones de autos
+            </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <a
               href="https://api.whatsapp.com/send?text=Checa%20las%20opciones%20de%20autos%20en%20renta%20en%20Durango%20con%20GALSA%20Rent%3A%20https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en WhatsApp"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
             >
               <span>WhatsApp</span>
             </a>
@@ -969,7 +970,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en Facebook"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
             >
               <span>Facebook</span>
             </a>
@@ -979,7 +980,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en X / Twitter"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
             >
               <span>X (Twitter)</span>
             </a>
@@ -987,9 +988,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={handleCopyLink}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-heading font-semibold text-slate-700 transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
             >
-              <Copy className="w-3.5 h-3.5 text-slate-500" strokeWidth={1.4} />
               <span>{copied ? '¡Copiado!' : 'Copiar enlace'}</span>
             </button>
           </div>
