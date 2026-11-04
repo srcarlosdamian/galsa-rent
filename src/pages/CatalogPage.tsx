@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
+import { CatalogMap } from '../components/CatalogMap';
 import { Vehicle, SearchState } from '../types/vehicle';
 import { DateRangePicker } from '../components/DateRangePicker';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
   ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
-  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X
+  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X,
+  LayoutGrid, Map as MapIcon
 } from 'lucide-react';
 
 interface CatalogPageProps {
@@ -191,6 +193,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   const toggleDropdown = (name: 'location' | 'dates' | 'type' | 'seats' | 'trans' | 'price' | 'sort') => {
     setOpenDropdown(prev => prev === name ? null : name);
   };
+
+  // Modo de visualización: Cuadrícula o Mapa (con tarjeta horizontal)
+  const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
+  const [hoveredVehicleId, setHoveredVehicleId] = useState<string | null>(null);
 
   // Modal de filtros en vista móvil
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -383,11 +389,41 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     <div className="py-6 sm:py-10 bg-white" onClick={() => setOpenDropdown(null)}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
-        {/* Título y Conteo de Resultados */}
-        <div className="mb-4">
-          <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
-            Autos disponibles ({filteredVehicles.length})
-          </h1>
+        {/* Título y Conteo de Resultados + Pill Cuadrícula / Mapa */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
+              Autos disponibles ({filteredVehicles.length})
+            </h1>
+          </div>
+
+          {/* Pill Selector: Cuadrícula | Mapa */}
+          <div className="inline-flex items-center self-start sm:self-auto bg-slate-100 p-1 rounded-full border border-slate-200/70 shadow-xs">
+            <button
+              type="button"
+              onClick={() => setViewMode('grid')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-heading transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" strokeWidth={1.8} />
+              <span>Cuadrícula</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode('map')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-heading transition-all ${
+                viewMode === 'map'
+                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              <MapIcon className="w-3.5 h-3.5" strokeWidth={1.8} />
+              <span>Mapa</span>
+            </button>
+          </div>
         </div>
 
         {/* Barra de Controles en Mobile (md:hidden): Botón 'Filtros' con Badge + Selector de Orden */}
@@ -803,18 +839,49 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
         </div>
 
-        {/* Grid de Autos (Exacto al estilo GALSA / Figma, 3 columnas) */}
+        {/* Grid de Autos o Vista Mapa según modo seleccionado */}
         {paginatedVehicles.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedVehicles.map((vehicle, idx) => (
-              <VehicleCard
-                key={vehicle.id}
-                vehicle={vehicle}
-                onSelect={onSelectVehicle}
-                priority={idx === 0}
-              />
-            ))}
-          </div>
+          viewMode === 'map' ? (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              {/* Columna izquierda: Lista de autos en tarjeta horizontal (imagen a la izquierda, detalles a la derecha) */}
+              <div className="lg:col-span-7 flex flex-col gap-3.5 order-2 lg:order-1">
+                {paginatedVehicles.map((vehicle, idx) => (
+                  <VehicleCard
+                    key={vehicle.id}
+                    vehicle={vehicle}
+                    onSelect={onSelectVehicle}
+                    priority={idx === 0}
+                    layout="horizontal"
+                    isHovered={hoveredVehicleId === vehicle.id}
+                    onMouseEnter={() => setHoveredVehicleId(vehicle.id)}
+                    onMouseLeave={() => setHoveredVehicleId(null)}
+                  />
+                ))}
+              </div>
+
+              {/* Columna derecha: Mapa interactivo con pines de precios en Durango */}
+              <div className="lg:col-span-5 order-1 lg:order-2 lg:sticky lg:top-24">
+                <CatalogMap
+                  vehicles={filteredVehicles}
+                  hoveredVehicleId={hoveredVehicleId}
+                  onSelectVehicle={onSelectVehicle}
+                  onHoverVehicle={setHoveredVehicleId}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {paginatedVehicles.map((vehicle, idx) => (
+                <VehicleCard
+                  key={vehicle.id}
+                  vehicle={vehicle}
+                  onSelect={onSelectVehicle}
+                  priority={idx === 0}
+                  layout="grid"
+                />
+              ))}
+            </div>
+          )
         ) : (
           <div className="text-center py-16 px-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
             <p className="text-base font-heading font-bold text-slate-800">
