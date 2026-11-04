@@ -591,12 +591,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </p>
               </div>
 
-              {/* Ahorros del viaje */}
-              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-heading">
-                <span className="text-slate-600">Descuento de tarifa directa</span>
-                <span className="font-bold text-emerald-600">-$250 MXN</span>
-              </div>
-
               {/* Botón Morado/Azul de Reserva */}
               <button
                 type="button"
