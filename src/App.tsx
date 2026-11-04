@@ -238,6 +238,30 @@ export const App: React.FC = () => {
     navigateTo('/catalogo');
   };
 
+  const isKnownRoute =
+    currentPath === '/' ||
+    currentPath.startsWith('/vehiculos/') ||
+    currentPath === '/catalogo' ||
+    currentPath === '/anfitriones' ||
+    currentPath === '/confianza' ||
+    currentPath === '/faq' ||
+    currentPath === '/como-funciona' ||
+    currentPath === '/nosotros' ||
+    currentPath === '/contacto' ||
+    currentPath === '/blog' ||
+    currentPath.startsWith('/blog/') ||
+    currentPath === '/terminos' ||
+    currentPath === '/privacidad' ||
+    currentPath === '/login' ||
+    currentPath === '/registro' ||
+    currentPath === '/recuperar-password' ||
+    currentPath === '/recuperar-password/enviado' ||
+    currentPath === '/restablecer-password' ||
+    currentPath === '/seo' ||
+    currentPath.startsWith('/cuenta') ||
+    currentPath === '/completar-perfil' ||
+    currentPath === '/cuenta/completar';
+
   return (
     <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-black selection:text-white flex flex-col">
       {/* Header with concise menu */}
@@ -513,6 +537,11 @@ export const App: React.FC = () => {
             <FinalCtaSection onNavigate={navigateTo} />
 
           </>
+        )}
+
+        {/* ROUTE 10: 404 NOT FOUND / FALLBACK */}
+        {(!isKnownRoute || currentPath === '/404') && (
+          <NotFoundPage onNavigate={navigateTo} />
         )}
 
       </main>
