@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       
       {/* Main Footer Content */}
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           
           {/* Brand Info */}
           <div className="space-y-4 lg:pr-4">
@@ -34,26 +34,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <p className="text-[12px] font-heading text-slate-400">
               contacto@galsarent.com.mx
             </p>
-          </div>
-
-          {/* Columna 1: Sucursal y Horarios (Minimalista y aireado) */}
-          <div className="space-y-3">
-            <p className="text-[13px] font-heading font-semibold text-slate-900 tracking-tight">
-              Puntos de Entrega
-            </p>
-            <div className="space-y-2 text-[13px] font-heading text-slate-500 leading-relaxed">
-              <div>
-                <p className="text-slate-900 font-medium">Sucursal Plaza 450</p>
-                <p className="text-slate-500">Blvd. Guadiana, Durango</p>
-              </div>
-              <div className="pt-1">
-                <p className="text-slate-900 font-medium">DGO Aeropuerto</p>
-                <p className="text-slate-500">Entrega en terminal aérea</p>
-              </div>
-              <div className="pt-2 text-[12px] text-slate-400">
-                <p>Lun a Dom: 8:00 – 20:00 hrs</p>
-              </div>
-            </div>
           </div>
 
           {/* Columna 2: Navegación */}
@@ -102,9 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
       {/* Bottom Bar minimalista */}
       <div className="border-t border-slate-100 py-6">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] font-heading text-slate-400">
-          <p>© 2026 GALSA Rent. Operando en Durango, México.</p>
-
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center sm:justify-end gap-4 text-[12px] font-heading text-slate-400">
           <div className="flex items-center space-x-6">
             <a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-slate-700 transition-colors">Privacidad</a>
             <a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-slate-700 transition-colors">Términos</a>
@@ -119,8 +97,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
           <div className="flex items-center gap-3 text-white">
-            <span>Última actualización: <strong>03 Nov 2026, 23:40 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.22</span>
+            <span>Última actualización: <strong>03 Nov 2026, 23:45 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.23</span>
           </div>
         </div>
       </div>
