@@ -65,10 +65,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
   const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
 
-  // Imágenes del vehículo
-  const images = vehicle.images && vehicle.images.length > 0 
-    ? vehicle.images.map(img => typeof img === 'string' ? img : img.url)
-    : [heroCarImg];
+  // Imagen de las tarjetas del home repetida 5 veces para evitar fotos genéricas
+  const cardHomeImage = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793239505248-1-car.webp';
+  const images = [cardHomeImage, cardHomeImage, cardHomeImage, cardHomeImage, cardHomeImage];
 
   const mainPhoto = images[activePhotoIdx] || images[0];
   const sidePhoto1 = images[1] || images[0];
@@ -431,8 +430,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </button>
               </div>
 
-              {/* Ficha previa compacta del vehículo */}
-              <div className="my-5 p-3 rounded-2xl bg-slate-50 border border-slate-200/70 flex items-center gap-3.5">
+              {/* Ficha previa compacta del vehículo sin fondo gris */}
+              <div className="my-5 flex items-center gap-3.5">
                 <img 
                   src={mainPhoto} 
                   alt={`${vehicle.make} ${vehicle.model}`}
@@ -926,17 +925,14 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     <span>Total de la renta</span>
                     <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
                   </div>
-                  <p className="text-[11px] font-sans text-slate-400 text-right mt-1">
-                    IVA incluido · extras opcionales
-                  </p>
                 </div>
               </div>
 
-              {/* Depósito en garantía neutro y sin fondo */}
+              {/* Depósito en garantía con mismo tamaño de texto que tarifa de servicio y precio homologado */}
               <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-700">
-                  <span className="font-medium">Depósito en garantía (reembolsable)</span>
-                  <span className="font-heading font-extrabold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                  <span>Depósito en garantía (reembolsable)</span>
+                  <span className="font-heading font-semibold text-slate-800">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
                 </div>
               </div>
 
@@ -1354,17 +1350,14 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       <span>Total de la renta</span>
                       <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
                     </div>
-                    <p className="text-[11px] font-sans text-slate-400 text-right mt-1">
-                      IVA incluido · extras opcionales
-                    </p>
                   </div>
                 </div>
 
-                {/* Depósito en garantía neutro y sin fondo */}
+                {/* Depósito en garantía con mismo tamaño de texto que tarifa de servicio y precio homologado */}
                 <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
-                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-700">
-                    <span className="font-medium">Depósito en garantía (reembolsable)</span>
-                    <span className="font-heading font-extrabold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                    <span>Depósito en garantía (reembolsable)</span>
+                    <span className="font-heading font-semibold text-slate-800">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
                   </div>
                 </div>
 
