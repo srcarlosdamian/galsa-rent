@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  ShieldCheck, Share2, ChevronRight, ChevronLeft, ChevronDown,
+  ShieldCheck, Share2, ChevronRight, ChevronLeft, ChevronDown, ChevronUp,
   MapPin, Calendar, CarFront, Sparkles,
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
@@ -37,13 +37,17 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [copied, setCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
 
-  // Bloquear scroll y permitir cerrar con tecla Escape
+  // Bloquear scroll y permitir cerrar modales con tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setGalleryModalOpen(false);
+      if (e.key === 'Escape') {
+        setGalleryModalOpen(false);
+        setMobileSheetOpen(false);
+      }
     };
-    if (galleryModalOpen) {
+    if (galleryModalOpen || mobileSheetOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
@@ -53,7 +57,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [galleryModalOpen]);
+  }, [galleryModalOpen, mobileSheetOpen]);
 
   const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
   const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
@@ -213,7 +217,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   };
 
   return (
-    <div className="w-full py-4 sm:py-8 bg-white">
+    <div className="w-full py-4 sm:py-8 bg-white pb-28 lg:pb-8">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Breadcrumb & Share */}
@@ -632,8 +636,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
           </div>
 
-          {/* COLUMNA DERECHA: Sticky Card Checkout */}
-          <div className="lg:col-span-5">
+          {/* COLUMNA DERECHA: Sticky Card Checkout (Sólo Desktop, en Mobile se usa barra flotante) */}
+          <div className="hidden lg:block lg:col-span-5">
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-lg space-y-6 text-left">
               
               {/* Precio (sin calificación repetida abajo) */}
@@ -985,6 +989,242 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             </div>
           </div>
         </div>
+
+        {/* ========================================================
+            BARRA FLOTANTE STEPPER EN MODO MOBILE (Minimalista)
+            Chevron + Total a la izquierda, Continuar a la derecha
+           ======================================================== */}
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] lg:hidden">
+          <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+            {/* Lado izquierdo: Chevron + Total y resumen de fechas */}
+            <div
+              className="flex items-center gap-2.5 cursor-pointer select-none group min-w-0"
+              onClick={() => setMobileSheetOpen(!mobileSheetOpen)}
+            >
+              <button
+                type="button"
+                aria-label="Levantar configuración de reserva"
+                className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-all"
+              >
+                {mobileSheetOpen ? (
+                  <ChevronDown className="w-4 h-4 text-slate-800" strokeWidth={2.2} />
+                ) : (
+                  <ChevronUp className="w-4 h-4 text-slate-800" strokeWidth={2.2} />
+                )}
+              </button>
+
+              <div className="min-w-0 text-left">
+                <span className="text-base font-heading font-extrabold text-slate-900 block leading-tight truncate">
+                  ${total.toLocaleString('es-MX')} total
+                </span>
+                <span className="text-[11px] font-sans text-slate-500 font-medium block truncate">
+                  {formatRangeSummary(startDate, endDate)} · {rentalDays} día{rentalDays > 1 ? 's' : ''}
+                </span>
+              </div>
+            </div>
+
+            {/* Lado derecho: Botón Continuar */}
+            <button
+              type="button"
+              onClick={() => {
+                if (!mobileSheetOpen) {
+                  setMobileSheetOpen(true);
+                } else {
+                  handleBooking();
+                }
+              }}
+              style={{ backgroundColor: '#4F46E5' }}
+              className="px-5 py-2.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-95 transition-all shadow-xs shrink-0 flex items-center gap-1.5"
+            >
+              <span>Continuar</span>
+            </button>
+          </div>
+        </div>
+
+        {/* ========================================================
+            BOTTOM SHEET DRAWER EN MODO MOBILE (Se levanta con el chevron o al pulsar Continuar)
+           ======================================================== */}
+        {mobileSheetOpen && (
+          <div 
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end lg:hidden animate-in fade-in duration-200"
+            onClick={() => setMobileSheetOpen(false)}
+          >
+            <div 
+              className="bg-white w-full rounded-t-[24px] max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-250 text-left"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Barra / Handle superior */}
+              <div className="pt-3 pb-1 flex justify-center cursor-pointer" onClick={() => setMobileSheetOpen(false)}>
+                <div className="w-10 h-1 bg-slate-300 rounded-full" />
+              </div>
+
+              {/* Header del Bottom Sheet */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
+                <div>
+                  <span className="text-xl font-heading font-extrabold text-slate-900 block leading-tight">
+                    ${total.toLocaleString('es-MX')} total
+                  </span>
+                  <span className="text-xs font-sans text-slate-500">
+                    {vehicle.make} {vehicle.model} · Plaza 450
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setMobileSheetOpen(false)}
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors"
+                  aria-label="Cerrar configuración"
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Contenido con scroll */}
+              <div className="p-5 overflow-y-auto space-y-4">
+                {/* Fila 1: Ciudad y Sucursal */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Ciudad
+                    </label>
+                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none">
+                      Durango
+                    </div>
+                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                      Ubicación del vehículo
+                    </span>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Sucursal
+                    </label>
+                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none truncate">
+                      Plaza 450
+                    </div>
+                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                      Recogida y devolución
+                    </span>
+                  </div>
+                </div>
+
+                {/* Fila 2: Fecha de recogida y Hora de entrega */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Fecha de recogida
+                    </label>
+                    <input
+                      type="date"
+                      value={startDate}
+                      min={new Date().toISOString().split('T')[0]}
+                      onChange={(e) => handleStartDateChange(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Hora de entrega
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={pickupTime}
+                        onChange={(e) => setPickupTime(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
+                      >
+                        {TIME_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                      Horario de atención
+                    </span>
+                  </div>
+                </div>
+
+                {/* Fila 3: Fecha de devolución y Hora de devolución */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Fecha de devolución
+                    </label>
+                    <input
+                      type="date"
+                      value={endDate}
+                      min={startDate || new Date().toISOString().split('T')[0]}
+                      onChange={(e) => handleEndDateChange(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                      Hora de devolución
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={returnTime}
+                        onChange={(e) => setReturnTime(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
+                      >
+                        {TIME_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desglose y Resumen de Precios */}
+                <div className="rounded-2xl border border-slate-200/90 bg-slate-50/60 p-4 space-y-3">
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                    <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
+                    <span className="font-heading font-semibold text-slate-800">${baseSubtotal.toLocaleString('es-MX')}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                    <span>Tarifa de servicio GALSA</span>
+                    <span className="font-heading font-semibold text-slate-800">${serviceFee.toLocaleString('es-MX')}</span>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-200">
+                    <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
+                      <span>Total de la renta</span>
+                      <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
+                    </div>
+                    <p className="text-[11px] font-sans text-slate-400 text-right mt-1">
+                      IVA incluido · extras opcionales
+                    </p>
+                  </div>
+                </div>
+
+                {/* Depósito en garantía neutro y sin fondo */}
+                <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
+                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-700">
+                    <span className="font-medium">Depósito en garantía (reembolsable)</span>
+                    <span className="font-heading font-extrabold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                  </div>
+                </div>
+
+                {/* Botón Final Continuar */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileSheetOpen(false);
+                    handleBooking();
+                  }}
+                  style={{ backgroundColor: '#4F46E5' }}
+                  className="w-full py-3.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
+                >
+                  <span>Continuar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
