@@ -342,177 +342,164 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8 lg:gap-x-12">
                 <div className="flex items-center gap-4 text-slate-800">
                   <Users className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">{vehicle.seats} asientos</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">{vehicle.seats} asientos</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Fuel className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Calendar className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Año modelo {vehicle.year}</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Año modelo {vehicle.year}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Gauge className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Car className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Briefcase className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Zap className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">{vehicle.specs?.mpgOrFuelEconomy || 'Rendimiento eficiente'}</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">{vehicle.specs?.mpgOrFuelEconomy || 'Rendimiento eficiente'}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Aire acondicionado A/C</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Aire acondicionado A/C</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Smartphone className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Apple CarPlay & Android Auto</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Apple CarPlay & Android Auto</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Frenos ABS y bolsas de aire</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Frenos ABS y bolsas de aire</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Camera className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Cámara de reversa y sensores</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Cámara de reversa y sensores</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <CarFront className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-normal text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
                 </div>
               </div>
             </div>
 
-            {/* Beneficios de tu reserva (Cancelación gratis, Pago protegido, Kilometraje libre) */}
-            <div className="pt-6 border-t border-slate-100 space-y-4">
-              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-100">
-                <ThumbsUp className="w-5 h-5 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.5} />
+            {/* Aspectos destacados del viaje (Estructura exacta Airbnb) */}
+            <div className="pt-6 border-t border-slate-100 space-y-6">
+              <div className="flex items-start gap-4">
+                <CarFront className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
                 <div>
-                  <h4 className="text-sm font-heading font-bold text-slate-900">
+                  <h4 className="text-base font-heading font-semibold text-slate-900">
+                    Olvídate del mostrador de renta tradicional
+                  </h4>
+                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
+                    Firma tu contrato digital desde tu teléfono y realiza la entrega rápida en minutos.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <ThumbsUp className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
+                <div>
+                  <h4 className="text-base font-heading font-semibold text-slate-900">
                     Cancelación gratis
                   </h4>
-                  <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
                     Reembolso completo cancelando hasta 24 horas antes de la hora de inicio.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-100">
-                <CreditCard className="w-5 h-5 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.5} />
+              <div className="flex items-start gap-4">
+                <CreditCard className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
                 <div>
-                  <h4 className="text-sm font-heading font-bold text-slate-900">
+                  <h4 className="text-base font-heading font-semibold text-slate-900">
                     Pago protegido
                   </h4>
-                  <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
                     Firma tu contrato digital y asegura tu unidad con depósito reembolsable.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5">
-                <Gauge className="w-5 h-5 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.5} />
+              <div className="flex items-start gap-4">
+                <Gauge className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
                 <div>
-                  <h4 className="text-sm font-heading font-bold text-slate-900">
+                  <h4 className="text-base font-heading font-semibold text-slate-900">
                     Kilometraje libre
                   </h4>
-                  <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
                     Sin límites de kilometraje diario para viajar por cualquier carretera de México.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
+                <div>
+                  <h4 className="text-base font-heading font-semibold text-slate-900">
+                    Asistencia en el camino 24/7 en México
+                  </h4>
+                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
+                    Soporte vial continuo ante cualquier eventualidad durante todo tu periodo de renta.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <Clock className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
+                <div>
+                  <h4 className="text-base font-heading font-semibold text-slate-900">
+                    Tolerancia de entrega flexible
+                  </h4>
+                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
+                    Coordinación directa para entregas en sucursal o terminal aérea con hasta 2 horas de margen.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Sección: Incluido con tu viaje (Íconos + Textos como en la referencia) */}
-            <div className="pt-2 border-t border-slate-100 space-y-4">
-              <h3 className="text-lg font-heading font-bold text-slate-900">
-                Incluido con tu viaje
-              </h3>
-
-              <div className="space-y-4">
-                <div className="flex items-start gap-3.5">
-                  <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 mt-0.5">
-                    <CarFront className="w-4 h-4" strokeWidth={1.4} />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-heading font-bold text-slate-900">
-                      Olvídate del mostrador de renta tradicional
-                    </h4>
-                    <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
-                      Firma tu contrato digital desde tu teléfono y realiza la entrega rápida en minutos.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 mt-0.5">
-                    <ShieldCheck className="w-4 h-4" strokeWidth={1.4} />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-heading font-bold text-slate-900">
-                      Asistencia en el camino 24/7 en México
-                    </h4>
-                    <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
-                      Soporte vial continuo ante cualquier eventualidad durante todo tu periodo de renta.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 mt-0.5">
-                    <Clock className="w-4 h-4" strokeWidth={1.4} />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-heading font-bold text-slate-900">
-                      Tolerancia de entrega flexible
-                    </h4>
-                    <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
-                      Coordinación directa para entregas en sucursal o terminal aérea con hasta 2 horas de margen.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Sección: Reglas del camino (Iconos tachados y de advertencia) */}
-            <div className="pt-2 border-t border-slate-100 space-y-4">
-              <h3 className="text-lg font-heading font-bold text-slate-900">
+            {/* Sección: Reglas del camino */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
                 Reglas del camino
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {vehicle.rules && vehicle.rules.length > 0 ? (
                   vehicle.rules.map((rule, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <div key={idx} className="flex items-start gap-3 p-3.5 rounded-[12px] bg-slate-50/80 border border-slate-100">
                       <CheckCircle2 className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                      <span className="text-xs font-sans text-slate-700 leading-relaxed">{rule}</span>
+                      <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">{rule}</span>
                     </div>
                   ))
                 ) : (
                   <>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs font-sans text-slate-700">
-                      Prohibido fumar dentro del vehículo.
+                    <div className="flex items-start gap-3 p-3.5 rounded-[12px] bg-slate-50/80 border border-slate-100">
+                      <CheckCircle2 className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
+                      <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">Prohibido fumar dentro del vehículo.</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs font-sans text-slate-700">
-                      Devolver con el mismo nivel de combustible.
+                    <div className="flex items-start gap-3 p-3.5 rounded-[12px] bg-slate-50/80 border border-slate-100">
+                      <CheckCircle2 className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
+                      <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">Devolver con el mismo nivel de combustible.</span>
                     </div>
                   </>
                 )}
