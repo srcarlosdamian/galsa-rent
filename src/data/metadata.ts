@@ -4,8 +4,8 @@ import { VEHICLES } from './vehicles';
 export const SITE_URL = 'https://galsarent.com.mx';
 
 export const DEFAULT_OG_IMAGE = {
-  url: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793246469211-0-cover.webp',
-  alt: 'GALSA Rent — Renta de autos en México y Durango',
+  url: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793821950338-0-2232323.webp',
+  alt: 'GALSA Rent — Renta de autos en México',
   width: 1200,
   height: 630,
 };

@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { STATIC_ROUTES_METADATA, getVehicleMetadata, SITE_URL } from '../data/metadata';
+import { STATIC_ROUTES_METADATA, getVehicleMetadata } from '../data/metadata';
 import { VEHICLES } from '../data/vehicles';
 import { 
-  Search, Copy, Check, ExternalLink, Globe, Share2, MessageSquare, 
-  Smartphone, Monitor, Sparkles, AlertCircle, ArrowLeft, CarFront, Filter
+  Search, Copy, Check, ExternalLink, Globe, Share2, MessageSquare, ArrowLeft
 } from 'lucide-react';
 
 interface SeoItem {
@@ -110,14 +109,8 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                 </button>
               )}
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider">
-                    Auditor & Simulador
-                  </span>
-                  <span className="text-xs text-slate-400">· {filteredPages.length} páginas</span>
-                </div>
-                <h1 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900 mt-0.5">
-                  Previsualizador SEO & Redes Sociales
+                <h1 className="text-xl sm:text-2xl font-heading font-bold text-slate-900">
+                  Previsualizador SEO
                 </h1>
               </div>
             </div>
@@ -126,47 +119,47 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
             <div className="flex items-center bg-slate-100 p-1 rounded-xl self-start sm:self-center border border-slate-200">
               <button
                 onClick={() => setActiveTab('serp')}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
                   activeTab === 'serp'
                     ? 'bg-white text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <Globe className="w-4 h-4 text-blue-600" />
-                Google SERP
+                <Globe className="w-3.5 h-3.5 text-blue-600" />
+                Google
               </button>
               <button
                 onClick={() => setActiveTab('og')}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
                   activeTab === 'og'
                     ? 'bg-white text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <Share2 className="w-4 h-4 text-indigo-600" />
-                Social / Open Graph
+                <Share2 className="w-3.5 h-3.5 text-indigo-600" />
+                Social
               </button>
               <button
                 onClick={() => setActiveTab('chat')}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
                   activeTab === 'chat'
                     ? 'bg-white text-slate-900 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <MessageSquare className="w-4 h-4 text-emerald-600" />
-                WhatsApp / Chat
+                <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                WhatsApp
               </button>
             </div>
           </div>
 
           {/* Search and filters bar */}
           <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-3">
-            <div className="relative w-full md:w-96">
+            <div className="relative w-full md:w-80">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Buscar por URL, título o palabra clave..."
+                placeholder="Buscar ruta o título..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
@@ -178,7 +171,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                 { id: 'all', label: 'Todas' },
                 { id: 'core', label: 'Principales' },
                 { id: 'vehicles', label: 'Vehículos' },
-                { id: 'auth', label: 'Auth & Recuperación' },
+                { id: 'auth', label: 'Auth' },
                 { id: 'legal', label: 'Legales' },
               ].map((tab) => (
                 <button
@@ -204,12 +197,6 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
           {filteredPages.map((item) => {
             const cleanPath = item.path === '/' ? '' : item.path.replace(/^\//, '');
             const displayBreadcrumb = `galsarent.com.mx ${cleanPath ? '› ' + cleanPath.split('/').join(' › ') : ''}`;
-            
-            // Health checks
-            const titleLength = item.title.length;
-            const descLength = item.description.length;
-            const isTitleOk = titleLength >= 30 && titleLength <= 65;
-            const isDescOk = descLength >= 80 && descLength <= 165;
 
             return (
               <div 
@@ -227,21 +214,11 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                     </span>
                   </div>
 
-                  {/* Badges / Metrics */}
-                  <div className="flex items-center gap-2">
-                    <span className={`text-[11px] font-mono px-2 py-0.5 rounded ${
-                      isTitleOk ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
-                    }`}>
-                      Título: {titleLength} car.
-                    </span>
-                    <span className={`text-[11px] font-mono px-2 py-0.5 rounded ${
-                      isDescOk ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
-                    }`}>
-                      Desc: {descLength} car.
-                    </span>
+                  {/* Actions */}
+                  <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => copyToClipboard(item.canonical, `url-${item.id}`)}
-                      className="text-xs text-slate-500 hover:text-slate-800 p-1 rounded hover:bg-slate-100 transition-colors ml-1"
+                      className="text-xs text-slate-500 hover:text-slate-800 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
                       title="Copiar URL canónica"
                     >
                       {copiedKey === `url-${item.id}` ? (
@@ -253,7 +230,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                     {onNavigate && (
                       <button
                         onClick={() => onNavigate(item.path)}
-                        className="text-xs text-blue-600 hover:text-blue-700 p-1 rounded hover:bg-blue-50 transition-colors"
+                        className="text-xs text-blue-600 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition-colors"
                         title="Abrir página en la app"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
