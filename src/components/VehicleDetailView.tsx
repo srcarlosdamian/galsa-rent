@@ -737,22 +737,24 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   </span>
                 </div>
 
-                <p className="text-xs sm:text-sm font-sans text-slate-500 pt-1">
-                  Consulta los{' '}
-                  <a
-                    href="/terminos"
-                    onClick={(e) => {
-                      if (onNavigate) {
-                        e.preventDefault();
-                        onNavigate('/terminos');
-                      }
-                    }}
-                    className="text-blue-600 font-medium hover:underline"
-                  >
-                    términos y condiciones
-                  </a>{' '}
-                  completos.
-                </p>
+                <div className="rounded-xl bg-slate-50 p-3.5 sm:p-4 mt-2">
+                  <p className="text-xs sm:text-sm font-sans text-slate-600">
+                    Consulta los{' '}
+                    <a
+                      href="/terminos"
+                      onClick={(e) => {
+                        if (onNavigate) {
+                          e.preventDefault();
+                          onNavigate('/terminos');
+                        }
+                      }}
+                      className="text-black font-semibold hover:underline"
+                    >
+                      términos y condiciones
+                    </a>{' '}
+                    completos.
+                  </p>
+                </div>
               </div>
             </div>
 
