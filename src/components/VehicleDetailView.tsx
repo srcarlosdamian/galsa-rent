@@ -688,15 +688,50 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </p>
               </div>
 
+              {/* Desglose y Resumen de Precios (Exacto de la captura) */}
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xs space-y-3">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                  <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
+                  <span className="font-heading font-semibold text-slate-800">${baseSubtotal.toLocaleString('es-MX')}</span>
+                </div>
+
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                  <span>Tarifa de servicio GALSA</span>
+                  <span className="font-heading font-semibold text-slate-800">${serviceFee.toLocaleString('es-MX')}</span>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100">
+                  <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
+                    <span>Total de la renta</span>
+                    <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
+                  </div>
+                  <p className="text-[11px] font-sans text-slate-400 text-right mt-1">
+                    IVA incluido · extras opcionales
+                  </p>
+                </div>
+              </div>
+
+              {/* Depósito en garantía reembolsable (Exacto de la captura) */}
+              <div className="rounded-xl border border-sky-200/80 bg-sky-50/60 px-4 py-3">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-700">
+                  <span className="font-medium">Depósito en garantía (reembolsable)</span>
+                  <span className="font-heading font-extrabold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                </div>
+              </div>
+
               {/* Botón Morado/Azul de Reserva */}
               <button
                 type="button"
                 onClick={handleBooking}
                 style={{ backgroundColor: '#4F46E5' }}
-                className="w-full py-3.5 rounded-[8px] text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
+                className="w-full py-3.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
               >
                 <span>Continuar</span>
               </button>
+
+              <p className="text-[11px] font-sans text-slate-400 text-center -mt-2">
+                No se te cobrará nada todavía · Pago protegido
+              </p>
 
             </div>
           </div>
