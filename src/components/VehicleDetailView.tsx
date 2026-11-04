@@ -4,7 +4,7 @@ import {
   MapPin, Calendar, CarFront, Sparkles,
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
-  X, Briefcase, Wind, Smartphone, Camera, Car, Zap
+  X, Briefcase, Wind, Smartphone, Camera, Car, Zap, Check
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
@@ -392,107 +392,49 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Aspectos destacados del viaje (Estructura exacta Airbnb) */}
-            <div className="pt-6 border-t border-slate-100 space-y-6">
-              <div className="flex items-start gap-4">
-                <CarFront className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
-                <div>
-                  <h4 className="text-base font-heading font-semibold text-slate-900">
-                    Olvídate del mostrador de renta tradicional
-                  </h4>
-                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
-                    Firma tu contrato digital desde tu teléfono y realiza la entrega rápida en minutos.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <ThumbsUp className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
-                <div>
-                  <h4 className="text-base font-heading font-semibold text-slate-900">
-                    Cancelación gratis
-                  </h4>
-                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
-                    Reembolso completo cancelando hasta 24 horas antes de la hora de inicio.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <CreditCard className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
-                <div>
-                  <h4 className="text-base font-heading font-semibold text-slate-900">
-                    Pago protegido
-                  </h4>
-                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
-                    Firma tu contrato digital y asegura tu unidad con depósito reembolsable.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Gauge className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
-                <div>
-                  <h4 className="text-base font-heading font-semibold text-slate-900">
-                    Kilometraje libre
-                  </h4>
-                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
-                    Sin límites de kilometraje diario para viajar por cualquier carretera de México.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
-                <div>
-                  <h4 className="text-base font-heading font-semibold text-slate-900">
-                    Asistencia en el camino 24/7 en México
-                  </h4>
-                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
-                    Soporte vial continuo ante cualquier eventualidad durante todo tu periodo de renta.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <Clock className="w-6 h-6 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.4} />
-                <div>
-                  <h4 className="text-base font-heading font-semibold text-slate-900">
-                    Tolerancia de entrega flexible
-                  </h4>
-                  <p className="text-sm font-sans text-slate-500 leading-relaxed mt-0.5">
-                    Coordinación directa para entregas en sucursal o terminal aérea con hasta 2 horas de margen.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Sección: Reglas del camino */}
+            {/* Sección: Características y condiciones de uso (Exacto de la 2da imagen) */}
             <div className="pt-6 border-t border-slate-100 space-y-4">
               <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                Reglas del camino
+                Características y condiciones de uso
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {vehicle.rules && vehicle.rules.length > 0 ? (
-                  vehicle.rules.map((rule, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3.5 rounded-[12px] bg-slate-50/80 border border-slate-100">
-                      <CheckCircle2 className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                      <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">{rule}</span>
-                    </div>
-                  ))
-                ) : (
-                  <>
-                    <div className="flex items-start gap-3 p-3.5 rounded-[12px] bg-slate-50/80 border border-slate-100">
-                      <CheckCircle2 className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                      <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">Prohibido fumar dentro del vehículo.</span>
-                    </div>
-                    <div className="flex items-start gap-3 p-3.5 rounded-[12px] bg-slate-50/80 border border-slate-100">
-                      <CheckCircle2 className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                      <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">Devolver con el mismo nivel de combustible.</span>
-                    </div>
-                  </>
-                )}
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-xs">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Kilometraje libre.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Combustible: se entrega y devuelve con el mismo nivel.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Edad mínima del conductor: 21 años con licencia vigente.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Depósito en garantía reembolsable al cierre sin incidencias.
+                    </span>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
+                      Prohibido fumar dentro de la unidad.
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
