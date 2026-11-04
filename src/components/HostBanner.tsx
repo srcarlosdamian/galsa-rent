@@ -49,7 +49,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
           >
             <div className="space-y-4 max-w-xl text-left">
               {/* Icono 3D de carro con monedas más grande */}
-              <div className="w-24 h-24 sm:w-32 sm:h-32 mb-1">
+              <div className="w-48 h-48 sm:w-32 sm:h-32 mb-1">
                 <img
                   src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793603910333-0-348390.webp"
                   alt="Programa Anfitriones GALSA"
