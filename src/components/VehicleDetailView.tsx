@@ -296,7 +296,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 className="absolute top-3.5 right-3.5 w-8 h-8 flex items-center justify-center rounded-full bg-white/70 hover:bg-white text-slate-900 backdrop-blur-md transition-all z-10 shadow-xs"
               >
                 <Heart
-                  className={`w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : 'text-slate-800'}`}
+                  className={`w-4 h-4 transition-colors ${isFav ? 'fill-purple-500 text-purple-500' : 'text-slate-800'}`}
                   strokeWidth={1.4}
                 />
               </button>

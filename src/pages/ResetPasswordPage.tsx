@@ -27,8 +27,9 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
   };
 
   return (
-    <div className="min-h-[78vh] flex items-center justify-center py-12 px-4 sm:px-6 bg-slate-50/50">
-      <div className="w-full max-w-[460px] bg-white rounded-[24px] p-8 sm:p-10 shadow-sm border border-slate-200/80 animate-in fade-in zoom-in-95 duration-200">
+    <div className="min-h-[78vh] flex items-center justify-center py-12 px-4 sm:px-6 bg-white">
+      {/* Contenido sin contenedor de tarjeta blanco, sin sombra y sin línea de borde */}
+      <div className="w-full max-w-[440px] animate-in fade-in zoom-in-95 duration-200">
         
         {!submitted ? (
           <>

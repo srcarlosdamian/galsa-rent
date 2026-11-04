@@ -7,7 +7,7 @@ import { DateRangePicker } from '../components/DateRangePicker';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
   ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
-  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X,
+  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X, Search,
   LayoutGrid, Map as MapIcon, CarFront, Clock, Users, BookOpen, FileText, Lock
 } from 'lucide-react';
 
@@ -61,6 +61,12 @@ const LOCATION_OPTIONS = [
     icon: Train,
     value: 'Central de Autobuses de Durango',
   },
+];
+
+const TIME_OPTIONS = [
+  '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
+  '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
+  '19:00', '20:00', '21:00', '22:00'
 ];
 
 export const CatalogPage: React.FC<CatalogPageProps> = ({ 
@@ -200,6 +206,45 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
   // Modal de filtros en vista móvil
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [pickupTime, setPickupTime] = useState<string>('08:00');
+  const [returnTime, setReturnTime] = useState<string>('18:00');
+  const [mobileLocationSearch, setMobileLocationSearch] = useState<string>('');
+
+  // Histograma de distribución de precios para el filtro móvil estilo Airbnb
+  const histogramBuckets = useMemo(() => {
+    const numBuckets = 22;
+    const minPrice = 850;
+    const maxPrice = 3500;
+    const step = (maxPrice - minPrice) / numBuckets;
+    const buckets = Array.from({ length: numBuckets }, (_, i) => ({
+      min: minPrice + i * step,
+      max: minPrice + (i + 1) * step,
+      count: 0,
+    }));
+
+    VEHICLES.forEach((v) => {
+      const p = v.pricePerDay;
+      const bucket = buckets.find((b) => p >= b.min && p <= b.max);
+      if (bucket) {
+        bucket.count += 1;
+      }
+    });
+
+    const maxCount = Math.max(...buckets.map((b) => b.count), 1);
+    return buckets.map((b) => ({
+      ...b,
+      heightPct: Math.max(16, Math.round((b.count / maxCount) * 100)),
+    }));
+  }, []);
+
+  // Opciones de ubicación filtradas para el buscador móvil
+  const filteredLocationOptions = useMemo(() => {
+    if (!mobileLocationSearch.trim()) return LOCATION_OPTIONS;
+    const q = mobileLocationSearch.toLowerCase();
+    return LOCATION_OPTIONS.filter(
+      (loc) => loc.title.toLowerCase().includes(q) || (loc.subtitle && loc.subtitle.toLowerCase().includes(q)) || loc.value.toLowerCase().includes(q)
+    );
+  }, [mobileLocationSearch]);
 
   // Lista de badges de filtros activos
   const activeFiltersList = useMemo(() => {
@@ -389,7 +434,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     <div className="py-6 sm:py-10 bg-white" onClick={() => setOpenDropdown(null)}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
 
-        {/* Título y Conteo de Resultados + Pill Cuadrícula / Mapa */}
+        {/* Título y Conteo de Resultados + Controles Desktop (Toggle + Recomendados en misma línea) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div>
             <h1 className="text-[26px] sm:text-[30px] font-heading font-extrabold tracking-tight text-slate-900 leading-tight">
@@ -397,71 +442,145 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             </h1>
           </div>
 
-          {/* Pill Selector: Cuadrícula | Mapa */}
-          <div className="inline-flex items-center self-start sm:self-auto bg-slate-100 p-1 rounded-full border border-slate-200/70 shadow-xs">
-            <button
-              type="button"
-              onClick={() => setViewMode('grid')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-heading transition-all ${
-                viewMode === 'grid'
-                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 font-medium'
-              }`}
-            >
-              <LayoutGrid className="w-3.5 h-3.5" strokeWidth={1.8} />
-              <span>Cuadrícula</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('map')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-heading transition-all ${
-                viewMode === 'map'
-                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 font-medium'
-              }`}
-            >
-              <MapIcon className="w-3.5 h-3.5" strokeWidth={1.8} />
-              <span>Mapa</span>
-            </button>
+          {/* Controles Desktop: Toggle Cuadrícula/Mapa + Ordenar por Recomendados juntos con misma altura (h-[38px]) y bordes rounded-[10px] */}
+          <div className="hidden md:flex items-center gap-2.5">
+            {/* Toggle Cuadrícula / Mapa estilo Login con bordes redondeados acordes a inputs */}
+            <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center h-[38px] border border-slate-200/80">
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                className={`inline-flex items-center gap-1.5 h-full px-3.5 rounded-[8px] text-xs font-heading transition-all ${
+                  viewMode === 'grid'
+                    ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 font-medium'
+                }`}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" strokeWidth={1.8} />
+                <span>Cuadrícula</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('map')}
+                className={`inline-flex items-center gap-1.5 h-full px-3.5 rounded-[8px] text-xs font-heading transition-all ${
+                  viewMode === 'map'
+                    ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 font-medium'
+                }`}
+              >
+                <MapIcon className="w-3.5 h-3.5" strokeWidth={1.8} />
+                <span>Mapa</span>
+              </button>
+            </div>
+
+            {/* Selector de ordenamiento Recomendados pegado al toggle con misma altura y borde rounded-[10px] */}
+            <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                onClick={() => toggleDropdown('sort')}
+                className="inline-flex items-center gap-2 h-[38px] px-3.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors shadow-xs"
+              >
+                <span>
+                  {sortBy === 'recommended' && 'Recomendados'}
+                  {sortBy === 'price-asc' && 'Precio: menor a mayor'}
+                  {sortBy === 'price-desc' && 'Precio: mayor a menor'}
+                  {sortBy === 'year-desc' && 'Año más reciente'}
+                </span>
+                <ChevronDown className="w-4 h-4 text-slate-500" strokeWidth={1.4} />
+              </button>
+
+              {openDropdown === 'sort' && (
+                <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
+                  {[
+                    { id: 'recommended', label: 'Recomendados' },
+                    { id: 'price-asc', label: 'Precio: menor a mayor' },
+                    { id: 'price-desc', label: 'Precio: mayor a menor' },
+                    { id: 'year-desc', label: 'Año más reciente' },
+                  ].map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => {
+                        setSortBy(opt.id as any);
+                        setOpenDropdown(null);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
+                        sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Barra de Controles en Mobile (md:hidden): Botón 'Filtros' con Badge + Selector de Orden */}
-        <div className="md:hidden flex items-center justify-between gap-2.5 mb-3.5">
+        {/* Barra de Controles en Mobile (md:hidden): Filtros + Pill Cuadrícula/Mapa + Recomendados en una MISMA línea */}
+        <div className="md:hidden flex items-center justify-between gap-1.5 mb-3.5">
+          {/* Botón Filtros con Badge */}
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               setMobileFiltersOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-semibold text-slate-800 shadow-xs hover:bg-slate-50 active:bg-slate-100 transition-colors"
+            className="inline-flex items-center gap-1.5 px-2.5 h-[36px] rounded-[8px] border border-slate-300 bg-white text-xs font-heading font-semibold text-slate-800 shadow-xs hover:bg-slate-50 active:bg-slate-100 transition-colors shrink-0"
           >
-            <SlidersHorizontal className="w-4 h-4 text-slate-700" strokeWidth={1.8} />
+            <SlidersHorizontal className="w-3.5 h-3.5 text-slate-700" strokeWidth={1.8} />
             <span>Filtros</span>
             {activeFiltersCount > 0 && (
-              <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-blue-600 text-white text-[11px] font-bold">
+              <span className="inline-flex items-center justify-center min-w-[18px] h-4 px-1 rounded-full bg-blue-600 text-white text-[10px] font-bold">
                 {activeFiltersCount}
               </span>
             )}
           </button>
 
-          {/* Selector de ordenamiento en mobile */}
-          <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
+          {/* Pill Toggle Cuadrícula | Mapa en mobile */}
+          <div className="bg-slate-100 p-0.5 rounded-[8px] inline-flex items-center h-[36px] border border-slate-200/80 shrink-0">
+            <button
+              type="button"
+              onClick={() => setViewMode('grid')}
+              className={`inline-flex items-center gap-1 h-full px-2 rounded-[6px] text-[11px] font-heading transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              <LayoutGrid className="w-3 h-3" strokeWidth={1.8} />
+              <span>Cuadrícula</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode('map')}
+              className={`inline-flex items-center gap-1 h-full px-2 rounded-[6px] text-[11px] font-heading transition-all ${
+                viewMode === 'map'
+                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
+            >
+              <MapIcon className="w-3 h-3" strokeWidth={1.8} />
+              <span>Mapa</span>
+            </button>
+          </div>
+
+          {/* Selector de ordenamiento Recomendados en mobile */}
+          <div className="relative inline-block shrink-0" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={() => toggleDropdown('sort')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 transition-colors"
+              className="inline-flex items-center gap-1 px-2.5 h-[36px] rounded-[8px] border border-slate-300 bg-white text-xs font-heading font-medium text-slate-800 transition-colors"
             >
-              <span className="truncate max-w-[150px]">
+              <span className="truncate max-w-[95px]">
                 {sortBy === 'recommended' && 'Recomendados'}
                 {sortBy === 'price-asc' && 'Precio: menor'}
                 {sortBy === 'price-desc' && 'Precio: mayor'}
                 {sortBy === 'year-desc' && 'Año reciente'}
               </span>
-              <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.4} />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.4} />
             </button>
             {openDropdown === 'sort' && (
-              <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
+              <div className="absolute right-0 top-full mt-1.5 w-48 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
                 {[
                   { id: 'recommended', label: 'Recomendados' },
                   { id: 'price-asc', label: 'Precio: menor a mayor' },
@@ -475,7 +594,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setSortBy(opt.id as any);
                       setOpenDropdown(null);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
+                    className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-heading font-medium transition-colors ${
                       sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
                     }`}
                   >
@@ -750,9 +869,9 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             )}
           </div>
 
-          {/* Zona derecha: Botón Limpiar filtros + Selector de ordenamiento (Recomendados) pegado a la derecha */}
-          <div className="ml-auto flex items-center gap-3">
-            {(selectedLocation || (startDate && endDate) || vehicleTypeFilter !== 'Todos' || seatsFilter !== 'Todos' || transmissionFilter !== 'Todos' || priceMaxFilter < 3500) && (
+          {/* Zona derecha: Botón Limpiar filtros */}
+          {(selectedLocation || (startDate && endDate) || vehicleTypeFilter !== 'Todos' || seatsFilter !== 'Todos' || transmissionFilter !== 'Todos' || priceMaxFilter < 3500) && (
+            <div className="ml-auto flex items-center gap-3">
               <button
                 type="button"
                 onClick={resetFilters}
@@ -761,50 +880,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 <RotateCcw className="w-3.5 h-3.5" strokeWidth={1.4} />
                 <span>Limpiar filtros</span>
               </button>
-            )}
-
-            {/* Selector de ordenamiento pegado a la derecha */}
-            <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
-              <button
-                type="button"
-                onClick={() => toggleDropdown('sort')}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[8px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors"
-              >
-                <span>
-                  {sortBy === 'recommended' && 'Recomendados'}
-                  {sortBy === 'price-asc' && 'Precio: menor a mayor'}
-                  {sortBy === 'price-desc' && 'Precio: mayor a menor'}
-                  {sortBy === 'year-desc' && 'Año más reciente'}
-                </span>
-                <ChevronDown className="w-4 h-4 text-slate-500" strokeWidth={1.4} />
-              </button>
-
-              {openDropdown === 'sort' && (
-                <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
-                  {[
-                    { id: 'recommended', label: 'Recomendados' },
-                    { id: 'price-asc', label: 'Precio: menor a mayor' },
-                    { id: 'price-desc', label: 'Precio: mayor a menor' },
-                    { id: 'year-desc', label: 'Año más reciente' },
-                  ].map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => {
-                        setSortBy(opt.id as any);
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
-                        sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
-          </div>
+          )}
 
         </div>
 
@@ -812,8 +889,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
         {paginatedVehicles.length > 0 ? (
           viewMode === 'map' ? (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Columna izquierda: Lista de autos en tarjeta horizontal (imagen a la izquierda, detalles a la derecha) */}
-              <div className="lg:col-span-7 flex flex-col gap-3.5 order-2 lg:order-1">
+              {/* Columna izquierda: Lista de autos en tarjeta horizontal (40% de ancho) */}
+              <div className="lg:col-span-5 flex flex-col gap-3.5 order-2 lg:order-1">
                 {paginatedVehicles.map((vehicle, idx) => (
                   <VehicleCard
                     key={vehicle.id}
@@ -828,8 +905,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 ))}
               </div>
 
-              {/* Columna derecha: Mapa interactivo con pines de precios en Durango */}
-              <div className="lg:col-span-5 order-1 lg:order-2 lg:sticky lg:top-24">
+              {/* Columna derecha: Mapa interactivo (60% de ancho) */}
+              <div className="lg:col-span-7 order-1 lg:order-2 lg:sticky lg:top-24">
                 <CatalogMap
                   vehicles={filteredVehicles}
                   hoveredVehicleId={hoveredVehicleId}
@@ -1145,13 +1222,36 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
             {/* Modal Body (Scrollable) */}
             <div className="p-5 space-y-6 overflow-y-auto">
-              {/* 1. Ubicación */}
+              {/* 1. Ubicación de entrega con buscador interactivo como Home */}
               <div>
                 <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
                   Ubicación de entrega
                 </label>
-                <div className="space-y-1.5">
-                  {LOCATION_OPTIONS.map((loc) => {
+
+                {/* Input Buscador estilo Home */}
+                <div className="relative mb-2.5">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={1.8} />
+                  <input
+                    type="text"
+                    value={mobileLocationSearch}
+                    onChange={(e) => setMobileLocationSearch(e.target.value)}
+                    placeholder="Dirección, ciudad o aeropuerto..."
+                    className="w-full pl-9 pr-8 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading text-xs sm:text-sm outline-none transition-colors"
+                  />
+                  {mobileLocationSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setMobileLocationSearch('')}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Lista de ubicaciones filtrables */}
+                <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                  {filteredLocationOptions.map((loc) => {
                     const isSelected = (!selectedLocation && loc.value === '') || selectedLocation === loc.value;
                     const Icon = loc.icon;
                     return (
@@ -1164,6 +1264,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           } else {
                             handleLocationSelect(loc.value);
                           }
+                          setMobileLocationSearch('');
                         }}
                         className={`w-full text-left p-2.5 rounded-[12px] border transition-colors flex items-center gap-3 ${
                           isSelected
@@ -1188,50 +1289,101 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       </button>
                     );
                   })}
+                  {filteredLocationOptions.length === 0 && (
+                    <div className="p-3 text-center text-xs text-slate-500">
+                      No se encontraron resultados para "{mobileLocationSearch}".
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* 2. Fechas */}
+              {/* 2. Fechas y Horas del viaje (Diseño idéntico a vista detalle) */}
               <div>
                 <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
                   Fechas del viaje
                 </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50">
-                    <span className="block text-[10px] font-heading uppercase text-slate-400 font-bold mb-1">Recogida</span>
-                    <input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setStartDate(val);
-                        if (onSearchChange && searchState) {
-                          onSearchChange({ ...searchState, startDate: val });
-                        }
-                      }}
-                      className="w-full bg-transparent text-[13px] font-heading font-semibold text-slate-800 outline-none"
-                    />
+                <div className="space-y-3">
+                  {/* Entrega */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[11px] font-heading font-medium text-slate-600 mb-1">
+                        Fecha de entrega
+                      </label>
+                      <input
+                        type="date"
+                        value={startDate}
+                        min={new Date().toISOString().split('T')[0]}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setStartDate(val);
+                          if (onSearchChange && searchState) {
+                            onSearchChange({ ...searchState, startDate: val });
+                          }
+                        }}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-heading font-medium text-slate-600 mb-1">
+                        Hora de entrega
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={pickupTime}
+                          onChange={(e) => setPickupTime(e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors appearance-none cursor-pointer"
+                        >
+                          {TIME_OPTIONS.map((t) => (
+                            <option key={`pickup-${t}`} value={t}>{t}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="w-4 h-4 text-slate-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/50">
-                    <span className="block text-[10px] font-heading uppercase text-slate-400 font-bold mb-1">Devolución</span>
-                    <input
-                      type="date"
-                      value={endDate}
-                      min={startDate}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setEndDate(val);
-                        if (onSearchChange && searchState) {
-                          onSearchChange({ ...searchState, endDate: val });
-                        }
-                      }}
-                      className="w-full bg-transparent text-[13px] font-heading font-semibold text-slate-800 outline-none"
-                    />
+
+                  {/* Devolución */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[11px] font-heading font-medium text-slate-600 mb-1">
+                        Fecha de devolución
+                      </label>
+                      <input
+                        type="date"
+                        value={endDate}
+                        min={startDate || new Date().toISOString().split('T')[0]}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setEndDate(val);
+                          if (onSearchChange && searchState) {
+                            onSearchChange({ ...searchState, endDate: val });
+                          }
+                        }}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-heading font-medium text-slate-600 mb-1">
+                        Hora de devolución
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={returnTime}
+                          onChange={(e) => setReturnTime(e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors appearance-none cursor-pointer"
+                        >
+                          {TIME_OPTIONS.map((t) => (
+                            <option key={`return-${t}`} value={t}>{t}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="w-4 h-4 text-slate-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* 3. Tipo de vehículo */}
+              {/* 3. Tipo de vehículo (usando grises neutros sin fondos negros) */}
               <div>
                 <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
                   Tipo de vehículo
@@ -1247,10 +1399,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           setVehicleTypeFilter(type);
                           setCurrentPage(1);
                         }}
-                        className={`px-3.5 py-2 rounded-[10px] text-xs font-heading font-semibold border transition-colors ${
+                        className={`px-3 py-1.5 rounded-[10px] text-xs font-heading transition-colors border ${
                           isSelected
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold shadow-xs'
+                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 font-medium'
                         }`}
                       >
                         {type === 'Todos' ? 'Todos los tipos' : type}
@@ -1260,7 +1412,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 </div>
               </div>
 
-              {/* 4. Asientos */}
+              {/* 4. Capacidad de asientos (usando grises neutros sin fondos negros) */}
               <div>
                 <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
                   Capacidad de asientos
@@ -1276,10 +1428,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           setSeatsFilter(s);
                           setCurrentPage(1);
                         }}
-                        className={`px-3.5 py-2 rounded-[10px] text-xs font-heading font-semibold border transition-colors ${
+                        className={`px-3 py-1.5 rounded-[10px] text-xs font-heading transition-colors border ${
                           isSelected
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold shadow-xs'
+                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 font-medium'
                         }`}
                       >
                         {s === 'Todos' ? 'Cualquiera' : `${s}+ plazas`}
@@ -1289,7 +1441,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 </div>
               </div>
 
-              {/* 5. Transmisión */}
+              {/* 5. Transmisión (usando grises neutros sin fondos negros) */}
               <div>
                 <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-2">
                   Transmisión
@@ -1305,10 +1457,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           setTransmissionFilter(t);
                           setCurrentPage(1);
                         }}
-                        className={`px-3.5 py-2 rounded-[10px] text-xs font-heading font-semibold border transition-colors ${
+                        className={`px-3 py-1.5 rounded-[10px] text-xs font-heading transition-colors border ${
                           isSelected
-                            ? 'bg-slate-900 text-white border-slate-900'
-                            : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold shadow-xs'
+                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 font-medium'
                         }`}
                       >
                         {t === 'Todos' ? 'Cualquiera' : t}
@@ -1318,31 +1470,63 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 </div>
               </div>
 
-              {/* 6. Precio máximo */}
+              {/* 6. Precio total antes de impuestos con Histograma de barras y Slider */}
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-heading font-bold text-slate-900 uppercase tracking-wider">
-                    Precio máximo por día
-                  </label>
-                  <span className="text-sm font-heading font-extrabold text-blue-600">
-                    ${priceMaxFilter.toLocaleString('es-MX')} MXN
-                  </span>
+                <label className="block text-xs font-heading font-bold text-slate-900 uppercase tracking-wider mb-1">
+                  Precio total antes de impuestos
+                </label>
+                <p className="text-[11px] font-sans text-slate-500 mb-3">
+                  Precio por día según los autos disponibles
+                </p>
+
+                {/* Cajas de Mínimo y Máximo */}
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div className="p-2.5 rounded-xl border border-slate-300 bg-white">
+                    <span className="block text-[10px] font-heading font-medium text-slate-500 mb-0.5">Mínimo</span>
+                    <span className="text-sm font-heading font-semibold text-slate-900">$ 850</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl border border-slate-300 bg-white">
+                    <span className="block text-[10px] font-heading font-medium text-slate-500 mb-0.5">Máximo</span>
+                    <span className="text-sm font-heading font-semibold text-slate-900">
+                      $ {priceMaxFilter.toLocaleString('es-MX')}{priceMaxFilter >= 3500 ? '+' : ''}
+                    </span>
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min="850"
-                  max="3500"
-                  step="100"
-                  value={priceMaxFilter}
-                  onChange={(e) => {
-                    setPriceMaxFilter(parseInt(e.target.value, 10));
-                    setCurrentPage(1);
-                  }}
-                  className="w-full accent-blue-600 cursor-pointer"
-                />
-                <div className="flex justify-between text-[11px] text-slate-400 font-heading mt-1">
-                  <span>$850</span>
-                  <span>$3,500</span>
+
+                {/* Histograma de frecuencia de precios con colores de marca */}
+                <div className="h-16 flex items-end gap-1 px-1 mb-1">
+                  {histogramBuckets.map((bucket, i) => {
+                    const isFilled = bucket.min <= priceMaxFilter;
+                    return (
+                      <div
+                        key={i}
+                        className={`flex-1 rounded-t-sm transition-colors duration-150 ${
+                          isFilled ? 'bg-blue-600' : 'bg-slate-200'
+                        }`}
+                        style={{ height: `${bucket.heightPct}%` }}
+                      />
+                    );
+                  })}
+                </div>
+
+                {/* Range Slider */}
+                <div className="relative pt-1">
+                  <input
+                    type="range"
+                    min="850"
+                    max="3500"
+                    step="50"
+                    value={priceMaxFilter}
+                    onChange={(e) => {
+                      setPriceMaxFilter(parseInt(e.target.value, 10));
+                      setCurrentPage(1);
+                    }}
+                    className="w-full accent-blue-600 cursor-pointer"
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-400 font-heading mt-1">
+                    <span>$850</span>
+                    <span>$3,500+</span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -17,9 +17,9 @@ export const PasswordSentPage: React.FC<PasswordSentPageProps> = ({ onNavigate }
   }, []);
 
   return (
-    <div className="min-h-[78vh] flex items-center justify-center py-12 px-4 sm:px-6 bg-slate-50/50">
-      {/* Cuadro blanco centrado sin imagen a la izquierda y sin breadcrumb */}
-      <div className="w-full max-w-[460px] bg-white rounded-[24px] p-8 sm:p-10 shadow-sm border border-slate-200/80 text-center animate-in fade-in zoom-in-95 duration-200">
+    <div className="min-h-[78vh] flex items-center justify-center py-12 px-4 sm:px-6 bg-white">
+      {/* Contenido centrado sin contenedor de tarjeta, sin sombra y sin línea de borde */}
+      <div className="w-full max-w-[440px] text-center animate-in fade-in zoom-in-95 duration-200">
         
         {/* Ilustración hasta arriba */}
         <div className="mb-6 flex justify-center">
@@ -31,7 +31,7 @@ export const PasswordSentPage: React.FC<PasswordSentPageProps> = ({ onNavigate }
         </div>
 
         {/* Título */}
-        <h1 className="text-2xl sm:text-[26px] font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
+        <h1 className="text-2xl sm:text-[28px] font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
           ¡Correo enviado!
         </h1>
 
