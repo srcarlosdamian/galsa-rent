@@ -542,29 +542,29 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={() => setCalendarOpen(!calendarOpen)}
-                    className="w-full p-3 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors bg-white text-left flex items-center justify-between"
+                    className="w-full px-4 py-3 rounded-[8px] border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
                   >
                     <div>
-                      <span className="block text-[11px] font-heading font-medium text-slate-400">Inicio del viaje</span>
-                      <span className="text-xs font-heading font-semibold text-slate-900">
+                      <span className="block text-[11px] font-heading font-medium text-slate-500 mb-0.5">Inicio del viaje</span>
+                      <span className="text-[14px] font-heading font-semibold text-slate-900">
                         {startDate ? formatDisplayDate(startDate) : 'Elegir fecha de inicio'} · 10:00 a.m.
                       </span>
                     </div>
-                    <Calendar className="w-4 h-4 text-slate-500" strokeWidth={1.4} />
+                    <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setCalendarOpen(!calendarOpen)}
-                    className="w-full p-3 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors bg-white text-left flex items-center justify-between"
+                    className="w-full px-4 py-3 rounded-[8px] border border-slate-300 hover:border-slate-400 transition-colors bg-white text-left flex items-center justify-between"
                   >
                     <div>
-                      <span className="block text-[11px] font-heading font-medium text-slate-400">Fin del viaje</span>
-                      <span className="text-xs font-heading font-semibold text-slate-900">
+                      <span className="block text-[11px] font-heading font-medium text-slate-500 mb-0.5">Fin del viaje</span>
+                      <span className="text-[14px] font-heading font-semibold text-slate-900">
                         {endDate ? formatDisplayDate(endDate) : 'Elegir fecha de devolución'} · 10:00 a.m.
                       </span>
                     </div>
-                    <Calendar className="w-4 h-4 text-slate-500" strokeWidth={1.4} />
+                    <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
                   </button>
 
                   {calendarOpen && (
@@ -596,7 +596,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 type="button"
                 onClick={handleBooking}
                 style={{ backgroundColor: '#4F46E5' }}
-                className="w-full py-3.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
+                className="w-full py-3.5 rounded-[8px] text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
               >
                 <span>Continuar</span>
               </button>
