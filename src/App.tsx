@@ -271,16 +271,16 @@ export const App: React.FC = () => {
         
         {/* ROUTE 1: VEHICLE DETAIL PAGE */}
         {currentPath.startsWith('/vehiculos/') && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {currentVehicle ? (
+          currentVehicle ? (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <VehicleDetailView
                 vehicle={currentVehicle}
                 onNavigate={navigateTo}
               />
-            ) : (
-              <NotFoundPage onNavigate={navigateTo} />
-            )}
-          </div>
+            </div>
+          ) : (
+            <NotFoundPage onNavigate={navigateTo} />
+          )
         )}
 
         {/* ROUTE 2: CATALOG PAGE */}

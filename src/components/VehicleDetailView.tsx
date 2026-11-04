@@ -587,7 +587,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               {/* Descripción del vehículo en fuente de 16px sin título repetido ni línea divisoria */}
-              <p className="mt-4 text-[16px] font-sans font-normal text-slate-600 leading-relaxed">
+              <p className="mt-4 text-[16px] font-sans font-normal text-black leading-relaxed">
                 {vehicle.description || 'Unidad inspeccionada mecánicamente con contrato mercantil digital y entrega rápida en nuestras ubicaciones oficiales.'}
               </p>
             </div>
@@ -601,52 +601,52 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8 lg:gap-x-12">
                 <div className="flex items-center gap-4 text-slate-800">
                   <Users className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">{vehicle.seats} asientos</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.seats} asientos</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Fuel className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Calendar className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Año modelo {vehicle.year}</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Año modelo {vehicle.year}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Gauge className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Car className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Briefcase className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Aire acondicionado A/C</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Aire acondicionado A/C</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Frenos ABS y bolsas de aire</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Frenos ABS y bolsas de aire</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <Camera className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Cámara de reversa y sensores</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Cámara de reversa y sensores</span>
                 </div>
 
                 <div className="flex items-center gap-4 text-slate-800">
                   <CarFront className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
+                  <span className="text-[16px] font-heading font-normal text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
                 </div>
               </div>
             </div>
@@ -660,35 +660,35 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="space-y-3.5">
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Kilometraje libre.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Combustible: se entrega y devuelve con el mismo nivel.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Edad mínima del conductor: 21 años con licencia vigente.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Depósito en garantía reembolsable al cierre sin incidencias.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Prohibido fumar dentro de la unidad.
                   </span>
                 </div>
@@ -704,40 +704,40 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="space-y-3.5">
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Documentación verificada antes de la entrega (licencia, identificación y comprobante).
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Contrato digital firmado por ambas partes con validez legal.
                   </span>
                 </div>
 
                 <div className="flex items-start gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0 mt-0.5" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800 leading-relaxed">
+                  <span className="text-[16px] font-heading font-normal text-slate-800 leading-relaxed">
                     Cancelaciones: Las cancelaciones realizadas con más de 48 horas de anticipación reciben reembolso completo. Cancelaciones posteriores están sujetas a cargos parciales según el tiempo restante para el inicio de la renta.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Multas y peajes durante la renta corren por cuenta del cliente.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Cualquier daño se documenta con evidencia fotográfica en la devolución.
                   </span>
                 </div>
 
-                <div className="rounded-xl bg-slate-50 p-3.5 sm:p-4 mt-2">
+                <div className="inline-block w-auto rounded-xl bg-slate-50 p-3.5 sm:p-4 mt-2">
                   <p className="text-xs sm:text-sm font-sans text-slate-600">
                     Consulta los{' '}
                     <a
@@ -767,28 +767,28 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="space-y-3.5">
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Fotos de estado exterior e interior.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Registro de kilometraje de salida y entrada.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Nivel de combustible verificado.
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3.5 text-slate-800">
                   <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                  <span className="text-[16px] font-heading font-normal text-slate-800">
                     Firma digital de entrega y devolución.
                   </span>
                 </div>
