@@ -940,12 +940,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
               </div>
 
-              {/* Botón Morado/Azul de Reserva */}
+              {/* Botón CTA Oficial GALSA de Reserva */}
               <button
                 type="button"
                 onClick={handleBooking}
-                style={{ backgroundColor: '#4F46E5' }}
-                className="w-full py-3.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
               >
                 <span>Continuar</span>
               </button>
@@ -1194,8 +1193,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   handleBooking();
                 }
               }}
-              style={{ backgroundColor: '#4F46E5' }}
-              className="px-5 py-2.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-95 transition-all shadow-xs shrink-0 flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5"
             >
               <span>Continuar</span>
             </button>
@@ -1377,8 +1375,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     setMobileSheetOpen(false);
                     handleBooking();
                   }}
-                  style={{ backgroundColor: '#4F46E5' }}
-                  className="w-full py-3.5 rounded-xl text-white font-heading font-semibold text-sm hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
+                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
                 >
                   <span>Continuar</span>
                 </button>
