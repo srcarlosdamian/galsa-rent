@@ -14,7 +14,7 @@ export function getHomeSchemaJson() {
         url: `${SITE_URL}/`,
         logo: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
         image: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
-        description: 'Renta de autos 100% en línea en Durango con entrega en Sucursal Plaza 450 y marketplace de anfitriones.',
+        description: 'Renta de autos 100% en línea en Durango con entrega rápida sin filas, seguro incluido y marketplace de anfitriones.',
         priceRange: '$$',
         currenciesAccepted: 'MXN',
         paymentAccepted: 'Credit Card, Debit Card, Bank Transfer',
@@ -219,7 +219,7 @@ export function getHostSchemaJson() {
         name: '¿Dónde se entrega y recibe mi auto?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Todas las entregas y devoluciones se coordinan en Sucursal Plaza 450 en Durango con checklist fotográfico de salida y entrada.',
+          text: 'Todas las entregas y devoluciones se coordinan de forma rápida y puntual en Durango con checklist fotográfico digital de salida y entrada.',
         },
       },
     ],

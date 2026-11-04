@@ -43,7 +43,7 @@ export const VEHICLES: Vehicle[] = [
       },
     ],
     description:
-      'Jeep Wrangler Rubicon 2018 verificado para entrega inmediata en Sucursal Plaza 450, Durango. Kilometraje libre, contrato digital firmado desde tu celular y depósito reembolsable.',
+      'Jeep Wrangler Rubicon 2018 verificado para entrega inmediata sin filas en Durango. Kilometraje libre, contrato digital firmado desde tu celular y depósito reembolsable.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -115,7 +115,7 @@ export const VEHICLES: Vehicle[] = [
       },
     ],
     description:
-      'Jeep Wrangler 2011 disponible en Durango con entrega física en Sucursal Plaza 450. Kilometraje libre, contrato digital y depósito reembolsable.',
+      'Jeep Wrangler 2011 disponible en Durango con entrega rápida sin filas. Kilometraje libre, contrato digital y depósito reembolsable.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -187,7 +187,7 @@ export const VEHICLES: Vehicle[] = [
       },
     ],
     description:
-      'Nissan Sentra Sense 2026 en Durango para traslados y movilidad cómoda. Entrega en Sucursal Plaza 450 con contrato digital y kilometraje libre.',
+      'Nissan Sentra Sense 2026 en Durango para traslados y movilidad cómoda. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -259,7 +259,7 @@ export const VEHICLES: Vehicle[] = [
       },
     ],
     description:
-      'Honda Civic Coupé 2019 en Durango para viajes ejecutivos y traslados con estilo. Entrega en Sucursal Plaza 450 con contrato digital y kilometraje libre.',
+      'Honda Civic Coupé 2019 en Durango para viajes ejecutivos y traslados con estilo. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -331,7 +331,7 @@ export const VEHICLES: Vehicle[] = [
       },
     ],
     description:
-      'Volkswagen Virtus Trendline 2026 en Durango para movilidad diaria y traslados cómodos. Entrega en Sucursal Plaza 450 con contrato digital y kilometraje libre.',
+      'Volkswagen Virtus Trendline 2026 en Durango para movilidad diaria y traslados cómodos. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',

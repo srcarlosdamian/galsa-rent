@@ -321,7 +321,7 @@ staticPages.forEach(({ route, schema, initialHtml }: any) => {
       <main>
         <h1>${meta.title}</h1>
         <p>${meta.description}</p>
-        <p>GALSA Rent en Durango · Entrega en Sucursal Plaza 450.</p>
+        <p>GALSA Rent en Durango · Renta de autos con entrega rápida sin filas.</p>
       </main>
     `,
   });

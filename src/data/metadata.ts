@@ -14,11 +14,11 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
   '/': {
     title: 'Renta de Autos en México — Reserva en Línea | GALSA Rent',
     description:
-      'Renta autos en México desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, contrato digital y kilometraje libre. Entrega en Sucursal Plaza 450.',
+      'Renta autos en México desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, contrato digital, kilometraje libre y entrega rápida sin filas.',
     canonical: `${SITE_URL}/`,
     ogTitle: 'Renta de Autos en México — Reserva en Línea | GALSA Rent',
     ogDescription:
-      'Renta autos en México desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, contrato digital y kilometraje libre. Entrega en Sucursal Plaza 450.',
+      'Renta autos en México desde $1,100 al día: sedanes, SUVs y Jeep Wrangler. Reserva en línea, contrato digital, kilometraje libre y entrega rápida sin filas.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/anfitriones': {
@@ -54,11 +54,11 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
   '/confianza': {
     title: 'Seguridad y Confianza en Renta de Autos | GALSA Durango',
     description:
-      'Contrato digital con validez legal, seguro con cobertura amplia e inspección de cada vehículo antes de entregarse en Sucursal Plaza 450, Durango.',
+      'Contrato digital con validez legal, seguro de cobertura amplia, inspección fotográfica rigurosa y entrega garantizada sin filas en Durango.',
     canonical: `${SITE_URL}/confianza`,
     ogTitle: 'Seguridad y Confianza en Renta de Autos | GALSA Durango',
     ogDescription:
-      'Contrato digital con validez legal, seguro con cobertura amplia e inspección de cada vehículo antes de entregarse en Sucursal Plaza 450, Durango.',
+      'Contrato digital con validez legal, seguro de cobertura amplia, inspección fotográfica rigurosa y entrega garantizada sin filas en Durango.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/faq': {
@@ -72,13 +72,13 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/contacto': {
-    title: 'Contacto y Sucursal Plaza 450 en Durango | GALSA Rent',
+    title: 'Contacto y Sucursal en Durango | GALSA Rent',
     description:
-      'Visítanos en Sucursal Plaza 450 en Durango o contáctanos por WhatsApp. Horarios, ubicación y atención directa para renta de autos y anfitriones.',
+      'Visítanos en nuestra sucursal de Durango o contáctanos por WhatsApp. Horarios de atención, ubicación y asesoría directa para renta de autos y anfitriones.',
     canonical: `${SITE_URL}/contacto`,
-    ogTitle: 'Contacto y Sucursal Plaza 450 en Durango | GALSA Rent',
+    ogTitle: 'Contacto y Sucursal en Durango | GALSA Rent',
     ogDescription:
-      'Visítanos en Sucursal Plaza 450 en Durango o contáctanos por WhatsApp. Horarios, ubicación y atención directa para renta de autos y anfitriones.',
+      'Visítanos en nuestra sucursal de Durango o contáctanos por WhatsApp. Horarios de atención, ubicación y asesoría directa para renta de autos y anfitriones.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/terminos': {
@@ -104,11 +104,11 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
   '/como-funciona': {
     title: 'Cómo Funciona la Renta de Autos 100% en Línea | GALSA',
     description:
-      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge en Sucursal Plaza 450, Durango.',
+      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge tu auto al instante sin filas en Durango.',
     canonical: `${SITE_URL}/como-funciona`,
     ogTitle: 'Cómo Funciona la Renta de Autos 100% en Línea | GALSA',
     ogDescription:
-      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge en Sucursal Plaza 450, Durango.',
+      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge tu auto al instante sin filas en Durango.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/nosotros': {
@@ -194,7 +194,7 @@ export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {
     title = `${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango | GALSA`;
   }
 
-  let desc = `${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango desde $${vehicle.pricePerDay.toLocaleString('es-MX')}/día. Unidad verificada, contrato digital y depósito reembolsable. Entrega en Plaza 450.`;
+  let desc = `${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango desde $${vehicle.pricePerDay.toLocaleString('es-MX')}/día. Auto verificado, contrato digital, seguro incluido y entrega rápida sin filas.`;
   if (desc.length > 155) {
     desc = desc.substring(0, 152) + '...';
   }
