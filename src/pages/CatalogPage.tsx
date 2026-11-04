@@ -8,7 +8,7 @@ import {
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
   ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
   MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X, Search,
-  LayoutGrid, Map as MapIcon, CarFront, Clock, Users, BookOpen, FileText, Lock
+  CarFront, Clock, Users, BookOpen, FileText, Lock
 } from 'lucide-react';
 
 interface CatalogPageProps {
@@ -444,30 +444,28 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
           {/* Controles Desktop: Toggle Cuadrícula/Mapa + Ordenar por Recomendados juntos con misma altura (h-[38px]) y bordes rounded-[10px] */}
           <div className="hidden md:flex items-center gap-2.5">
-            {/* Toggle Cuadrícula / Mapa estilo Login con bordes redondeados acordes a inputs */}
-            <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center h-[38px] border border-slate-200/80">
+            {/* Toggle Cuadrícula / Mapa estilo Login sin borde y sin iconos */}
+            <div className="bg-slate-100 p-1 rounded-[10px] inline-flex items-center h-[38px]">
               <button
                 type="button"
                 onClick={() => setViewMode('grid')}
-                className={`inline-flex items-center gap-1.5 h-full px-3.5 rounded-[8px] text-xs font-heading transition-all ${
+                className={`inline-flex items-center justify-center h-full px-4 rounded-[8px] text-xs font-heading transition-all ${
                   viewMode === 'grid'
                     ? 'bg-white text-slate-900 font-semibold shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 font-medium'
                 }`}
               >
-                <LayoutGrid className="w-3.5 h-3.5" strokeWidth={1.8} />
                 <span>Cuadrícula</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode('map')}
-                className={`inline-flex items-center gap-1.5 h-full px-3.5 rounded-[8px] text-xs font-heading transition-all ${
+                className={`inline-flex items-center justify-center h-full px-4 rounded-[8px] text-xs font-heading transition-all ${
                   viewMode === 'map'
                     ? 'bg-white text-slate-900 font-semibold shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 font-medium'
                 }`}
               >
-                <MapIcon className="w-3.5 h-3.5" strokeWidth={1.8} />
                 <span>Mapa</span>
               </button>
             </div>
@@ -536,30 +534,28 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             )}
           </button>
 
-          {/* Pill Toggle Cuadrícula | Mapa en mobile */}
-          <div className="bg-slate-100 p-0.5 rounded-[8px] inline-flex items-center h-[36px] border border-slate-200/80 shrink-0">
+          {/* Pill Toggle Cuadrícula | Mapa en mobile sin borde y sin iconos */}
+          <div className="bg-slate-100 p-0.5 rounded-[8px] inline-flex items-center h-[36px] shrink-0">
             <button
               type="button"
               onClick={() => setViewMode('grid')}
-              className={`inline-flex items-center gap-1 h-full px-2 rounded-[6px] text-[11px] font-heading transition-all ${
+              className={`inline-flex items-center justify-center h-full px-2.5 rounded-[6px] text-xs font-heading transition-all ${
                 viewMode === 'grid'
                   ? 'bg-white text-slate-900 font-semibold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
-              <LayoutGrid className="w-3 h-3" strokeWidth={1.8} />
               <span>Cuadrícula</span>
             </button>
             <button
               type="button"
               onClick={() => setViewMode('map')}
-              className={`inline-flex items-center gap-1 h-full px-2 rounded-[6px] text-[11px] font-heading transition-all ${
+              className={`inline-flex items-center justify-center h-full px-2.5 rounded-[6px] text-xs font-heading transition-all ${
                 viewMode === 'map'
                   ? 'bg-white text-slate-900 font-semibold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
-              <MapIcon className="w-3 h-3" strokeWidth={1.8} />
               <span>Mapa</span>
             </button>
           </div>
