@@ -162,7 +162,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             type="button"
             onClick={handleShare}
             aria-label="Compartir este vehículo"
-            className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-700 hover:text-black px-3.5 py-1.5 rounded-[8px] bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200"
+            className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-700 hover:text-black px-2.5 py-1.5 rounded-[8px] hover:bg-slate-100 transition-colors"
           >
             <Share2 className="w-3.5 h-3.5" strokeWidth={1.4} />
             <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
