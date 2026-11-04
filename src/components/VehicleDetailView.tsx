@@ -4,7 +4,7 @@ import {
   MapPin, Calendar, CarFront, Sparkles,
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
-  X
+  X, Briefcase, Wind, Smartphone, Camera, Car, Zap
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
@@ -308,7 +308,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           {/* COLUMNA IZQUIERDA: Ficha detallada idéntica a la referencia */}
           <div className="lg:col-span-7 space-y-8 text-left">
             
-            {/* Título y Subtítulo con insignia Anfitrión */}
+            {/* Título y Subtítulo */}
             <div>
               <h1 className="text-2xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
                 {vehicle.make} {vehicle.model}
@@ -317,45 +317,10 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="mt-2 flex items-center gap-2 flex-wrap text-sm text-slate-600 font-heading">
                 <span>{vehicle.year} {vehicle.trim || vehicle.version}</span>
                 <span>·</span>
-                <div className="inline-flex items-center gap-1 text-slate-800 font-semibold">
-                  <Award className="w-4 h-4 text-amber-500" strokeWidth={1.4} />
-                  <span>{vehicle.host?.name ? `Anfitrión ${vehicle.host.name}` : 'Anfitrión Verificado GALSA'}</span>
-                </div>
+                <span className="text-slate-800 font-medium">{vehicle.category}</span>
+                <span>·</span>
+                <span className="text-slate-500">{vehicle.location || 'Durango, México'}</span>
               </div>
-            </div>
-
-            {/* Badges de características superiores (Pills) */}
-            <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-slate-100 text-slate-800 text-xs font-heading font-medium">
-                <Users className="w-3.5 h-3.5 text-slate-600" strokeWidth={1.4} />
-                {vehicle.seats} asientos
-              </span>
-
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-slate-100 text-slate-800 text-xs font-heading font-medium">
-                <Fuel className="w-3.5 h-3.5 text-slate-600" strokeWidth={1.4} />
-                {vehicle.fuel}
-              </span>
-
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-slate-100 text-slate-800 text-xs font-heading font-medium">
-                <Gauge className="w-3.5 h-3.5 text-slate-600" strokeWidth={1.4} />
-                {vehicle.specs?.mpgOrFuelEconomy || 'Rendimiento eficiente'}
-              </span>
-
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-slate-100 text-slate-800 text-xs font-heading font-medium">
-                <CarFront className="w-3.5 h-3.5 text-slate-600" strokeWidth={1.4} />
-                {vehicle.transmission}
-              </span>
-            </div>
-
-            {/* Banner Verde: ¡Gran oferta! */}
-            <div className="p-4 rounded-[12px] bg-emerald-50/80 border border-emerald-200/60 text-emerald-900 space-y-0.5">
-              <p className="text-xs font-heading font-bold flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600" strokeWidth={1.4} />
-                ¡Gran oferta para tu viaje en México!
-              </p>
-              <p className="text-xs font-sans text-emerald-700">
-                Esta unidad cuenta con tarifa preferencial, kilometraje libre y depósito en garantía 100% reembolsable.
-              </p>
             </div>
 
             {/* Sección: Clase / Categoría del Vehículo */}
@@ -368,59 +333,110 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </p>
             </div>
 
-            {/* Sección: Características del vehículo (2 columnas como en la referencia) */}
-            <div className="pt-2 border-t border-slate-100 space-y-4">
-              <h3 className="text-lg font-heading font-bold text-slate-900">
-                Características del vehículo
+            {/* Sección: Lo que ofrece este vehículo (Estructura idéntica a Airbnb) */}
+            <div className="pt-6 border-t border-slate-100 space-y-6">
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+                Lo que ofrece este vehículo
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-                <div className="space-y-2.5">
-                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-900 block">
-                    Seguridad y Confort
-                  </span>
-                  <div className="space-y-2 text-xs sm:text-sm font-sans text-slate-700">
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Frenos ABS y control de estabilidad
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Bolsas de aire frontales y laterales
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Aire acondicionado de alta eficiencia
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Cámara de reversa y sensores
-                    </p>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8 lg:gap-x-12">
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Users className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">{vehicle.seats} asientos</span>
                 </div>
 
-                <div className="space-y-2.5">
-                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-900 block">
-                    Conectividad y Equipo
-                  </span>
-                  <div className="space-y-2 text-xs sm:text-sm font-sans text-slate-700">
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Apple CarPlay & Android Auto
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Bluetooth y puertos USB de carga rápida
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Controles de audio al volante
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                      Elevadores eléctricos y llave inteligente
-                    </p>
-                  </div>
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Fuel className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Calendar className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Año modelo {vehicle.year}</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Gauge className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Car className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Briefcase className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Zap className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">{vehicle.specs?.mpgOrFuelEconomy || 'Rendimiento eficiente'}</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Aire acondicionado A/C</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Smartphone className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Apple CarPlay & Android Auto</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Frenos ABS y bolsas de aire</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <Camera className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Cámara de reversa y sensores</span>
+                </div>
+
+                <div className="flex items-center gap-4 text-slate-800">
+                  <CarFront className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                  <span className="text-sm sm:text-base font-normal text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Beneficios de tu reserva (Cancelación gratis, Pago protegido, Kilometraje libre) */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-100">
+                <ThumbsUp className="w-5 h-5 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div>
+                  <h4 className="text-sm font-heading font-bold text-slate-900">
+                    Cancelación gratis
+                  </h4>
+                  <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                    Reembolso completo cancelando hasta 24 horas antes de la hora de inicio.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3.5 pb-4 border-b border-slate-100">
+                <CreditCard className="w-5 h-5 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div>
+                  <h4 className="text-sm font-heading font-bold text-slate-900">
+                    Pago protegido
+                  </h4>
+                  <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                    Firma tu contrato digital y asegura tu unidad con depósito reembolsable.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3.5">
+                <Gauge className="w-5 h-5 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div>
+                  <h4 className="text-sm font-heading font-bold text-slate-900">
+                    Kilometraje libre
+                  </h4>
+                  <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                    Sin límites de kilometraje diario para viajar por cualquier carretera de México.
+                  </p>
                 </div>
               </div>
             </div>
@@ -598,45 +614,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               >
                 <span>Continuar</span>
               </button>
-
-              {/* Política de cancelación */}
-              <div className="pt-4 border-t border-slate-100 space-y-1">
-                <div className="flex items-start gap-2.5">
-                  <ThumbsUp className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                  <div>
-                    <h5 className="text-xs font-heading font-bold text-slate-900">Cancelación gratis</h5>
-                    <p className="text-[11px] font-sans text-slate-500 leading-snug">
-                      Reembolso completo cancelando hasta 24 horas antes de la hora de inicio.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Opciones de pago */}
-              <div className="pt-2 border-t border-slate-100 space-y-1">
-                <div className="flex items-start gap-2.5">
-                  <CreditCard className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                  <div>
-                    <h5 className="text-xs font-heading font-bold text-slate-900">Pago protegido</h5>
-                    <p className="text-[11px] font-sans text-slate-500 leading-snug">
-                      Firma tu contrato digital y asegura tu unidad con depósito reembolsable.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Distancia incluida */}
-              <div className="pt-2 border-t border-slate-100 space-y-1">
-                <div className="flex items-start gap-2.5">
-                  <Gauge className="w-4 h-4 text-slate-700 mt-0.5 shrink-0" strokeWidth={1.4} />
-                  <div>
-                    <h5 className="text-xs font-heading font-bold text-slate-900">Kilometraje libre</h5>
-                    <p className="text-[11px] font-sans text-slate-500 leading-snug">
-                      Sin límites de kilometraje diario para viajar por cualquier carretera de México.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
             </div>
           </div>
