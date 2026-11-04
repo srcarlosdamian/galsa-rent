@@ -27,6 +27,9 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
+  const baseUrl = ((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '');
+  const faviconUrl = `${baseUrl}/favicon.png`;
+
   // Build the complete list of SEO pages from STATIC_ROUTES_METADATA + sample vehicles
   const allPages: SeoItem[] = useMemo(() => {
     const list: SeoItem[] = [];
@@ -264,13 +267,13 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                   <div className="max-w-2xl bg-white">
                     {/* Google SERP Header */}
                     <div className="flex items-center gap-3 mb-1.5">
-                      <div className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200/80 flex items-center justify-center shrink-0">
+                      <div className="w-7 h-7 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
                         <img 
-                          src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793246469211-0-cover.webp" 
-                          alt="GALSA" 
-                          className="w-5 h-5 rounded-full object-cover"
+                          src={faviconUrl} 
+                          alt="GALSA Favicon" 
+                          className="w-5 h-5 rounded-full object-contain"
                           onError={(e) => {
-                            (e.currentTarget as HTMLElement).style.display = 'none';
+                            (e.currentTarget as HTMLImageElement).src = '/favicon.png';
                           }}
                         />
                       </div>
