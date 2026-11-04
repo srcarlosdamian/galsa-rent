@@ -32,7 +32,7 @@ export const PrivacyPage: React.FC = () => {
           <section className="space-y-2">
             <h2 className="text-base font-bold text-neutral-900">3. Derechos ARCO</h2>
             <p>
-              Usted podrá ejercer en cualquier momento sus derechos de Acceso, Rectificación, Cancelación y Oposición enviando una solicitud formal a <strong>contacto@galsarent.com.mx</strong>.
+              Usted podrá ejercer en cualquier momento sus derechos de Acceso, Rectificación, Cancelación y Oposición enviando una solicitud formal a <strong>soporte@galsarent.com.mx</strong>.
             </p>
           </section>
         </div>

@@ -75,7 +75,7 @@ export const ContactPage: React.FC = () => {
                   <Mail className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
                   <div>
                     {/* TODO: Reemplazar con la cuenta de correo oficial */}
-                    <p className="font-semibold text-neutral-900">contacto@galsarent.com.mx</p>
+                    <p className="font-semibold text-neutral-900">soporte@galsarent.com.mx</p>
                   </div>
                 </div>
               </div>
