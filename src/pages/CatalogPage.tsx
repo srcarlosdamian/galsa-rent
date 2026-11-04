@@ -1005,7 +1005,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
           <div className="flex flex-wrap items-center gap-2">
             <a
-              href="https://api.whatsapp.com/send?text=Checa%20las%20opciones%20de%20autos%20en%20renta%20en%20Durango%20con%20GALSA%20Rent%3A%20https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
+              href="https://api.whatsapp.com/send?text=Checa%20las%20opciones%20de%20autos%20en%20renta%20con%20GALSA%20Rent%3A%20https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en WhatsApp"
@@ -1025,7 +1025,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             </a>
 
             <a
-              href="https://twitter.com/intent/tweet?text=Renta%20de%20autos%20en%20Durango%20100%25%20en%20l%C3%ADnea%20con%20GALSA%20Rent&url=https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
+              href="https://twitter.com/intent/tweet?text=Renta%20de%20autos%20100%25%20en%20l%C3%ADnea%20con%20GALSA%20Rent&url=https%3A%2F%2Fgalsarent.com.mx%2Fcatalogo"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en X / Twitter"
@@ -1044,14 +1044,14 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         </div>
 
-        {/* Sección 1: Guía de renta de autos en Durango (Contenedor propio) */}
+        {/* Sección 1: Guía de renta de autos (Contenedor propio) */}
         <section className="mt-10 bg-gray-50 rounded-[24px] p-6 sm:p-10 border-0">
           <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight mb-4">
-            Guía de renta de autos en Durango: consejos, requisitos y categorías
+            Guía de renta de autos: consejos, requisitos y categorías
           </h2>
           
           <p className="text-sm font-sans text-slate-600 leading-relaxed mb-6">
-            Rentar un auto en Durango con GALSA Rent es rápido, transparente y 100% digital. Ya sea que viajes por negocios a la capital duranguense, disfrutes de unas vacaciones familiares o asistas a un evento especial, en nuestro catálogo encontrarás el vehículo ideal con entrega en Sucursal Plaza 450 o en el Aeropuerto Internacional General Guadalupe Victoria (DGO).
+            Rentar un auto con GALSA Rent es rápido, transparente y 100% digital. Ya sea que viajes por negocios, disfrutes de unas vacaciones familiares o asistas a un evento especial, en nuestro catálogo encontrarás el vehículo ideal con contrato digital, seguro de cobertura amplia y asistencia vial continua.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1068,7 +1068,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 Sedanes, SUVs y 4x4
               </h3>
               <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-                Contamos con sedanes económicos (Nissan Sentra, Versa, Virtus) de gran rendimiento urbano, SUVs familiares (Toyota RAV4, Audi Q5) para confort en carretera y camionetas 4x4 todo terreno (Jeep Wrangler Rubicon) para la sierra y cabañas en Mexiquillo.
+                Contamos con sedanes económicos (Nissan Sentra, Versa, Virtus) de gran rendimiento urbano, SUVs familiares (Toyota RAV4, Audi Q5) para confort en carretera y camionetas 4x4 todo terreno (Jeep Wrangler Rubicon) para aventuras y viajes off-road.
               </p>
             </div>
 
@@ -1102,14 +1102,14 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 Entrega oficial y asistencia 24/7
               </h3>
               <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-                Recoge tu vehículo inspeccionado y con tanque listo en Sucursal Plaza 450 (Boulevard Guadiana). Todas nuestras rentas incluyen seguro de cobertura y asistencia vial continua en Durango y carreteras de México.
+                Recoge tu vehículo inspeccionado, limpio y con tanque listo. Todas nuestras rentas incluyen seguro de cobertura y asistencia vial continua 24/7 en autopistas y carreteras de México.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Sección 2: Enlaces útiles de navegación (Contenedor propio estilo FAQ) */}
-        <section className="mt-8 bg-gray-50 rounded-[24px] p-6 sm:p-10 border-0">
+        {/* Sección 2: Enlaces útiles de navegación (Sin fondo gris, estilo FAQ minimalista) */}
+        <section className="mt-10 p-0 border-0 bg-transparent">
           <div className="mb-6 sm:mb-8 text-left">
             <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
               Enlaces útiles de navegación
@@ -1147,13 +1147,13 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 href: '/faq',
               },
               {
-                title: 'Sucursal Plaza 450 y contacto',
-                desc: 'Ubicación física en Blvd. Guadiana, teléfonos y canal de WhatsApp 24/7.',
+                title: 'Sucursales y contacto',
+                desc: 'Ubicación oficial, teléfonos y canal de WhatsApp de atención continua.',
                 href: '/contacto',
               },
               {
                 title: 'Blog de rutas y viajes',
-                desc: 'Itinerarios, consejos de manejo en sierra duranguense y guías turísticas.',
+                desc: 'Itinerarios recomendados, consejos de manejo en carretera y guías turísticas.',
                 href: '/blog',
               },
               {
@@ -1177,17 +1177,17 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }
                 }}
-                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 rounded-2xl border border-neutral-200/90 bg-white hover:bg-neutral-50/70 hover:border-slate-300 transition-all duration-200 group"
+                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white hover:border-slate-400 transition-colors group"
               >
                 <div className="min-w-0 flex-1">
-                  <span className="text-base font-heading font-semibold text-slate-900 tracking-tight leading-snug group-hover:text-blue-600 transition-colors block">
+                  <span className="text-base font-heading font-semibold text-slate-900 tracking-tight leading-snug block">
                     {item.title}
                   </span>
                   <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1 line-clamp-1 leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center shrink-0 text-neutral-500 group-hover:text-blue-600 group-hover:border-blue-400 group-hover:translate-x-0.5 transition-all">
+                <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center shrink-0 text-slate-400 group-hover:text-slate-600 group-hover:border-slate-400 transition-colors">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </a>

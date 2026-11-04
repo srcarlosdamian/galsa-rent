@@ -32,13 +32,13 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/catalogo': {
-    title: 'Catálogo de autos en renta en Durango | GALSA Rent',
+    title: 'Catálogo de autos en renta | GALSA Rent',
     description:
-      'Explora autos verificados en Durango: sedanes económicos, SUVs y 4x4 de flota propia y anfitriones. Contrato digital y entrega en Plaza 450.',
+      'Explora autos verificados: sedanes económicos, SUVs familiares y camionetas 4x4 de flota propia y anfitriones. Contrato digital, seguro incluido y reserva 100% en línea.',
     canonical: `${SITE_URL}/catalogo`,
-    ogTitle: 'Catálogo de autos en renta en Durango | GALSA Rent',
+    ogTitle: 'Catálogo de autos en renta | GALSA Rent',
     ogDescription:
-      'Explora autos verificados en Durango: sedanes económicos, SUVs y 4x4 de flota propia y anfitriones. Contrato digital y entrega en Plaza 450.',
+      'Explora autos verificados: sedanes económicos, SUVs familiares y camionetas 4x4 de flota propia y anfitriones. Contrato digital, seguro incluido y reserva 100% en línea.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/blog': {

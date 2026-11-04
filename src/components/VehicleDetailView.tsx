@@ -270,13 +270,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         {/* ========================================================
             1. GALERÍA DE FOTOS (1 Grande a la izquierda + 2 Pequeñas a la derecha)
            ======================================================== */}
-        <div className="mb-8 sm:mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-[280px] sm:h-[380px] md:h-[420px] lg:h-[460px]">
+        <div className="mb-8 sm:mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-[260px] sm:h-[340px] lg:h-[380px] min-h-0">
             
             {/* Foto principal grande (izquierda, 8 columnas en desktop) */}
             <div 
               onClick={() => setGalleryModalOpen(true)}
-              className="md:col-span-8 relative h-full rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+              className="md:col-span-8 relative h-full min-h-0 rounded-[20px] sm:rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer group"
             >
               <img
                 src={images[0]}
@@ -307,11 +307,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             </div>
 
             {/* Dos fotos laterales apiladas a la derecha (4 columnas en desktop) */}
-            <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-3 h-full">
+            <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-3 h-full min-h-0">
               {/* Foto lateral 1 (arriba) */}
               <div 
                 onClick={() => setGalleryModalOpen(true)}
-                className="relative h-full rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+                className="relative h-full min-h-0 rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
               >
                 <img
                   src={images[1] || images[0]}
@@ -323,7 +323,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               {/* Foto lateral 2 (abajo con botón "Ver X fotos") */}
               <div 
                 onClick={() => setGalleryModalOpen(true)}
-                className="relative h-full rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+                className="relative h-full min-h-0 rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
               >
                 <img
                   src={images[2] || images[0]}
@@ -867,9 +867,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       </select>
                       <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
-                      Horario de atención
-                    </span>
                   </div>
                 </div>
 
@@ -1293,9 +1290,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       </select>
                       <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
-                      Horario de atención
-                    </span>
                   </div>
                 </div>
 
