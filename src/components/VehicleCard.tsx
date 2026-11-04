@@ -47,10 +47,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         onClick={() => onSelect && onSelect(vehicle)}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        className={`group cursor-pointer bg-white rounded-[16px] p-3 flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-200 border ${
+        className={`group cursor-pointer bg-white rounded-[16px] p-3 flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-200 border border-slate-200 ${
           isHovered
-            ? 'border-slate-900 shadow-md ring-1 ring-slate-900'
-            : 'border-slate-200 hover:border-slate-300 hover:shadow-md'
+            ? 'md:shadow-md'
+            : 'md:hover:shadow-md'
         }`}
       >
         {/* Vehicle Image (a la izquierda) */}
@@ -74,7 +74,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             type="button"
             onClick={toggleFavorite}
             aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-            className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/50 hover:bg-white/80 text-slate-800 backdrop-blur-md transition-all z-10 shadow-xs"
+            className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/50 md:hover:bg-white/80 text-slate-800 backdrop-blur-md transition-all z-10 shadow-xs"
           >
             <Heart
               className={`w-3.5 h-3.5 transition-colors ${
@@ -174,7 +174,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   return (
     <article
       onClick={() => onSelect && onSelect(vehicle)}
-      className="group cursor-pointer bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] transition-all duration-200 md:hover:shadow-md border border-transparent md:hover:border-slate-200"
+      className="group cursor-pointer bg-white rounded-[16px] p-[10px] flex flex-col gap-[8px] transition-all duration-200 border border-slate-200 md:hover:shadow-md"
     >
       {/* Vehicle Image (aspect 1:1 rounded-[8px]) con Skeleton integrado mientras carga */}
       <div className="relative aspect-square w-full rounded-[8px] overflow-hidden bg-slate-100">
@@ -200,7 +200,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           type="button"
           onClick={toggleFavorite}
           aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-          className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/40 hover:bg-white/60 text-slate-800 backdrop-blur-md transition-all z-10 shadow-sm"
+          className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/40 md:hover:bg-white/60 text-slate-800 backdrop-blur-md transition-all z-10 shadow-sm"
         >
           <Heart
             className={`w-3.5 h-3.5 transition-colors ${

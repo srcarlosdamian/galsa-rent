@@ -64,10 +64,9 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
       zoomControl: false,
     });
 
-    // CartoDB Voyager tiles (estilo moderno claro estilo Google Maps)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
-      subdomains: 'abcd',
+    // OpenStreetMap standard tiles (100% libre, sin requerir API key ni marca de agua)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19,
     }).addTo(map);
 
@@ -118,8 +117,16 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
       const marker = L.marker(coords, { icon, zIndexOffset: isActive ? 1000 : 100 })
         .addTo(map)
         .on('click', () => onSelectVehicle(vehicle))
-        .on('mouseover', () => onHoverVehicle && onHoverVehicle(vehicle.id))
-        .on('mouseout', () => onHoverVehicle && onHoverVehicle(null));
+        .on('mouseover', () => {
+          if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+            if (onHoverVehicle) onHoverVehicle(vehicle.id);
+          }
+        })
+        .on('mouseout', () => {
+          if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+            if (onHoverVehicle) onHoverVehicle(null);
+          }
+        });
 
       markersRef.current.set(vehicle.id, marker);
     });

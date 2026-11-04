@@ -894,8 +894,16 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                     priority={idx === 0}
                     layout="horizontal"
                     isHovered={hoveredVehicleId === vehicle.id}
-                    onMouseEnter={() => setHoveredVehicleId(vehicle.id)}
-                    onMouseLeave={() => setHoveredVehicleId(null)}
+                    onMouseEnter={() => {
+                      if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+                        setHoveredVehicleId(vehicle.id);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+                        setHoveredVehicleId(null);
+                      }
+                    }}
                   />
                 ))}
               </div>
