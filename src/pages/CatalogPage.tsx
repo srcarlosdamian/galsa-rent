@@ -8,7 +8,7 @@ import {
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
   ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
   MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X,
-  LayoutGrid, Map as MapIcon
+  LayoutGrid, Map as MapIcon, CarFront, Clock, Users, BookOpen, FileText, Lock
 } from 'lucide-react';
 
 interface CatalogPageProps {
@@ -1005,131 +1005,136 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             Rentar un auto en Durango con GALSA Rent es rápido, transparente y 100% digital. Ya sea que viajes por negocios a la capital duranguense, disfrutes de unas vacaciones familiares o asistas a un evento especial, en nuestro catálogo encontrarás el vehículo ideal con entrega en Sucursal Plaza 450 o en el Aeropuerto Internacional General Guadalupe Victoria (DGO).
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm">
-              <h3 className="text-sm font-heading font-bold text-slate-900 mb-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-white rounded-2xl p-6 border-0 shadow-none">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                <CarFront className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-heading font-bold text-slate-900 mb-2">
                 Sedanes, SUVs y 4x4
               </h3>
-              <p className="text-xs font-sans text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
                 Contamos con sedanes económicos (Nissan Sentra, Versa, Virtus) de gran rendimiento urbano, SUVs familiares (Toyota RAV4, Audi Q5) para confort en carretera y camionetas 4x4 todo terreno (Jeep Wrangler Rubicon) para la sierra y cabañas en Mexiquillo.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm">
-              <h3 className="text-sm font-heading font-bold text-slate-900 mb-2">
+            <div className="bg-white rounded-2xl p-6 border-0 shadow-none">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-heading font-bold text-slate-900 mb-2">
                 Requisitos claros y sin sorpresas
               </h3>
-              <p className="text-xs font-sans text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
                 Solo requieres ser mayor de 21 años, presentar identificación oficial vigente (INE o pasaporte), licencia de conducir vigente y tarjeta bancaria para depósito en garantía 100% reembolsable al entregar la unidad.
               </p>
             </div>
 
-            <div className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm">
-              <h3 className="text-sm font-heading font-bold text-slate-900 mb-2">
+            <div className="bg-white rounded-2xl p-6 border-0 shadow-none">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                <MapPin className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-heading font-bold text-slate-900 mb-2">
                 Entrega oficial y asistencia 24/7
               </h3>
-              <p className="text-xs font-sans text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
                 Recoge tu vehículo inspeccionado y con tanque listo en Sucursal Plaza 450 (Boulevard Guadiana). Todas nuestras rentas incluyen seguro de cobertura y asistencia vial continua en Durango y carreteras de México.
               </p>
             </div>
           </div>
 
-          <div className="border-t border-slate-200 pt-6">
-            <span className="text-xs font-heading font-semibold text-slate-500 uppercase tracking-wider block mb-3">
-              Enlaces útiles de navegación
-            </span>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-heading font-medium text-blue-600">
-              <a
-                href="/"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                Inicio y reservaciones
-              </a>
-              <a
-                href="/como-funciona"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/como-funciona');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                ¿Cómo funciona la renta digital?
-              </a>
-              <a
-                href="/anfitriones"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/anfitriones');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                Gana dinero como anfitrión
-              </a>
-              <a
-                href="/confianza"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/confianza');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                Garantía y seguridad digital
-              </a>
-              <a
-                href="/faq"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/faq');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                Preguntas frecuentes
-              </a>
-              <a
-                href="/contacto"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/contacto');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                Sucursal Plaza 450 y contacto
-              </a>
-              <a
-                href="/blog"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/blog');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-                className="hover:underline text-slate-700 hover:text-blue-600"
-              >
-                Blog de rutas y viajes
-              </a>
+          <div className="border-t border-slate-200/80 pt-8">
+            <div className="mb-6">
+              <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
+                Enlaces útiles de navegación
+              </h3>
+              <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1">
+                Accede rápidamente a información clave sobre el proceso de renta, garantías y servicios.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                {
+                  title: 'Inicio y reservaciones',
+                  desc: 'Explora autos disponibles con tarifas en tiempo real y reserva en minutos.',
+                  href: '/',
+                  icon: CarFront,
+                },
+                {
+                  title: '¿Cómo funciona la renta digital?',
+                  desc: 'Conoce los 4 pasos para reservar, verificar identidad y recoger tu vehículo.',
+                  href: '/como-funciona',
+                  icon: Clock,
+                },
+                {
+                  title: 'Gana dinero como anfitrión',
+                  desc: 'Publica tu automóvil con protección integral y genera ingresos recurrentes.',
+                  href: '/anfitriones',
+                  icon: Users,
+                },
+                {
+                  title: 'Garantía y seguridad digital',
+                  desc: 'Inspección con fotos en entrega, depósito seguro y seguro certificado.',
+                  href: '/confianza',
+                  icon: ShieldCheck,
+                },
+                {
+                  title: 'Preguntas frecuentes',
+                  desc: 'Respuestas sobre depósitos, pólizas, límites de kilometraje y cancelaciones.',
+                  href: '/faq',
+                  icon: Info,
+                },
+                {
+                  title: 'Sucursal Plaza 450 y contacto',
+                  desc: 'Ubicación física en Blvd. Guadiana, teléfonos y canal de WhatsApp 24/7.',
+                  href: '/contacto',
+                  icon: MapPin,
+                },
+                {
+                  title: 'Blog de rutas y viajes',
+                  desc: 'Itinerarios, consejos de manejo en sierra duranguense y guías turísticas.',
+                  href: '/blog',
+                  icon: BookOpen,
+                },
+                {
+                  title: 'Términos del servicio',
+                  desc: 'Políticas claras de uso, condiciones de arrendamiento y deberes legales.',
+                  href: '/terminos',
+                  icon: FileText,
+                },
+                {
+                  title: 'Aviso de privacidad',
+                  desc: 'Protección absoluta y tratamiento seguro de tus datos personales.',
+                  href: '/privacidad',
+                  icon: Lock,
+                },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => {
+                    if (onNavigate) {
+                      e.preventDefault();
+                      onNavigate(item.href);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  className="group flex items-start gap-3.5 p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200/70 hover:border-blue-300 hover:shadow-md transition-all duration-200 text-left"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+                    <item.icon className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs font-sans text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </section>

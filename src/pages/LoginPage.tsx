@@ -95,10 +95,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                       </label>
                       <button
                         type="button"
-                        onClick={() => {
-                          setShowForgot(true);
-                          setForgotSent(false);
-                        }}
+                        onClick={() => onNavigate('/recuperar-password')}
                         className="text-xs font-heading font-medium text-slate-500 hover:text-slate-800 hover:underline transition-colors"
                       >
                         ¿Olvidaste tu contraseña?

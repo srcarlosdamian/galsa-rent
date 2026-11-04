@@ -26,6 +26,10 @@ import { AboutPage } from './pages/AboutPage';
 import { BlogPage } from './pages/BlogPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { PasswordSentPage } from './pages/PasswordSentPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
+import { SeoPage } from './pages/SeoPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -299,6 +303,14 @@ export const App: React.FC = () => {
         {/* ROUTE 7.5: INICIAR SESIÓN Y REGISTRO */}
         {currentPath === '/login' && <LoginPage onNavigate={navigateTo} />}
         {currentPath === '/registro' && <RegisterPage onNavigate={navigateTo} />}
+
+        {/* ROUTE 7.6: RECUPERACIÓN DE CONTRASEÑA (3 PASOS CON URL INDEPENDIENTE) */}
+        {currentPath === '/recuperar-password' && <ForgotPasswordPage onNavigate={navigateTo} />}
+        {currentPath === '/recuperar-password/enviado' && <PasswordSentPage onNavigate={navigateTo} />}
+        {currentPath === '/restablecer-password' && <ResetPasswordPage onNavigate={navigateTo} />}
+
+        {/* ROUTE 7.7: VISOR Y AUDITOR SEO */}
+        {currentPath === '/seo' && <SeoPage onNavigate={navigateTo} />}
 
         {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR) */}
         {currentPath === '/cuenta' && (

@@ -154,7 +154,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Durango, Dgo.',
       date: 'Octubre 2026',
       rating: 5,
-      avatarColor: 'bg-blue-600',
+      avatarColor: 'bg-slate-800',
       comment: `Excelente experiencia rentando el ${vehicle.make} ${vehicle.model}. El auto estaba impecable, con olor a nuevo, tanque lleno y entrega súper puntual en Plaza 450. El contrato digital se firmó en menos de 2 minutos sin filas ni burocracia.`,
     },
     {
@@ -163,7 +163,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Ciudad de México',
       date: 'Octubre 2026',
       rating: 5,
-      avatarColor: 'bg-emerald-600',
+      avatarColor: 'bg-slate-800',
       comment: `Viajé por trabajo y carretera en Durango. La unidad se comportó de maravilla, aire acondicionado al 100 y el kilometraje libre te da total tranquilidad para moverte sin preocupaciones. Muy recomendado.`,
     },
     {
@@ -171,8 +171,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       author: 'Alejandro Garza',
       location: 'Monterrey, N.L.',
       date: 'Septiembre 2026',
-      rating: 5,
-      avatarColor: 'bg-indigo-600',
+      rating: 4,
+      avatarColor: 'bg-slate-800',
       comment: `El mejor servicio de renta que he probado en México. Cero sorpresas con el precio, depósito en garantía devuelto íntegro y sin demoras a las 24 hrs de la entrega. La atención por WhatsApp fue de 10.`,
     },
     {
@@ -181,7 +181,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Guadalajara, Jal.',
       date: 'Septiembre 2026',
       rating: 5,
-      avatarColor: 'bg-amber-600',
+      avatarColor: 'bg-slate-800',
       comment: `Súper fácil el proceso con el checklist digital al recibir y entregar el auto con fotos. Todo transparente y seguro. El ${vehicle.model} muy cómodo y espacioso para la familia. Definitivamente volveré a rentar aquí.`,
     },
     {
@@ -190,7 +190,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       location: 'Mazatlán, Sin.',
       date: 'Agosto 2026',
       rating: 5,
-      avatarColor: 'bg-rose-600',
+      avatarColor: 'bg-slate-800',
       comment: `Renta rápida y confiable. El auto en óptimas condiciones mecánicas, suspensión perfecta para carretera y frenos impecables. La coordinación de entrega fue rápida y puntual en sucursal.`,
     },
     {
@@ -198,8 +198,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       author: 'Valeria Morales',
       location: 'Torreón, Coah.',
       date: 'Agosto 2026',
-      rating: 5,
-      avatarColor: 'bg-violet-600',
+      rating: 4,
+      avatarColor: 'bg-slate-800',
       comment: `Increíble servicio. Tenía dudas sobre los requisitos pero en WhatsApp me atendieron de inmediato. Auto muy limpio, seguro vigente y contrato con validez legal. 100% recomendable.`,
     },
   ];
@@ -411,7 +411,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   href="#resenas"
                   className="inline-flex items-center gap-1 text-slate-900 font-bold hover:text-blue-600 transition-colors"
                 >
-                  <Star className="w-4 h-4 fill-amber-400 text-amber-400 shrink-0" />
+                  <Star className="w-4 h-4 fill-blue-300 text-blue-300 shrink-0" />
                   <span>{ratingScore}</span>
                   <span className="font-medium text-slate-500 underline ml-0.5">({reviewCount})</span>
                 </a>
@@ -488,97 +488,93 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Sección: Características y condiciones de uso (Exacto de la 2da imagen) */}
+            {/* Sección: Características y condiciones de uso (Una sola columna, checks neutros, sin contenedor con línea) */}
             <div className="pt-6 border-t border-slate-100 space-y-4">
               <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
                 Características y condiciones de uso
               </h3>
 
-              <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-xs">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                  <div className="flex items-start gap-3">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Kilometraje libre.
-                    </span>
-                  </div>
+              <div className="space-y-3.5">
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Kilometraje libre.
+                  </span>
+                </div>
 
-                  <div className="flex items-start gap-3">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Combustible: se entrega y devuelve con el mismo nivel.
-                    </span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Combustible: se entrega y devuelve con el mismo nivel.
+                  </span>
+                </div>
 
-                  <div className="flex items-start gap-3">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Edad mínima del conductor: 21 años con licencia vigente.
-                    </span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Edad mínima del conductor: 21 años con licencia vigente.
+                  </span>
+                </div>
 
-                  <div className="flex items-start gap-3">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Depósito en garantía reembolsable al cierre sin incidencias.
-                    </span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Depósito en garantía reembolsable al cierre sin incidencias.
+                  </span>
+                </div>
 
-                  <div className="flex items-start gap-3">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Prohibido fumar dentro de la unidad.
-                    </span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Prohibido fumar dentro de la unidad.
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Sección: Reglas y condiciones (Exacto de la captura) */}
+            {/* Sección: Reglas y condiciones (Una sola columna, checks neutros, sin contenedor con línea) */}
             <div className="pt-6 border-t border-slate-100 space-y-4">
               <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
                 Reglas y condiciones
               </h3>
 
-              <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-xs space-y-3.5">
-                <div className="space-y-3.5">
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Documentación verificada antes de la entrega (licencia, identificación y comprobante).
-                    </span>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Contrato digital firmado por ambas partes con validez legal.
-                    </span>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Cancelaciones: Las cancelaciones realizadas con más de 48 horas de anticipación reciben reembolso completo. Cancelaciones posteriores están sujetas a cargos parciales según el tiempo restante para el inicio de la renta.
-                    </span>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Multas y peajes durante la renta corren por cuenta del cliente.
-                    </span>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" strokeWidth={1.8} />
-                    <span className="text-sm sm:text-base font-sans font-normal text-slate-800 leading-relaxed">
-                      Cualquier daño se documenta con evidencia fotográfica en la devolución.
-                    </span>
-                  </div>
+              <div className="space-y-3.5">
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Documentación verificada antes de la entrega (licencia, identificación y comprobante).
+                  </span>
                 </div>
 
-                <p className="text-xs sm:text-sm font-sans text-slate-500 pt-3 border-t border-slate-100">
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Contrato digital firmado por ambas partes con validez legal.
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0 mt-0.5" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800 leading-relaxed">
+                    Cancelaciones: Las cancelaciones realizadas con más de 48 horas de anticipación reciben reembolso completo. Cancelaciones posteriores están sujetas a cargos parciales según el tiempo restante para el inicio de la renta.
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Multas y peajes durante la renta corren por cuenta del cliente.
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Cualquier daño se documenta con evidencia fotográfica en la devolución.
+                  </span>
+                </div>
+
+                <p className="text-xs sm:text-sm font-sans text-slate-500 pt-1">
                   Consulta los{' '}
                   <a
                     href="/terminos"
@@ -597,73 +593,59 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Sección: Checklist controlado (Exacto de la captura) */}
+            {/* Sección: Checklist controlado (Sin contenedor con línea, sin icono en el título, con check en cada ítem) */}
             <div className="pt-6 border-t border-slate-100 space-y-4">
-              <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-xs space-y-3.5">
-                <div className="flex items-center gap-2.5">
-                  <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 shrink-0" strokeWidth={1.8} />
-                  <h4 className="text-base sm:text-lg font-heading font-bold text-slate-900">
-                    Checklist controlado
-                  </h4>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+                Checklist controlado
+              </h3>
+
+              <div className="space-y-3.5">
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Fotos de estado exterior e interior.
+                  </span>
                 </div>
 
-                <div className="space-y-2.5 pt-1">
-                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
-                    <span className="text-slate-400 font-bold select-none">•</span>
-                    <span>Fotos de estado exterior e interior.</span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Registro de kilometraje de salida y entrada.
+                  </span>
+                </div>
 
-                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
-                    <span className="text-slate-400 font-bold select-none">•</span>
-                    <span>Registro de kilometraje de salida y entrada.</span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Nivel de combustible verificado.
+                  </span>
+                </div>
 
-                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
-                    <span className="text-slate-400 font-bold select-none">•</span>
-                    <span>Nivel de combustible verificado.</span>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
-                    <span className="text-slate-400 font-bold select-none">•</span>
-                    <span>Firma digital de entrega y devolución.</span>
-                  </div>
+                <div className="flex items-center gap-3.5 text-slate-800">
+                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                  <span className="text-sm sm:text-base font-heading font-medium text-slate-800">
+                    Firma digital de entrega y devolución.
+                  </span>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* COLUMNA DERECHA: Sticky Card Checkout Exacto Mockup Turo */}
+          {/* COLUMNA DERECHA: Sticky Card Checkout */}
           <div className="lg:col-span-5">
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-lg space-y-6 text-left">
               
-              {/* Precio */}
+              {/* Precio (sin calificación repetida abajo) */}
               <div className="pb-4 border-b border-slate-100">
                 <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 block">
                   ${total.toLocaleString('es-MX')} total
                 </span>
-                <div className="flex items-center gap-1.5 text-xs font-heading font-medium text-slate-600 mt-1">
-                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0" />
-                  <span className="font-bold text-slate-900">{ratingScore}</span>
-                  <span className="text-slate-400">·</span>
-                  <a href="#resenas" className="text-slate-500 hover:text-slate-900 underline">
-                    {reviewCount} evaluaciones
-                  </a>
-                </div>
               </div>
 
-              {/* Fechas y sucursal (Exacto de la captura de referencia) */}
-              <div className="space-y-4 pt-2">
-                <div>
-                  <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 tracking-tight">
-                    Fechas y sucursal
-                  </h3>
-                  <p className="text-xs font-sans text-slate-500 mt-0.5">
-                    Elige dónde y cuándo recoges el vehículo
-                  </p>
-                </div>
-
-                {/* Fila 1: Ciudad y Sucursal bloqueadas van juntas como en el home */}
+              {/* Inputs de Ciudad, Sucursal y Fechas (sin título 'Fechas y sucursal') */}
+              <div className="space-y-4 pt-1">
+                {/* Fila 1: Ciudad y Sucursal bloqueadas */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
@@ -760,15 +742,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     </div>
                   </div>
                 </div>
-
-                {/* Nota de disponibilidad */}
-                <div className="flex items-center gap-2 text-xs font-heading font-medium text-emerald-700 bg-emerald-50/70 border border-emerald-200/60 px-3 py-2 rounded-xl">
-                  <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Disponible del {formatRangeSummary(startDate, endDate)}</span>
-                </div>
               </div>
 
-              {/* Desglose y Resumen de Precios (Exacto de la captura) */}
+              {/* Desglose y Resumen de Precios */}
               <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xs space-y-3">
                 <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
                   <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
@@ -791,8 +767,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
               </div>
 
-              {/* Depósito en garantía reembolsable (Exacto de la captura) */}
-              <div className="rounded-xl border border-sky-200/80 bg-sky-50/60 px-4 py-3">
+              {/* Depósito en garantía neutro y sin fondo */}
+              <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
                 <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-700">
                   <span className="font-medium">Depósito en garantía (reembolsable)</span>
                   <span className="font-heading font-extrabold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
@@ -809,10 +785,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 <span>Continuar</span>
               </button>
 
-              <p className="text-[11px] font-sans text-slate-400 text-center -mt-2">
-                No se te cobrará nada todavía · Pago protegido
-              </p>
-
             </div>
           </div>
 
@@ -822,19 +794,17 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             RESEÑAS Y CALIFICACIONES (Estilo Airbnb / Turo)
            ======================================================== */}
         <section id="resenas" className="mt-14 sm:mt-20 pt-10 border-t border-slate-100 text-left">
-          {/* Header de Reseñas */}
+          {/* Header de Reseñas: Primero 22 evaluaciones verificadas, luego badge con estrella 4.92 sin fondo con borde neutro */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200/60 px-3 py-1.5 rounded-xl">
-                  <Star className="w-5 h-5 fill-amber-400 text-amber-400 shrink-0" />
-                  <span className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900">
-                    {ratingScore}
-                  </span>
-                </div>
+              <div className="flex flex-wrap items-center gap-3">
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold text-slate-900 tracking-tight">
                   {reviewCount} evaluaciones verificadas
                 </h2>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-transparent text-slate-900 text-sm font-heading font-bold">
+                  <Star className="w-4 h-4 fill-blue-300 text-blue-300 shrink-0" />
+                  <span>{ratingScore}</span>
+                </div>
               </div>
               <p className="text-xs sm:text-sm font-sans text-slate-500 mt-2">
                 Calificaciones reales de clientes que completaron su renta con GALSA Rent en Durango y México.
@@ -842,8 +812,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             </div>
           </div>
 
-          {/* Desglose de 6 métricas de calidad */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 p-5 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200/80 mb-10">
+          {/* Desglose de 6 métricas de calidad (gris 50 sin línea) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 p-5 sm:p-6 rounded-2xl bg-slate-50 border-0 mb-10">
             <div>
               <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Limpieza</span>
               <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">4.9 ★</span>
@@ -870,26 +840,26 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             </div>
           </div>
 
-          {/* Grid de 6 Reseñas */}
+          {/* Grid de Reseñas: Avatar gris oscuro, texto negro sin líneas, verificado neutro sin emoji */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {mockReviews.map((rev) => (
               <div 
                 key={rev.id} 
-                className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs flex flex-col justify-between space-y-4 hover:border-slate-300 transition-colors"
+                className="rounded-2xl border-0 bg-white p-5 sm:p-6 flex flex-col justify-between space-y-4"
               >
                 <div>
-                  {/* Autor y Avatar */}
+                  {/* Autor y Avatar gris oscuro */}
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-10 h-10 rounded-full ${rev.avatarColor} text-white font-heading font-bold text-sm flex items-center justify-center shrink-0 shadow-xs`}>
+                    <div className="w-10 h-10 rounded-full bg-slate-800 text-white font-heading font-bold text-sm flex items-center justify-center shrink-0">
                       {rev.author.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-heading font-bold text-slate-900">
+                        <h4 className="text-sm font-heading font-bold text-black">
                           {rev.author}
                         </h4>
-                        <span className="inline-flex items-center gap-0.5 text-[10px] font-heading font-medium bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full border border-emerald-200/60">
-                          ✓ Verificado
+                        <span className="inline-flex items-center text-[10px] font-heading font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
+                          Verificado
                         </span>
                       </div>
                       <p className="text-xs font-sans text-slate-500">
@@ -898,15 +868,22 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     </div>
                   </div>
 
-                  {/* Estrellas */}
+                  {/* Estrellas: azul 300 para calificaciones, gris claro para vacías */}
                   <div className="flex items-center gap-1 mb-2">
-                    {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400 shrink-0" />
+                    {[...Array(5)].map((_, i) => (
+                      <Star 
+                        key={i} 
+                        className={`w-4 h-4 shrink-0 ${
+                          i < rev.rating 
+                            ? 'fill-blue-300 text-blue-300' 
+                            : 'fill-slate-200 text-slate-200'
+                        }`} 
+                      />
                     ))}
                   </div>
 
                   {/* Texto de la reseña */}
-                  <p className="text-xs sm:text-sm font-sans font-normal text-slate-700 leading-relaxed">
+                  <p className="text-xs sm:text-sm font-sans font-normal text-black leading-relaxed">
                     "{rev.comment}"
                   </p>
                 </div>

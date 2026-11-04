@@ -147,6 +147,42 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogDescription: 'Crea tu cuenta en GALSA Rent en un minuto y reserva autos 100% en línea.',
     ogImage: DEFAULT_OG_IMAGE,
   },
+  '/recuperar-password': {
+    title: 'Recuperar Contraseña | GALSA Rent',
+    description: 'Restablece el acceso a tu cuenta de GALSA Rent de forma rápida y segura.',
+    canonical: `${SITE_URL}/recuperar-password`,
+    ogTitle: 'Recuperar Contraseña | GALSA Rent',
+    ogDescription: 'Restablece el acceso a tu cuenta de GALSA Rent de forma rápida y segura.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
+  '/recuperar-password/enviado': {
+    title: 'Correo Enviado | GALSA Rent',
+    description: 'Instrucciones para restablecer contraseña enviadas por correo electrónico.',
+    canonical: `${SITE_URL}/recuperar-password/enviado`,
+    ogTitle: 'Correo Enviado | GALSA Rent',
+    ogDescription: 'Instrucciones para restablecer contraseña enviadas por correo electrónico.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
+  '/restablecer-password': {
+    title: 'Restablecer Contraseña | GALSA Rent',
+    description: 'Crea una nueva contraseña segura para tu cuenta de GALSA Rent.',
+    canonical: `${SITE_URL}/restablecer-password`,
+    ogTitle: 'Restablecer Contraseña | GALSA Rent',
+    ogDescription: 'Crea una nueva contraseña segura para tu cuenta de GALSA Rent.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
+  '/seo': {
+    title: 'Visor y Auditor SEO | GALSA Rent',
+    description: 'Previsualización en tiempo real de resultados en Google SERP, Open Graph y compartidos sociales para todas las páginas de GALSA Rent.',
+    canonical: `${SITE_URL}/seo`,
+    ogTitle: 'Visor y Auditor SEO | GALSA Rent',
+    ogDescription: 'Previsualización en tiempo real de resultados en Google SERP, Open Graph y compartidos sociales para todas las páginas de GALSA Rent.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
 };
 
 export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {
