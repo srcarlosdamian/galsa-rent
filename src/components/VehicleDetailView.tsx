@@ -525,19 +525,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="lg:col-span-5">
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-lg space-y-6 text-left">
               
-              {/* Precio y Comparativa */}
+              {/* Precio */}
               <div className="pb-4 border-b border-slate-100">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-slate-400 line-through text-base font-heading">
-                    ${originalSubtotal.toLocaleString('es-MX')}
-                  </span>
-                  <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-                    ${total.toLocaleString('es-MX')} total
-                  </span>
-                </div>
-                <p className="text-[11px] font-sans text-slate-400 mt-0.5">
-                  Por {rentalDays} {rentalDays === 1 ? 'día' : 'días'} con kilometraje libre e impuestos incluidos
-                </p>
+                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 block">
+                  ${total.toLocaleString('es-MX')} total
+                </span>
               </div>
 
               {/* Fechas de viaje (Inicio y Fin como en el mockup) */}
