@@ -6,9 +6,8 @@ import { Vehicle, SearchState } from '../types/vehicle';
 import { DateRangePicker } from '../components/DateRangePicker';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
-  ArrowLeft, ArrowRight, ShieldCheck, Tag, Info, Share2, Copy,
-  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X, Search,
-  CarFront, Clock, Users, BookOpen, FileText, Lock
+  ArrowLeft, ArrowRight, Copy,
+  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X, Search
 } from 'lucide-react';
 
 interface CatalogPageProps {
@@ -988,8 +987,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         )}
 
-        {/* Contenedor Social / Compartir Catálogo */}
-        <div className="mt-10 bg-slate-50 rounded-2xl border border-slate-200/80 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Contenedor Social / Compartir Catálogo (sin línea gris, solo bg-slate-50) */}
+        <div className="mt-10 bg-slate-50 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-sm font-heading font-semibold text-slate-800">
               Comparte estas opciones de autos
@@ -1037,7 +1036,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         </div>
 
-        {/* Sección de Contenido e Información SEO para el Catálogo */}
+        {/* Sección 1: Guía de renta de autos en Durango (Contenedor propio) */}
         <section className="mt-10 bg-gray-50 rounded-[24px] p-6 sm:p-10 border-0">
           <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight mb-4">
             Guía de renta de autos en Durango: consejos, requisitos y categorías
@@ -1047,10 +1046,15 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             Rentar un auto en Durango con GALSA Rent es rápido, transparente y 100% digital. Ya sea que viajes por negocios a la capital duranguense, disfrutes de unas vacaciones familiares o asistas a un evento especial, en nuestro catálogo encontrarás el vehículo ideal con entrega en Sucursal Plaza 450 o en el Aeropuerto Internacional General Guadalupe Victoria (DGO).
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl p-6 border-0 shadow-none">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-                <CarFront className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-xl overflow-hidden mb-4 bg-slate-50">
+                <img
+                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600346395-4-background-border-shadow.webp"
+                  alt="Sedanes, SUVs y 4x4"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
               <h3 className="text-base font-heading font-bold text-slate-900 mb-2">
                 Sedanes, SUVs y 4x4
@@ -1061,8 +1065,13 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             </div>
 
             <div className="bg-white rounded-2xl p-6 border-0 shadow-none">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-                <ShieldCheck className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-xl overflow-hidden mb-4 bg-slate-50">
+                <img
+                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600346030-3-background-border-shadow-1.webp"
+                  alt="Requisitos claros y sin sorpresas"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
               <h3 className="text-base font-heading font-bold text-slate-900 mb-2">
                 Requisitos claros y sin sorpresas
@@ -1073,8 +1082,13 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             </div>
 
             <div className="bg-white rounded-2xl p-6 border-0 shadow-none">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
-                <MapPin className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-xl overflow-hidden mb-4 bg-slate-50">
+                <img
+                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600345607-2-background-border-shadow-2.webp"
+                  alt="Entrega oficial y asistencia 24/7"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
               <h3 className="text-base font-heading font-bold text-slate-900 mb-2">
                 Entrega oficial y asistencia 24/7
@@ -1084,100 +1098,92 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               </p>
             </div>
           </div>
+        </section>
 
-          <div className="border-t border-slate-200/80 pt-8">
-            <div className="mb-6">
-              <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
-                Enlaces útiles de navegación
-              </h3>
-              <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1">
-                Accede rápidamente a información clave sobre el proceso de renta, garantías y servicios.
-              </p>
-            </div>
+        {/* Sección 2: Enlaces útiles de navegación (Contenedor propio estilo FAQ) */}
+        <section className="mt-8 bg-gray-50 rounded-[24px] p-6 sm:p-10 border-0">
+          <div className="mb-6 sm:mb-8 text-left">
+            <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+              Enlaces útiles de navegación
+            </h3>
+            <p className="text-sm font-sans text-slate-600 leading-relaxed mt-1">
+              Accede rápidamente a información clave sobre el proceso de renta, garantías y servicios.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                {
-                  title: 'Inicio y reservaciones',
-                  desc: 'Explora autos disponibles con tarifas en tiempo real y reserva en minutos.',
-                  href: '/',
-                  icon: CarFront,
-                },
-                {
-                  title: '¿Cómo funciona la renta digital?',
-                  desc: 'Conoce los 4 pasos para reservar, verificar identidad y recoger tu vehículo.',
-                  href: '/como-funciona',
-                  icon: Clock,
-                },
-                {
-                  title: 'Gana dinero como anfitrión',
-                  desc: 'Publica tu automóvil con protección integral y genera ingresos recurrentes.',
-                  href: '/anfitriones',
-                  icon: Users,
-                },
-                {
-                  title: 'Garantía y seguridad digital',
-                  desc: 'Inspección con fotos en entrega, depósito seguro y seguro certificado.',
-                  href: '/confianza',
-                  icon: ShieldCheck,
-                },
-                {
-                  title: 'Preguntas frecuentes',
-                  desc: 'Respuestas sobre depósitos, pólizas, límites de kilometraje y cancelaciones.',
-                  href: '/faq',
-                  icon: Info,
-                },
-                {
-                  title: 'Sucursal Plaza 450 y contacto',
-                  desc: 'Ubicación física en Blvd. Guadiana, teléfonos y canal de WhatsApp 24/7.',
-                  href: '/contacto',
-                  icon: MapPin,
-                },
-                {
-                  title: 'Blog de rutas y viajes',
-                  desc: 'Itinerarios, consejos de manejo en sierra duranguense y guías turísticas.',
-                  href: '/blog',
-                  icon: BookOpen,
-                },
-                {
-                  title: 'Términos del servicio',
-                  desc: 'Políticas claras de uso, condiciones de arrendamiento y deberes legales.',
-                  href: '/terminos',
-                  icon: FileText,
-                },
-                {
-                  title: 'Aviso de privacidad',
-                  desc: 'Protección absoluta y tratamiento seguro de tus datos personales.',
-                  href: '/privacidad',
-                  icon: Lock,
-                },
-              ].map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    if (onNavigate) {
-                      e.preventDefault();
-                      onNavigate(item.href);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                  }}
-                  className="group flex items-start gap-3.5 p-4 rounded-xl bg-slate-50 hover:bg-white border border-slate-200/70 hover:border-blue-300 hover:shadow-md transition-all duration-200 text-left"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <h4 className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
-                      {item.title}
-                    </h4>
-                    <p className="text-xs font-sans text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+            {[
+              {
+                title: 'Inicio y reservaciones',
+                desc: 'Explora autos disponibles con tarifas en tiempo real y reserva en minutos.',
+                href: '/',
+              },
+              {
+                title: '¿Cómo funciona la renta digital?',
+                desc: 'Conoce los 4 pasos para reservar, verificar identidad y recoger tu vehículo.',
+                href: '/como-funciona',
+              },
+              {
+                title: 'Gana dinero como anfitrión',
+                desc: 'Publica tu automóvil con protección integral y genera ingresos recurrentes.',
+                href: '/anfitriones',
+              },
+              {
+                title: 'Garantía y seguridad digital',
+                desc: 'Inspección con fotos en entrega, depósito seguro y seguro certificado.',
+                href: '/confianza',
+              },
+              {
+                title: 'Preguntas frecuentes',
+                desc: 'Respuestas sobre depósitos, pólizas, límites de kilometraje y cancelaciones.',
+                href: '/faq',
+              },
+              {
+                title: 'Sucursal Plaza 450 y contacto',
+                desc: 'Ubicación física en Blvd. Guadiana, teléfonos y canal de WhatsApp 24/7.',
+                href: '/contacto',
+              },
+              {
+                title: 'Blog de rutas y viajes',
+                desc: 'Itinerarios, consejos de manejo en sierra duranguense y guías turísticas.',
+                href: '/blog',
+              },
+              {
+                title: 'Términos del servicio',
+                desc: 'Políticas claras de uso, condiciones de arrendamiento y deberes legales.',
+                href: '/terminos',
+              },
+              {
+                title: 'Aviso de privacidad',
+                desc: 'Protección absoluta y tratamiento seguro de tus datos personales.',
+                href: '/privacidad',
+              },
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate(item.href);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 rounded-2xl border border-neutral-200/90 bg-white hover:bg-neutral-50/70 hover:border-slate-300 transition-all duration-200 group"
+              >
+                <div className="min-w-0 flex-1">
+                  <span className="text-base font-heading font-semibold text-slate-900 tracking-tight leading-snug group-hover:text-blue-600 transition-colors block">
+                    {item.title}
+                  </span>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1 line-clamp-1 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+                <div className="w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center shrink-0 text-neutral-500 group-hover:text-blue-600 group-hover:border-blue-400 group-hover:translate-x-0.5 transition-all">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </a>
+            ))}
           </div>
         </section>
 
