@@ -4,7 +4,8 @@ import {
   MapPin, Calendar, CarFront, Sparkles,
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
-  X, Briefcase, Wind, Smartphone, Camera, Car, Zap, Check
+  X, Briefcase, Wind, Smartphone, Camera, Car, Zap, Check,
+  ClipboardCheck
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
@@ -498,6 +499,40 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   </a>{' '}
                   completos.
                 </p>
+              </div>
+            </div>
+
+            {/* Sección: Checklist controlado (Exacto de la captura) */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <div className="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-xs space-y-3.5">
+                <div className="flex items-center gap-2.5">
+                  <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 shrink-0" strokeWidth={1.8} />
+                  <h4 className="text-base sm:text-lg font-heading font-bold text-slate-900">
+                    Checklist controlado
+                  </h4>
+                </div>
+
+                <div className="space-y-2.5 pt-1">
+                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
+                    <span className="text-slate-400 font-bold select-none">•</span>
+                    <span>Fotos de estado exterior e interior.</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
+                    <span className="text-slate-400 font-bold select-none">•</span>
+                    <span>Registro de kilometraje de salida y entrada.</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
+                    <span className="text-slate-400 font-bold select-none">•</span>
+                    <span>Nivel de combustible verificado.</span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 text-sm sm:text-base font-sans font-normal text-slate-700 leading-relaxed">
+                    <span className="text-slate-400 font-bold select-none">•</span>
+                    <span>Firma digital de entrega y devolución.</span>
+                  </div>
+                </div>
               </div>
             </div>
 
