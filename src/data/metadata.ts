@@ -183,6 +183,15 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
+  '/design-system': {
+    title: 'Sistema de Diseño (Atomic Design) | GALSA Rent',
+    description: 'Guía interactiva de componentes, tokens, átomos, moléculas y organismos de la plataforma GALSA Rent.',
+    canonical: `${SITE_URL}/design-system`,
+    ogTitle: 'Sistema de Diseño (Atomic Design) | GALSA Rent',
+    ogDescription: 'Guía interactiva de componentes, tokens, átomos, moléculas y organismos de la plataforma GALSA Rent.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
 };
 
 export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {

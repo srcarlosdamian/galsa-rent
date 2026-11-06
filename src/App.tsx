@@ -31,6 +31,7 @@ import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { PasswordSentPage } from './pages/PasswordSentPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SeoPage } from './pages/SeoPage';
+import { DesignSystemPage } from './pages/DesignSystemPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -258,6 +259,7 @@ export const App: React.FC = () => {
     currentPath === '/recuperar-password/enviado' ||
     currentPath === '/restablecer-password' ||
     currentPath === '/seo' ||
+    currentPath === '/design-system' ||
     currentPath.startsWith('/cuenta') ||
     currentPath === '/completar-perfil' ||
     currentPath === '/cuenta/completar';
@@ -336,6 +338,9 @@ export const App: React.FC = () => {
 
         {/* ROUTE 7.7: VISOR Y AUDITOR SEO */}
         {currentPath === '/seo' && <SeoPage onNavigate={navigateTo} />}
+
+        {/* ROUTE 7.8: SISTEMA DE DISEÑO (ATOMIC DESIGN) */}
+        {currentPath === '/design-system' && <DesignSystemPage onNavigate={navigateTo} />}
 
         {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR / COMPLETAR PERFIL) */}
         {(currentPath.startsWith('/cuenta') || currentPath === '/completar-perfil' || currentPath === '/cuenta/completar') && (

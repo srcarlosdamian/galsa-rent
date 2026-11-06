@@ -225,6 +225,7 @@ const staticPages = [
   { route: '/recuperar-password/enviado', schema: null },
   { route: '/restablecer-password', schema: null },
   { route: '/seo', schema: null },
+  { route: '/design-system', schema: null },
   { route: '/terminos', schema: null },
   { route: '/privacidad', schema: null },
   { route: '/cuenta', schema: null },
