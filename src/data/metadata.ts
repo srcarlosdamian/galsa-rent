@@ -22,11 +22,11 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/anfitriones': {
-    title: 'Renta tu auto en Durango y gana dinero | GALSA Anfitriones',
+    title: 'Renta tu auto y gana dinero | GALSA Anfitriones',
     description:
       'Publica tu auto en GALSA y recibe el 100% de tu tarifa diaria. Tú apruebas cada reserva; clientes verificados, seguro durante la renta y pagos a tu cuenta.',
     canonical: `${SITE_URL}/anfitriones`,
-    ogTitle: 'Renta tu auto en Durango y gana dinero | GALSA Anfitriones',
+    ogTitle: 'Renta tu auto y gana dinero | GALSA Anfitriones',
     ogDescription:
       'Publica tu auto en GALSA y recibe el 100% de tu tarifa diaria. Tú apruebas cada reserva; clientes verificados, seguro durante la renta y pagos a tu cuenta.',
     ogImage: DEFAULT_OG_IMAGE,
@@ -52,82 +52,82 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/confianza': {
-    title: 'Seguridad y Confianza en Renta de Autos | GALSA Durango',
+    title: 'Seguridad y Confianza en Renta de Autos | GALSA Rent',
     description:
-      'Contrato digital con validez legal, seguro de cobertura amplia, inspección fotográfica rigurosa y entrega garantizada sin filas en Durango.',
+      'Contrato digital con validez legal, seguro de cobertura amplia, inspección fotográfica rigurosa y entrega garantizada sin filas en México.',
     canonical: `${SITE_URL}/confianza`,
-    ogTitle: 'Seguridad y Confianza en Renta de Autos | GALSA Durango',
+    ogTitle: 'Seguridad y Confianza en Renta de Autos | GALSA Rent',
     ogDescription:
-      'Contrato digital con validez legal, seguro de cobertura amplia, inspección fotográfica rigurosa y entrega garantizada sin filas en Durango.',
+      'Contrato digital con validez legal, seguro de cobertura amplia, inspección fotográfica rigurosa y entrega garantizada sin filas en México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/faq': {
-    title: 'Preguntas Frecuentes sobre Renta de Autos | GALSA Durango',
+    title: 'Preguntas Frecuentes sobre Renta de Autos | GALSA Rent',
     description:
-      'Resuelve tus dudas sobre requisitos, tarifas con 33% de servicio, depósitos reembolsables y cómo funciona la renta de autos 100% en línea en Durango.',
+      'Resuelve tus dudas sobre requisitos, tarifas transparentes, depósitos reembolsables y cómo funciona la renta de autos 100% en línea en México.',
     canonical: `${SITE_URL}/faq`,
-    ogTitle: 'Preguntas Frecuentes sobre Renta de Autos | GALSA Durango',
+    ogTitle: 'Preguntas Frecuentes sobre Renta de Autos | GALSA Rent',
     ogDescription:
-      'Resuelve tus dudas sobre requisitos, tarifas con 33% de servicio, depósitos reembolsables y cómo funciona la renta de autos 100% en línea en Durango.',
+      'Resuelve tus dudas sobre requisitos, tarifas transparentes, depósitos reembolsables y cómo funciona la renta de autos 100% en línea en México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/contacto': {
-    title: 'Contacto y Sucursal en Durango | GALSA Rent',
+    title: 'Contacto y Atención a Clientes | GALSA Rent',
     description:
-      'Visítanos en nuestra sucursal de Durango o contáctanos por WhatsApp. Horarios de atención, ubicación y asesoría directa para renta de autos y anfitriones.',
+      'Contáctanos directamente por WhatsApp o visítanos en sucursal. Horarios de atención, soporte y asesoría directa para renta de autos y anfitriones en México.',
     canonical: `${SITE_URL}/contacto`,
-    ogTitle: 'Contacto y Sucursal en Durango | GALSA Rent',
+    ogTitle: 'Contacto y Atención a Clientes | GALSA Rent',
     ogDescription:
-      'Visítanos en nuestra sucursal de Durango o contáctanos por WhatsApp. Horarios de atención, ubicación y asesoría directa para renta de autos y anfitriones.',
+      'Contáctanos directamente por WhatsApp o visítanos en sucursal. Horarios de atención, soporte y asesoría directa para renta de autos y anfitriones en México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/terminos': {
     title: 'Términos y Condiciones del Contrato Digital | GALSA Rent',
     description:
-      'Condiciones legales del servicio de renta de autos y marketplace de anfitriones de GALSA Rent en Durango, México. Transparencia y certeza jurídica.',
+      'Condiciones legales del servicio de renta de autos y marketplace de anfitriones de GALSA Rent en México. Transparencia y certeza jurídica.',
     canonical: `${SITE_URL}/terminos`,
     ogTitle: 'Términos y Condiciones del Contrato Digital | GALSA Rent',
     ogDescription:
-      'Condiciones legales del servicio de renta de autos y marketplace de anfitriones de GALSA Rent en Durango, México. Transparencia y certeza jurídica.',
+      'Condiciones legales del servicio de renta de autos y marketplace de anfitriones de GALSA Rent en México. Transparencia y certeza jurídica.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/privacidad': {
-    title: 'Aviso de Privacidad Integral | GALSA Rent Durango',
+    title: 'Aviso de Privacidad Integral | GALSA Rent',
     description:
-      'Conoce cómo GALSA protege tus datos personales, identificaciones y licencias de conducir para la renta de autos y validación de anfitriones en Durango.',
+      'Conoce cómo GALSA protege tus datos personales, identificaciones y licencias de conducir para la renta de autos y validación de anfitriones en México.',
     canonical: `${SITE_URL}/privacidad`,
-    ogTitle: 'Aviso de Privacidad Integral | GALSA Rent Durango',
+    ogTitle: 'Aviso de Privacidad Integral | GALSA Rent',
     ogDescription:
-      'Conoce cómo GALSA protege tus datos personales, identificaciones y licencias de conducir para la renta de autos y validación de anfitriones en Durango.',
+      'Conoce cómo GALSA protege tus datos personales, identificaciones y licencias de conducir para la renta de autos y validación de anfitriones en México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/como-funciona': {
     title: 'Cómo Funciona la Renta de Autos 100% en Línea | GALSA',
     description:
-      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge tu auto al instante sin filas en Durango.',
+      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge tu auto al instante sin filas en México.',
     canonical: `${SITE_URL}/como-funciona`,
     ogTitle: 'Cómo Funciona la Renta de Autos 100% en Línea | GALSA',
     ogDescription:
-      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge tu auto al instante sin filas en Durango.',
+      'Aprende a rentar tu auto en 4 pasos: reserva en línea, sube tus documentos, firma tu contrato digital y recoge tu auto al instante sin filas en México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/nosotros': {
-    title: 'Sobre Nosotros — Movilidad Digital en Durango | GALSA Rent',
+    title: 'Sobre Nosotros — Movilidad Digital | GALSA Rent',
     description:
-      'Conoce la historia, misión y estándares de GALSA Rent: renta de autos sin filas, tarifas transparentes y marketplace seguro en Durango y México.',
+      'Conoce la historia, misión y estándares de GALSA Rent: renta de autos sin filas, tarifas transparentes y marketplace seguro en todo México.',
     canonical: `${SITE_URL}/nosotros`,
-    ogTitle: 'Sobre Nosotros — Movilidad Digital en Durango | GALSA Rent',
+    ogTitle: 'Sobre Nosotros — Movilidad Digital | GALSA Rent',
     ogDescription:
-      'Conoce la historia, misión y estándares de GALSA Rent: renta de autos sin filas, tarifas transparentes y marketplace seguro en Durango y México.',
+      'Conoce la historia, misión y estándares de GALSA Rent: renta de autos sin filas, tarifas transparentes y marketplace seguro en todo México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   // Private routes with noindex
   '/cuenta': {
-    title: 'Mi Cuenta | GALSA Rent Durango',
-    description: 'Gestión de reservas y contratos digitales de clientes GALSA Rent en Durango.',
+    title: 'Mi Cuenta | GALSA Rent',
+    description: 'Gestión de reservas y contratos digitales de clientes GALSA Rent en México.',
     canonical: `${SITE_URL}/cuenta`,
-    ogTitle: 'Mi Cuenta | GALSA Rent Durango',
-    ogDescription: 'Gestión de reservas y contratos digitales de clientes GALSA Rent en Durango.',
+    ogTitle: 'Mi Cuenta | GALSA Rent',
+    ogDescription: 'Gestión de reservas y contratos digitales de clientes GALSA Rent en México.',
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
@@ -186,15 +186,15 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
 };
 
 export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {
-  let title = `Renta ${vehicle.make} ${vehicle.model} ${vehicle.version} ${vehicle.year} en Durango | GALSA`;
+  let title = `Renta ${vehicle.make} ${vehicle.model} ${vehicle.version} ${vehicle.year} | GALSA`;
   if (title.length > 60) {
-    title = `Renta ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango | GALSA`;
+    title = `Renta ${vehicle.make} ${vehicle.model} ${vehicle.year} | GALSA`;
   }
   if (title.length > 60) {
-    title = `${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango | GALSA`;
+    title = `${vehicle.make} ${vehicle.model} ${vehicle.year} | GALSA`;
   }
 
-  let desc = `${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango desde $${vehicle.pricePerDay.toLocaleString('es-MX')}/día. Auto verificado, contrato digital, seguro incluido y entrega rápida sin filas.`;
+  let desc = `${vehicle.make} ${vehicle.model} ${vehicle.year} desde $${vehicle.pricePerDay.toLocaleString('es-MX')}/día en México. Auto verificado, contrato digital, seguro incluido y entrega rápida sin filas.`;
   if (desc.length > 155) {
     desc = desc.substring(0, 152) + '...';
   }
@@ -224,10 +224,10 @@ export function getRouteMetadata(path: string): RouteMetadata {
   if (cleanPath.startsWith('/admin') || cleanPath.startsWith('/reservar') || cleanPath.startsWith('/cuenta') || cleanPath === '/completar-perfil') {
     return {
       title: 'Área Privada | GALSA Rent',
-      description: 'Acceso privado para gestión de reservas y contratos digitales en Durango.',
+      description: 'Acceso privado para gestión de reservas y contratos digitales en México.',
       canonical: `${SITE_URL}${cleanPath}`,
       ogTitle: 'Área Privada | GALSA Rent',
-      ogDescription: 'Acceso privado para gestión de reservas y contratos digitales en Durango.',
+      ogDescription: 'Acceso privado para gestión de reservas y contratos digitales en México.',
       ogImage: DEFAULT_OG_IMAGE,
       noIndex: true,
     };
@@ -251,11 +251,11 @@ export function getRouteMetadata(path: string): RouteMetadata {
 
   // Default fallback 404
   return {
-    title: 'Página no encontrada | GALSA Rent Durango',
-    description: 'La página que buscas no existe. Explora nuestro catálogo de autos disponibles en Durango.',
+    title: 'Página no encontrada | GALSA Rent',
+    description: 'La página que buscas no existe. Explora nuestro catálogo de autos disponibles en renta en México.',
     canonical: `${SITE_URL}/404`,
-    ogTitle: 'Página no encontrada | GALSA Rent Durango',
-    ogDescription: 'Explora nuestro catálogo de autos disponibles en renta en Durango.',
+    ogTitle: 'Página no encontrada | GALSA Rent',
+    ogDescription: 'Explora nuestro catálogo de autos disponibles en renta en México.',
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   };

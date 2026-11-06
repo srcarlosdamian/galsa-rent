@@ -25,25 +25,25 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
-        alt: 'Jeep Wrangler Rubicon 2018 en renta en Durango frontal',
+        alt: 'Jeep Wrangler Rubicon 2018 en renta frontal',
         width: 1200,
         height: 750,
       },
       {
         url: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553259/galsa/vehiculos/cxmlzrdsry8ajr58fhuj.jpg',
-        alt: 'Jeep Wrangler Rubicon 2018 en Plaza 450 Durango lateral',
+        alt: 'Jeep Wrangler Rubicon 2018 lateral',
         width: 1200,
         height: 750,
       },
       {
         url: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553263/galsa/vehiculos/wh5wtx8hzduqupp6ruvt.jpg',
-        alt: 'Jeep Wrangler Rubicon 2018 interior y cabina en Durango',
+        alt: 'Jeep Wrangler Rubicon 2018 interior y cabina',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Jeep Wrangler Rubicon 2018 verificado para entrega inmediata sin filas en Durango. Kilometraje libre, contrato digital firmado desde tu celular y depósito reembolsable.',
+      'Jeep Wrangler Rubicon 2018 verificado para entrega inmediata sin filas en México. Kilometraje libre, contrato digital firmado desde tu celular y depósito reembolsable.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -103,19 +103,19 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Jeep Wrangler 2011 en renta en Durango',
+        alt: 'Jeep Wrangler 2011 en renta frontal',
         width: 1200,
         height: 750,
       },
       {
         url: 'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Jeep Wrangler 2011 vista lateral en Durango',
+        alt: 'Jeep Wrangler 2011 vista lateral',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Jeep Wrangler 2011 disponible en Durango con entrega rápida sin filas. Kilometraje libre, contrato digital y depósito reembolsable.',
+      'Jeep Wrangler 2011 disponible con entrega rápida sin filas en México. Kilometraje libre, contrato digital y depósito reembolsable.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -175,19 +175,19 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Nissan Sentra Sense 2026 en renta en Durango frente angular',
+        alt: 'Nissan Sentra Sense 2026 en renta frente angular',
         width: 1200,
         height: 750,
       },
       {
         url: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Nissan Sentra Sense 2026 vista lateral en Durango',
+        alt: 'Nissan Sentra Sense 2026 vista lateral',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Nissan Sentra Sense 2026 en Durango para traslados y movilidad cómoda. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
+      'Nissan Sentra Sense 2026 para traslados y movilidad cómoda en México. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -247,19 +247,19 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Honda Civic Coupé 2019 en renta en Durango frontal',
+        alt: 'Honda Civic Coupé 2019 en renta frontal',
         width: 1200,
         height: 750,
       },
       {
         url: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Honda Civic Coupé 2019 en Durango lateral',
+        alt: 'Honda Civic Coupé 2019 lateral',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Honda Civic Coupé 2019 en Durango para viajes ejecutivos y traslados con estilo. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
+      'Honda Civic Coupé 2019 para viajes ejecutivos y traslados con estilo en México. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -319,19 +319,19 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Volkswagen Virtus Trendline 2026 en renta en Durango vista exterior',
+        alt: 'Volkswagen Virtus Trendline 2026 en renta vista exterior',
         width: 1200,
         height: 750,
       },
       {
         url: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Volkswagen Virtus Trendline 2026 en Durango perfil',
+        alt: 'Volkswagen Virtus Trendline 2026 perfil',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Volkswagen Virtus Trendline 2026 en Durango para movilidad diaria y traslados cómodos. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
+      'Volkswagen Virtus Trendline 2026 para movilidad diaria y traslados cómodos en México. Entrega rápida sin filas, con contrato digital, seguro y kilometraje libre.',
     features: [
       'Kilometraje libre.',
       'Combustible: se entrega y devuelve con el mismo nivel.',
@@ -391,13 +391,13 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Audi A4 S-Line 2024 en renta en Durango frontal',
+        alt: 'Audi A4 S-Line 2024 en renta frontal',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Audi A4 S-Line 2024 en Durango para traslados ejecutivos y de negocios. Elegancia, confort premium y tracción deportiva.',
+      'Audi A4 S-Line 2024 para traslados ejecutivos y de negocios en México. Elegancia, confort premium y tracción deportiva.',
     features: [
       'Kilometraje libre.',
       'Sonido Bang & Olufsen y conectividad inalámbrica.',
@@ -455,7 +455,7 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Audi Q5 Quattro 2025 en Durango frontal',
+        alt: 'Audi Q5 Quattro 2025 frontal',
         width: 1200,
         height: 750,
       },
@@ -518,13 +518,13 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Audi A3 Sedán 2023 en Durango',
+        alt: 'Audi A3 Sedán 2023',
         width: 1200,
         height: 750,
       },
     ],
     description:
-      'Audi A3 Sedán 2023 en Durango. Ágil, moderno y de gran rendimiento para ejecutivos y paseos urbanos con estilo.',
+      'Audi A3 Sedán 2023 en México. Ágil, moderno y de gran rendimiento para ejecutivos y paseos urbanos con estilo.',
     features: [
       'Kilometraje libre.',
       'Transmisión S-Tronic 7 velocidades.',
@@ -581,7 +581,7 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Nissan March en Durango',
+        alt: 'Nissan March',
         width: 1200,
         height: 750,
       },
@@ -642,7 +642,7 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Chevrolet Aveo LS en Durango',
+        alt: 'Chevrolet Aveo LS',
         width: 1200,
         height: 750,
       },
@@ -703,7 +703,7 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Toyota RAV4 en Durango',
+        alt: 'Toyota RAV4',
         width: 1200,
         height: 750,
       },
@@ -764,7 +764,7 @@ export const VEHICLES: Vehicle[] = [
     images: [
       {
         url: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?auto=format&fit=crop&w=1200&h=750&q=80',
-        alt: 'Ford Mustang GT en Durango',
+        alt: 'Ford Mustang GT',
         width: 1200,
         height: 750,
       },
