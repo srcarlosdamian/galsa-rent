@@ -183,7 +183,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                     setExpandedSteps(prev => prev.includes('dates') ? prev.filter(s => s !== 'dates') : prev);
                     setExpandedSteps(prev => prev.includes('client') ? prev : [...prev, 'client']);
                   }}
-                  className="w-full mt-4 py-3 px-4 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
+                  className="ml-auto py-3 px-6 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
                 >
                   Continuar
                 </button>
@@ -255,7 +255,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                     setExpandedSteps(prev => prev.includes('client') ? prev.filter(s => s !== 'client') : prev);
                     setExpandedSteps(prev => prev.includes('documents') ? prev : [...prev, 'documents']);
                   }}
-                  className="w-full mt-4 py-3 px-4 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
+                  className="ml-auto py-3 px-6 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
                 >
                   Continuar
                 </button>
@@ -301,7 +301,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                     setExpandedSteps(prev => prev.includes('documents') ? prev.filter(s => s !== 'documents') : prev);
                     setExpandedSteps(prev => prev.includes('extras') ? prev : [...prev, 'extras']);
                   }}
-                  className="w-full mt-4 py-3 px-4 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
+                  className="ml-auto py-3 px-6 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
                 >
                   Continuar
                 </button>
@@ -348,7 +348,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                     setExpandedSteps(prev => prev.includes('extras') ? prev.filter(s => s !== 'extras') : prev);
                     setExpandedSteps(prev => prev.includes('summary') ? prev : [...prev, 'summary']);
                   }}
-                  className="w-full mt-4 py-3 px-4 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
+                  className="ml-auto py-3 px-6 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
                 >
                   Continuar
                 </button>
@@ -392,7 +392,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                   <input type="checkbox" className="w-5 h-5 accent-cta-500 rounded" />
                   <span className="text-sm text-neutral-700">Acepto los términos y condiciones</span>
                 </label>
-                <button className="w-full mt-4 py-3 px-4 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors">
+                <button className="ml-auto py-3 px-6 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors">
                   Confirmar y completar reserva
                 </button>
               </div>
@@ -450,7 +450,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                       setExpandedSteps(prev => prev.includes('summary') ? prev.filter(s => s !== 'summary') : prev);
                       setExpandedSteps(prev => prev.includes('contract') ? prev : [...prev, 'contract']);
                     }}
-                    className="w-full mt-4 py-3 px-4 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
+                    className="ml-auto py-3 px-6 bg-cta-500 hover:bg-cta-600 text-white font-semibold rounded-xl transition-colors"
                   >
                     Continuar
                   </button>
