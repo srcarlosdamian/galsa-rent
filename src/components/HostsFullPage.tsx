@@ -147,9 +147,9 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Full Width Blue Section with Background Image */}
           <div className="mb-8 lg:mb-12">
-            <div className="bg-blue-100 rounded-3xl p-8 sm:p-12 overflow-hidden relative">
+            <div className="bg-cta-100 rounded-3xl p-8 sm:p-12 overflow-hidden relative">
               {/* Background Image - Right side */}
-              <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-60">
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-100">
                 <img 
                   src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794389847378-0-349394.webp"
                   alt="Background decoration"
@@ -337,21 +337,19 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-16 md:py-24 bg-white ">
+      <section className="py-16 md:py-24 bg-cta-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight mb-6">
             Empieza a ganar con tu auto hoy
           </h2>
-          <p className="text-base text-neutral-600 leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-base text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto">
             Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
           </p>
           <button
             onClick={() => handleNavigate('/anfitriones/registro')}
-            style={{ backgroundColor: '#3D63FF' }}
-            className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:brightness-95 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 bg-white text-cta-500 font-bold text-sm px-7 py-3 rounded-xl transition-all hover:bg-neutral-50 active:scale-95"
           >
             <span>Quiero publicar mi auto</span>
-            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </section>
