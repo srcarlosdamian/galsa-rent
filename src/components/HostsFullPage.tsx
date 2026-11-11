@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, Check, TrendingUp } from 'lucide-react';
+import { RentYourCarSection } from './RentYourCarSection';
 
 interface HostsFullPageProps {
   onNavigate?: (path: string) => void;
@@ -80,57 +81,9 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
 
   return (
     <div className="bg-white">
-      {/* HERO SECTION */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-4">
-              Programa de anfitriones GALSA
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 leading-tight mb-6">
-              Renta tu auto y genera ingresos con GALSA
-            </h1>
-            <p className="text-base sm:text-lg text-neutral-600 leading-relaxed mb-8 max-w-2xl">
-              Publica tu vehículo en nuestro marketplace y recibe el 100% de la tarifa por día que fijes. Nosotros ponemos la verificación de clientes, el seguro durante la renta y los pagos claros. La tarifa de servicio del 33% la paga el cliente, no tú.
-            </p>
+      {/* HERO SECTION: Renta tu auto y genera ingresos */}
+      <RentYourCarSection onNavigate={handleNavigate} />
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-12">
-              <button
-                onClick={() => handleNavigate('/anfitriones/registro')}
-                style={{ backgroundColor: '#3D63FF' }}
-                className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:brightness-95 active:scale-95"
-              >
-                <span>Quiero publicar mi auto</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => document.getElementById('simulador')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center justify-center gap-2 text-neutral-900 font-bold text-sm px-7 py-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 transition-colors"
-              >
-                <span>Calcular mis ingresos</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 sm:gap-8">
-              <div>
-                <div className="text-3xl sm:text-4xl font-black text-neutral-900 mb-1">33%</div>
-                <p className="text-xs sm:text-sm text-neutral-600 font-medium">Tarifa de servicio, la paga el cliente</p>
-              </div>
-              <div>
-                <div className="text-3xl sm:text-4xl font-black text-neutral-900 mb-1">100%</div>
-                <p className="text-xs sm:text-sm text-neutral-600 font-medium">De tu tarifa, para ti</p>
-              </div>
-              <div>
-                <div className="text-3xl sm:text-4xl font-black text-neutral-900 mb-1">24-48h</div>
-                <p className="text-xs sm:text-sm text-neutral-600 font-medium">Revisión de tu solicitud</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* HOW IT WORKS */}
       <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
