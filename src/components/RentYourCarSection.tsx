@@ -83,7 +83,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                 Convierte tu auto en{' '}
                 <span className="relative inline-block">
                   <span className="relative z-10 text-neutral-900">ingresos</span>
-                  <span className="absolute left-0 bottom-0 h-2.5 bg-cta-200 w-full -z-0" />
+                  <span className="absolute left-0 bottom-0 h-2.5 bg-cta-100 w-full -z-0" />
                 </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
@@ -94,7 +94,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
             {/* Key Benefits */}
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-cta-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-cta-900 font-bold text-xs">✓</span>
                 </div>
                 <div>
@@ -104,7 +104,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-cta-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-cta-900 font-bold text-xs">✓</span>
                 </div>
                 <div>
@@ -114,7 +114,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-cta-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-cta-900 font-bold text-xs">✓</span>
                 </div>
                 <div>

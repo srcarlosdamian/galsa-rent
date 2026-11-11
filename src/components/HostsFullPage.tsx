@@ -206,8 +206,8 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
               <ul className="space-y-3 flex-1">
                 {RequirementsList.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-neutral-900 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-3 h-3 text-white" />
+                    <div className="w-5 h-5 rounded-full bg-cta-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-3 h-3 text-cta-950" />
                     </div>
                     <span className="text-sm text-neutral-700">{req}</span>
                   </li>
@@ -347,7 +347,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
           </p>
           <button
             onClick={() => handleNavigate('/anfitriones/registro')}
-            className="inline-flex items-center justify-center gap-2 bg-white text-cta-300 font-bold text-sm px-7 py-3 rounded-xl transition-all hover:bg-neutral-50 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 bg-cta-400 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:bg-cta-500 active:scale-95"
           >
             <span>Quiero publicar mi auto</span>
           </button>
