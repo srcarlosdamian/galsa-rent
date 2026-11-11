@@ -11,6 +11,7 @@ import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from './VehicleCard';
 import { DateRangePicker } from './DateRangePicker';
+import { TimeSelect } from './TimeSelect';
 
 interface VehicleDetailViewProps {
   vehicle: Vehicle;
@@ -851,23 +852,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de entrega
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
+                  <TimeSelect
+                    value={pickupTime}
+                    onChange={setPickupTime}
+                    label="Hora de entrega"
+                  />
                 </div>
 
                 {/* Fila 3: Fecha de devolución y Hora de devolución */}
@@ -885,23 +874,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de devolución
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
+                  <TimeSelect
+                    value={returnTime}
+                    onChange={setReturnTime}
+                    label="Hora de devolución"
+                  />
                 </div>
               </div>
 
@@ -1274,23 +1251,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de entrega
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
+                  <TimeSelect
+                    value={pickupTime}
+                    onChange={setPickupTime}
+                    label="Hora de entrega"
+                  />
                 </div>
 
                 {/* Fila 3: Fecha de devolución y Hora de devolución */}
@@ -1308,23 +1273,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de devolución
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
+                  <TimeSelect
+                    value={returnTime}
+                    onChange={setReturnTime}
+                    label="Hora de devolución"
+                  />
                 </div>
 
                 {/* Desglose y Resumen de Precios */}

@@ -9,6 +9,7 @@ import { UseCasesSection } from './components/UseCasesSection';
 import { TrustSafetySection } from './components/TrustSafetySection';
 import { HostBanner } from './components/HostBanner';
 import { HostSection } from './components/HostSection';
+import { HostsFullPage } from './components/HostsFullPage';
 import { RentYourCarSection } from './components/RentYourCarSection';
 import { FaqSection } from './components/FaqSection';
 import { FinalCtaSection } from './components/FinalCtaSection';
@@ -245,6 +246,7 @@ export const App: React.FC = () => {
     currentPath.startsWith('/vehiculos/') ||
     currentPath === '/catalogo' ||
     currentPath === '/anfitriones' ||
+    currentPath === '/anfitriones/registro' ||
     currentPath === '/confianza' ||
     currentPath === '/faq' ||
     currentPath === '/como-funciona' ||
@@ -298,7 +300,24 @@ export const App: React.FC = () => {
 
         {/* ROUTE 3: ANFITRIONES PAGE */}
         {currentPath === '/anfitriones' && (
-          <HostSection isFullPage={true} />
+          <HostsFullPage onNavigate={navigateTo} />
+        )}
+
+        {/* ROUTE 3.1: ANFITRIONES REGISTRO PAGE */}
+        {currentPath === '/anfitriones/registro' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div className="text-center">
+              <h1 className="text-4xl font-black text-neutral-900 mb-4">Registro de Anfitriones</h1>
+              <p className="text-lg text-neutral-600 mb-8">Próximamente disponible</p>
+              <button
+                onClick={() => navigateTo('/anfitriones')}
+                className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all"
+                style={{ backgroundColor: '#3D63FF' }}
+              >
+                Volver
+              </button>
+            </div>
+          </div>
         )}
 
         {/* ROUTE 4: CONFIANZA PAGE */}
