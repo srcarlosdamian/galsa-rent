@@ -67,7 +67,11 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                 Programa de afiliaciones GALSA
               </span>
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-tight">
-                Convierte tu auto en <span className="text-blue-600">ingresos</span>
+                Convierte tu auto en{' '}
+                <span className="relative inline-block pb-2">
+                  <span className="text-neutral-900">ingresos</span>
+                  <div className="absolute -bottom-1 left-0 h-1.5 bg-gradient-to-r from-blue-400 to-blue-300 w-32" />
+                </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
                 Publica tu vehículo en el marketplace de GALSA y genera ingresos con la seguridad de una operación profesional: verificación, seguro y pagos automatizados.
