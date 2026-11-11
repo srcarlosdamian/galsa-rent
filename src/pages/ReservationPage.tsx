@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, ShieldCheck, HelpCircle, Phone, Mail, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck, HelpCircle, Phone, Mail, Check, Calendar } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { TimeSelect } from '../components/TimeSelect';
+import { DateRangePicker } from '../components/DateRangePicker';
 
 interface ReservationPageProps {
   vehicle: Vehicle;
@@ -23,6 +24,9 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
   onNavigate,
 }) => {
   const [currentStep, setCurrentStep] = useState<ReservationStep>('dates');
+  const [localStartDate, setLocalStartDate] = useState(startDate);
+  const [localEndDate, setLocalEndDate] = useState(endDate);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [clientData, setClientData] = useState({
     name: '',
     surname: '',
@@ -34,8 +38,8 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
   const [expandedSteps, setExpandedSteps] = useState<ReservationStep[]>(['dates']);
   
   // Cálculos
-  const startDateObj = new Date(startDate + 'T00:00:00');
-  const endDateObj = new Date(endDate + 'T00:00:00');
+  const startDateObj = new Date(localStartDate + 'T00:00:00');
+  const endDateObj = new Date(localEndDate + 'T00:00:00');
   const rentalDays = Math.ceil((endDateObj.getTime() - startDateObj.getTime()) / (1000 * 60 * 60 * 24)) || 1;
   const baseSubtotal = vehicle.pricePerDay * rentalDays;
   const serviceFee = Math.round(baseSubtotal * 0.1);
@@ -139,12 +143,13 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 mb-2">FECHA DE RECOGIDA</label>
-                    <input
-                      type="date"
-                      value={startDate}
-                      disabled
-                      className="w-full px-3 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-700 text-sm"
-                    />
+                    <button
+                      onClick={() => setShowDatePicker(true)}
+                      className="w-full px-3 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-700 text-sm text-left flex items-center gap-2 hover:bg-neutral-50 transition-colors"
+                    >
+                      <Calendar className="w-4 h-4 text-neutral-600" />
+                      {localStartDate}
+                    </button>
                   </div>
                   <TimeSelect
                     value={pickupTime}
@@ -155,12 +160,13 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 mb-2">FECHA DE DEVOLUCIÓN</label>
-                    <input
-                      type="date"
-                      value={endDate}
-                      disabled
-                      className="w-full px-3 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-700 text-sm"
-                    />
+                    <button
+                      onClick={() => setShowDatePicker(true)}
+                      className="w-full px-3 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-700 text-sm text-left flex items-center gap-2 hover:bg-neutral-50 transition-colors"
+                    >
+                      <Calendar className="w-4 h-4 text-neutral-600" />
+                      {localEndDate}
+                    </button>
                   </div>
                   <TimeSelect
                     value={returnTime}
@@ -170,7 +176,7 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
                 </div>
                 <div className="text-sm text-neutral-600">
                   <Check className="w-4 h-4 text-cta-500 inline-block mr-2" />
-                  Disponible del {startDate} – {endDate}
+                  Disponible del {localStartDate} – {localEndDate}
                 </div>
                 <button
                   onClick={() => {
@@ -499,6 +505,40 @@ export const ReservationPage: React.FC<ReservationPageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Date Range Picker Modal */}
+      {showDatePicker && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h2 className="text-xl font-bold text-neutral-900 mb-6">Selecciona fechas de renta</h2>
+              <DateRangePicker
+                startDate={localStartDate}
+                endDate={localEndDate}
+                onChange={(start, end) => {
+                  setLocalStartDate(start);
+                  setLocalEndDate(end);
+                }}
+                onClose={() => setShowDatePicker(false)}
+              />
+              <div className="flex gap-3 mt-6 justify-end">
+                <button
+                  onClick={() => setShowDatePicker(false)}
+                  className="px-6 py-2.5 rounded-xl border border-neutral-200 bg-white text-neutral-900 font-bold text-sm hover:bg-neutral-50 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => setShowDatePicker(false)}
+                  className="px-6 py-2.5 rounded-xl bg-cta-500 text-white font-bold text-sm hover:bg-cta-600 transition-colors"
+                >
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

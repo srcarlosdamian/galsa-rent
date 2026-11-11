@@ -46,7 +46,6 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       category: 'buttons',
       code: `<button style={{ backgroundColor: '#3D63FF' }} className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:brightness-95 active:scale-95">
   <span>Acción Principal</span>
-  <ArrowRight className="w-4 h-4" />
 </button>`,
       render: () => (
         <button 
@@ -54,7 +53,6 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
           className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:brightness-95 active:scale-95"
         >
           <span>Acción Principal</span>
-          <ArrowRight className="w-4 h-4" />
         </button>
       ),
     },
@@ -65,12 +63,10 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       category: 'buttons',
       code: `<button className="inline-flex items-center justify-center gap-2 text-neutral-900 font-bold text-sm px-7 py-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 transition-colors">
   <span>Acción Secundaria</span>
-  <ArrowRight className="w-4 h-4" />
 </button>`,
       render: () => (
         <button className="inline-flex items-center justify-center gap-2 text-neutral-900 font-bold text-sm px-7 py-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 transition-colors">
           <span>Acción Secundaria</span>
-          <ArrowRight className="w-4 h-4" />
         </button>
       ),
     },
