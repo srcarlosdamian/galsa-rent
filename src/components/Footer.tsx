@@ -15,85 +15,131 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     }
   };
 
+  const navigationLinks = [
+    { label: 'Inicio', path: '/' },
+    { label: 'Catálogo de autos', path: '/catalogo' },
+    { label: 'Cómo funciona', path: '/como-funciona' },
+    { label: 'Sobre nosotros', path: '/nosotros' },
+    { label: 'Anfitriones', path: '/anfitriones' },
+  ];
+
+  const helpLinks = [
+    { label: 'Preguntas frecuentes', path: '/faq' },
+    { label: 'Requisitos de renta', path: '/blog/guia-renta-autos-mexico-requisitos' },
+    { label: 'Gana con tu auto', path: '/blog/como-ganar-dinero-rentando-tu-auto-anfitrion' },
+    { label: 'Blog de viajes', path: '/blog' },
+    { label: 'Contacto', path: '/contacto' },
+  ];
+
+  const legalLinks = [
+    { label: 'Términos y condiciones', path: '/terminos' },
+    { label: 'Aviso de privacidad', path: '/privacidad' },
+    { label: 'Contrato y cobertura', path: '/confianza' },
+    { label: 'Políticas de cancelación', path: '/terminos' },
+  ];
+
+  const FooterLink: React.FC<{ label: string; path: string }> = ({ label, path }) => (
+    <a 
+      href={path} 
+      onClick={(e) => handleLink(e, path)} 
+      className="text-xs text-neutral-600 hover:text-neutral-900 transition-colors font-sans"
+    >
+      {label}
+    </a>
+  );
+
   return (
-    <footer className="bg-white text-slate-900 border-t border-slate-100">
+    <footer className="bg-white border-t border-neutral-200">
       
       {/* Main Footer Content */}
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           
-          {/* Brand Info */}
-          <div className="space-y-4 lg:pr-4">
+          {/* Brand Column */}
+          <div className="lg:col-span-1 space-y-4">
             <div className="flex items-center">
-              <GalsaLogo className="h-6 w-auto text-blue-500" />
+              <GalsaLogo className="h-6 w-auto" />
             </div>
             
-            <p className="text-[13px] font-heading font-normal text-slate-500 leading-relaxed">
+            <p className="text-xs text-neutral-600 leading-relaxed font-sans">
               Renta de autos 100% en línea con contrato digital y kilometraje libre en Durango, México.
             </p>
 
-            <p className="text-[12px] font-heading text-slate-400">
-              soporte@galsarent.com.mx
-            </p>
+            <div className="pt-2">
+              <a 
+                href="mailto:soporte@galsarent.com.mx" 
+                className="text-xs text-neutral-600 hover:text-neutral-900 transition-colors font-sans"
+              >
+                soporte@galsarent.com.mx
+              </a>
+            </div>
           </div>
 
-          {/* Columna 2: Navegación */}
-          <div className="space-y-3">
-            <p className="text-[13px] font-heading font-semibold text-slate-900 tracking-tight">
+          {/* Explorar Column */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-900 font-sans">
               Explorar
-            </p>
-            <ul className="space-y-2 text-[13px] font-heading text-slate-500">
-              <li><a href="/" onClick={(e) => handleLink(e, '/')} className="hover:text-black transition-colors">Inicio</a></li>
-              <li><a href="/catalogo" onClick={(e) => handleLink(e, '/catalogo')} className="hover:text-black transition-colors">Catálogo de autos</a></li>
-              <li><a href="/como-funciona" onClick={(e) => handleLink(e, '/como-funciona')} className="hover:text-black transition-colors">Cómo funciona</a></li>
-              <li><a href="/nosotros" onClick={(e) => handleLink(e, '/nosotros')} className="hover:text-black transition-colors">Sobre nosotros</a></li>
-              <li><a href="/anfitriones" onClick={(e) => handleLink(e, '/anfitriones')} className="hover:text-black transition-colors">Anfitriones</a></li>
+            </h4>
+            <ul className="space-y-2.5">
+              {navigationLinks.map((link) => (
+                <li key={link.path}>
+                  <FooterLink label={link.label} path={link.path} />
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Columna 3: Blog y Ayuda */}
-          <div className="space-y-3">
-            <p className="text-[13px] font-heading font-semibold text-slate-900 tracking-tight">
+          {/* Ayuda Column */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-900 font-sans">
               Ayuda & Guías
-            </p>
-            <ul className="space-y-2 text-[13px] font-heading text-slate-500">
-              <li><a href="/faq" onClick={(e) => handleLink(e, '/faq')} className="hover:text-black transition-colors">Preguntas frecuentes</a></li>
-              <li><a href="/blog/guia-renta-autos-mexico-requisitos" onClick={(e) => handleLink(e, '/blog/guia-renta-autos-mexico-requisitos')} className="hover:text-black transition-colors">Requisitos de renta</a></li>
-              <li><a href="/blog/como-ganar-dinero-rentando-tu-auto-anfitrion" onClick={(e) => handleLink(e, '/blog/como-ganar-dinero-rentando-tu-auto-anfitrion')} className="hover:text-black transition-colors">Gana con tu auto</a></li>
-              <li><a href="/blog" onClick={(e) => handleLink(e, '/blog')} className="hover:text-black transition-colors">Blog de viajes</a></li>
-              <li><a href="/contacto" onClick={(e) => handleLink(e, '/contacto')} className="hover:text-black transition-colors">Contacto</a></li>
+            </h4>
+            <ul className="space-y-2.5">
+              {helpLinks.map((link) => (
+                <li key={link.path}>
+                  <FooterLink label={link.label} path={link.path} />
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Columna 4: Legal */}
-          <div className="space-y-3">
-            <p className="text-[13px] font-heading font-semibold text-slate-900 tracking-tight">
+          {/* Legal Column */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-900 font-sans">
               Legal
-            </p>
-            <ul className="space-y-2 text-[13px] font-heading text-slate-500">
-              <li><a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-black transition-colors">Términos y condiciones</a></li>
-              <li><a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-black transition-colors">Aviso de privacidad</a></li>
-              <li><a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-black transition-colors">Contrato y cobertura</a></li>
-              <li><a href="/terminos#cancelaciones" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-black transition-colors">Políticas de cancelación</a></li>
+            </h4>
+            <ul className="space-y-2.5">
+              {legalLinks.map((link) => (
+                <li key={link.path}>
+                  <FooterLink label={link.label} path={link.path} />
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Empty column for spacing on desktop */}
+          <div className="hidden lg:block" />
+
         </div>
       </div>
 
-      {/* Bottom Bar minimalista */}
-      <div className="border-t border-slate-100 py-6">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center sm:justify-end gap-4 text-[12px] font-heading text-slate-400">
-          <div className="flex items-center space-x-6">
-            <a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-slate-700 transition-colors">Privacidad</a>
-            <a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-slate-700 transition-colors">Términos</a>
-            <a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-slate-700 transition-colors">Seguridad</a>
-            <a href="/contacto" onClick={(e) => handleLink(e, '/contacto')} className="hover:text-slate-700 transition-colors">Contacto</a>
+      {/* Bottom Bar */}
+      <div className="border-t border-neutral-200 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 font-sans">
+            <div className="text-center sm:text-left">
+              <p>© 2026 GALSA Rent. Todos los derechos reservados.</p>
+            </div>
+            <div className="flex items-center gap-6">
+              <FooterLink label="Privacidad" path="/privacidad" />
+              <FooterLink label="Términos" path="/terminos" />
+              <FooterLink label="Seguridad" path="/confianza" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Listón de control interno de despliegue / QA (No forma parte del diseño final) */}
+      {/* QA Ribbon - Only in development */}
       <div className="bg-black text-white text-[11px] font-mono py-2 px-4 border-t border-neutral-800 text-center tracking-wide">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
@@ -107,8 +153,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Palette className="w-3.5 h-3.5 text-pink-400 group-hover:rotate-12 transition-transform" />
               <span>Sistema de Diseño</span>
             </a>
-            <span>Última actualización: <strong>06 Nov 2026, 10:50 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.71</span>
+            <span>Última actualización: <strong>11 Nov 2026</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.0</span>
           </div>
         </div>
       </div>
