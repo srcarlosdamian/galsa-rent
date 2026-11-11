@@ -79,11 +79,11 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
                 Programa de afiliaciones GALSA
               </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-tight">
+              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-neutral-900 leading-tight">
                 Convierte tu auto en{' '}
-                <span className="relative inline-block pb-4">
+                <span className="relative inline-block">
                   <span className="text-neutral-900">ingresos</span>
-                  <div className="absolute -bottom-1 left-0 h-2 bg-gradient-to-r from-blue-500 to-blue-400 w-32" style={{zIndex: -1}} />
+                  <div className="absolute -bottom-2 left-0 h-2.5 bg-gradient-to-r from-blue-500 to-blue-400 w-40" style={{zIndex: -1}} />
                 </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
@@ -129,10 +129,9 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               <button
                 onClick={handlePublish}
                 style={{ backgroundColor: '#3D63FF' }}
-                className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:brightness-95 active:scale-95"
+                className="inline-flex items-center justify-center text-white font-bold text-sm px-7 py-3 rounded-xl transition-all hover:brightness-95 active:scale-95"
               >
                 <span>Quiero publicar mi auto</span>
-                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
