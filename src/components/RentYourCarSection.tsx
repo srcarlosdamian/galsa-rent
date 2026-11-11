@@ -83,7 +83,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                 Convierte tu auto en{' '}
                 <span className="relative inline-block">
                   <span className="relative z-10 text-neutral-900">ingresos</span>
-                  <span className="absolute left-0 bottom-0 h-2.5 bg-cta-500 w-full -z-0" />
+                  <span className="absolute left-0 bottom-0 h-2.5 bg-cta-200 w-full -z-0" />
                 </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
