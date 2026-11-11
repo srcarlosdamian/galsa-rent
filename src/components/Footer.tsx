@@ -58,7 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand Column */}
           <div className="lg:col-span-1 space-y-4">
             <div className="flex items-center">
-              <GalsaLogo className="h-6 w-auto" />
+              <GalsaLogo className="h-6 w-auto text-cta-500" />
             </div>
             
             <p className="text-xs text-neutral-600 leading-relaxed font-sans">
