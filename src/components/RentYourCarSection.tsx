@@ -55,7 +55,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+    <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -137,8 +137,8 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
           </div>
 
           {/* Right Column: Interactive Calculator */}
-          <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8">
-            <div className="flex items-center justify-between pb-5 border-b border-neutral-100 mb-6">
+          <div className="bg-white rounded-2xl p-6 sm:p-8">
+            <div className="flex items-center justify-between pb-5 mb-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
                   Simulador interactivo
@@ -186,7 +186,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                     ${currentEstimation.pricePerDay.toLocaleString('es-MX')} MXN
                   </span>
                 </div>
-                <div className="flex justify-between items-center pt-2 border-t border-neutral-200">
+                <div className="flex justify-between items-center pt-2">
                   <span className="text-xs text-neutral-600 font-medium">Cliente paga por día (+33%)</span>
                   <span className="text-sm font-bold text-neutral-900">
                     ${clientDailyPrice.toLocaleString('es-MX')} MXN

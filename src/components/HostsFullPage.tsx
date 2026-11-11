@@ -86,7 +86,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
 
 
       {/* HOW IT WORKS */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -115,7 +115,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
                 description: 'GALSA cobra al cliente la renta más su tarifa de servicio y te deposita tu parte en la cuenta que registres.',
               },
             ].map((item, idx) => (
-              <div key={idx} className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8">
+              <div key={idx} className="bg-white rounded-2xl p-6 sm:p-8">
                 <h3 className="text-lg font-bold text-neutral-900 mb-3">{item.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{item.description}</p>
               </div>
@@ -125,7 +125,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* CONDITIONS */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -141,12 +141,12 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Service Fee Card */}
-            <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8">
+            <div className="bg-white rounded-2xl p-6 sm:p-8">
               <h3 className="text-lg font-bold text-neutral-900 mb-4">Tarifa de servicio del marketplace</h3>
               <p className="text-sm text-neutral-600 leading-relaxed mb-6">
                 Se suma al precio de cada renta y la paga el cliente. Sin cargos ocultos.
               </p>
-              <div className="space-y-4 pt-4 border-t border-neutral-100">
+              <div className="space-y-4 pt-4 ">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-neutral-700">Tarifa GALSA (la paga el cliente)</span>
                   <span className="text-2xl font-black text-neutral-900">33%</span>
@@ -159,7 +159,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
             </div>
 
             {/* Requirements Card */}
-            <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8">
+            <div className="bg-white rounded-2xl p-6 sm:p-8">
               <h3 className="text-lg font-bold text-neutral-900 mb-4">Quién puede rentar tu auto</h3>
               <p className="text-sm text-neutral-600 leading-relaxed mb-6">
                 Solo rentan clientes verificados que cumplen:
@@ -180,7 +180,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* BENEFITS */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -196,7 +196,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Benefits.map((benefit, idx) => (
-              <div key={idx} className="bg-white border border-neutral-200 rounded-2xl p-6">
+              <div key={idx} className="bg-white rounded-2xl p-6">
                 <h3 className="text-base font-bold text-neutral-900 mb-2">{benefit.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{benefit.description}</p>
               </div>
@@ -206,7 +206,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* SIMULATOR */}
-      <section id="simulador" className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section id="simulador" className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -278,8 +278,8 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
             </div>
 
             {/* Results */}
-            <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8">
-              <div className="pb-6 border-b border-neutral-200 mb-6">
+            <div className="bg-white rounded-2xl p-6 sm:p-8">
+              <div className="pb-6  mb-6">
                 <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-1">
                   Tu ingreso neto mensual estimado
                 </span>
@@ -294,7 +294,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
                 </p>
               </div>
 
-              <div className="space-y-3 mb-6 pb-6 border-b border-neutral-200">
+              <div className="space-y-3 mb-6 pb-6 ">
                 <div className="flex justify-between text-xs">
                   <span className="text-neutral-700 font-medium">Tus rentas del mes (precio × días)</span>
                   <span className="font-black text-neutral-900">${monthlyEarnings.toLocaleString('es-MX')}</span>
@@ -307,7 +307,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
                   <span className="text-neutral-700 font-medium">Lo que pagan tus clientes</span>
                   <span className="font-black text-neutral-900">${totalClientMonth.toLocaleString('es-MX')}</span>
                 </div>
-                <div className="flex justify-between text-xs pt-2 border-t border-neutral-200">
+                <div className="flex justify-between text-xs pt-2 ">
                   <span className="text-neutral-700 font-bold">Tu ingreso neto</span>
                   <span className="font-black text-neutral-900">${monthlyEarnings.toLocaleString('es-MX')}</span>
                 </div>
@@ -335,7 +335,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* PROCESS */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -348,7 +348,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ProcessSteps.map((step, idx) => (
-              <div key={idx} className="bg-white border border-neutral-200 rounded-2xl p-6 relative">
+              <div key={idx} className="bg-white rounded-2xl p-6 relative">
                 <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center font-black">
                   {idx + 1}
                 </div>
@@ -361,7 +361,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -385,7 +385,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
                   </span>
                 </button>
                 {expandedFAQ === idx && (
-                  <div className="px-6 py-4 bg-neutral-50 border-t border-neutral-200">
+                  <div className="px-6 py-4 bg-neutral-50 ">
                     <p className="text-sm text-neutral-700 leading-relaxed">{item.a}</p>
                   </div>
                 )}
@@ -396,7 +396,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-16 md:py-24 bg-white border-b border-neutral-200">
+      <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-6">
             Empieza a ganar con tu auto hoy
