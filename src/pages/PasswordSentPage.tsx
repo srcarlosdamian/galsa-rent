@@ -45,7 +45,7 @@ export const PasswordSentPage: React.FC<PasswordSentPageProps> = ({ onNavigate }
           <button
             type="button"
             onClick={() => onNavigate('/login')}
-            className="w-full py-3.5 px-6 rounded-[10px] bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-xs"
+            className="w-full py-3.5 px-6 rounded-[10px] bg-cta-600 hover:bg-cta-700 active:scale-[0.99] text-white text-sm font-heading font-semibold transition-all shadow-xs"
           >
             Volver a iniciar sesión
           </button>
@@ -55,7 +55,7 @@ export const PasswordSentPage: React.FC<PasswordSentPageProps> = ({ onNavigate }
             <button
               type="button"
               onClick={() => onNavigate('/recuperar-password')}
-              className="text-blue-600 font-heading font-semibold hover:underline"
+              className="text-cta-600 font-heading font-semibold hover:underline"
             >
               Reintentar con otro correo
             </button>

@@ -433,7 +433,7 @@ export const App: React.FC = () => {
                     Renta de autos en México,<br className="hidden sm:inline" />{' '}
                     <span className="relative inline-block whitespace-nowrap">
                       <span className="relative z-10">100 % en línea</span>
-                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-blue-300 rounded-sm -z-0" />
+                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-cta-300 rounded-sm -z-0" />
                     </span>{' '}
                     y al instante
                   </h1>

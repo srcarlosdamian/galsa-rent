@@ -125,7 +125,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <Globe className="w-3.5 h-3.5 text-blue-600" />
+                <Globe className="w-3.5 h-3.5 text-cta-600" />
                 Google
               </button>
               <button
@@ -162,7 +162,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                 placeholder="Buscar ruta o título..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-cta-500 transition-all"
               />
             </div>
 
@@ -230,7 +230,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                     {onNavigate && (
                       <button
                         onClick={() => onNavigate(item.path)}
-                        className="text-xs text-blue-600 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition-colors"
+                        className="text-xs text-cta-600 hover:text-cta-700 p-1.5 rounded-lg hover:bg-cta-50 transition-colors"
                         title="Abrir página en la app"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />

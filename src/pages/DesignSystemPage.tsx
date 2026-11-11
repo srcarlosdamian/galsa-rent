@@ -109,13 +109,13 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       code: `<input 
   type="text"
   placeholder="Escribe aquí..."
-  className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-neutral-900"
+  className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-neutral-900"
 />`,
       render: () => (
         <input 
           type="text"
           placeholder="Escribe aquí..."
-          className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-neutral-900"
+          className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors text-neutral-900"
         />
       ),
     },
@@ -126,12 +126,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       category: 'inputs',
       code: `<input 
   type="date"
-  className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-blue-600 outline-none transition-colors"
+  className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-cta-600 outline-none transition-colors"
 />`,
       render: () => (
         <input 
           type="date"
-          className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-blue-600 outline-none transition-colors"
+          className="w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white hover:border-neutral-300 focus:border-cta-600 outline-none transition-colors"
         />
       ),
     },
@@ -225,7 +225,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 </button>
               )}
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded bg-blue-50 text-blue-700 block mb-1" style={{ backgroundColor: 'rgba(61, 99, 255, 0.1)', color: '#3D63FF' }}>
+                <span className="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded bg-cta-50 text-cta-700 block mb-1" style={{ backgroundColor: 'rgba(61, 99, 255, 0.1)', color: '#3D63FF' }}>
                   Design System
                 </span>
                 <h1 className="text-2xl font-black text-neutral-900">GALSA Rent Components</h1>

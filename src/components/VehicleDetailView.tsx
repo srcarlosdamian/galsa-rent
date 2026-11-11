@@ -304,7 +304,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 className="absolute top-3.5 right-3.5 w-8 h-8 flex items-center justify-center rounded-full bg-white/70 hover:bg-white text-slate-900 backdrop-blur-md transition-all z-10 shadow-xs"
               >
                 <Heart
-                  className={`w-4 h-4 transition-colors ${isFav ? 'fill-blue-500 text-blue-500' : 'text-slate-800'}`}
+                  className={`w-4 h-4 transition-colors ${isFav ? 'fill-cta-500 text-cta-500' : 'text-slate-800'}`}
                   strokeWidth={1.4}
                 />
               </button>
@@ -580,9 +580,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <div className="mt-2 flex items-center gap-2 flex-wrap text-sm text-slate-600 font-heading">
                 <a
                   href="#resenas"
-                  className="inline-flex items-center gap-1 text-slate-900 font-bold hover:text-blue-600 transition-colors"
+                  className="inline-flex items-center gap-1 text-slate-900 font-bold hover:text-cta-600 transition-colors"
                 >
-                  <Star className="w-4 h-4 fill-blue-300 text-blue-300 shrink-0" />
+                  <Star className="w-4 h-4 fill-cta-300 text-cta-300 shrink-0" />
                   <span>{ratingScore}</span>
                   <span className="font-medium text-slate-500 underline ml-0.5">({reviewCount})</span>
                 </a>
@@ -856,7 +856,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       value={startDate}
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 hover:border-neutral-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-500 bg-white text-neutral-900 font-heading font-medium text-[14px] outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 hover:border-neutral-300 focus:border-cta-600 focus:ring-1 focus:ring-blue-500 bg-white text-neutral-900 font-heading font-medium text-[14px] outline-none transition-colors"
                     />
                   </div>
 
@@ -878,7 +878,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       value={endDate}
                       min={startDate || new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 hover:border-neutral-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-500 bg-white text-neutral-900 font-heading font-medium text-[14px] outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 hover:border-neutral-300 focus:border-cta-600 focus:ring-1 focus:ring-blue-500 bg-white text-neutral-900 font-heading font-medium text-[14px] outline-none transition-colors"
                     />
                   </div>
 
@@ -922,7 +922,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <button
                 type="button"
                 onClick={handleBooking}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-3.5 rounded-xl bg-cta-600 hover:bg-cta-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
               >
                 <span>Continuar</span>
               </button>
@@ -944,7 +944,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   {reviewCount} evaluaciones verificadas
                 </h2>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-transparent text-slate-900 text-sm font-heading font-bold">
-                  <Star className="w-4 h-4 fill-blue-300 text-blue-300 shrink-0" />
+                  <Star className="w-4 h-4 fill-cta-300 text-cta-300 shrink-0" />
                   <span>{ratingScore}</span>
                 </div>
               </div>
@@ -1017,7 +1017,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                         key={i} 
                         className={`w-4 h-4 shrink-0 ${
                           i < rev.rating 
-                            ? 'fill-blue-300 text-blue-300' 
+                            ? 'fill-cta-300 text-cta-300' 
                             : 'fill-slate-200 text-slate-200'
                         }`} 
                       />
@@ -1165,7 +1165,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             <button
               type="button"
               onClick={handleBooking}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl bg-cta-600 hover:bg-cta-700 text-white font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5"
             >
               <span>Continuar</span>
             </button>
@@ -1249,7 +1249,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       value={startDate}
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
                     />
                   </div>
 
@@ -1271,7 +1271,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       value={endDate}
                       min={startDate || new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
                     />
                   </div>
 
@@ -1317,7 +1317,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     setMobileSheetOpen(false);
                     handleBooking();
                   }}
-                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
+                  className="w-full py-3.5 rounded-xl bg-cta-600 hover:bg-cta-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
                 >
                   <span>Continuar</span>
                 </button>

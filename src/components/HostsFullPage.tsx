@@ -274,7 +274,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
               <div key={idx} className="flex flex-col">
                 {/* Number Badge */}
                 <div className="mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-blue-400 text-white flex items-center justify-center font-black text-lg">
+                  <div className="w-12 h-12 rounded-lg bg-cta-400 text-white flex items-center justify-center font-black text-lg">
                     {idx + 1}
                   </div>
                 </div>

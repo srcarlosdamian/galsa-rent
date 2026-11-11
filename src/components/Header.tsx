@@ -75,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
             aria-label="GALSA - Inicio"
           >
-            <GalsaLogo className="h-6 w-auto text-blue-500" />
+            <GalsaLogo className="h-6 w-auto text-cta-500" />
           </a>
 
           {/* Right Group: Navigation links aligned next to Account buttons (visible only on desktop lg+) */}
@@ -137,7 +137,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                             <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">MXN · Pesos mexicanos ($)</p>
                           </div>
                         </div>
-                        {selectedLang === 'es' && <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" strokeWidth={1.4} />}
+                        {selectedLang === 'es' && <Check className="w-4 h-4 text-cta-600 shrink-0 ml-2" strokeWidth={1.4} />}
                       </button>
 
                       <button
@@ -159,7 +159,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                             <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">USD · US Dollars ($)</p>
                           </div>
                         </div>
-                        {selectedLang === 'en' && <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" strokeWidth={1.4} />}
+                        {selectedLang === 'en' && <Check className="w-4 h-4 text-cta-600 shrink-0 ml-2" strokeWidth={1.4} />}
                       </button>
                     </div>
                   </div>
@@ -234,7 +234,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 onClick={() => setSelectedLang('es')}
                 className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
                   selectedLang === 'es'
-                    ? 'border-blue-500 bg-blue-50/50 text-slate-900 font-medium'
+                    ? 'border-cta-500 bg-cta-50/50 text-slate-900 font-medium'
                     : 'border-slate-200 bg-white text-slate-700'
                 }`}
               >
@@ -249,7 +249,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 onClick={() => setSelectedLang('en')}
                 className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
                   selectedLang === 'en'
-                    ? 'border-blue-500 bg-blue-50/50 text-slate-900 font-medium'
+                    ? 'border-cta-500 bg-cta-50/50 text-slate-900 font-medium'
                     : 'border-slate-200 bg-white text-slate-700'
                 }`}
               >

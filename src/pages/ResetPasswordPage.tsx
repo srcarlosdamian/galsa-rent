@@ -62,7 +62,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Mínimo 8 caracteres"
-                    className="w-full px-4 py-3 rounded-[10px] border border-slate-300 bg-white hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
+                    className="w-full px-4 py-3 rounded-[10px] border border-slate-300 bg-white hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
                   />
                   <button
                     type="button"
@@ -85,7 +85,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Repite tu contraseña"
-                    className="w-full px-4 py-3 rounded-[10px] border border-slate-300 bg-white hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
+                    className="w-full px-4 py-3 rounded-[10px] border border-slate-300 bg-white hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
                   />
                   <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-500 pointer-events-none" strokeWidth={1.5} />
                 </div>
@@ -96,7 +96,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
                   type="submit"
                   className={`w-full py-3.5 rounded-[10px] text-sm font-heading font-semibold transition-all shadow-xs cursor-pointer active:scale-[0.99] ${
                     isFilled
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      ? 'bg-cta-600 hover:bg-cta-700 text-white'
                       : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
                   }`}
                 >
@@ -130,7 +130,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
               <button
                 type="button"
                 onClick={() => onNavigate('/login')}
-                className="w-full py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 text-white text-sm font-heading font-semibold transition-colors"
+                className="w-full py-3.5 rounded-[10px] bg-cta-600 hover:bg-cta-700 text-white text-sm font-heading font-semibold transition-colors"
               >
                 Iniciar sesión ahora
               </button>
