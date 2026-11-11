@@ -295,8 +295,10 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-black selection:text-white flex flex-col">
-      {/* Header with concise menu */}
-      <Header currentPath={currentPath} onNavigate={navigateTo} />
+      {/* Header with concise menu - hidden on reservation page */}
+      {!currentPath.startsWith('/reserva/') && (
+        <Header currentPath={currentPath} onNavigate={navigateTo} />
+      )}
 
       <main className="flex-1">
         
