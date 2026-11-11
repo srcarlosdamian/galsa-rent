@@ -83,7 +83,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                 Convierte tu auto en{' '}
                 <span className="relative inline-block">
                   <span className="relative z-10 text-neutral-900">ingresos</span>
-                  <span className="absolute left-0 bottom-0 h-2.5 bg-gradient-to-r from-cta-500 to-cta-400 w-full -z-0" />
+                  <span className="absolute left-0 bottom-0 h-2.5 bg-cta-500 w-full -z-0" />
                 </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
@@ -185,10 +185,9 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                       step="50000"
                       value={autoValue}
                       onChange={(e) => setAutoValue(Number(e.target.value))}
-                      className="flex-1 h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-white"
+                      className="flex-1 h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer"
                       style={{
-                        accentColor: 'white',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                        accentColor: '#3D63FF',
                       }}
                     />
                     <span className="text-sm font-bold text-neutral-900 whitespace-nowrap">${autoValue.toLocaleString('es-MX')}</span>
@@ -208,7 +207,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                       onChange={(e) => setRentalDays(Number(e.target.value))}
                       className="flex-1 h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer"
                       style={{
-                        accentColor: 'white',
+                        accentColor: '#3D63FF',
                       }}
                     />
                     <span className="text-sm font-bold text-neutral-900 whitespace-nowrap">{rentalDays} d</span>
@@ -228,7 +227,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                       onChange={(e) => setPricePerDay(Number(e.target.value))}
                       className="flex-1 h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer"
                       style={{
-                        accentColor: 'white',
+                        accentColor: '#3D63FF',
                       }}
                     />
                     <span className="text-sm font-bold text-neutral-900 whitespace-nowrap">${pricePerDay.toLocaleString('es-MX')}</span>
