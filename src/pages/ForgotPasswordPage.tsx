@@ -73,7 +73,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="tucorreo@ejemplo.com"
-                    className="w-full px-4 py-3 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
+                    className="w-full px-4 py-3 rounded-[8px] border border-slate-300 bg-white hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 focus:outline-none text-[14px] font-heading text-slate-900 placeholder-slate-400 transition-colors pr-11"
                   />
                   <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-700 pointer-events-none" strokeWidth={1.4} />
                 </div>
@@ -84,7 +84,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
                   type="submit"
                   className={`w-full py-3.5 rounded-[8px] text-sm font-heading font-semibold transition-all shadow-none cursor-pointer active:scale-[0.99] ${
                     isFilled
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      ? 'bg-cta-600 hover:bg-cta-700 text-white'
                       : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
                   }`}
                 >
@@ -100,7 +100,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
                 <button
                   type="button"
                   onClick={() => onNavigate('/login')}
-                  className="font-heading font-semibold text-slate-900 hover:text-blue-600 hover:underline"
+                  className="font-heading font-semibold text-slate-900 hover:text-cta-600 hover:underline"
                 >
                   Inicia sesión
                 </button>

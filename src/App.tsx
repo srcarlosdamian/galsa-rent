@@ -9,6 +9,7 @@ import { UseCasesSection } from './components/UseCasesSection';
 import { TrustSafetySection } from './components/TrustSafetySection';
 import { HostBanner } from './components/HostBanner';
 import { HostSection } from './components/HostSection';
+import { HostsFullPage } from './components/HostsFullPage';
 import { FaqSection } from './components/FaqSection';
 import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
@@ -32,6 +33,7 @@ import { PasswordSentPage } from './pages/PasswordSentPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SeoPage } from './pages/SeoPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
+import { ReservationPage } from './pages/ReservationPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -60,6 +62,15 @@ export const App: React.FC = () => {
     endDate: '',
     endTime: '10:00',
     category: '',
+  });
+
+  // Reservation state
+  const [reservationData, setReservationData] = useState({
+    vehicleId: '',
+    startDate: '',
+    endDate: '',
+    pickupTime: '10:00',
+    returnTime: '10:00',
   });
 
   // Autodetección de ubicación inteligente (Geolocalización del navegador + Reverse Geocoding)
@@ -195,6 +206,22 @@ export const App: React.FC = () => {
     return null;
   }, [currentPath]);
 
+  // Recuperar datos de reserva desde sessionStorage cuando se navega a /reserva/
+  useEffect(() => {
+    if (currentPath.startsWith('/reserva/')) {
+      const storedData = sessionStorage.getItem('reservationData');
+      if (storedData) {
+        try {
+          const data = JSON.parse(storedData);
+          setReservationData(data);
+          sessionStorage.removeItem('reservationData'); // Limpiar después de usar
+        } catch (e) {
+          console.error('Error parsing reservation data:', e);
+        }
+      }
+    }
+  }, [currentPath]);
+
   // Filtered vehicles for Home (2 filas de 4 columnas = 8 autos por página)
   const [homePage, setHomePage] = useState(1);
   const homeItemsPerPage = 8;
@@ -242,8 +269,10 @@ export const App: React.FC = () => {
   const isKnownRoute =
     currentPath === '/' ||
     currentPath.startsWith('/vehiculos/') ||
+    currentPath.startsWith('/reserva/') ||
     currentPath === '/catalogo' ||
     currentPath === '/anfitriones' ||
+    currentPath === '/anfitriones/registro' ||
     currentPath === '/confianza' ||
     currentPath === '/faq' ||
     currentPath === '/como-funciona' ||
@@ -266,8 +295,10 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-black selection:text-white flex flex-col">
-      {/* Header with concise menu */}
-      <Header currentPath={currentPath} onNavigate={navigateTo} />
+      {/* Header with concise menu - hidden on reservation page */}
+      {!currentPath.startsWith('/reserva/') && (
+        <Header currentPath={currentPath} onNavigate={navigateTo} />
+      )}
 
       <main className="flex-1">
         
@@ -285,6 +316,26 @@ export const App: React.FC = () => {
           )
         )}
 
+        {/* ROUTE 1.5: RESERVATION PAGE */}
+        {currentPath.startsWith('/reserva/') && (
+          (() => {
+            const vehicleId = currentPath.replace('/reserva/', '');
+            const vehicle = VEHICLES.find(v => v.id === vehicleId || v.slug === vehicleId);
+            return vehicle ? (
+              <ReservationPage
+                vehicle={vehicle}
+                startDate={reservationData.startDate}
+                endDate={reservationData.endDate}
+                pickupTime={reservationData.pickupTime}
+                returnTime={reservationData.returnTime}
+                onNavigate={navigateTo}
+              />
+            ) : (
+              <NotFoundPage onNavigate={navigateTo} />
+            );
+          })()
+        )}
+
         {/* ROUTE 2: CATALOG PAGE */}
         {currentPath === '/catalogo' && (
           <CatalogPage
@@ -297,7 +348,24 @@ export const App: React.FC = () => {
 
         {/* ROUTE 3: ANFITRIONES PAGE */}
         {currentPath === '/anfitriones' && (
-          <HostSection isFullPage={true} />
+          <HostsFullPage onNavigate={navigateTo} />
+        )}
+
+        {/* ROUTE 3.1: ANFITRIONES REGISTRO PAGE */}
+        {currentPath === '/anfitriones/registro' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div className="text-center">
+              <h1 className="text-4xl font-black text-neutral-900 mb-4">Registro de Anfitriones</h1>
+              <p className="text-lg text-neutral-600 mb-8">Próximamente disponible</p>
+              <button
+                onClick={() => navigateTo('/anfitriones')}
+                className="inline-flex items-center justify-center gap-2 text-white font-bold text-sm px-7 py-3 rounded-xl transition-all"
+                style={{ backgroundColor: '#3D63FF' }}
+              >
+                Volver
+              </button>
+            </div>
+          </div>
         )}
 
         {/* ROUTE 4: CONFIANZA PAGE */}
@@ -367,7 +435,7 @@ export const App: React.FC = () => {
                     Renta de autos en México,<br className="hidden sm:inline" />{' '}
                     <span className="relative inline-block whitespace-nowrap">
                       <span className="relative z-10">100 % en línea</span>
-                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-blue-300 rounded-sm -z-0" />
+                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-cta-300 rounded-sm -z-0" />
                     </span>{' '}
                     y al instante
                   </h1>

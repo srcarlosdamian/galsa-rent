@@ -160,7 +160,7 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
         <button
           type="button"
           onClick={handleResetArea}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-heading font-semibold shadow-md transition-all active:scale-95"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cta-600 hover:bg-cta-700 text-white text-xs font-heading font-semibold shadow-md transition-all active:scale-95"
         >
           <Search className="w-3.5 h-3.5" strokeWidth={2} />
           <span>Buscar en esta área</span>

@@ -106,7 +106,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
         {/* 1. Header de Perfil y Bienvenida Minimalista */}
         <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-blue-600 text-white flex items-center justify-center font-heading font-extrabold text-2xl sm:text-3xl shadow-sm shrink-0">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-cta-600 text-white flex items-center justify-center font-heading font-extrabold text-2xl sm:text-3xl shadow-sm shrink-0">
               {fullName ? fullName.charAt(0).toUpperCase() : email.charAt(0).toUpperCase()}
             </div>
             <div>
@@ -132,7 +132,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <button
                 type="button"
                 onClick={() => setShowCompleteModal(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs sm:text-sm font-heading font-semibold shadow-xs transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cta-600 hover:bg-cta-700 active:scale-95 text-white text-xs sm:text-sm font-heading font-semibold shadow-xs transition-all"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Completar información</span>
@@ -200,7 +200,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-4 py-3 text-xs sm:text-sm font-heading transition-all whitespace-nowrap border-b-2 ${
                 activeTab === tab.id
-                  ? 'border-blue-600 text-blue-600 font-bold'
+                  ? 'border-cta-600 text-cta-600 font-bold'
                   : 'border-transparent text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
@@ -227,7 +227,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigate('/catalogo')}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-heading font-bold transition-all shadow-xs"
+                  className="px-4 py-2 rounded-xl bg-cta-600 hover:bg-cta-700 text-white text-xs font-heading font-bold transition-all shadow-xs"
                 >
                   Rentar otro auto
                 </button>
@@ -244,7 +244,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     />
                   )}
                   <div>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-heading font-bold bg-blue-50 text-blue-700 mb-1">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-heading font-bold bg-cta-50 text-cta-700 mb-1">
                       Programada · Contrato digital listo
                     </span>
                     <h3 className="text-base font-heading font-bold text-slate-900">
@@ -287,7 +287,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 <div className="border border-slate-200 rounded-2xl p-5 space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <CreditCard className="w-5 h-5 text-blue-600" />
+                      <CreditCard className="w-5 h-5 text-cta-600" />
                       <h3 className="font-heading font-bold text-slate-900 text-sm">
                         Licencia de conducir vigente
                       </h3>
@@ -302,7 +302,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowCompleteModal(true)}
-                    className="text-xs font-heading font-semibold text-blue-600 hover:underline"
+                    className="text-xs font-heading font-semibold text-cta-600 hover:underline"
                   >
                     {licenseNumber ? 'Actualizar licencia' : 'Registrar licencia ahora'}
                   </button>
@@ -312,7 +312,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 <div className="border border-slate-200 rounded-2xl p-5 space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <FileText className="w-5 h-5 text-blue-600" />
+                      <FileText className="w-5 h-5 text-cta-600" />
                       <h3 className="font-heading font-bold text-slate-900 text-sm">
                         Identificación oficial (INE / Pasaporte)
                       </h3>
@@ -327,7 +327,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowCompleteModal(true)}
-                    className="text-xs font-heading font-semibold text-blue-600 hover:underline"
+                    className="text-xs font-heading font-semibold text-cta-600 hover:underline"
                   >
                     {fullName ? 'Ver datos registrados' : 'Registrar identificación'}
                   </button>
@@ -362,7 +362,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     <button
                       type="button"
                       onClick={() => onNavigate(`/vehiculos/${v.slug}`)}
-                      className="mt-3 w-full py-2 rounded-xl bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-800 text-xs font-heading font-semibold transition-colors text-center"
+                      className="mt-3 w-full py-2 rounded-xl bg-slate-100 hover:bg-cta-600 hover:text-white text-slate-800 text-xs font-heading font-semibold transition-colors text-center"
                     >
                       Reservar
                     </button>
@@ -401,7 +401,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <button
                     type="button"
                     onClick={() => onNavigate('/recuperar-password')}
-                    className="text-xs font-heading font-semibold text-blue-600 hover:underline"
+                    className="text-xs font-heading font-semibold text-cta-600 hover:underline"
                   >
                     Cambiar o recuperar mi contraseña
                   </button>
@@ -440,7 +440,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <>
                 {/* Header del Modal */}
                 <div className="text-left mb-6">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px] font-heading font-bold mb-3">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta-700 text-[11px] font-heading font-bold mb-3">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Completa tu información</span>
                   </div>
@@ -466,7 +466,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="Ej. Carlos Damián Sierra"
-                        className="w-full px-4 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-sm font-heading outline-none transition-colors pr-10"
+                        className="w-full px-4 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-sm font-heading outline-none transition-colors pr-10"
                       />
                       <User className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
@@ -483,7 +483,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+52 618 123 4567"
-                        className="w-full px-4 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-sm font-heading outline-none transition-colors pr-10"
+                        className="w-full px-4 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-sm font-heading outline-none transition-colors pr-10"
                       />
                       <Phone className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
@@ -499,7 +499,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                         type="date"
                         value={birthDate}
                         onChange={(e) => setBirthDate(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-heading outline-none transition-colors"
+                        className="w-full px-3 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-heading outline-none transition-colors"
                       />
                     </div>
 
@@ -513,7 +513,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                           value={licenseNumber}
                           onChange={(e) => setLicenseNumber(e.target.value)}
                           placeholder="DGO-123456"
-                          className="w-full px-3 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-heading outline-none transition-colors pr-8"
+                          className="w-full px-3 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-heading outline-none transition-colors pr-8"
                         />
                         <CreditCard className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                       </div>
@@ -531,7 +531,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         placeholder="Durango, Dgo."
-                        className="w-full px-4 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-sm font-heading outline-none transition-colors pr-10"
+                        className="w-full px-4 py-2.5 rounded-[10px] border border-slate-300 hover:border-slate-400 focus:border-cta-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-sm font-heading outline-none transition-colors pr-10"
                       />
                       <MapPin className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     </div>
@@ -541,7 +541,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <div className="pt-3 space-y-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-xs active:scale-[0.99] cursor-pointer"
+                      className="w-full py-3.5 rounded-[10px] bg-cta-600 hover:bg-cta-700 text-white font-heading font-bold text-sm transition-all shadow-xs active:scale-[0.99] cursor-pointer"
                     >
                       Guardar y verificar perfil
                     </button>

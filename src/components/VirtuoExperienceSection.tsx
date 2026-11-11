@@ -39,20 +39,20 @@ export const VirtuoExperienceSection: React.FC = () => {
     <section className="w-full py-10 md:py-14 bg-white overflow-hidden">
       {/* Contenedor alineado a 1200px */}
       <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col justify-start items-start">
-        <div className="w-full p-6 sm:p-10 md:p-12 bg-blue-600 rounded-[28px] sm:rounded-[36px] flex flex-col justify-start items-start overflow-hidden shadow-sm">
+        <div className="w-full p-6 sm:p-10 md:p-12 bg-cta-600 rounded-[28px] sm:rounded-[36px] flex flex-col justify-start items-start overflow-hidden shadow-sm">
           <div className="w-full flex flex-col lg:flex-row justify-start items-stretch gap-10 lg:gap-14">
             
             {/* Columna Izquierda: Textos y Pasos */}
             <div className="flex-1 flex flex-col justify-between items-start">
               {/* Header Textos */}
               <div className="w-full flex flex-col justify-start items-start gap-3 sm:gap-4">
-                <span className="text-blue-100 text-xs font-bold uppercase tracking-wider font-heading">
+                <span className="text-cta-100 text-xs font-bold uppercase tracking-wider font-heading">
                   CERTEZA Y TRANSPARENCIA
                 </span>
                 <h2 className="w-full text-white text-3xl sm:text-4xl lg:text-[42px] font-bold font-heading leading-tight tracking-tight">
                   Rentar con GALSA es así de simple
                 </h2>
-                <p className="w-full text-blue-100/90 text-sm sm:text-base font-normal font-sans leading-relaxed pt-1">
+                <p className="w-full text-cta-100/90 text-sm sm:text-base font-normal font-sans leading-relaxed pt-1">
                   Sin filas interminables ni papeleo en mostrador. Selecciona tu vehículo, valida tu identificación oficial mexicana y firma tu contrato digital directamente desde tu celular.
                 </p>
               </div>
@@ -74,7 +74,7 @@ export const VirtuoExperienceSection: React.FC = () => {
                           />
                         ) : (
                           <div className="w-full h-full bg-white rounded-2xl flex items-center justify-center border border-white/80">
-                            <Icon className="w-7 h-7 text-blue-600" strokeWidth={1.4} />
+                            <Icon className="w-7 h-7 text-cta-600" strokeWidth={1.4} />
                           </div>
                         )}
                       </div>
@@ -84,7 +84,7 @@ export const VirtuoExperienceSection: React.FC = () => {
                         <h3 className="text-white text-base sm:text-[17px] font-bold font-heading leading-snug">
                           {step.title}
                         </h3>
-                        <p className="text-blue-100/90 text-xs sm:text-sm font-normal font-sans leading-relaxed">
+                        <p className="text-cta-100/90 text-xs sm:text-sm font-normal font-sans leading-relaxed">
                           {step.description}
                         </p>
                       </div>
@@ -96,7 +96,7 @@ export const VirtuoExperienceSection: React.FC = () => {
 
             {/* Columna Derecha: Ilustración / Imagen 3D */}
             <div className="flex-1 flex items-center justify-center">
-              <div className="w-full h-full min-h-[380px] sm:min-h-[480px] rounded-[24px] overflow-hidden bg-blue-700/30">
+              <div className="w-full h-full min-h-[380px] sm:min-h-[480px] rounded-[24px] overflow-hidden bg-cta-700/30">
                 <img
                   src={rightMockupImg}
                   alt="Experiencia de renta digital GALSA Rent"

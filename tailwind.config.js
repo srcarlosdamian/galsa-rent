@@ -12,16 +12,17 @@ export default {
       colors: {
         // Palette Primary from design system
         cta: {
-          50: '#F3F6FC',
-          100: '#E5ECF9',
-          200: '#C6D7F1',
-          300: '#93B6E6',
-          400: '#5A90D6',
-          500: '#3D63FF', // Figma CTA color: cta/background/default (#3d63ff)
-          600: '#2A4EEB',
-          700: '#1F3DD4',
-          800: '#172FB0',
-          900: '#132488',
+          50: '#E9F2FF',
+          100: '#D8E8FF',
+          200: '#B8D3FF',
+          300: '#8EB5FF',
+          400: '#618BFF',
+          500: '#3D63FF',
+          600: '#1B36FF',
+          700: '#1F34F2',
+          800: '#1125C2',
+          900: '#182A97',
+          950: '#0E165B',
           DEFAULT: '#3D63FF',
         },
         surface: '#FFFFFF',

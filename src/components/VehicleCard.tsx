@@ -78,7 +78,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           >
             <Heart
               className={`w-3.5 h-3.5 transition-colors ${
-                isFavorite ? 'fill-blue-500 text-blue-500' : 'text-slate-800'
+                isFavorite ? 'fill-cta-500 text-cta-500' : 'text-slate-800'
               }`}
               strokeWidth={1.4}
             />
@@ -96,7 +96,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
                 <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
               </div>
               <div className="flex items-center gap-1 text-slate-900 font-semibold text-[12px]">
-                <Star className="w-3.5 h-3.5 fill-blue-300 text-blue-300 shrink-0" />
+                <Star className="w-3.5 h-3.5 fill-cta-300 text-cta-300 shrink-0" />
                 <span>{vehicle.rating || 4.9}</span>
               </div>
             </div>
@@ -115,7 +115,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
                   {vehicle.make} {vehicle.model}
                 </a>
               </h3>
-              <span className="hidden md:block absolute left-0 bottom-0.5 w-0 h-2 bg-blue-300 rounded-sm -z-0 transition-all duration-200 md:group-hover:w-full" />
+              <span className="hidden md:block absolute left-0 bottom-0.5 w-0 h-2 bg-cta-300 rounded-sm -z-0 transition-all duration-200 md:group-hover:w-full" />
             </div>
 
             {/* Vehicle Features Pills */}
@@ -157,7 +157,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             <div className="h-px bg-slate-100 w-full mb-2" />
             <div className="flex items-center justify-between w-full">
               <div className="flex items-baseline gap-[8px] whitespace-nowrap">
-                <span className="font-heading font-bold text-[20px] text-black md:group-hover:text-blue-500 transition-colors leading-[28px]">
+                <span className="font-heading font-bold text-[20px] text-black md:group-hover:text-cta-500 transition-colors leading-[28px]">
                   ${vehicle.pricePerDay.toLocaleString('es-MX')}
                 </span>
                 <span className="font-heading font-normal text-[12px] text-slate-500 leading-[20px]">
@@ -204,7 +204,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         >
           <Heart
             className={`w-3.5 h-3.5 transition-colors ${
-              isFavorite ? 'fill-blue-500 text-blue-500' : 'text-slate-800'
+              isFavorite ? 'fill-cta-500 text-cta-500' : 'text-slate-800'
             }`}
             strokeWidth={1.4}
           />
@@ -223,7 +223,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
               <span>{vehicle.category.split('/')[1]?.trim() || 'Aventura'}</span>
             </div>
             <div className="flex items-center gap-1 text-slate-900 font-semibold text-[12px]">
-              <Star className="w-3.5 h-3.5 fill-blue-300 text-blue-300 shrink-0" />
+              <Star className="w-3.5 h-3.5 fill-cta-300 text-cta-300 shrink-0" />
               <span>{vehicle.rating || 4.9}</span>
             </div>
           </div>
@@ -242,7 +242,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
                 {vehicle.make} {vehicle.model}
               </a>
             </h3>
-            <span className="hidden md:block absolute left-0 bottom-0.5 w-0 h-2 bg-blue-300 rounded-sm -z-0 transition-all duration-200 md:group-hover:w-full" />
+            <span className="hidden md:block absolute left-0 bottom-0.5 w-0 h-2 bg-cta-300 rounded-sm -z-0 transition-all duration-200 md:group-hover:w-full" />
           </div>
 
           {/* Vehicle Features Pills */}
@@ -285,7 +285,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         {/* Price Divider & Daily Rate con hover a blue-500 solo en desktop */}
         <div className="flex items-center justify-between w-full pt-0.5">
           <div className="flex items-baseline gap-[8px] whitespace-nowrap">
-            <span className="font-heading font-bold text-[20px] text-black md:group-hover:text-blue-500 transition-colors leading-[28px]">
+            <span className="font-heading font-bold text-[20px] text-black md:group-hover:text-cta-500 transition-colors leading-[28px]">
               ${vehicle.pricePerDay.toLocaleString('es-MX')}
             </span>
             <span className="font-heading font-normal text-[12px] text-slate-500 leading-[20px]">

@@ -91,53 +91,53 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     const days = Array.from({ length: totalDays }, (_, i) => i + 1);
 
     return (
-      <div className="flex-1 min-w-[260px] sm:min-w-[280px]">
+      <div className="flex-1 min-w-[280px] sm:min-w-[300px]">
         {/* Month Header */}
-        <div className="flex items-center justify-between mb-3 sm:mb-4 h-9">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           {showLeftArrow ? (
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
+              className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-600 transition-colors"
               aria-label="Mes anterior"
             >
-              <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
+              <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
             </button>
           ) : (
-            <div className="w-7" />
+            <div className="w-10" />
           )}
 
-          <h3 className="font-heading font-bold text-[16px] sm:text-[18px] text-slate-900 tracking-tight">
-            {MONTH_NAMES[month]} {year}
+          <h3 className="font-heading font-bold text-lg sm:text-xl text-neutral-900 tracking-tight">
+            {MONTH_NAMES[month]} <span className="font-semibold text-neutral-500">{year}</span>
           </h3>
 
           {showRightArrow ? (
             <button
               type="button"
               onClick={handleNextMonth}
-              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
+              className="p-2 rounded-lg hover:bg-neutral-100 text-neutral-600 transition-colors"
               aria-label="Mes siguiente"
             >
-              <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
+              <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
             </button>
           ) : (
-            <div className="w-7" />
+            <div className="w-10" />
           )}
         </div>
 
         {/* Days of Week Header */}
-        <div className="grid grid-cols-7 gap-1 text-center mb-1 sm:mb-2">
+        <div className="grid grid-cols-7 gap-1.5 text-center mb-2 sm:mb-3">
           {DAYS_HEADER.map((day) => (
-            <span key={day} className="text-[11px] sm:text-[12px] font-heading font-medium text-slate-400 py-0.5 sm:py-1">
+            <span key={day} className="text-xs sm:text-sm font-heading font-semibold text-neutral-400 py-1 sm:py-2 uppercase tracking-wide">
               {day}
             </span>
           ))}
         </div>
 
         {/* Day Grid */}
-        <div className="grid grid-cols-7 gap-y-1 text-center">
+        <div className="grid grid-cols-7 gap-1.5 text-center">
           {blanks.map((_, i) => (
-            <div key={`blank-${i}`} className="h-8 w-8 sm:h-9 sm:w-9" />
+            <div key={`blank-${i}`} className="h-9 sm:h-10 w-9 sm:w-10" />
           ))}
 
           {days.map((day) => {
@@ -147,18 +147,18 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             const isEnd = endDate === dateStr;
             const inRange = startDate && endDate && dateStr > startDate && dateStr < endDate;
 
-            let buttonClass = 'h-8 w-8 sm:h-9 sm:w-9 mx-auto rounded-full text-[13px] sm:text-[14px] font-heading flex items-center justify-center transition-colors ';
+            let buttonClass = 'h-9 sm:h-10 w-9 sm:w-10 mx-auto rounded-lg text-sm sm:text-base font-heading flex items-center justify-center transition-all ';
             let containerClass = 'relative flex items-center justify-center ';
 
             if (isPast) {
-              buttonClass += 'text-slate-300 cursor-not-allowed';
+              buttonClass += 'text-neutral-300 cursor-not-allowed';
             } else if (isStart || isEnd) {
-              buttonClass += 'bg-black text-white font-bold';
+              buttonClass += 'bg-cta-500 text-white font-bold shadow-md';
             } else if (inRange) {
-              buttonClass += 'text-slate-900 font-medium hover:bg-slate-100';
-              containerClass += 'bg-slate-100';
+              buttonClass += 'text-neutral-900 font-medium hover:bg-cta-100 bg-cta-50';
+              containerClass += '';
             } else {
-              buttonClass += 'text-slate-800 font-medium hover:bg-slate-100 cursor-pointer';
+              buttonClass += 'text-neutral-700 font-medium hover:bg-neutral-100 cursor-pointer';
             }
 
             return (
@@ -181,51 +181,53 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
 
   return (
     <div 
-      className="bg-white rounded-[20px] sm:rounded-[24px] p-4 sm:p-6 shadow-2xl border border-slate-200/80 animate-in fade-in-50 zoom-in-95 duration-150 select-none max-w-[calc(100vw-32px)] overflow-hidden"
+      className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-neutral-100 animate-in fade-in-50 zoom-in-95 duration-150 select-none max-w-[calc(100vw-32px)] overflow-hidden"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
+      {/* Selected dates summary */}
+      {(startDate || endDate) && (
+        <div className="mb-6 pb-6 border-b border-neutral-100">
+          <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wide mb-3">Fechas seleccionadas</p>
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <p className="text-xs text-neutral-600 mb-1">Recogida</p>
+              <p className="text-lg font-bold text-neutral-900">{startDate || '—'}</p>
+            </div>
+            <div className="flex-1">
+              <p className="text-xs text-neutral-600 mb-1">Devolución</p>
+              <p className="text-lg font-bold text-neutral-900">{endDate || '—'}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Calendars */}
+      <div className="flex flex-col lg:flex-row gap-8">
         {renderMonth(currentYear, currentMonth, true, false)}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           {renderMonth(nextMonthYear, nextMonth, false, true)}
         </div>
       </div>
 
-      {/* Footer info & acciones: Rango en 1 línea completa, y botones Borrar/Aplicar en otra línea */}
-      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100 flex flex-col gap-3 text-xs">
-        {/* Línea 1: Rango completo */}
-        <div className="flex items-center gap-2 text-slate-600 whitespace-nowrap">
-          <span className="font-heading font-medium text-slate-500">Rango:</span>
-          <span className="bg-slate-100 px-2.5 py-1 rounded-md text-slate-900 font-semibold text-xs font-mono">
-            {startDate ? startDate : 'Fecha inicio'}
-          </span>
-          <span className="text-slate-400">→</span>
-          <span className="bg-slate-100 px-2.5 py-1 rounded-md text-slate-900 font-semibold text-xs font-mono">
-            {endDate ? endDate : 'Fecha devolución'}
-          </span>
-        </div>
-
-        {/* Línea 2: Botones Borrar y Aplicar alineados a la derecha */}
-        <div className="flex items-center justify-end gap-3 pt-1">
-          {(startDate || endDate) && (
-            <button
-              type="button"
-              onClick={() => onChange('', '')}
-              className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-heading font-medium hover:bg-slate-100 transition-colors text-xs"
-            >
-              Borrar
-            </button>
-          )}
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-5 py-2 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors text-xs"
-            >
-              Aplicar
-            </button>
-          )}
-        </div>
+      {/* Actions */}
+      <div className="mt-6 pt-6 border-t border-neutral-100 flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={() => onChange('', '')}
+          className="px-4 py-2.5 rounded-lg text-neutral-600 hover:text-neutral-900 font-heading font-medium hover:bg-neutral-50 transition-colors text-sm"
+        >
+          Limpiar
+        </button>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={!startDate || !endDate}
+            className="px-6 py-2.5 rounded-lg bg-cta-500 text-white font-heading font-semibold hover:bg-cta-600 disabled:bg-neutral-200 disabled:text-neutral-400 disabled:cursor-not-allowed transition-colors text-sm"
+          >
+            Aplicar
+          </button>
+        )}
       </div>
     </div>
   );
