@@ -141,10 +141,18 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   };
 
   const handleBooking = () => {
-    const msg = encodeURIComponent(
-      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${startDate} (${pickupTime}) al ${endDate} (${returnTime}) por ${rentalDays} días. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
-    );
-    window.open(`https://wa.me/526180000000?text=${msg}`, '_blank');
+    // Navega a la página de reserva con los datos actuales
+    if (onNavigate) {
+      // Guardar datos en sessionStorage para recuperarlos en la página de reserva
+      sessionStorage.setItem('reservationData', JSON.stringify({
+        vehicleId: vehicle.id,
+        startDate,
+        endDate,
+        pickupTime,
+        returnTime,
+      }));
+      onNavigate(`/reserva/${vehicle.id}`);
+    }
   };
 
   // Autos similares para la misma categoría o uso

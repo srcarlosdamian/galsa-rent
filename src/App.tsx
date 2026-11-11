@@ -34,6 +34,7 @@ import { PasswordSentPage } from './pages/PasswordSentPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SeoPage } from './pages/SeoPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
+import { ReservationPage } from './pages/ReservationPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -62,6 +63,15 @@ export const App: React.FC = () => {
     endDate: '',
     endTime: '10:00',
     category: '',
+  });
+
+  // Reservation state
+  const [reservationData, setReservationData] = useState({
+    vehicleId: '',
+    startDate: '',
+    endDate: '',
+    pickupTime: '10:00',
+    returnTime: '10:00',
   });
 
   // Autodetección de ubicación inteligente (Geolocalización del navegador + Reverse Geocoding)
@@ -197,6 +207,22 @@ export const App: React.FC = () => {
     return null;
   }, [currentPath]);
 
+  // Recuperar datos de reserva desde sessionStorage cuando se navega a /reserva/
+  useEffect(() => {
+    if (currentPath.startsWith('/reserva/')) {
+      const storedData = sessionStorage.getItem('reservationData');
+      if (storedData) {
+        try {
+          const data = JSON.parse(storedData);
+          setReservationData(data);
+          sessionStorage.removeItem('reservationData'); // Limpiar después de usar
+        } catch (e) {
+          console.error('Error parsing reservation data:', e);
+        }
+      }
+    }
+  }, [currentPath]);
+
   // Filtered vehicles for Home (2 filas de 4 columnas = 8 autos por página)
   const [homePage, setHomePage] = useState(1);
   const homeItemsPerPage = 8;
@@ -244,6 +270,7 @@ export const App: React.FC = () => {
   const isKnownRoute =
     currentPath === '/' ||
     currentPath.startsWith('/vehiculos/') ||
+    currentPath.startsWith('/reserva/') ||
     currentPath === '/catalogo' ||
     currentPath === '/anfitriones' ||
     currentPath === '/anfitriones/registro' ||
@@ -286,6 +313,26 @@ export const App: React.FC = () => {
           ) : (
             <NotFoundPage onNavigate={navigateTo} />
           )
+        )}
+
+        {/* ROUTE 1.5: RESERVATION PAGE */}
+        {currentPath.startsWith('/reserva/') && (
+          (() => {
+            const vehicleId = currentPath.replace('/reserva/', '');
+            const vehicle = VEHICLES.find(v => v.id === vehicleId || v.slug === vehicleId);
+            return vehicle ? (
+              <ReservationPage
+                vehicle={vehicle}
+                startDate={reservationData.startDate}
+                endDate={reservationData.endDate}
+                pickupTime={reservationData.pickupTime}
+                returnTime={reservationData.returnTime}
+                onNavigate={navigateTo}
+              />
+            ) : (
+              <NotFoundPage onNavigate={navigateTo} />
+            );
+          })()
         )}
 
         {/* ROUTE 2: CATALOG PAGE */}
