@@ -1164,13 +1164,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             {/* Lado derecho: Botón Continuar */}
             <button
               type="button"
-              onClick={() => {
-                if (!mobileSheetOpen) {
-                  setMobileSheetOpen(true);
-                } else {
-                  handleBooking();
-                }
-              }}
+              onClick={handleBooking}
               className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5"
             >
               <span>Continuar</span>
