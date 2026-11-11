@@ -9,6 +9,7 @@ import { UseCasesSection } from './components/UseCasesSection';
 import { TrustSafetySection } from './components/TrustSafetySection';
 import { HostBanner } from './components/HostBanner';
 import { HostSection } from './components/HostSection';
+import { RentYourCarSection } from './components/RentYourCarSection';
 import { FaqSection } from './components/FaqSection';
 import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
@@ -531,6 +532,9 @@ export const App: React.FC = () => {
 
             {/* H2 ORDER 5: Cada renta, respaldada de principio a fin */}
             <TrustSafetySection />
+
+            {/* Convierte tu auto en ingresos - Renta tu auto */}
+            <RentYourCarSection onNavigate={navigateTo} />
 
             {/* Banner Anuncio Programa de Anfitriones (Sin cotizador en Home) */}
             <HostBanner onNavigate={navigateTo} />
