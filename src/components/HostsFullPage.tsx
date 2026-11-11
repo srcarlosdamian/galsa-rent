@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, Check, TrendingUp } from 'lucide-react';
+import { ArrowRight, Check, TrendingUp, Plus, Minus } from 'lucide-react';
 import { RentYourCarSection } from './RentYourCarSection';
 
 interface HostsFullPageProps {
@@ -281,7 +281,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 md:py-24 bg-white ">
+      <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
@@ -292,25 +292,36 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
             </h2>
           </div>
 
-          <div className="max-w-3xl space-y-4">
-            {FAQItems.map((item, idx) => (
-              <div key={idx} className="border border-neutral-200 rounded-2xl overflow-hidden">
-                <button
-                  onClick={() => setExpandedFAQ(expandedFAQ === idx ? null : idx)}
-                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-neutral-50 transition-colors"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-7xl">
+            {FAQItems.map((item, idx) => {
+              const isOpen = expandedFAQ === idx;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-neutral-200/90 bg-white overflow-hidden transition-all duration-200"
                 >
-                  <h3 className="text-sm font-bold text-neutral-900 text-left">{item.q}</h3>
-                  <span className={`text-neutral-900 transition-transform flex-shrink-0 ${expandedFAQ === idx ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
-                </button>
-                {expandedFAQ === idx && (
-                  <div className="px-6 py-4 bg-neutral-50 ">
-                    <p className="text-sm text-neutral-700 leading-relaxed">{item.a}</p>
-                  </div>
-                )}
-              </div>
-            ))}
+                  <button
+                    type="button"
+                    onClick={() => setExpandedFAQ(expandedFAQ === idx ? null : idx)}
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-neutral-50/50 transition-colors"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug">
+                      {item.q}
+                    </span>
+                    <div className="w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center shrink-0 text-neutral-700">
+                      {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-5 sm:px-6 pb-6 pt-1 text-sm font-sans text-neutral-600 leading-relaxed border-t border-neutral-100">
+                      <p>{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
