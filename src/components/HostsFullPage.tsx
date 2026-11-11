@@ -145,10 +145,20 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       {/* CONDITIONS */}
       <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Full Width Blue Section */}
+          {/* Full Width Blue Section with Background Image */}
           <div className="mb-8 lg:mb-12">
-            <div className="bg-blue-100 rounded-3xl p-8 sm:p-12">
-              <div className="space-y-4">
+            <div className="bg-blue-100 rounded-3xl p-8 sm:p-12 overflow-hidden relative">
+              {/* Background Image - Right side */}
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-60">
+                <img 
+                  src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794389847378-0-349394.webp"
+                  alt="Background decoration"
+                  className="w-full h-full object-cover object-right"
+                />
+              </div>
+              
+              {/* Content */}
+              <div className="space-y-4 relative z-10">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 block mb-2">
                     Cómo funciona
@@ -158,7 +168,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
                     <span className="block">GALSA</span>
                   </h2>
                 </div>
-                <p className="text-base text-neutral-700 leading-relaxed font-medium">
+                <p className="text-base text-neutral-700 leading-relaxed font-medium max-w-md">
                   Lo que cuesta publicar tu auto y quién puede rentarlo.
                 </p>
               </div>
