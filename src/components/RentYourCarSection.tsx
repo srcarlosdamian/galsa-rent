@@ -71,19 +71,19 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-start">
           
-          {/* Left Column: Content - 60% */}
+          {/* Left Column: Content - 55% */}
           <div className="space-y-8">
             <div className="space-y-6">
               <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
                 Programa de afiliaciones GALSA
               </span>
-              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-neutral-900 leading-tight">
+              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-tight">
                 Convierte tu auto en{' '}
-                <span className="relative inline-block pb-2">
+                <span className="relative inline-block pb-4">
                   <span className="text-neutral-900">ingresos</span>
-                  <div className="absolute -bottom-1 left-0 h-2 bg-gradient-to-r from-blue-400 to-blue-300 w-40" />
+                  <div className="absolute -bottom-1 left-0 h-2 bg-gradient-to-r from-blue-500 to-blue-400 w-32" style={{zIndex: -1}} />
                 </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
@@ -94,8 +94,8 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
             {/* Key Benefits */}
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-white font-bold text-xs">✓</span>
+                <div className="w-6 h-6 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-neutral-900 font-bold text-xs">✓</span>
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-neutral-900">33% comisión al cliente</h4>
@@ -104,8 +104,8 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-white font-bold text-xs">✓</span>
+                <div className="w-6 h-6 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-neutral-900 font-bold text-xs">✓</span>
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-neutral-900">100% de la tarifa para ti</h4>
@@ -114,8 +114,8 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-white font-bold text-xs">✓</span>
+                <div className="w-6 h-6 rounded-full bg-neutral-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-neutral-900 font-bold text-xs">✓</span>
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-neutral-900">24-48h revisión de solicitud</h4>
@@ -124,7 +124,7 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
               </div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTA Button */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <button
                 onClick={handlePublish}
@@ -134,22 +134,10 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
                 <span>Quiero publicar mi auto</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <button
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/anfitriones');
-                  }
-                }}
-                className="inline-flex items-center justify-center gap-2 text-neutral-900 font-bold text-sm px-7 py-3 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 transition-colors"
-              >
-                <span>Calcular mis ingresos</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
             </div>
           </div>
 
-          {/* Right Column: Interactive Calculator - 40% */}
+          {/* Right Column: Interactive Calculator - 45% */}
           <div className="bg-white rounded-2xl p-8 space-y-6 border border-neutral-200">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
