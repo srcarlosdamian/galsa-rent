@@ -48,6 +48,11 @@ VEHICLES.forEach((v) => {
     priority: '0.9',
     changefreq: 'weekly',
   });
+  sitemapUrls.push({
+    loc: `${SITE_URL}/reserva/${v.id}`,
+    priority: '0.8',
+    changefreq: 'daily',
+  });
 });
 
 // Generate sitemap.xml
@@ -378,7 +383,88 @@ VEHICLES.forEach((v) => {
   writeRouteFile(`/vehiculos/${v.uuid}`, redirectHtml);
 });
 
-// 4. Render Blog Articles
+// 4. Render Reservation Pages for Each Vehicle
+VEHICLES.forEach((v) => {
+  const meta = {
+    title: `Reservar ${v.make} ${v.model} ${v.year} | GALSA Rent`,
+    description: `Completa tu reserva para ${v.make} ${v.model} ${v.year}. Ingresa tus datos, selecciona extras y firma tu contrato digital.`,
+    canonical: `${SITE_URL}/reserva/${v.id}`,
+    ogTitle: `Reservar ${v.make} ${v.model} ${v.year} | GALSA Rent`,
+    ogDescription: `Completa tu reserva para ${v.make} ${v.model} ${v.year}`,
+    ogImage: {
+      url: v.images[0]?.url || 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793239505248-1-car.webp',
+      alt: `${v.make} ${v.model} ${v.year}`,
+      width: 1200,
+      height: 630,
+    },
+  };
+
+  const reservationHtml = renderPage({
+    routePath: `/reserva/${v.id}`,
+    metadata: meta,
+    schemaJson: null,
+    initialContentHtml: `
+      <div>
+        <h1>Reserva tu ${v.make} ${v.model} ${v.year}</h1>
+        <p>Completa los siguientes pasos para finalizar tu reserva.</p>
+        <section>
+          <h2>Vehículo seleccionado</h2>
+          <p>${v.make} ${v.model} ${v.year} - ${v.category}</p>
+          <p>Precio: $${v.pricePerDay} MXN por día</p>
+        </section>
+        <section>
+          <h2>Pasos de la reserva</h2>
+          <ol>
+            <li>Fechas y horarios</li>
+            <li>Información personal</li>
+            <li>Documentos</li>
+            <li>Extras y servicios</li>
+            <li>Resumen de pago</li>
+            <li>Contrato digital</li>
+          </ol>
+        </section>
+      </div>
+    `,
+  });
+
+  writeRouteFile(`/reserva/${v.id}`, reservationHtml);
+
+  // Also create reservation page with slug
+  const reservationSlugHtml = renderPage({
+    routePath: `/reserva/${v.slug}`,
+    metadata: {
+      ...meta,
+      canonical: `${SITE_URL}/reserva/${v.slug}`,
+    },
+    schemaJson: null,
+    initialContentHtml: `
+      <div>
+        <h1>Reserva tu ${v.make} ${v.model} ${v.year}</h1>
+        <p>Completa los siguientes pasos para finalizar tu reserva.</p>
+        <section>
+          <h2>Vehículo seleccionado</h2>
+          <p>${v.make} ${v.model} ${v.year} - ${v.category}</p>
+          <p>Precio: $${v.pricePerDay} MXN por día</p>
+        </section>
+        <section>
+          <h2>Pasos de la reserva</h2>
+          <ol>
+            <li>Fechas y horarios</li>
+            <li>Información personal</li>
+            <li>Documentos</li>
+            <li>Extras y servicios</li>
+            <li>Resumen de pago</li>
+            <li>Contrato digital</li>
+          </ol>
+        </section>
+      </div>
+    `,
+  });
+
+  writeRouteFile(`/reserva/${v.slug}`, reservationSlugHtml);
+});
+
+// 5. Render Blog Articles
 BLOG_POSTS.forEach((post) => {
   const meta = {
     title: `${post.title} | Blog GALSA Rent`,
