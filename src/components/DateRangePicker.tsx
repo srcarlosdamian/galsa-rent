@@ -98,7 +98,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
+              className="p-1.5 rounded-full hover:bg-neutral-100 text-neutral-600 transition-colors"
               aria-label="Mes anterior"
             >
               <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
@@ -107,7 +107,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <div className="w-7" />
           )}
 
-          <h3 className="font-heading font-bold text-[16px] sm:text-[18px] text-slate-900 tracking-tight">
+          <h3 className="font-heading font-bold text-[16px] sm:text-[18px] text-neutral-900 tracking-tight">
             {MONTH_NAMES[month]} {year}
           </h3>
 
@@ -115,7 +115,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <button
               type="button"
               onClick={handleNextMonth}
-              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-700 transition-colors"
+              className="p-1.5 rounded-full hover:bg-neutral-100 text-neutral-600 transition-colors"
               aria-label="Mes siguiente"
             >
               <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
@@ -128,7 +128,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
         {/* Days of Week Header */}
         <div className="grid grid-cols-7 gap-1 text-center mb-1 sm:mb-2">
           {DAYS_HEADER.map((day) => (
-            <span key={day} className="text-[11px] sm:text-[12px] font-heading font-medium text-slate-400 py-0.5 sm:py-1">
+            <span key={day} className="text-[11px] sm:text-[12px] font-heading font-medium text-neutral-400 py-0.5 sm:py-1">
               {day}
             </span>
           ))}
@@ -151,14 +151,14 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             let containerClass = 'relative flex items-center justify-center ';
 
             if (isPast) {
-              buttonClass += 'text-slate-300 cursor-not-allowed';
+              buttonClass += 'text-neutral-300 cursor-not-allowed';
             } else if (isStart || isEnd) {
-              buttonClass += 'bg-black text-white font-bold';
+              buttonClass += 'bg-neutral-900 text-white font-bold';
             } else if (inRange) {
-              buttonClass += 'text-slate-900 font-medium hover:bg-slate-100';
-              containerClass += 'bg-slate-100';
+              buttonClass += 'text-neutral-900 font-medium hover:bg-neutral-100';
+              containerClass += 'bg-neutral-100';
             } else {
-              buttonClass += 'text-slate-800 font-medium hover:bg-slate-100 cursor-pointer';
+              buttonClass += 'text-neutral-800 font-medium hover:bg-neutral-100 cursor-pointer';
             }
 
             return (
@@ -181,7 +181,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
 
   return (
     <div 
-      className="bg-white rounded-[20px] sm:rounded-[24px] p-4 sm:p-6 shadow-2xl border border-slate-200/80 animate-in fade-in-50 zoom-in-95 duration-150 select-none max-w-[calc(100vw-32px)] overflow-hidden"
+      className="bg-white rounded-[20px] sm:rounded-[24px] p-4 sm:p-6 border border-neutral-200 animate-in fade-in-50 zoom-in-95 duration-150 select-none max-w-[calc(100vw-32px)] overflow-hidden"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex flex-col md:flex-row gap-6 sm:gap-8">
@@ -192,15 +192,15 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       </div>
 
       {/* Footer info & acciones: Rango en 1 línea completa, y botones Borrar/Aplicar en otra línea */}
-      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-100 flex flex-col gap-3 text-xs">
+      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-neutral-100 flex flex-col gap-3 text-xs">
         {/* Línea 1: Rango completo */}
-        <div className="flex items-center gap-2 text-slate-600 whitespace-nowrap">
-          <span className="font-heading font-medium text-slate-500">Rango:</span>
-          <span className="bg-slate-100 px-2.5 py-1 rounded-md text-slate-900 font-semibold text-xs font-mono">
+        <div className="flex items-center gap-2 text-neutral-600 whitespace-nowrap">
+          <span className="font-heading font-medium text-neutral-500">Rango:</span>
+          <span className="bg-neutral-100 px-2.5 py-1 rounded-md text-neutral-900 font-semibold text-xs font-mono">
             {startDate ? startDate : 'Fecha inicio'}
           </span>
-          <span className="text-slate-400">→</span>
-          <span className="bg-slate-100 px-2.5 py-1 rounded-md text-slate-900 font-semibold text-xs font-mono">
+          <span className="text-neutral-400">→</span>
+          <span className="bg-neutral-100 px-2.5 py-1 rounded-md text-neutral-900 font-semibold text-xs font-mono">
             {endDate ? endDate : 'Fecha devolución'}
           </span>
         </div>
@@ -211,7 +211,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <button
               type="button"
               onClick={() => onChange('', '')}
-              className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 font-heading font-medium hover:bg-slate-100 transition-colors text-xs"
+              className="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 font-heading font-medium hover:bg-neutral-100 transition-colors text-xs"
             >
               Borrar
             </button>
@@ -220,7 +220,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors text-xs"
+              className="px-5 py-2 rounded-lg bg-neutral-900 text-white font-heading font-semibold hover:bg-neutral-800 transition-colors text-xs"
             >
               Aplicar
             </button>

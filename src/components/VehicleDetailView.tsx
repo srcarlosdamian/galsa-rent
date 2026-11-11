@@ -807,11 +807,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
           {/* COLUMNA DERECHA: Sticky Card Checkout (Sólo Desktop, en Mobile se usa barra flotante) */}
           <div className="hidden lg:block lg:col-span-5">
-            <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-lg space-y-6 text-left">
+            <div className="sticky top-24 bg-white rounded-[24px] border border-neutral-200 p-6 sm:p-7 space-y-6 text-left">
               
               {/* Precio (sin calificación repetida abajo) */}
-              <div className="pb-4 border-b border-slate-100">
-                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 block">
+              <div className="pb-4 border-b border-neutral-100">
+                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-neutral-900 block">
                   ${total.toLocaleString('es-MX')} total
                 </span>
               </div>
@@ -821,25 +821,25 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 {/* Fila 1: Ciudad y Sucursal bloqueadas */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                    <label className="block text-xs font-heading font-medium text-neutral-700 mb-1">
                       Ciudad
                     </label>
-                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none">
+                    <div className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 bg-neutral-50 text-neutral-900 font-heading font-medium text-[14px] cursor-not-allowed select-none">
                       Durango
                     </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                    <span className="block text-[11px] font-sans text-neutral-500 mt-1">
                       Ubicación del vehículo
                     </span>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                    <label className="block text-xs font-heading font-medium text-neutral-700 mb-1">
                       Sucursal
                     </label>
-                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none truncate">
+                    <div className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 bg-neutral-50 text-neutral-900 font-heading font-medium text-[14px] cursor-not-allowed select-none truncate">
                       Plaza 450
                     </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
+                    <span className="block text-[11px] font-sans text-neutral-500 mt-1">
                       Recogida y devolución
                     </span>
                   </div>
@@ -848,7 +848,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 {/* Fila 2: Fecha de recogida y Hora de entrega */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                    <label className="block text-xs font-heading font-medium text-neutral-700 mb-1">
                       Fecha de recogida
                     </label>
                     <input
@@ -856,7 +856,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       value={startDate}
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 hover:border-neutral-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-500 bg-white text-neutral-900 font-heading font-medium text-[14px] outline-none transition-colors"
                     />
                   </div>
 
@@ -870,7 +870,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 {/* Fila 3: Fecha de devolución y Hora de devolución */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                    <label className="block text-xs font-heading font-medium text-neutral-700 mb-1">
                       Fecha de devolución
                     </label>
                     <input
@@ -878,7 +878,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       value={endDate}
                       min={startDate || new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-[12px] border border-neutral-200 hover:border-neutral-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-500 bg-white text-neutral-900 font-heading font-medium text-[14px] outline-none transition-colors"
                     />
                   </div>
 
@@ -891,30 +891,30 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               {/* Desglose y Resumen de Precios */}
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xs space-y-3">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+              <div className="rounded-2xl border border-neutral-200 bg-white p-4 sm:p-5 space-y-3">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-neutral-600">
                   <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
-                  <span className="font-heading font-semibold text-slate-800">${baseSubtotal.toLocaleString('es-MX')}</span>
+                  <span className="font-heading font-semibold text-neutral-900">${baseSubtotal.toLocaleString('es-MX')}</span>
                 </div>
 
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-neutral-600">
                   <span>Tarifa de servicio GALSA</span>
-                  <span className="font-heading font-semibold text-slate-800">${serviceFee.toLocaleString('es-MX')}</span>
+                  <span className="font-heading font-semibold text-neutral-900">${serviceFee.toLocaleString('es-MX')}</span>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100">
-                  <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
+                <div className="pt-3 border-t border-neutral-100">
+                  <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-neutral-900">
                     <span>Total de la renta</span>
-                    <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
+                    <span className="text-base sm:text-lg font-extrabold text-neutral-900">${total.toLocaleString('es-MX')}</span>
                   </div>
                 </div>
               </div>
 
               {/* Depósito en garantía con mismo tamaño de texto que tarifa de servicio y precio homologado */}
-              <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
+              <div className="rounded-xl border border-neutral-200 bg-transparent px-4 py-3">
+                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-neutral-600">
                   <span>Depósito en garantía (reembolsable)</span>
-                  <span className="font-heading font-semibold text-slate-800">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                  <span className="font-heading font-semibold text-neutral-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
                 </div>
               </div>
 
