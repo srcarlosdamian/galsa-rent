@@ -7,16 +7,6 @@ interface HostsFullPageProps {
 }
 
 export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
-  const [dailyRate, setDailyRate] = useState(1200);
-  const [daysPerMonth, setDaysPerMonth] = useState(15);
-
-  // Anfitrión receives 100% of the daily rate they set
-  const monthlyEarnings = dailyRate * daysPerMonth;
-  const clientDailyPrice = Math.round(dailyRate * 1.33);
-  const totalClientMonth = clientDailyPrice * daysPerMonth;
-  const serviceFeeMonth = totalClientMonth - monthlyEarnings;
-  const annualProjection = monthlyEarnings * 12;
-
   const handleNavigate = (path: string) => {
     if (onNavigate) {
       onNavigate(path);
@@ -61,12 +51,36 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
   ];
 
   const Benefits = [
-    { title: 'Control total', description: 'Tú defines precios, disponibilidad y qué reservas aceptas.' },
-    { title: 'Pagos a tu cuenta', description: 'Cobramos al cliente y te depositamos tu parte en la cuenta que registres.' },
-    { title: 'Seguro y verificación', description: 'Cobertura durante la renta y clientes con identidad verificada.' },
-    { title: 'Soporte 24/7', description: 'Equipo dedicado para anfitriones y asistencia en carretera.' },
-    { title: 'Tarifa transparente', description: 'El 33% de servicio lo paga el cliente. Sin cargos ocultos.' },
-    { title: 'Más ocupación', description: 'Recomendaciones de precio dinámico según la demanda de tu ciudad.' },
+    { 
+      title: 'Control total', 
+      description: 'Tú defines precios, disponibilidad y qué reservas aceptas.',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop'
+    },
+    { 
+      title: 'Pagos a tu cuenta', 
+      description: 'Cobramos al cliente y te depositamos tu parte en la cuenta que registres.',
+      image: 'https://images.unsplash.com/photo-1556821552-5f7e29fc4de0?w=400&h=300&fit=crop'
+    },
+    { 
+      title: 'Seguro y verificación', 
+      description: 'Cobertura durante la renta y clientes con identidad verificada.',
+      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop'
+    },
+    { 
+      title: 'Soporte 24/7', 
+      description: 'Equipo dedicado para anfitriones y asistencia en carretera.',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop'
+    },
+    { 
+      title: 'Tarifa transparente', 
+      description: 'El 33% de servicio lo paga el cliente. Sin cargos ocultos.',
+      image: 'https://images.unsplash.com/photo-1556821552-5f7e29fc4de0?w=400&h=300&fit=crop'
+    },
+    { 
+      title: 'Más ocupación', 
+      description: 'Recomendaciones de precio dinámico según la demanda de tu ciudad.',
+      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop'
+    },
   ];
 
   const RequirementsList = [
@@ -92,7 +106,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
               Cómo funciona
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-4">
+            <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-4">
               Cómo ganar dinero con tu auto en GALSA
             </h2>
             <p className="text-base text-neutral-600 leading-relaxed">
@@ -105,17 +119,21 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
               {
                 title: 'Publica tu auto',
                 description: 'Registra tu vehículo, define tu disponibilidad y elige tu precio con ayuda de nuestro motor de tarifas.',
+                image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388656934-2-gemini_generated_image_s8fcyrs8fcyrs8fc.webp',
               },
               {
                 title: 'Aprueba reservas',
                 description: 'Clientes verificados solicitan tu auto y tú decides a quién le dices que sí.',
+                image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388656485-1-gemini_generated_image_jmm2n3jmm2n3jmm2.webp',
               },
               {
                 title: 'Cobra tu tarifa',
                 description: 'GALSA cobra al cliente la renta más su tarifa de servicio y te deposita tu parte en la cuenta que registres.',
+                image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388655725-0-gemini_generated_image_6uloc56uloc56ulo.webp',
               },
             ].map((item, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-6 sm:p-8">
+              <div key={idx}>
+                <img src={item.image} alt={item.title} className="w-full h-48 object-cover rounded-xl mb-4" />
                 <h3 className="text-lg font-bold text-neutral-900 mb-3">{item.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{item.description}</p>
               </div>
@@ -127,31 +145,42 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       {/* CONDITIONS */}
       <section className="py-16 md:py-24 bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-              Condiciones
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-4">
-              Condiciones del programa de anfitriones
-            </h2>
-            <p className="text-base text-neutral-600 leading-relaxed">
-              Lo que cuesta publicar tu auto y quién puede rentarlo.
-            </p>
+          {/* Full Width Blue Section */}
+          <div className="mb-8 lg:mb-12">
+            <div className="bg-blue-100 rounded-3xl p-8 sm:p-12">
+              <div className="space-y-4">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 block mb-2">
+                    Cómo funciona
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900 leading-tight">
+                    Cómo ganar dinero con tu auto en{' '}
+                    <span className="block">GALSA</span>
+                  </h2>
+                </div>
+                <p className="text-base text-neutral-700 leading-relaxed font-medium">
+                  Lo que cuesta publicar tu auto y quién puede rentarlo.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Two Columns - 50/50 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            
             {/* Service Fee Card */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8">
+            <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 h-full flex flex-col">
               <h3 className="text-lg font-bold text-neutral-900 mb-4">Tarifa de servicio del marketplace</h3>
               <p className="text-sm text-neutral-600 leading-relaxed mb-6">
                 Se suma al precio de cada renta y la paga el cliente. Sin cargos ocultos.
               </p>
-              <div className="space-y-4 pt-4 ">
+              <div className="space-y-4 flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-neutral-700">Tarifa GALSA (la paga el cliente)</span>
                   <span className="text-2xl font-black text-neutral-900">33%</span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="border-t border-neutral-300"></div>
+                <div className="flex justify-between items-center pt-4">
                   <span className="text-sm font-medium text-neutral-700">De tu tarifa, para ti</span>
                   <span className="text-2xl font-black text-neutral-900">100%</span>
                 </div>
@@ -159,12 +188,12 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
             </div>
 
             {/* Requirements Card */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8">
+            <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 h-full flex flex-col">
               <h3 className="text-lg font-bold text-neutral-900 mb-4">Quién puede rentar tu auto</h3>
               <p className="text-sm text-neutral-600 leading-relaxed mb-6">
                 Solo rentan clientes verificados que cumplen:
               </p>
-              <ul className="space-y-3">
+              <ul className="space-y-3 flex-1">
                 {RequirementsList.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <div className="w-5 h-5 rounded-full bg-neutral-900 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -175,6 +204,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
                 ))}
               </ul>
             </div>
+
           </div>
         </div>
       </section>
@@ -196,9 +226,16 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Benefits.map((benefit, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-6">
-                <h3 className="text-base font-bold text-neutral-900 mb-2">{benefit.title}</h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">{benefit.description}</p>
+              <div key={idx} className="bg-white rounded-2xl overflow-hidden flex h-full">
+                <img 
+                  src={benefit.image} 
+                  alt={benefit.title}
+                  className="w-32 h-32 object-cover flex-shrink-0"
+                />
+                <div className="p-6 flex flex-col justify-center flex-1">
+                  <h3 className="text-base font-bold text-neutral-900 mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{benefit.description}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -206,133 +243,6 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* SIMULATOR */}
-      <section id="simulador" className="py-16 md:py-24 bg-white ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-              Simulador
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-4">
-              Simulador de ingresos para anfitriones
-            </h2>
-            <p className="text-base text-neutral-600 leading-relaxed">
-              Ajusta los días y el precio para estimar cuánto puedes ganar al mes con tu auto.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* Sliders */}
-            <div className="space-y-8">
-              {/* Valor del auto */}
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="text-sm font-bold text-neutral-900">Valor del auto</label>
-                  <span className="text-sm font-black text-neutral-900">$450,000 MXN</span>
-                </div>
-                <div className="flex justify-between text-xs text-neutral-500 mt-1">
-                  <span>$150,000</span>
-                  <span>$1,500,000</span>
-                </div>
-              </div>
-
-              {/* Días rentados al mes */}
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="text-sm font-bold text-neutral-900">Días rentados al mes</label>
-                  <span className="text-sm font-black text-neutral-900">{daysPerMonth} días</span>
-                </div>
-                <input
-                  type="range"
-                  min={1}
-                  max={30}
-                  value={daysPerMonth}
-                  onChange={(e) => setDaysPerMonth(Number(e.target.value))}
-                  className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-black"
-                />
-                <div className="flex justify-between text-xs text-neutral-500 mt-1">
-                  <span>1 día</span>
-                  <span>30 días</span>
-                </div>
-              </div>
-
-              {/* Precio por día */}
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="text-sm font-bold text-neutral-900">Precio por día</label>
-                  <span className="text-sm font-black text-neutral-900">${dailyRate.toLocaleString('es-MX')} MXN</span>
-                </div>
-                <input
-                  type="range"
-                  min={500}
-                  max={3000}
-                  step={50}
-                  value={dailyRate}
-                  onChange={(e) => setDailyRate(Number(e.target.value))}
-                  className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-black"
-                />
-                <div className="flex justify-between text-xs text-neutral-500 mt-1">
-                  <span>$500</span>
-                  <span>$3,000</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Results */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8">
-              <div className="pb-6  mb-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-1">
-                  Tu ingreso neto mensual estimado
-                </span>
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-4xl sm:text-5xl font-black text-neutral-900">
-                    ${monthlyEarnings.toLocaleString('es-MX')}
-                  </span>
-                  <span className="text-sm font-bold text-neutral-600">MXN</span>
-                </div>
-                <p className="text-xs text-neutral-600 leading-relaxed">
-                  Recibes el 100% de tu tarifa. La tarifa de servicio de GALSA (33%) la paga el cliente.
-                </p>
-              </div>
-
-              <div className="space-y-3 mb-6 pb-6 ">
-                <div className="flex justify-between text-xs">
-                  <span className="text-neutral-700 font-medium">Tus rentas del mes (precio × días)</span>
-                  <span className="font-black text-neutral-900">${monthlyEarnings.toLocaleString('es-MX')}</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-neutral-700 font-medium">Tarifa de servicio GALSA (33%), la paga el cliente</span>
-                  <span className="font-black text-neutral-900">${serviceFeeMonth.toLocaleString('es-MX')}</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-neutral-700 font-medium">Lo que pagan tus clientes</span>
-                  <span className="font-black text-neutral-900">${totalClientMonth.toLocaleString('es-MX')}</span>
-                </div>
-                <div className="flex justify-between text-xs pt-2 ">
-                  <span className="text-neutral-700 font-bold">Tu ingreso neto</span>
-                  <span className="font-black text-neutral-900">${monthlyEarnings.toLocaleString('es-MX')}</span>
-                </div>
-              </div>
-
-              <div className="bg-neutral-50 rounded-xl p-4 mb-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 block mb-2">
-                  Proyección anual
-                </span>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-black text-neutral-900">
-                    ${annualProjection.toLocaleString('es-MX')}
-                  </span>
-                  <span className="text-xs font-bold text-neutral-600">MXN / año</span>
-                </div>
-                <p className="text-xs text-neutral-500 mt-2">Neto × 12 meses</p>
-              </div>
-
-              <p className="text-xs text-neutral-500 text-center leading-relaxed">
-                Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación de tu auto.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* PROCESS */}
       <section className="py-16 md:py-24 bg-white ">
@@ -341,19 +251,29 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
               Proceso
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 leading-tight mb-4">
               Publica tu auto en 6 pasos
             </h2>
+            <p className="text-base text-neutral-600 leading-relaxed">
+              Diseñamos un flujo simple y transparente para que no pierdas tiempo en filas ni papeleo tradicional.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {ProcessSteps.map((step, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-6 relative">
-                <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-neutral-900 text-white flex items-center justify-center font-black">
-                  {idx + 1}
+              <div key={idx} className="flex flex-col">
+                {/* Number Badge */}
+                <div className="mb-6">
+                  <div className="w-12 h-12 rounded-lg bg-blue-400 text-white flex items-center justify-center font-black text-lg">
+                    {idx + 1}
+                  </div>
                 </div>
-                <h3 className="text-base font-bold text-neutral-900 mb-2 mt-4">{step.title}</h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">{step.description}</p>
+                
+                {/* Content */}
+                <div className="flex-1">
+                  <h3 className="text-base font-bold text-neutral-900 mb-2">{step.title}</h3>
+                  <p className="text-sm text-neutral-600 leading-relaxed">{step.description}</p>
+                </div>
               </div>
             ))}
           </div>

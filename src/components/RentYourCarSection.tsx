@@ -7,6 +7,9 @@ interface RentYourCarSectionProps {
 
 export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState<'sedan-compacto' | 'suv-familiar' | 'pickup-trabajo' | 'premium-lujo'>('sedan-compacto');
+  const [autoValue, setAutoValue] = useState<number>(450000);
+  const [rentalDays, setRentalDays] = useState<number>(15);
+  const [pricePerDay, setPricePerDay] = useState<number>(1200);
 
   const categories = [
     { id: 'sedan-compacto', label: 'Sedán compacto', value: 'Sedán compacto' },
@@ -42,9 +45,19 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
     },
   };
 
-  const currentEstimation = estimations[selectedCategory];
+  const handleCategoryChange = (categoryId: 'sedan-compacto' | 'suv-familiar' | 'pickup-trabajo' | 'premium-lujo') => {
+    setSelectedCategory(categoryId);
+    const est = estimations[categoryId];
+    setAutoValue(est.estimatedValue);
+    setRentalDays(est.rentalDaysPerMonth);
+    setPricePerDay(est.pricePerDay);
+  };
+
   const serviceFeePct = 33;
-  const clientDailyPrice = Math.round(currentEstimation.pricePerDay * (1 + serviceFeePct / 100));
+  const monthlyEarnings = pricePerDay * rentalDays;
+  const serviceCharge = Math.round(monthlyEarnings * (serviceFeePct / 100));
+  const clientPays = monthlyEarnings + serviceCharge;
+  const clientDailyPrice = Math.round(pricePerDay * (1 + serviceFeePct / 100));
 
   const handlePublish = (e: React.MouseEvent) => {
     if (onNavigate) {
@@ -58,19 +71,19 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 lg:gap-16 items-start">
           
-          {/* Left Column: Content */}
+          {/* Left Column: Content - 60% */}
           <div className="space-y-8">
-            <div className="space-y-4">
+            <div className="space-y-6">
               <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
                 Programa de afiliaciones GALSA
               </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-tight">
+              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-neutral-900 leading-tight">
                 Convierte tu auto en{' '}
                 <span className="relative inline-block pb-2">
                   <span className="text-neutral-900">ingresos</span>
-                  <div className="absolute -bottom-1 left-0 h-1.5 bg-gradient-to-r from-blue-400 to-blue-300 w-32" />
+                  <div className="absolute -bottom-1 left-0 h-2 bg-gradient-to-r from-blue-400 to-blue-300 w-40" />
                 </span>
               </h2>
               <p className="text-base text-neutral-600 leading-relaxed">
@@ -136,84 +149,146 @@ export const RentYourCarSection: React.FC<RentYourCarSectionProps> = ({ onNaviga
             </div>
           </div>
 
-          {/* Right Column: Interactive Calculator */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8">
-            <div className="flex items-center justify-between pb-5 mb-6">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
-                  Simulador interactivo
-                </span>
-                <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mt-1">
-                  Calcula tus ingresos estimados
-                </h3>
-              </div>
+          {/* Right Column: Interactive Calculator - 40% */}
+          <div className="bg-white rounded-2xl p-8 space-y-6 border border-neutral-200">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
+                Simulador interactivo
+              </span>
+              <h3 className="text-lg font-bold text-neutral-900 mt-2">
+                Calcula tus ingresos estimados
+              </h3>
             </div>
 
-            {/* Category Tabs */}
-            <div className="space-y-4 mb-6">
+            {/* Category Dropdown */}
+            <div className="space-y-3">
               <p className="text-xs font-bold uppercase tracking-wider text-neutral-500">
                 Tipo de vehículo
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <select
+                value={selectedCategory}
+                onChange={(e) => handleCategoryChange(e.target.value as any)}
+                className="w-full px-4 py-2.5 border border-neutral-300 rounded-lg text-sm font-medium text-neutral-900 bg-white hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-900 appearance-none bg-no-repeat"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231f2937' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                  backgroundPosition: 'right 0.75rem center',
+                  backgroundSize: '1.2em 1.2em',
+                  paddingRight: '2.5rem',
+                }}
+              >
                 {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id as any)}
-                    className={`px-3 py-2 rounded-lg text-xs font-bold transition-colors ${
-                      selectedCategory === cat.id
-                        ? 'bg-neutral-900 text-white'
-                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                    }`}
-                  >
+                  <option key={cat.id} value={cat.id}>
                     {cat.label}
-                  </button>
+                  </option>
                 ))}
+              </select>
+            </div>
+
+            {/* Minimalista Sliders Section */}
+            <div className="space-y-4">
+              {/* Valor del Auto */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-4">
+                  <label className="text-sm font-bold text-neutral-900 whitespace-nowrap">Valor del auto</label>
+                  <input
+                    type="range"
+                    min="150000"
+                    max="1500000"
+                    step="50000"
+                    value={autoValue}
+                    onChange={(e) => setAutoValue(Number(e.target.value))}
+                    className="flex-1 h-2 bg-neutral-300 rounded-lg appearance-none cursor-pointer accent-neutral-900"
+                  />
+                  <span className="text-sm font-bold text-neutral-900 whitespace-nowrap">${autoValue.toLocaleString('es-MX')}</span>
+                </div>
+              </div>
+
+              {/* Días Rentados al Mes */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-4">
+                  <label className="text-sm font-bold text-neutral-900 whitespace-nowrap">Días rentados</label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={rentalDays}
+                    onChange={(e) => setRentalDays(Number(e.target.value))}
+                    className="flex-1 h-2 bg-neutral-300 rounded-lg appearance-none cursor-pointer accent-neutral-900"
+                  />
+                  <span className="text-sm font-bold text-neutral-900 whitespace-nowrap">{rentalDays} d</span>
+                </div>
+              </div>
+
+              {/* Precio por Día */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-4">
+                  <label className="text-sm font-bold text-neutral-900 whitespace-nowrap">Precio/día</label>
+                  <input
+                    type="range"
+                    min="500"
+                    max="3000"
+                    step="100"
+                    value={pricePerDay}
+                    onChange={(e) => setPricePerDay(Number(e.target.value))}
+                    className="flex-1 h-2 bg-neutral-300 rounded-lg appearance-none cursor-pointer accent-neutral-900"
+                  />
+                  <span className="text-sm font-bold text-neutral-900 whitespace-nowrap">${pricePerDay.toLocaleString('es-MX')}</span>
+                </div>
               </div>
             </div>
 
-            {/* Estimation Breakdown */}
-            <div className="space-y-4">
-              <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-neutral-600 font-medium">Valor estimado del auto</span>
-                  <span className="text-sm font-bold text-neutral-900">
-                    ${currentEstimation.estimatedValue.toLocaleString('es-MX')} MXN
-                  </span>
-                </div>
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-neutral-600 font-medium">Tu tarifa por día</span>
-                  <span className="text-sm font-bold text-neutral-900">
-                    ${currentEstimation.pricePerDay.toLocaleString('es-MX')} MXN
-                  </span>
-                </div>
-                <div className="flex justify-between items-center pt-2">
-                  <span className="text-xs text-neutral-600 font-medium">Cliente paga por día (+33%)</span>
-                  <span className="text-sm font-bold text-neutral-900">
-                    ${clientDailyPrice.toLocaleString('es-MX')} MXN
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-200/40">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
-                    Tu ingreso neto mensual estimado
-                  </span>
-                </div>
+            {/* Results Container - Blue Background */}
+            <div className="bg-blue-50 rounded-2xl p-6 space-y-4">
+              
+              {/* Main Income Display */}
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 block mb-3">
+                  Tu ingreso neto mensual estimado
+                </span>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl sm:text-4xl font-black text-neutral-900">
-                    ${currentEstimation.monthlyEarnings.toLocaleString('es-MX')}
+                    ${monthlyEarnings.toLocaleString('es-MX')}
                   </span>
-                  <span className="text-xs font-bold text-neutral-600">MXN / mes</span>
+                  <span className="text-xs font-bold text-neutral-600">MXN</span>
                 </div>
-                <p className="text-xs text-neutral-600 mt-3 leading-relaxed">
-                  Basado en {currentEstimation.rentalDaysPerMonth} días al mes. Tú estableces disponibilidad y apruebas cada solicitud.
-                </p>
               </div>
 
-              <p className="text-xs text-neutral-500 text-center pt-2">
-                *Estimación con fines ilustrativos. Los ingresos dependen de demanda, temporada y disponibilidad del vehículo.
-              </p>
+              {/* Breakdown Section */}
+              <div className="space-y-2 text-xs border-t border-blue-200 pt-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-600">Tus rentas del mes</span>
+                  <span className="font-bold text-neutral-900">${monthlyEarnings.toLocaleString('es-MX')}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-600">Tarifa GALSA (33%)</span>
+                  <span className="font-bold text-neutral-900">${serviceCharge.toLocaleString('es-MX')}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-neutral-600">Lo que pagan clientes</span>
+                  <span className="font-bold text-neutral-900">${clientPays.toLocaleString('es-MX')}</span>
+                </div>
+              </div>
+
+              {/* Annual Projection - Smaller */}
+              <div className="border-t border-blue-200 pt-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 block mb-2">
+                  Proyección anual
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-black text-neutral-900">
+                    ${(monthlyEarnings * 12).toLocaleString('es-MX')}
+                  </span>
+                  <span className="text-xs font-bold text-neutral-600">MXN / año</span>
+                </div>
+              </div>
+
+              {/* Disclaimer */}
+              <div className="border-t border-blue-200 pt-3">
+                <p className="text-xs text-neutral-600 leading-relaxed text-center">
+                  Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
+                </p>
+              </div>
             </div>
           </div>
 
