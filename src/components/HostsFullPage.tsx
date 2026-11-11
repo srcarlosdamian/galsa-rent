@@ -337,7 +337,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-16 md:py-24 bg-cta-500">
+      <section className="py-16 md:py-24 bg-cta-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight mb-6">
             Empieza a ganar con tu auto hoy
@@ -347,7 +347,7 @@ export const HostsFullPage: React.FC<HostsFullPageProps> = ({ onNavigate }) => {
           </p>
           <button
             onClick={() => handleNavigate('/anfitriones/registro')}
-            className="inline-flex items-center justify-center gap-2 bg-white text-cta-500 font-bold text-sm px-7 py-3 rounded-xl transition-all hover:bg-neutral-50 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 bg-white text-cta-300 font-bold text-sm px-7 py-3 rounded-xl transition-all hover:bg-neutral-50 active:scale-95"
           >
             <span>Quiero publicar mi auto</span>
           </button>
