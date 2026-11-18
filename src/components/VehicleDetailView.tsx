@@ -11,6 +11,7 @@ import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from './VehicleCard';
 import { DateRangePicker } from './DateRangePicker';
+import { DocumentUploadCard, DocUploadState } from './DocumentUploadCard';
 
 interface VehicleDetailViewProps {
   vehicle: Vehicle;
@@ -156,6 +157,73 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  // Estados de carga de documentos solicitados
+  const [licenseDoc, setLicenseDoc] = useState<DocUploadState>({
+    name: 'Scann_158.pdf',
+    sizeStr: '30 MB / 74 MB',
+    progress: 79,
+    status: 'uploading',
+  });
+
+  const [ineDoc, setIneDoc] = useState<DocUploadState>({
+    name: '',
+    sizeStr: '',
+    progress: 0,
+    status: 'idle',
+  });
+
+  const [proofDoc, setProofDoc] = useState<DocUploadState>({
+    name: '',
+    sizeStr: '',
+    progress: 0,
+    status: 'idle',
+  });
+
+  const [additionalDocNotes, setAdditionalDocNotes] = useState('');
+
+  const simulateDocUpload = (type: 'license' | 'ine' | 'proof', customName?: string, customSize?: string) => {
+    const targetSetter = type === 'license' ? setLicenseDoc : type === 'ine' ? setIneDoc : setProofDoc;
+    const fileName = customName || (type === 'license' ? 'Scann_158.pdf' : type === 'ine' ? 'INE_identificacion_oficial.pdf' : 'Comprobante_domicilio_reciente.pdf');
+    const fileSize = customSize || (type === 'license' ? '30 MB / 74 MB' : type === 'ine' ? '2.4 MB / 2.4 MB' : '1.8 MB / 1.8 MB');
+
+    targetSetter({
+      name: fileName,
+      sizeStr: fileSize,
+      progress: 25,
+      status: 'uploading'
+    });
+
+    let current = 25;
+    const timer = setInterval(() => {
+      current += 25;
+      if (current >= 100) {
+        current = 100;
+        clearInterval(timer);
+        targetSetter({
+          name: fileName,
+          sizeStr: fileSize,
+          progress: 100,
+          status: 'completed'
+        });
+      } else {
+        targetSetter(prev => ({
+          ...prev,
+          progress: current
+        }));
+      }
+    }, 280);
+  };
+
+  const handleDocRemove = (type: 'license' | 'ine' | 'proof') => {
+    const targetSetter = type === 'license' ? setLicenseDoc : type === 'ine' ? setIneDoc : setProofDoc;
+    targetSetter({
+      name: '',
+      sizeStr: '',
+      progress: 0,
+      status: 'idle'
+    });
+  };
 
   // Validación de condiciones y campos obligatorios
   const isFormComplete = Boolean(
@@ -859,6 +927,70 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       </a>.
                     </span>
                   </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Sección: Sube tus documentos de identificación y comprobante de domicilio */}
+            <div className="pt-6 border-t border-slate-100 space-y-4 text-left">
+              <div>
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+                  Sube tus documentos de identificación y comprobante de domicilio
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-sans mt-1">
+                  Documentación requerida para la elaboración del contrato digital y entrega inmediata sin filas
+                </p>
+              </div>
+
+              <div className="space-y-4 pt-1">
+                {/* 1. Licencia de conducir */}
+                <DocumentUploadCard
+                  title="Licencia de conducir"
+                  badge="Vigente, ambos lados"
+                  fileState={licenseDoc}
+                  onFileSelect={(file) => {
+                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                    simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                  }}
+                  onRemove={() => handleDocRemove('license')}
+                />
+
+                {/* 2. Identificación oficial */}
+                <DocumentUploadCard
+                  title="Identificación oficial"
+                  badge="INE, frente y reverso"
+                  fileState={ineDoc}
+                  onFileSelect={(file) => {
+                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                    simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                  }}
+                  onRemove={() => handleDocRemove('ine')}
+                />
+
+                {/* 3. Comprobante de domicilio */}
+                <DocumentUploadCard
+                  title="Comprobante de domicilio"
+                  badge="No mayor a 3 meses"
+                  fileState={proofDoc}
+                  onFileSelect={(file) => {
+                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                    simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                  }}
+                  onRemove={() => handleDocRemove('proof')}
+                />
+
+                {/* 4. Información adicional (opcional) */}
+                <div className="space-y-1.5 pt-1">
+                  <label className="block text-sm font-heading font-bold text-slate-900">
+                    Información adicional (opcional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={additionalDocNotes}
+                    onChange={(e) => setAdditionalDocNotes(e.target.value)}
+                    placeholder="Notas relevantes para tu renta: conductor adicional, requerimientos de facturación o entrega especial en sucursal..."
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
+                  />
                 </div>
               </div>
             </div>

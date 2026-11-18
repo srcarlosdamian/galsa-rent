@@ -7,17 +7,11 @@ import {
 } from 'lucide-react';
 import { VEHICLES } from '../data/vehicles';
 import { Vehicle } from '../types/vehicle';
+import { DocumentUploadCard, DocUploadState } from '../components/DocumentUploadCard';
 
 interface AccountPageProps {
   onNavigate: (path: string) => void;
   initialOpenCompleteModal?: boolean;
-}
-
-interface DocUploadState {
-  name: string;
-  sizeStr: string;
-  progress: number;
-  status: 'idle' | 'uploading' | 'completed';
 }
 
 export const AccountPage: React.FC<AccountPageProps> = ({ 
@@ -390,217 +384,40 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
               <div className="space-y-5">
                 {/* 1. Licencia de conducir */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-heading font-bold text-slate-900">
-                      Licencia de conducir
-                    </label>
-                    <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
-                      Vigente, ambos lados
-                    </span>
-                  </div>
-
-                  {licenseDoc.status !== 'idle' ? (
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
-                        <FileText className="w-6 h-6 text-blue-600" />
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
-                            {licenseDoc.name}
-                          </h4>
-                        </div>
-                        <p className="text-xs font-sans text-slate-500 mb-2">
-                          {licenseDoc.sizeStr}
-                        </p>
-
-                        <div className="flex items-center gap-3">
-                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-blue-600 rounded-full transition-all duration-300"
-                              style={{ width: `${licenseDoc.progress}%` }}
-                            />
-                          </div>
-                          <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
-                            {licenseDoc.progress}%
-                          </span>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveDoc('license')}
-                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-1"
-                        aria-label="Eliminar o cancelar archivo"
-                        title="Eliminar archivo"
-                      >
-                        <X className="w-4 h-4" strokeWidth={2} />
-                      </button>
-                    </div>
-                  ) : (
-                    <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
-                      <input
-                        type="file"
-                        accept="image/*,.pdf"
-                        onChange={(e) => handleFileSelect('license', e)}
-                        className="hidden"
-                      />
-                      <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
-                        <UploadCloud className="w-5 h-5 text-slate-600" />
-                      </div>
-                      <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                        Haz clic para seleccionar archivo
-                      </span>
-                      <span className="text-xs font-sans text-slate-500 mt-0.5">
-                        Imagen (máx. 10MB) o PDF (máx. 3MB)
-                      </span>
-                    </label>
-                  )}
-                </div>
+                <DocumentUploadCard
+                  title="Licencia de conducir"
+                  badge="Vigente, ambos lados"
+                  fileState={licenseDoc}
+                  onFileSelect={(file) => {
+                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                    simulateUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                  }}
+                  onRemove={() => handleRemoveDoc('license')}
+                />
 
                 {/* 2. Identificación oficial */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-heading font-bold text-slate-900">
-                      Identificación oficial
-                    </label>
-                    <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
-                      INE, frente y reverso
-                    </span>
-                  </div>
-
-                  {ineDoc.status !== 'idle' ? (
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
-                        <FileText className="w-6 h-6 text-blue-600" />
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
-                            {ineDoc.name}
-                          </h4>
-                        </div>
-                        <p className="text-xs font-sans text-slate-500 mb-2">
-                          {ineDoc.sizeStr}
-                        </p>
-
-                        <div className="flex items-center gap-3">
-                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-blue-600 rounded-full transition-all duration-300"
-                              style={{ width: `${ineDoc.progress}%` }}
-                            />
-                          </div>
-                          <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
-                            {ineDoc.progress}%
-                          </span>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveDoc('ine')}
-                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-1"
-                        aria-label="Eliminar o cancelar archivo"
-                        title="Eliminar archivo"
-                      >
-                        <X className="w-4 h-4" strokeWidth={2} />
-                      </button>
-                    </div>
-                  ) : (
-                    <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
-                      <input
-                        type="file"
-                        accept="image/*,.pdf"
-                        onChange={(e) => handleFileSelect('ine', e)}
-                        className="hidden"
-                      />
-                      <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
-                        <UploadCloud className="w-5 h-5 text-slate-600" />
-                      </div>
-                      <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                        Haz clic para seleccionar archivo
-                      </span>
-                      <span className="text-xs font-sans text-slate-500 mt-0.5">
-                        Imagen (máx. 10MB) o PDF (máx. 3MB)
-                      </span>
-                    </label>
-                  )}
-                </div>
+                <DocumentUploadCard
+                  title="Identificación oficial"
+                  badge="INE, frente y reverso"
+                  fileState={ineDoc}
+                  onFileSelect={(file) => {
+                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                    simulateUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                  }}
+                  onRemove={() => handleRemoveDoc('ine')}
+                />
 
                 {/* 3. Comprobante de domicilio */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-heading font-bold text-slate-900">
-                      Comprobante de domicilio
-                    </label>
-                    <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
-                      No mayor a 3 meses
-                    </span>
-                  </div>
-
-                  {proofDoc.status !== 'idle' ? (
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
-                        <FileText className="w-6 h-6 text-blue-600" />
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
-                            {proofDoc.name}
-                          </h4>
-                        </div>
-                        <p className="text-xs font-sans text-slate-500 mb-2">
-                          {proofDoc.sizeStr}
-                        </p>
-
-                        <div className="flex items-center gap-3">
-                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-blue-600 rounded-full transition-all duration-300"
-                              style={{ width: `${proofDoc.progress}%` }}
-                            />
-                          </div>
-                          <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
-                            {proofDoc.progress}%
-                          </span>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveDoc('proof')}
-                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-1"
-                        aria-label="Eliminar o cancelar archivo"
-                        title="Eliminar archivo"
-                      >
-                        <X className="w-4 h-4" strokeWidth={2} />
-                      </button>
-                    </div>
-                  ) : (
-                    <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
-                      <input
-                        type="file"
-                        accept="image/*,.pdf"
-                        onChange={(e) => handleFileSelect('proof', e)}
-                        className="hidden"
-                      />
-                      <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
-                        <UploadCloud className="w-5 h-5 text-slate-600" />
-                      </div>
-                      <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                        Haz clic para seleccionar archivo
-                      </span>
-                      <span className="text-xs font-sans text-slate-500 mt-0.5">
-                        Imagen (máx. 10MB) o PDF (máx. 3MB)
-                      </span>
-                    </label>
-                  )}
-                </div>
+                <DocumentUploadCard
+                  title="Comprobante de domicilio"
+                  badge="No mayor a 3 meses"
+                  fileState={proofDoc}
+                  onFileSelect={(file) => {
+                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                    simulateUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                  }}
+                  onRemove={() => handleRemoveDoc('proof')}
+                />
 
                 {/* 4. Información adicional (opcional) */}
                 <div className="space-y-1.5 pt-2">
