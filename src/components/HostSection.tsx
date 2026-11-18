@@ -224,10 +224,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
               </div>
             </div>
 
-            {/* Columna Derecha: Tarjeta Azul Exacta de Estimación */}
+            {/* Columna Derecha: Tarjeta de Estimación en Fondo Gris 50 y elementos neutrales */}
             <div className="lg:col-span-5 w-full">
-              <div className="rounded-[28px] p-7 sm:p-8 text-left border border-blue-200/60 shadow-none" style={{ backgroundColor: '#D8E8FF' }}>
-                <span className="text-[11px] font-heading font-bold tracking-wider text-slate-700 uppercase block mb-1">
+              <div className="rounded-[28px] p-7 sm:p-8 text-left bg-slate-50 border border-slate-200/90 shadow-none">
+                <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
                   TU INGRESO NETO MENSUAL ESTIMADO
                 </span>
 
@@ -235,16 +235,16 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                   <span className="text-4xl sm:text-5xl font-heading font-extrabold text-slate-900 tracking-tight">
                     ${hostEarnings.toLocaleString('es-MX')}
                   </span>
-                  <span className="text-sm font-heading font-bold text-slate-700 uppercase">
+                  <span className="text-sm font-heading font-bold text-slate-500 uppercase">
                     MXN
                   </span>
                 </div>
 
                 {/* Línea divisora */}
-                <div className="border-t border-blue-200/80 my-5" />
+                <div className="border-t border-slate-200/80 my-5" />
 
                 {/* Desglose de ingresos */}
-                <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-700">
+                <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
                   <div className="flex justify-between items-center">
                     <span>Tus rentas del mes</span>
                     <span className="font-heading font-bold text-slate-900">
@@ -268,29 +268,29 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                 </div>
 
                 {/* Línea divisora */}
-                <div className="border-t border-blue-200/80 my-5" />
+                <div className="border-t border-slate-200/80 my-5" />
 
                 {/* Proyección Anual */}
                 <div>
-                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-700 uppercase block mb-1">
+                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
                     PROYECCIÓN ANUAL
                   </span>
                   <div className="flex items-baseline gap-1.5 mt-1">
                     <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tracking-tight">
                       ${annualProjection.toLocaleString('es-MX')}
                     </span>
-                    <span className="text-xs font-heading font-bold text-slate-700">
+                    <span className="text-xs font-heading font-bold text-slate-500">
                       MXN / año
                     </span>
                   </div>
                 </div>
 
                 {/* Línea divisora */}
-                <div className="border-t border-blue-200/80 my-5" />
+                <div className="border-t border-slate-200/80 my-5" />
 
-                {/* Disclaimer */}
-                <p className="text-[11px] font-sans text-slate-600 text-center leading-relaxed">
-                  Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
+                {/* Disclaimer resumido */}
+                <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
+                  *Estimado sujeto a demanda y ocupación.
                 </p>
 
                 {/* Botón de acción */}
@@ -298,7 +298,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                   href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full mt-6 py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
+                  className="w-full mt-6 py-4 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
                 >
                   <span>Quiero publicar mi auto</span>
                   <ArrowRight className="w-4 h-4" />
