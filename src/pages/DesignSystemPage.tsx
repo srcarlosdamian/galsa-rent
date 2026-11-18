@@ -642,7 +642,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 </span>
 
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                  v2.2.82
+                  v2.2.83
                 </span>
               </div>
             </div>
@@ -954,7 +954,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
                   <div className="flex items-center gap-3 text-white">
                     <span>Última actualización: <strong>06 Nov 2026</strong></span>
-                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.82</span>
+                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.83</span>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
                       <Palette className="w-3.5 h-3.5 text-pink-400" />
                       <span>Sistema de Diseño</span>

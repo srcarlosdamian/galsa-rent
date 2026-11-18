@@ -19,37 +19,37 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
     {
       title: 'Control total',
       description: 'Tú defines precios, disponibilidad y qué reservas aceptas.',
-      image: '/images/host-step-1.jpg',
+      image: '/images/step-img-1.webp',
       icon: Sliders,
     },
     {
       title: 'Pagos a tu cuenta',
       description: 'Cobramos al cliente y te depositamos tu parte en la cuenta que registres.',
-      image: '/images/host-step-3.jpg',
+      image: '/images/step-img-2.webp',
       icon: Award,
     },
     {
       title: 'Seguro y verificación',
       description: 'Cobertura durante la renta y clientes con identidad verificada.',
-      image: '/images/host-step-2.jpg',
+      image: '/images/step-img-3.webp',
       icon: ShieldCheck,
     },
     {
       title: 'Soporte 24/7',
       description: 'Equipo dedicado para anfitriones y asistencia en carretera.',
-      image: '/images/host-step-1.jpg',
+      image: '/images/step-img-4.webp',
       icon: Clock,
     },
     {
       title: 'Tarifa transparente',
       description: 'El 33% de servicio lo paga el cliente. Sin cargos ocultos.',
-      image: '/images/host-step-3.jpg',
+      image: '/images/step-img-1.webp',
       icon: Check,
     },
     {
       title: 'Más ocupación',
       description: 'Recomendaciones de precio dinámico según la demanda de tu ciudad.',
-      image: '/images/host-step-2.jpg',
+      image: '/images/step-img-2.webp',
       icon: ArrowRight,
     },
   ];
@@ -365,8 +365,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
         </div>
       </section>
 
-      {/* SECCIÓN 3: BENEFICIOS (Sin el textito 'BENEFICIOS' arriba, con imágenes cuadradas con bordes redondeados) */}
-      <section className="py-16 sm:py-20 border-b border-slate-100 bg-slate-50/50">
+      {/* SECCIÓN 3: BENEFICIOS (Sin el textito 'BENEFICIOS' arriba, con imágenes cuadradas con bordes redondeados al lado del texto) */}
+      <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="max-w-2xl mb-12">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
@@ -377,23 +377,25 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
             {BENEFITS.map((item, idx) => (
-              <div key={idx} className="space-y-3">
+              <div key={idx} className="flex items-start gap-4">
                 {/* Imagen Cuadrada con Bordes Redondeados */}
-                <div className="w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-2xl overflow-hidden bg-white border border-slate-200/90 flex items-center justify-center p-1.5 shadow-none">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80 shrink-0 shadow-none">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover rounded-xl"
+                    className="w-full h-full object-cover rounded-2xl"
                   />
                 </div>
-                <h3 className="text-base font-heading font-bold text-slate-900">
-                  {item.title}
-                </h3>
-                <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
-                  {item.description}
-                </p>
+                <div className="space-y-1">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
