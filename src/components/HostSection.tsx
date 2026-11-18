@@ -1,212 +1,444 @@
 import React, { useState } from 'react';
-import { TrendingUp, ArrowRight, Check, ShieldCheck, CalendarCheck, UserCheck } from 'lucide-react';
+import { Check, ShieldCheck, Clock, Award, Sliders, ArrowRight } from 'lucide-react';
 
 interface HostSectionProps {
   isFullPage?: boolean;
 }
 
-export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = false }) => {
-  const [dailyRate, setDailyRate] = useState(1100);
+export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) => {
+  // Calculadora interactiva: Tarifa diaria y días al mes (SIN selector de tipo de vehículo por requerimiento)
+  const [dailyRate, setDailyRate] = useState(1200);
   const [daysPerMonth, setDaysPerMonth] = useState(15);
 
-  // Anfitrión receives 100% of the daily rate they set!
-  // The client pays the 33% service fee.
   const hostEarnings = dailyRate * daysPerMonth;
-  const clientPricePerDay = Math.round(dailyRate * 1.33);
+  const galsaFee = Math.round(hostEarnings * 0.33);
+  const clientTotal = hostEarnings + galsaFee;
+  const annualProjection = hostEarnings * 12;
+
+  const BENEFITS = [
+    {
+      title: 'Control total',
+      description: 'Tú defines precios, disponibilidad y qué reservas aceptas.',
+      icon: Sliders,
+    },
+    {
+      title: 'Pagos a tu cuenta',
+      description: 'Cobramos al cliente y te depositamos tu parte en la cuenta que registres.',
+      icon: Award,
+    },
+    {
+      title: 'Seguro y verificación',
+      description: 'Cobertura durante la renta y clientes con identidad verificada.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Soporte 24/7',
+      description: 'Equipo dedicado para anfitriones y asistencia en carretera.',
+      icon: Clock,
+    },
+    {
+      title: 'Tarifa transparente',
+      description: 'El 33% de servicio lo paga el cliente. Sin cargos ocultos.',
+      icon: Check,
+    },
+    {
+      title: 'Más ocupación',
+      description: 'Recomendaciones de precio dinámico según la demanda de tu ciudad.',
+      icon: ArrowRight,
+    },
+  ];
+
+  const STEPS = [
+    {
+      num: 1,
+      title: 'Regístrate',
+      description: 'Crea tu cuenta de anfitrión con tus datos.',
+    },
+    {
+      num: 2,
+      title: 'Valida tu identidad',
+      description: 'Verificamos tu identidad y documentación.',
+    },
+    {
+      num: 3,
+      title: 'Carga tu vehículo',
+      description: 'Sube fotos, documentos y datos del auto.',
+    },
+    {
+      num: 4,
+      title: 'Recibe aprobación',
+      description: 'GALSA revisa tu vehículo en 24-48 horas.',
+    },
+    {
+      num: 5,
+      title: 'Recibe reservas',
+      description: 'Tu auto aparece en el catálogo y empieza a recibir solicitudes.',
+    },
+    {
+      num: 6,
+      title: 'Cobra',
+      description: 'Recibes tu parte de cada renta en la cuenta que registraste.',
+    },
+  ];
+
+  const HOW_IT_WORKS_CARDS = [
+    {
+      img: '/images/host-step-1.jpg',
+      title: 'Publica tu auto',
+      description: 'Registra tu vehículo, define tu disponibilidad y elige tu precio con ayuda de nuestro motor de tarifas.',
+    },
+    {
+      img: '/images/host-step-2.jpg',
+      title: 'Aprueba reservas',
+      description: 'Clientes verificados solicitan tu auto y tú decides a quién le dices que sí.',
+    },
+    {
+      img: '/images/host-step-3.jpg',
+      title: 'Cobra tu tarifa',
+      description: 'GALSA cobra al cliente la renta más su tarifa de servicio y te deposita tu parte en la cuenta que registres.',
+    },
+  ];
 
   return (
-    <section id="anfitriones" className="py-16 md:py-24 bg-white border-b border-neutral-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {isFullPage && (
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-              Marketplace de anfitriones en Durango
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-tight">
-              Gana dinero rentando tu auto en Durango
-            </h1>
-            <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed">
-              Tú fijas precio y disponibilidad, y apruebas cada reserva. GALSA se encarga de verificar clientes, firmar contratos y cobrar. Recibes el 100% de tu tarifa.
-            </p>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div className="bg-white min-h-screen">
+      {/* SECCIÓN 1: HERO & CALCULADORA INTERACTIVA */}
+      <section className="pt-10 sm:pt-14 pb-16 sm:pb-20 border-b border-slate-100">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           
-          {/* Left Column */}
-          <div className="lg:col-span-6 space-y-6">
-            {!isFullPage && (
-              <>
-                <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block">
-                  Marketplace de anfitriones
-                </span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 leading-tight">
-                  Gana dinero con tu auto en Durango
-                </h2>
-                <p className="text-base text-neutral-600 leading-relaxed">
-                  Tú fijas precio y disponibilidad, y apruebas cada reserva. GALSA se encarga de verificar clientes, firmar contratos y cobrar. Recibes el 100% de tu tarifa.
-                </p>
-              </>
-            )}
-
-            <div className="space-y-4 pt-2">
-              <div className="flex items-start gap-3">
-                <div className="p-1 rounded-full bg-neutral-900 text-white mt-0.5">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-neutral-900">Recibes el 100% de tu tarifa fijada</h3>
-                  <p className="text-xs text-neutral-600">No te descontamos comisiones. La tarifa de servicio del 33% la cubre el cliente.</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="p-1 rounded-full bg-neutral-900 text-white mt-0.5">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-neutral-900">Tú apruebas cada solicitud de reserva</h3>
-                  <p className="text-xs text-neutral-600">Tienes el control absoluto de tus fechas, tu calendario y quién conduce tu vehículo.</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="p-1 rounded-full bg-neutral-900 text-white mt-0.5">
-                  <Check className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-neutral-900">Clientes verificados y seguro incluido</h3>
-                  <p className="text-xs text-neutral-600">Validamos identidad, licencia y comprobantes de domicilio antes de entregar el auto en Plaza 450.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
-              {/* TODO: Reemplazar con el enlace directo al formulario o WhatsApp de anfitriones */}
-              {/* CTA en Anfitriones: Figma CTA (#3D63FF) */}
-              <a
-                href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ backgroundColor: '#3D63FF' }}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white text-xs font-bold px-7 py-4 rounded-2xl transition-all hover:brightness-105 active:scale-[0.98]"
-              >
-                <span>Publicar mi auto en GALSA</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-
-              {!isFullPage && (
-                <a
-                  href="/anfitriones"
-                  className="w-full sm:w-auto inline-flex items-center justify-center text-xs font-bold text-neutral-800 hover:text-black py-4 px-4"
-                >
-                  Conocer más sobre anfitriones →
-                </a>
-              )}
-            </div>
+          {/* Eyebrow de cabecera con programa y simulador interactivo */}
+          <div className="flex items-center justify-between pb-6 sm:pb-8 border-b border-slate-100/90 mb-8 sm:mb-10 text-left">
+            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400">
+              PROGRAMA DE AFILIACIONES GALSA
+            </span>
+            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400">
+              SIMULADOR INTERACTIVO
+            </span>
           </div>
 
-          {/* Right Column: Earnings Simulator */}
-          <div className="lg:col-span-6">
-            <div className="bg-white rounded-3xl border border-neutral-200 p-6 sm:p-8 shadow-dropdown">
-              <div className="flex items-center justify-between pb-5 border-b border-neutral-100">
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
-                    Simulador de ingresos
-                  </span>
-                  <h3 className="text-xl font-extrabold text-neutral-900 mt-0.5">
-                    Calcula cuánto recibirás al mes
-                  </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            
+            {/* Columna Izquierda: Título, Checks destacados y Controles de la calculadora */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
+                Convierte tu auto en ingresos
+              </h1>
+
+              {/* 3 Checks destacados con estilo exacto */}
+              <div className="space-y-4 pt-2">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-blue-600" strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-heading font-bold text-slate-900">
+                      33% comisión al cliente
+                    </h3>
+                    <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                      Tú recibes el 100% de la tarifa que fijas, el cliente cubre la comisión de servicio.
+                    </p>
+                  </div>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-900">
-                  <TrendingUp className="w-5 h-5" />
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-blue-600" strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-heading font-bold text-slate-900">
+                      100% de la tarifa para ti
+                    </h3>
+                    <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                      Sin descuentos, sin retenciones. Recibes íntegro lo que estableces por día.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-blue-600" strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-heading font-bold text-slate-900">
+                      24–48h revisión de solicitud
+                    </h3>
+                    <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                      Respuesta rápida en la plataforma. Tú apruebas cada reserva con total control.
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-6 space-y-6">
+              {/* Controles de la calculadora (SIN selector de tipo de vehículo) */}
+              <div className="pt-6 border-t border-slate-100 space-y-6">
+                <h4 className="text-base font-heading font-bold text-slate-900">
+                  Calcular tus ingresos
+                </h4>
+
+                {/* Control 1: Tarifa diaria */}
                 <div>
-                  <div className="flex justify-between text-xs mb-2">
-                    <span className="font-bold text-neutral-700">Tu tarifa fijada por día</span>
-                    <span className="font-black text-neutral-900">${dailyRate.toLocaleString('es-MX')} MXN</span>
+                  <div className="flex justify-between items-center text-xs sm:text-sm mb-2.5">
+                    <span className="font-heading font-medium text-slate-600">Tu tarifa fijada por día</span>
+                    <span className="font-heading font-bold text-slate-900 text-base">
+                      ${dailyRate.toLocaleString('es-MX')} MXN
+                    </span>
                   </div>
                   <input
                     type="range"
-                    min={700}
+                    min={600}
                     max={3000}
                     step={50}
                     value={dailyRate}
                     onChange={(e) => setDailyRate(Number(e.target.value))}
-                    className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-black"
+                    className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600"
                   />
-                  <div className="flex justify-between text-[10px] text-neutral-400 mt-1">
-                    <span>$700 (Sedán)</span>
-                    <span>$1,400 (SUV/4x4)</span>
-                    <span>$3,000 (Premium)</span>
+                  <div className="flex justify-between text-[11px] font-sans text-slate-400 mt-1.5">
+                    <span>$600 (Económico)</span>
+                    <span>$1,400 (Medio)</span>
+                    <span>$3,000 (Ejecutivo)</span>
                   </div>
                 </div>
 
+                {/* Control 2: Días de renta al mes */}
                 <div>
-                  <div className="flex justify-between text-xs mb-2">
-                    <span className="font-bold text-neutral-700">Días que decides rentarlo al mes</span>
-                    <span className="font-black text-neutral-900">{daysPerMonth} días</span>
+                  <div className="flex justify-between items-center text-xs sm:text-sm mb-2.5">
+                    <span className="font-heading font-medium text-slate-600">Días que decides rentarlo al mes</span>
+                    <span className="font-heading font-bold text-slate-900 text-base">
+                      {daysPerMonth} días
+                    </span>
                   </div>
                   <input
                     type="range"
                     min={3}
-                    max={28}
+                    max={30}
                     step={1}
                     value={daysPerMonth}
                     onChange={(e) => setDaysPerMonth(Number(e.target.value))}
-                    className="w-full h-2 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-black"
+                    className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600"
                   />
-                  <div className="flex justify-between text-[10px] text-neutral-400 mt-1">
+                  <div className="flex justify-between text-[11px] font-sans text-slate-400 mt-1.5">
                     <span>3 días (Fines de semana)</span>
                     <span>15 días (Medio mes)</span>
-                    <span>28 días (Flota activa)</span>
+                    <span>30 días (Mes completo)</span>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Calculation breakdown card */}
-                <div className="p-5 rounded-2xl border border-neutral-200 bg-neutral-50/70 space-y-3">
-                  <div className="flex justify-between text-xs text-neutral-600">
-                    <span>Tarifa que paga el cliente (+33% servicio):</span>
-                    <span className="font-semibold text-neutral-900">${clientPricePerDay.toLocaleString('es-MX')} MXN/día</span>
-                  </div>
+            {/* Columna Derecha: Tarjeta Azul Exacta de Estimación */}
+            <div className="lg:col-span-5 w-full">
+              <div className="rounded-[28px] p-7 sm:p-8 text-left border border-blue-200/60 shadow-none" style={{ backgroundColor: '#D8E8FF' }}>
+                <span className="text-[11px] font-heading font-bold tracking-wider text-slate-700 uppercase block mb-1">
+                  TU INGRESO NETO MENSUAL ESTIMADO
+                </span>
 
-                  <div className="pt-2 border-t border-neutral-200">
-                    <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block">
-                      Pago neto directo a tu cuenta bancaria (100% de tu tarifa):
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-4xl sm:text-5xl font-heading font-extrabold text-slate-900 tracking-tight">
+                    ${hostEarnings.toLocaleString('es-MX')}
+                  </span>
+                  <span className="text-sm font-heading font-bold text-slate-700 uppercase">
+                    MXN
+                  </span>
+                </div>
+
+                {/* Línea divisora */}
+                <div className="border-t border-blue-200/80 my-5" />
+
+                {/* Desglose de ingresos */}
+                <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-700">
+                  <div className="flex justify-between items-center">
+                    <span>Tus rentas del mes</span>
+                    <span className="font-heading font-bold text-slate-900">
+                      ${hostEarnings.toLocaleString('es-MX')}
                     </span>
-                    <div className="flex items-baseline gap-1.5 mt-1">
-                      <span className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
-                        ${hostEarnings.toLocaleString('es-MX')}
-                      </span>
-                      <span className="text-xs font-bold text-neutral-600">MXN / mes</span>
-                    </div>
                   </div>
 
-                  <p className="text-[10px] text-neutral-500 leading-normal">
-                    *El anfitrión recibe el 100% de la tarifa que fija. Los pagos se transfieren al término de cada contrato tras la revisión en Sucursal Plaza 450.
-                  </p>
+                  <div className="flex justify-between items-center">
+                    <span>Tarifa GALSA (33%)</span>
+                    <span className="font-heading font-bold text-slate-900">
+                      ${galsaFee.toLocaleString('es-MX')}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <span>Lo que pagan clientes</span>
+                    <span className="font-heading font-bold text-slate-900">
+                      ${clientTotal.toLocaleString('es-MX')}
+                    </span>
+                  </div>
                 </div>
 
-                {/* TODO: Reemplazar con enlace a WhatsApp de evaluación de vehículos */}
+                {/* Línea divisora */}
+                <div className="border-t border-blue-200/80 my-5" />
+
+                {/* Proyección Anual */}
+                <div>
+                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-700 uppercase block mb-1">
+                    PROYECCIÓN ANUAL
+                  </span>
+                  <div className="flex items-baseline gap-1.5 mt-1">
+                    <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tracking-tight">
+                      ${annualProjection.toLocaleString('es-MX')}
+                    </span>
+                    <span className="text-xs font-heading font-bold text-slate-700">
+                      MXN / año
+                    </span>
+                  </div>
+                </div>
+
+                {/* Línea divisora */}
+                <div className="border-t border-blue-200/80 my-5" />
+
+                {/* Disclaimer */}
+                <p className="text-[11px] font-sans text-slate-600 text-center leading-relaxed">
+                  Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
+                </p>
+
+                {/* Botón de acción */}
                 <a
-                  href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20evaluar%20mi%20auto%20para%20rentarlo%20en%20Durango"
+                  href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full block text-center py-3.5 rounded-xl border border-black text-neutral-900 font-bold text-xs hover:bg-neutral-900 hover:text-white transition-colors"
+                  className="w-full mt-6 py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
                 >
-                  Consultar evaluación de mi vehículo
+                  <span>Quiero publicar mi auto</span>
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 2: CÓMO FUNCIONA (Con las 3 imágenes 3D de coches) */}
+      <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+          <div className="max-w-2xl mb-12">
+            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
+              CÓMO FUNCIONA
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
+              Cómo ganar dinero con tu auto en GALSA
+            </h2>
+            <p className="text-sm sm:text-base font-sans text-slate-500 mt-2">
+              Tú pones el auto. GALSA pone la tecnología, los clientes y la operación.
+            </p>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {HOW_IT_WORKS_CARDS.map((card, idx) => (
+              <div key={idx} className="space-y-4">
+                <div className="rounded-2xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
+                  <img
+                    src={card.img}
+                    alt={card.title}
+                    className="w-full h-auto object-cover rounded-xl"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900">
+                    {card.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1 leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
 
-      </div>
-    </section>
+      {/* SECCIÓN 3: BENEFICIOS */}
+      <section className="py-16 sm:py-20 border-b border-slate-100 bg-slate-50/50">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+          <div className="max-w-2xl mb-12">
+            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
+              BENEFICIOS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
+              Beneficios de ser anfitrión GALSA
+            </h2>
+            <p className="text-sm sm:text-base font-sans text-slate-500 mt-2">
+              Más ingresos, menos complicaciones.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {BENEFITS.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={idx} className="space-y-2">
+                  <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-700 mb-3 shadow-none">
+                    <Icon className="w-5 h-5 text-slate-700" strokeWidth={1.75} />
+                  </div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 4: PROCESO (Publica tu auto en 6 pasos) */}
+      <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+          <div className="max-w-2xl mb-12">
+            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
+              PROCESO
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
+              Publica tu auto en 6 pasos
+            </h2>
+            <p className="text-sm sm:text-base font-sans text-slate-500 mt-2">
+              Diseñamos un flujo simple y transparente para que no pierdas tiempo en filas ni papeleo tradicional.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {STEPS.map((step) => (
+              <div key={step.num} className="space-y-3">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 text-white font-heading font-bold text-sm flex items-center justify-center shadow-none">
+                  {step.num}
+                </div>
+                <h3 className="text-base font-heading font-bold text-slate-900">
+                  {step.title}
+                </h3>
+                <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 5: BANNER FINAL CTA */}
+      <section className="py-14 sm:py-16" style={{ backgroundColor: '#8EB5FF' }}>
+        <div className="max-w-[1000px] mx-auto px-4 sm:px-6 text-center space-y-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white tracking-tight">
+            Empieza a ganar con tu auto hoy
+          </h2>
+          <p className="text-sm sm:text-base font-sans text-white/90 max-w-xl mx-auto">
+            Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
+          </p>
+          <div className="pt-3">
+            <a
+              href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all shadow-sm active:scale-95"
+            >
+              Quiero publicar mi auto
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
