@@ -63,43 +63,31 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
       num: 1,
       title: 'Regístrate',
       description: 'Crea tu cuenta de anfitrión con tus datos.',
-      image: '/images/step-img-1.webp',
-      icon: UserPlus,
     },
     {
       num: 2,
       title: 'Valida tu identidad',
       description: 'Verificamos tu identidad y documentación.',
-      image: '/images/step-img-2.webp',
-      icon: ShieldCheck,
     },
     {
       num: 3,
       title: 'Carga tu vehículo',
       description: 'Sube fotos, documentos y datos del auto.',
-      image: '/images/step-img-3.webp',
-      icon: Car,
     },
     {
       num: 4,
       title: 'Recibe aprobación',
       description: 'GALSA revisa tu vehículo en 24-48 horas.',
-      image: '/images/step-img-4.webp',
-      icon: CheckCircle2,
     },
     {
       num: 5,
       title: 'Recibe reservas',
       description: 'Tu auto aparece en el catálogo y empieza a recibir solicitudes.',
-      image: '/images/trust-safety.webp',
-      icon: CalendarCheck,
     },
     {
       num: 6,
       title: 'Cobra',
       description: 'Recibes tu parte de cada renta en la cuenta que registraste.',
-      image: '/images/renta-galsa.webp',
-      icon: Wallet,
     },
   ];
 
@@ -133,9 +121,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
             <div className="lg:col-span-6 space-y-6 text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-slate-900 tracking-tight leading-[1.08]">
                 Convierte tu auto<br />
+                en{' '}
                 <span className="relative inline-block whitespace-nowrap">
-                  <span className="relative z-10">en ingresos</span>
-                  <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-3 sm:h-3.5 bg-blue-100 rounded-sm -z-0" />
+                  <span className="relative z-10">ingresos</span>
+                  <span className="absolute left-0 bottom-0.5 w-full h-2.5 bg-[#D8E8FF] rounded-none -z-0" />
                 </span>
               </h1>
 
@@ -302,7 +291,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                   </div>
                 </div>
 
-                <div className="border-t border-slate-200/80 pt-3">
+                <div className="pt-2">
                   <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
                     PROYECCIÓN ANUAL
                   </span>
@@ -316,7 +305,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                   </div>
                 </div>
 
-                <div className="border-t border-slate-200/80 pt-3">
+                <div className="pt-2">
                   <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
                     Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
                   </p>
@@ -403,10 +392,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
         </div>
       </section>
 
-      {/* SECCIÓN 4: PROCESO EN 6 PASOS (Sin el textito 'PROCESO' arriba) */}
+      {/* SECCIÓN 4: PUBLICA TU AUTO EN 6 PASOS (Sin 'PROCESO' arriba, diseño exacto a la captura oficial) */}
       <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-          <div className="max-w-2xl mb-12">
+          <div className="max-w-2xl mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
               Publica tu auto en 6 pasos
             </h2>
@@ -415,62 +404,49 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {STEPS.map((step) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.num} className="flex flex-col items-start">
-                  {/* Contenedor de Imagen con badge flotante idéntico al Home */}
-                  <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
-                    <div className="w-full h-full rounded-2xl overflow-hidden">
-                      <img
-                        src={step.image}
-                        alt={step.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-
-                    {/* Badge cuadrado flotante en esquina inferior izquierda con margen */}
-                    <div className="absolute -bottom-3 left-3 w-12 h-12 bg-blue-300 rounded-xl flex items-center justify-center z-10 shadow-xs">
-                      <Icon className="w-5 h-5 text-blue-900" strokeWidth={1.4} />
-                    </div>
-                  </div>
-
-                  {/* Textos del paso */}
-                  <div className="pt-2 flex flex-col items-start text-left">
-                    <h3 className="text-base sm:text-lg font-heading font-semibold text-slate-900 mb-1.5 leading-snug">
-                      {step.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 sm:gap-x-12">
+            {STEPS.map((step) => (
+              <div key={step.num} className="space-y-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-500 text-white font-heading font-bold text-sm flex items-center justify-center shadow-none">
+                  {step.num}
                 </div>
-              );
-            })}
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SECCIÓN 5: BANNER FINAL */}
-      <section className="py-14 sm:py-16" style={{ backgroundColor: '#8EB5FF' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white tracking-tight">
-            Empieza a ganar con tu auto hoy
-          </h2>
-          <p className="text-sm sm:text-base font-sans text-white/90 max-w-xl mx-auto">
-            Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
-          </p>
-          <div className="pt-3">
-            <a
-              href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all shadow-sm active:scale-95"
-            >
-              Quiero publicar mi auto
-            </a>
+      {/* SECCIÓN 5: BANNER FINAL (Respeta estrictamente el max-width con contenedor redondeado) */}
+      <section className="py-12 sm:py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div 
+            style={{ backgroundColor: '#8EB5FF' }}
+            className="rounded-[28px] sm:rounded-[36px] py-14 sm:py-16 px-6 sm:px-12 text-center space-y-4 shadow-none"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white tracking-tight">
+              Empieza a ganar con tu auto hoy
+            </h2>
+            <p className="text-sm sm:text-base font-sans text-white/95 max-w-xl mx-auto">
+              Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
+            </p>
+            <div className="pt-3">
+              <a
+                href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-sm active:scale-95"
+              >
+                Quiero publicar mi auto
+              </a>
+            </div>
           </div>
         </div>
       </section>

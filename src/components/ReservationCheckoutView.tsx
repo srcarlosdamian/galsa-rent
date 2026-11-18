@@ -208,14 +208,11 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
     isContractSigned
   );
 
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
   const handleCompleteBooking = () => {
-    const extrasText = selectedExtras.length > 0 
-      ? ` con extras: ${selectedExtras.map(id => EXTRAS_OPTIONS.find(e => e.id === id)?.title).join(', ')}`
-      : '';
-    const msg = encodeURIComponent(
-      `Hola GALSA Rent! Confirmo mi reserva de ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Plaza 450) del ${startDate} (${pickupTime}) al ${endDate} (${returnTime}) por ${rentalDays} días${extrasText}. Documentación y contrato digital firmado por ${signatureName || 'el titular'}. Total: $${total.toLocaleString('es-MX')} MXN.`
-    );
-    window.open(`https://wa.me/526180000000?text=${msg}`, '_blank');
+    if (!isFormComplete) return;
+    setIsSuccessModalOpen(true);
   };
 
   return (
@@ -888,6 +885,68 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                   Confirmar firma digital
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE CONFIRMACIÓN EXITOSA (SIN WHATSAPP) */}
+      {isSuccessModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 text-center shadow-2xl">
+            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
+              <Check className="w-8 h-8" strokeWidth={2.5} />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
+                ¡Reserva confirmada con éxito!
+              </h3>
+              <p className="text-xs sm:text-sm font-sans text-slate-500 max-w-md mx-auto">
+                Tu contrato mercantil digital ha sido formalizado y tu unidad <strong>{vehicle.make} {vehicle.model} {vehicle.year}</strong> está reservada para entrega en <strong>Sucursal Plaza 450, Durango</strong>.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 text-left text-xs sm:text-sm space-y-2 font-sans text-slate-700">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Folio digital:</span>
+                <span className="font-heading font-bold text-slate-900 font-mono">#GLS-{vehicle.id.slice(0, 8).toUpperCase()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Titular del contrato:</span>
+                <span className="font-heading font-semibold text-slate-900">{signatureName || 'Titular verificado'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Periodo de entrega:</span>
+                <span className="font-heading font-semibold text-slate-900">{startDate} ({pickupTime} hrs) — {endDate} ({returnTime} hrs)</span>
+              </div>
+              <div className="flex justify-between pt-2 border-t border-slate-200/80">
+                <span className="font-heading font-bold text-slate-900">Total liquidado:</span>
+                <span className="font-heading font-extrabold text-blue-600 text-base">${total.toLocaleString('es-MX')} MXN</span>
+              </div>
+            </div>
+
+            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSuccessModalOpen(false);
+                  if (onNavigate) onNavigate('/catalogo');
+                }}
+                className="w-full py-3.5 rounded-xl border border-slate-200 text-slate-700 font-heading font-semibold text-xs sm:text-sm hover:bg-slate-50 transition-all cursor-pointer"
+              >
+                Explorar más vehículos
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSuccessModalOpen(false);
+                  if (onNavigate) onNavigate('/');
+                }}
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+              >
+                Volver al inicio
+              </button>
             </div>
           </div>
         </div>

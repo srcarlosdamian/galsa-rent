@@ -377,11 +377,29 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Vehículos similares */}
+            {/* Autos similares para tus fechas */}
             <div className="pt-8 border-t border-slate-100 space-y-4">
-              <h3 className="text-xl font-heading font-bold text-slate-900">
-                Vehículos similares
-              </h3>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-xl font-heading font-bold text-slate-900">
+                    Autos similares para tus fechas
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Opciones alternativas con entrega inmediata en México
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onNavigate) onNavigate('/catalogo');
+                  }}
+                  className="text-xs font-heading font-bold text-slate-900 hover:text-blue-600 transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Ver catálogo</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {similarVehicles.map((sim) => (
                   <div 
@@ -399,15 +417,48 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       />
                     </div>
                     <div>
-                      <h4 className="font-heading font-bold text-slate-900 text-sm truncate">
+                      <span className="text-[10px] font-sans text-slate-400 block truncate">
+                        {sim.year} · {sim.category}
+                      </span>
+                      <h4 className="font-heading font-bold text-slate-900 text-sm truncate mt-0.5">
                         {sim.make} {sim.model}
                       </h4>
                       <span className="text-xs font-heading font-bold text-slate-900 mt-1 block">
-                        ${sim.pricePerDay.toLocaleString('es-MX')} MXN/día
+                        ${sim.pricePerDay.toLocaleString('es-MX')} <span className="font-normal text-slate-400 text-[10px]">Por día, estimado</span>
                       </span>
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Banner: ¿Tienes dudas sobre esta unidad? */}
+            <div className="pt-8">
+              <div className="rounded-[28px] border border-slate-200/90 bg-slate-50/70 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-3 max-w-md text-left">
+                  <h3 className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
+                    ¿Tienes dudas sobre esta unidad?
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                    Atención local directa y personalizada en México. Resolvemos tus preguntas sobre modelos, requisitos, depósitos en garantía y entregas oficiales.
+                  </p>
+                  <div className="pt-2">
+                    <a
+                      href="mailto:contacto@galsarent.com?subject=Dudas%20sobre%20vehiculo"
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all shadow-sm active:scale-95"
+                    >
+                      Escríbenos por correo
+                    </a>
+                  </div>
+                </div>
+
+                <div className="w-full md:w-64 aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 shrink-0">
+                  <img
+                    src="/images/host-step-2.jpg"
+                    alt="Atención GALSA"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
 
@@ -419,69 +470,118 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="hidden lg:block lg:col-span-5">
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-sm space-y-6 text-left">
               
-              {/* Tarifa diaria */}
+              {/* Tarifa total */}
               <div>
                 <span className="text-3xl font-heading font-extrabold text-slate-900">
-                  ${vehicle.pricePerDay.toLocaleString('es-MX')}
+                  ${total.toLocaleString('es-MX')}
                 </span>
-                <span className="text-sm font-heading font-medium text-slate-500 ml-1.5">
-                  MXN / día
+                <span className="text-base font-heading font-medium text-slate-600 ml-1.5">
+                  total
                 </span>
               </div>
 
-              {/* Selector de Fechas */}
-              <div className="space-y-3 pt-2 border-t border-slate-100">
-                <label className="block text-xs font-heading font-bold uppercase tracking-wider text-slate-600">
-                  Fechas de viaje
-                </label>
+              {/* Ubicación y Sucursal */}
+              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
+                <div className="p-3 rounded-xl border border-slate-200 bg-slate-50/50">
+                  <span className="text-[10px] font-sans text-slate-400 block">Ciudad</span>
+                  <span className="text-xs font-heading font-bold text-slate-900 block mt-0.5">Durango</span>
+                  <span className="text-[10px] font-sans text-slate-400 block mt-0.5">Ubicación del vehículo</span>
+                </div>
+                <div className="p-3 rounded-xl border border-slate-200 bg-slate-50/50">
+                  <span className="text-[10px] font-sans text-slate-400 block">Sucursal</span>
+                  <span className="text-xs font-heading font-bold text-slate-900 block mt-0.5">Plaza 450</span>
+                  <span className="text-[10px] font-sans text-slate-400 block mt-0.5">Recogida y devolución</span>
+                </div>
+              </div>
+
+              {/* Selector de Fechas y Horarios */}
+              <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Recogida</label>
+                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Fecha de recogida</label>
                     <input
                       type="date"
                       value={startDate}
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-heading font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold bg-white"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Devolución</label>
+                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Hora de entrega</label>
+                    <div className="relative">
+                      <select
+                        value={pickupTime}
+                        onChange={(e) => setPickupTime(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold appearance-none bg-white pr-7 cursor-pointer"
+                      >
+                        {TIME_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Fecha de devolución</label>
                     <input
                       type="date"
                       value={endDate}
                       min={startDate || new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-heading font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold bg-white"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Hora de devolución</label>
+                    <div className="relative">
+                      <select
+                        value={returnTime}
+                        onChange={(e) => setReturnTime(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold appearance-none bg-white pr-7 cursor-pointer"
+                      >
+                        {TIME_OPTIONS.map((t) => (
+                          <option key={t} value={t}>{t}</option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Desglose de precios resumido */}
-              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100 space-y-2 text-xs font-sans text-slate-600">
+              {/* Desglose de precios exacto al diseño */}
+              <div className="rounded-2xl bg-slate-50/70 p-4 border border-slate-200/80 space-y-2 text-xs font-sans text-slate-600">
                 <div className="flex justify-between">
                   <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
                   <span className="font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Tarifa de servicio (33%)</span>
+                  <span>Tarifa de servicio GALSA</span>
                   <span className="font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
                 </div>
-                <div className="pt-2 border-t border-slate-200 flex justify-between text-sm font-heading font-bold text-slate-900">
-                  <span>Total estimado</span>
-                  <span>${total.toLocaleString('es-MX')} MXN</span>
+                <div className="pt-2 border-t border-slate-200/80 flex justify-between text-sm font-heading font-bold text-slate-900">
+                  <span>Total de la renta</span>
+                  <span>${total.toLocaleString('es-MX')}</span>
                 </div>
+              </div>
+
+              {/* Depósito en garantía */}
+              <div className="flex justify-between items-center p-3 rounded-xl border border-slate-200/80 bg-slate-50/40 text-xs font-sans">
+                <span className="text-slate-600">Depósito en garantía (reembolsable)</span>
+                <span className="font-heading font-bold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
               </div>
 
               {/* BOTÓN CONTINUAR -> AVANZA AL CHECKOUT / COMPLETA TU RESERVA */}
               <button
                 type="button"
                 onClick={handleProceedToCheckout}
-                className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-sm"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-[0.98] cursor-pointer shadow-sm text-center"
               >
-                <span>Continuar con la reserva</span>
-                <ArrowRight className="w-4 h-4" />
+                Continuar
               </button>
 
               <p className="text-[11px] text-center font-sans text-slate-400">
