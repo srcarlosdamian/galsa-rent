@@ -554,7 +554,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               {/* Desglose de precios exacto al diseño */}
-              <div className="rounded-2xl bg-slate-50/70 p-4 border border-slate-200/80 space-y-2 text-xs font-sans text-slate-600">
+              <div className="rounded-2xl bg-transparent p-4 border border-slate-200/80 space-y-2 text-xs font-sans text-slate-600">
                 <div className="flex justify-between">
                   <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
                   <span className="font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
@@ -570,7 +570,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               {/* Depósito en garantía */}
-              <div className="flex justify-between items-center p-3 rounded-xl border border-slate-200/80 bg-slate-50/40 text-xs font-sans">
+              <div className="flex justify-between items-center p-3 rounded-xl border border-slate-200/80 bg-transparent text-xs font-sans">
                 <span className="text-slate-600">Depósito en garantía (reembolsable)</span>
                 <span className="font-heading font-bold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
               </div>
