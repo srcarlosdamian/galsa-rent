@@ -5,7 +5,7 @@ import {
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
   X, Briefcase, Wind, Smartphone, Camera, Car, Zap, Check,
-  ClipboardCheck, Star, Copy, Mail
+  ClipboardCheck, Star, Copy, Mail, FileCheck, Eye, PenTool, FileText
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
@@ -41,6 +41,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [contractModalOpen, setContractModalOpen] = useState(false);
+  const [isContractSigned, setIsContractSigned] = useState(false);
+  const [contractSignedAt, setContractSignedAt] = useState<string | null>(null);
 
   // Bloquear scroll y permitir cerrar modales con tecla Escape
   useEffect(() => {
@@ -49,9 +52,10 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         setGalleryModalOpen(false);
         setMobileSheetOpen(false);
         setShareModalOpen(false);
+        setContractModalOpen(false);
       }
     };
-    if (galleryModalOpen || mobileSheetOpen || shareModalOpen) {
+    if (galleryModalOpen || mobileSheetOpen || shareModalOpen || contractModalOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
@@ -61,7 +65,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [galleryModalOpen, mobileSheetOpen, shareModalOpen]);
+  }, [galleryModalOpen, mobileSheetOpen, shareModalOpen, contractModalOpen]);
 
   const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
   const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
@@ -231,7 +235,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     endDate && 
     pickupTime && 
     returnTime && 
-    acceptedTerms
+    acceptedTerms &&
+    isContractSigned
   );
 
   // Control de acordeones en completa tu reserva (solo uno abierto a la vez)
@@ -693,6 +698,194 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         )}
 
         {/* ========================================================
+            MODAL DE CONTRATO MERCANTIL DIGITAL Y FIRMA
+           ======================================================== */}
+        {contractModalOpen && (
+          <div 
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-150 text-left"
+            onClick={() => setContractModalOpen(false)}
+          >
+            <div 
+              className="relative w-full max-w-2xl bg-white rounded-[24px] shadow-2xl border border-slate-100 flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Encabezado del Modal */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 sticky top-0 bg-white z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 leading-tight">
+                      Contrato Mercantil de Arrendamiento
+                    </h3>
+                    <p className="text-xs text-slate-500 font-sans mt-0.5">
+                      GALSA Rent México · Folio CTO-2026-{vehicle.slug.slice(0, 10).toUpperCase()}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setContractModalOpen(false)}
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors shrink-0 ml-2 cursor-pointer"
+                  aria-label="Cerrar contrato"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Contenido scrolleable con el texto legal y cláusulas importantes */}
+              <div className="p-6 overflow-y-auto space-y-5 text-slate-700 text-xs sm:text-sm font-sans leading-relaxed">
+                
+                {/* Ficha Resumen de la Renta */}
+                <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200/80 space-y-3">
+                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-700 block">
+                    Resumen de datos pactados
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <span className="text-slate-400 block font-medium">Unidad en arrendamiento:</span>
+                      <span className="font-heading font-bold text-slate-900 text-sm">
+                        {vehicle.make} {vehicle.model} {vehicle.year}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block font-medium">Periodo de renta:</span>
+                      <span className="font-heading font-bold text-slate-900 text-sm">
+                        {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block font-medium">Importe total pactado:</span>
+                      <span className="font-heading font-bold text-slate-900 text-sm">
+                        ${total.toLocaleString('es-MX')} MXN (IVA incluido)
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block font-medium">Depósito en garantía reembolsable:</span>
+                      <span className="font-heading font-bold text-slate-900 text-sm">
+                        ${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cláusulas Legales Importantes */}
+                <div className="space-y-4 pt-1">
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
+                      PRIMERA. Objeto del contrato y estado de la unidad
+                    </h4>
+                    <p className="text-slate-600">
+                      GALSA Rent otorga en arrendamiento temporal al Arrendatario el vehículo automotor antes descrito. La unidad se entrega en óptimas condiciones mecánicas, eléctricas y estéticas, conforme al acta y checklist fotográfico digital registrado al momento de la entrega en sucursal oficial.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
+                      SEGUNDA. Kilometraje libre y combustible
+                    </h4>
+                    <p className="text-slate-600">
+                      La renta incluye kilometraje libre sin límite de recorrido en el territorio de la República Mexicana. El vehículo se entrega con el nivel de combustible consignado en el checklist y el Arrendatario se compromete a devolverlo con el mismo nivel; de lo contrario, se aplicará el cargo de reposición pactado sin recargos abusivos.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
+                      TERCERA. Depósito en garantía y liberación
+                    </h4>
+                    <p className="text-slate-600">
+                      El Arrendatario constituye un depósito en garantía por ${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN. Dicho importe será liberado íntegramente al término de la renta tras cotejar la devolución satisfactoria de la unidad, sin siniestros, infracciones imputables o faltantes.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
+                      CUARTA. Conducción y restricciones de uso
+                    </h4>
+                    <p className="text-slate-600">
+                      El Arrendatario manifiesta ser mayor de 21 años y contar con licencia de conducir oficial y vigente. Se prohíbe expresamente subarrendar la unidad, permitir su manejo a personas no registradas en la reserva, fumar en el habitáculo o destinarla a fines ilícitos.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
+                      QUINTA. Validez legal de la firma electrónica
+                    </h4>
+                    <p className="text-slate-600">
+                      Las partes acuerdan que la presente confirmación electrónica posee plena validez jurídica, eficacia probatoria y fuerza ejecutiva al tenor de los Artículos 89 al 114 del Código de Comercio y la Norma Oficial Mexicana NOM-151-SCFI, sustituyendo a la firma autógrafa para todos los efectos legales a que haya lugar.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Certificado de Sello Digital si ya está firmado */}
+                {isContractSigned && (
+                  <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                    <div className="text-xs space-y-0.5">
+                      <span className="font-heading font-bold block">
+                        Contrato firmado electrónicamente con éxito
+                      </span>
+                      <p className="text-emerald-700">
+                        Fecha y hora: {contractSignedAt} · Algoritmo SHA-256 con constancia de conservación NOM-151.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+              </div>
+
+              {/* Barra inferior de acciones del Modal */}
+              <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <span className="text-[11px] font-sans text-slate-500">
+                  Al confirmar, aceptas formalmente las cláusulas aquí estipuladas.
+                </span>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setContractModalOpen(false)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 text-xs sm:text-sm font-heading font-medium transition-colors cursor-pointer"
+                  >
+                    {isContractSigned ? 'Cerrar' : 'Cancelar'}
+                  </button>
+
+                  {!isContractSigned ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsContractSigned(true);
+                        const now = new Date();
+                        const dateStr = now.toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+                        setContractSignedAt(dateStr);
+                        setAcceptedTerms(true);
+                        setTimeout(() => {
+                          setContractModalOpen(false);
+                        }, 500);
+                      }}
+                      className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-heading font-bold transition-all shadow-sm active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <Check className="w-4 h-4" />
+                      <span>Confirmar y firmar contrato</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setContractModalOpen(false)}
+                      className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-heading font-bold transition-all shadow-sm active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Contrato confirmado</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================
             2. GRID PRINCIPAL (Información Izquierda + Sticky Checkout Derecha)
            ======================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -1126,6 +1319,94 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     <span className="text-[16px] font-heading font-normal text-slate-800">
                       Firma digital de entrega y devolución.
                     </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 6. Sección: Firmar y contratar (Acordeón 6) */}
+            <div className="pt-6 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => toggleAccordion('contract')}
+                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+              >
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                      Firmar y contratar
+                    </h3>
+                    {isContractSigned ? (
+                      <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200 flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        Firmado digitalmente ✓
+                      </span>
+                    ) : (
+                      <span className="text-xs font-heading font-medium text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200">
+                        Pendiente de firma
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Contrato mercantil digital con validez jurídica NOM-151
+                  </p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'contract' ? 'rotate-180' : ''}`} />
+                </div>
+              </button>
+
+              {openAccordion === 'contract' && (
+                <div className="pt-5 pb-2 animate-in fade-in duration-200 text-left">
+                  <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-none">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center shrink-0">
+                        {isContractSigned ? (
+                          <FileCheck className="w-6 h-6 text-emerald-600" />
+                        ) : (
+                          <FileText className="w-6 h-6 text-blue-600" />
+                        )}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="text-base font-heading font-bold text-slate-900">
+                            Contrato Mercantil de Arrendamiento Vehicular
+                          </h4>
+                        </div>
+                        <p className="text-xs font-sans text-slate-500 mt-0.5">
+                          {isContractSigned
+                            ? `Firmado digitalmente · ${contractSignedAt || 'Hoy'} · Folio GALSA-2026-${vehicle.year}`
+                            : 'Revisa las cláusulas oficiales y firma en 1 clic de forma 100% digital.'}
+                        </p>
+                        <div className="mt-2 flex items-center gap-2 text-[11px] font-sans text-slate-400">
+                          <span>Código de Comercio Arts. 89-114</span>
+                          <span>·</span>
+                          <span>Sellado de tiempo NOM-151</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setContractModalOpen(true)}
+                      className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all shrink-0 flex items-center justify-center gap-2 cursor-pointer shadow-xs ${
+                        isContractSigned
+                          ? 'border border-slate-200 hover:bg-slate-50 text-slate-700'
+                          : 'bg-blue-600 hover:bg-blue-700 text-white'
+                      }`}
+                    >
+                      {isContractSigned ? (
+                        <>
+                          <Eye className="w-4 h-4 text-slate-500" />
+                          <span>Ver contrato firmado</span>
+                        </>
+                      ) : (
+                        <>
+                          <PenTool className="w-4 h-4" />
+                          <span>Ver y firmar contrato</span>
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
               )}
