@@ -120,10 +120,58 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     return `${sDate.getDate()} ${months[sDate.getMonth()]} — ${eDate.getDate()} ${months[eDate.getMonth()]}`;
   };
 
+  // Catálogo de extras disponibles
+  const EXTRAS_OPTIONS = [
+    {
+      id: 'extra-driver',
+      title: 'Conductor adicional',
+      description: 'Registra un segundo conductor autorizado.',
+      price: 350,
+    },
+    {
+      id: 'baby-seat',
+      title: 'Silla para bebé',
+      description: 'Sistema de retención infantil.',
+      price: 200,
+    },
+    {
+      id: 'gps',
+      title: 'GPS / Navegador',
+      description: 'Dispositivo de navegación.',
+      price: 150,
+    },
+    {
+      id: 'damage-cover',
+      title: 'Cobertura total de daños',
+      description: 'Protección adicional por daños al vehículo.',
+      price: 450,
+    },
+    {
+      id: 'unlimited-km',
+      title: 'Kilometraje ilimitado',
+      description: 'Sin tope de kilómetros por día.',
+      price: 500,
+    },
+  ];
+
+  const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
+  const [acceptedTerms, setAcceptedTerms] = useState(true);
+
+  const toggleExtra = (id: string) => {
+    setSelectedExtras(prev => 
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
+  };
+
+  const extrasTotal = selectedExtras.reduce((sum, id) => {
+    const ex = EXTRAS_OPTIONS.find(e => e.id === id);
+    return sum + (ex ? ex.price : 0);
+  }, 0);
+
   // Cálculo de precios exactos
   const baseSubtotal = vehicle.pricePerDay * rentalDays;
   const serviceFee = Math.round(baseSubtotal * 0.33);
-  const total = baseSubtotal + serviceFee;
+  const total = baseSubtotal + serviceFee + extrasTotal;
   const originalSubtotal = Math.round(baseSubtotal * 1.12);
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://galsarent.com.mx/vehiculos/${vehicle.slug}`;
@@ -140,8 +188,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   };
 
   const handleBooking = () => {
+    const extrasText = selectedExtras.length > 0 
+      ? ` con extras: ${selectedExtras.map(id => EXTRAS_OPTIONS.find(e => e.id === id)?.title).join(', ')}`
+      : '';
     const msg = encodeURIComponent(
-      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${startDate} (${pickupTime}) al ${endDate} (${returnTime}) por ${rentalDays} días. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
+      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${startDate} (${pickupTime}) al ${endDate} (${returnTime}) por ${rentalDays} días${extrasText}. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
     );
     window.open(`https://wa.me/526180000000?text=${msg}`, '_blank');
   };
@@ -650,109 +701,152 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Sección: Características y condiciones de uso (Una sola columna, checks neutros, sin contenedor con línea) */}
+            {/* Sección: EXTRAS */}
             <div className="pt-6 border-t border-slate-100 space-y-4">
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                Características y condiciones de uso
-              </h3>
-
-              <div className="space-y-3.5">
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Kilometraje libre.
-                  </span>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+                    Extras
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Personaliza tu viaje con servicios adicionales opcionales
+                  </p>
                 </div>
-
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Combustible: se entrega y devuelve con el mismo nivel.
+                {selectedExtras.length > 0 && (
+                  <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">
+                    {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
                   </span>
-                </div>
+                )}
+              </div>
 
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Edad mínima del conductor: 21 años con licencia vigente.
-                  </span>
-                </div>
+              <div className="space-y-2.5">
+                {EXTRAS_OPTIONS.map((extra) => {
+                  const isChecked = selectedExtras.includes(extra.id);
+                  return (
+                    <div
+                      key={extra.id}
+                      onClick={() => toggleExtra(extra.id)}
+                      className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
+                        isChecked
+                          ? 'border-slate-400 bg-slate-50/50'
+                          : 'border-slate-200 hover:border-slate-300 bg-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        {/* Checkbox con diseño neutral */}
+                        <div
+                          className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
+                            isChecked
+                              ? 'bg-slate-900 border-slate-900 text-white'
+                              : 'bg-white border-slate-300 text-transparent'
+                          }`}
+                        >
+                          <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                        </div>
 
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Depósito en garantía reembolsable al cierre sin incidencias.
-                  </span>
-                </div>
+                        <div className="text-left min-w-0">
+                          <span className="font-heading font-bold text-slate-900 text-sm block">
+                            {extra.title}
+                          </span>
+                          <span className="text-xs font-sans text-slate-500 block truncate">
+                            {extra.description}
+                          </span>
+                        </div>
+                      </div>
 
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Prohibido fumar dentro de la unidad.
-                  </span>
-                </div>
+                      <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
+                        +${extra.price} por renta
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Sección: Reglas y condiciones (Una sola columna, checks neutros, sin contenedor con línea) */}
-            <div className="pt-6 border-t border-slate-100 space-y-4">
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                Reglas y condiciones
-              </h3>
+            {/* Sección: Condiciones de uso en contenedor gris claro 50 con bordes redondeados */}
+            <div className="pt-6 border-t border-slate-100">
+              <div className="bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200/60 space-y-4 text-left">
+                <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 tracking-tight">
+                  Condiciones de uso
+                </h3>
 
-              <div className="space-y-3.5">
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Documentación verificada antes de la entrega (licencia, identificación y comprobante).
-                  </span>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 text-slate-800">
+                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                      Kilometraje libre.
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-800">
+                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                      Combustible: se entrega y devuelve con el mismo nivel.
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-800">
+                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                      Edad mínima del conductor: 21 años con licencia vigente.
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-800">
+                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                      Depósito en garantía reembolsable al cierre sin incidencias.
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-slate-800">
+                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                      Prohibido fumar dentro de la unidad.
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Contrato digital firmado por ambas partes con validez legal.
-                  </span>
-                </div>
-
-                <div className="flex items-start gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0 mt-0.5" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800 leading-relaxed">
-                    Cancelaciones: Las cancelaciones realizadas con más de 48 horas de anticipación reciben reembolso completo. Cancelaciones posteriores están sujetas a cargos parciales según el tiempo restante para el inicio de la renta.
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Multas y peajes durante la renta corren por cuenta del cliente.
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Cualquier daño se documenta con evidencia fotográfica en la devolución.
-                  </span>
-                </div>
-
-                <div className="inline-block w-auto rounded-xl bg-slate-50 p-3.5 sm:p-4 mt-2">
-                  <p className="text-xs sm:text-sm font-sans text-slate-600">
-                    Consulta los{' '}
-                    <a
-                      href="/terminos"
-                      onClick={(e) => {
-                        if (onNavigate) {
-                          e.preventDefault();
-                          onNavigate('/terminos');
-                        }
-                      }}
-                      className="text-black font-semibold hover:underline"
+                {/* Aceptación de términos y condiciones con enlaces en bold sin azul */}
+                <div className="pt-4 border-t border-slate-200/60">
+                  <label className="flex items-start gap-3 cursor-pointer select-none group">
+                    <div 
+                      onClick={() => setAcceptedTerms(!acceptedTerms)}
+                      className={`w-5 h-5 rounded-md border mt-0.5 flex items-center justify-center transition-colors shrink-0 ${
+                        acceptedTerms ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-300 text-transparent'
+                      }`}
                     >
-                      términos y condiciones
-                    </a>{' '}
-                    completos.
-                  </p>
+                      <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                    </div>
+                    <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
+                      Acepto los{' '}
+                      <a
+                        href="/terminos"
+                        onClick={(e) => {
+                          if (onNavigate) {
+                            e.preventDefault();
+                            onNavigate('/terminos');
+                          }
+                        }}
+                        className="font-bold text-slate-900 hover:underline inline"
+                      >
+                        términos y condiciones
+                      </a>{' '}
+                      de renta de GALSA y el{' '}
+                      <a
+                        href="/privacidad"
+                        onClick={(e) => {
+                          if (onNavigate) {
+                            e.preventDefault();
+                            onNavigate('/privacidad');
+                          }
+                        }}
+                        className="font-bold text-slate-900 hover:underline inline"
+                      >
+                        aviso de privacidad
+                      </a>.
+                    </span>
+                  </label>
                 </div>
               </div>
             </div>
@@ -969,6 +1063,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     <span>Depósito en garantía (reembolsable)</span>
                     <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
                   </div>
+
+                  {extrasTotal > 0 && (
+                    <div className="flex items-center justify-between">
+                      <span>Servicios extras ({selectedExtras.length})</span>
+                      <span className="font-heading font-semibold text-slate-900">+${extrasTotal.toLocaleString('es-MX')}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-3 border-t border-slate-200/80">
@@ -1402,6 +1503,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       <span>Depósito en garantía (reembolsable)</span>
                       <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
                     </div>
+
+                    {extrasTotal > 0 && (
+                      <div className="flex items-center justify-between">
+                        <span>Servicios extras ({selectedExtras.length})</span>
+                        <span className="font-heading font-semibold text-slate-900">+${extrasTotal.toLocaleString('es-MX')}</span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="pt-3 border-t border-slate-200/80">

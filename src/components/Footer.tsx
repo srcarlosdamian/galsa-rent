@@ -108,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <span>Sistema de Diseño</span>
             </a>
             <span>Última actualización: <strong>06 Nov 2026, 10:50 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.73</span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.74</span>
           </div>
         </div>
       </div>
