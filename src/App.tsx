@@ -324,7 +324,7 @@ export const App: React.FC = () => {
 
         {/* ROUTE 3: ANFITRIONES PAGE */}
         {currentPath === '/anfitriones' && (
-          <HostSection isFullPage={true} />
+          <HostSection isFullPage={true} onNavigate={navigateTo} />
         )}
 
         {/* ROUTE 4: CONFIANZA PAGE */}

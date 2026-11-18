@@ -6,9 +6,17 @@ import {
 
 interface HostSectionProps {
   isFullPage?: boolean;
+  onNavigate?: (path: string) => void;
 }
 
-export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) => {
+export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onNavigate }) => {
+  const handlePublish = (e: React.MouseEvent) => {
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate('/registro');
+    }
+  };
+
   // Calculadora interactiva (Valor del auto, Días rentados, Precio/día - SIN selector de tipo de vehículo)
   const [carValue, setCarValue] = useState(450000);
   const [daysRented, setDaysRented] = useState(15);
@@ -180,9 +188,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
               {/* Botón CTA oficial */}
               <div className="pt-4">
                 <a
-                  href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/registro"
+                  onClick={handlePublish}
                   className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-sm active:scale-95"
                 >
                   Quiero publicar mi auto
@@ -439,9 +446,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
             </p>
             <div className="pt-3">
               <a
-                href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/registro"
+                  onClick={handlePublish}
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-sm active:scale-95"
               >
                 Quiero publicar mi auto

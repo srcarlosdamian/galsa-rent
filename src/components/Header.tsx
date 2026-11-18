@@ -21,7 +21,7 @@ const HELP_FAQS = [
   },
   {
     question: '¿Puedo cancelar o modificar las fechas de mi reserva?',
-    answer: 'Sí. Las cancelaciones con más de 48 horas de anticipación reciben reembolso del 100%. Para modificaciones de fecha y horario puedes escribirnos directamente por WhatsApp.',
+    answer: 'Sí. Las cancelaciones con más de 48 horas de anticipación reciben reembolso del 100%. Para modificaciones de fecha y horario puedes contactarnos por teléfono o correo.',
   },
   {
     question: '¿Dónde se entrega y devuelve físicamente el vehículo?',
@@ -165,29 +165,6 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 Números y atención oficial
               </span>
 
-              {/* WhatsApp oficial */}
-              <a
-                href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20necesito%20ayuda%20con%20mi%20reserva"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3.5 rounded-2xl border border-slate-200/90 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-between gap-3 transition-all group cursor-pointer"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                    <MessageSquare className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                      WhatsApp soporte digital
-                    </div>
-                    <div className="text-xs font-sans text-slate-500">
-                      +52 618 123 4567 · Respuesta inmediata
-                    </div>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-slate-700" />
-              </a>
-
               {/* Teléfono fijo / móvil */}
               <a
                 href="tel:+526180000000"
@@ -286,13 +263,10 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           {/* Footer del Drawer */}
           <div className="p-4 border-t border-slate-200 bg-white">
             <a
-              href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20con%20mi%20reserva"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="tel:+526180000000"
               className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs"
             >
-              <MessageSquare className="w-4 h-4" />
-              <span>Chatear por WhatsApp con un asesor</span>
+              <span>Llamar a un asesor</span>
             </a>
           </div>
         </div>
