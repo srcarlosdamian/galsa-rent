@@ -3,7 +3,8 @@ import {
   Palette, Layers, Box, Sparkles, Copy, Check, ArrowRight, ArrowLeft,
   Search, Calendar, Car, ChevronDown, Star, ShieldCheck, Loader2,
   ExternalLink, MessageCircle, Heart, Filter, Grid, MapPin, 
-  CheckCircle2, AlertCircle, Info, Fuel, Users, Gauge, Clock, SlidersHorizontal
+  CheckCircle2, AlertCircle, Info, Fuel, Users, Gauge, Clock, SlidersHorizontal,
+  FileText, UploadCloud, X
 } from 'lucide-react';
 
 interface DesignSystemPageProps {
@@ -621,7 +622,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 </span>
 
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                  v2.2.72
+                  v2.2.73
                 </span>
               </div>
             </div>
@@ -769,6 +770,81 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             </div>
 
+            {/* 4. Carga y Subida de Archivos (File Upload & Progress Molecule) */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Subida de Archivos & Progreso (File Upload Molecule)
+                  </h3>
+                  <p className="text-xs text-slate-500 font-sans mt-0.5">
+                    Estilo neutral minimalista sin sombras, sin degradados y con icono gris 100 sin línea
+                  </p>
+                </div>
+                <span className="text-[11px] font-mono text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
+                  Molecule
+                </span>
+              </div>
+
+              {/* Estado en progreso de subida (79%) */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-heading font-medium text-slate-500">Estado en progreso de subida:</span>
+                <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                    <FileText className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
+                      Scann_158.pdf
+                    </h4>
+                    <p className="text-xs font-sans text-slate-500 mb-2">
+                      30 MB / 74 MB
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-blue-600 rounded-full w-[79%]" />
+                      </div>
+                      <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
+                        79%
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button" className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors">
+                    <X className="w-4 h-4" strokeWidth={2} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Estado completado (100%) */}
+              <div className="space-y-1.5 pt-2">
+                <span className="text-xs font-heading font-medium text-slate-500">Estado completado exitosamente:</span>
+                <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
+                  <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                    <FileText className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
+                      INE_frente_y_reverso.pdf
+                    </h4>
+                    <p className="text-xs font-sans text-slate-500 mb-2">
+                      2.4 MB / 2.4 MB
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-blue-600 rounded-full w-[100%]" />
+                      </div>
+                      <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
+                        100%
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button" className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors">
+                    <X className="w-4 h-4" strokeWidth={2} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </section>
         )}
 
@@ -868,7 +944,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
                   <div className="flex items-center gap-3 text-white">
                     <span>Última actualización: <strong>06 Nov 2026</strong></span>
-                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.72</span>
+                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.73</span>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
                       <Palette className="w-3.5 h-3.5 text-pink-400" />
                       <span>Sistema de Diseño</span>

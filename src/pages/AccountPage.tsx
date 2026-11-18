@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   User, Mail, Phone, Calendar, CreditCard, MapPin, 
   CheckCircle2, ShieldCheck, Car, Clock, X, Edit3, 
-  ArrowRight, FileText, ChevronRight, LogOut, Sparkles, AlertCircle
+  ArrowRight, FileText, ChevronRight, LogOut, Sparkles, AlertCircle,
+  UploadCloud, Check, FileCheck, RefreshCw
 } from 'lucide-react';
 import { VEHICLES } from '../data/vehicles';
 import { Vehicle } from '../types/vehicle';
@@ -10,6 +11,13 @@ import { Vehicle } from '../types/vehicle';
 interface AccountPageProps {
   onNavigate: (path: string) => void;
   initialOpenCompleteModal?: boolean;
+}
+
+interface DocUploadState {
+  name: string;
+  sizeStr: string;
+  progress: number;
+  status: 'idle' | 'uploading' | 'completed';
 }
 
 export const AccountPage: React.FC<AccountPageProps> = ({ 
@@ -28,6 +36,83 @@ export const AccountPage: React.FC<AccountPageProps> = ({
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [modalSubmitted, setModalSubmitted] = useState(false);
   const [activeTab, setActiveTab] = useState<'reservas' | 'documentos' | 'favoritos' | 'seguridad'>('reservas');
+
+  // Estados de carga de documentos solicitados
+  const [licenseDoc, setLicenseDoc] = useState<DocUploadState>({
+    name: 'Scann_158.pdf',
+    sizeStr: '30 MB / 74 MB',
+    progress: 79,
+    status: 'uploading',
+  });
+
+  const [ineDoc, setIneDoc] = useState<DocUploadState>({
+    name: 'INE_frente_y_reverso.pdf',
+    sizeStr: '2.4 MB / 2.4 MB',
+    progress: 100,
+    status: 'completed',
+  });
+
+  const [proofDoc, setProofDoc] = useState<DocUploadState>({
+    name: '',
+    sizeStr: '',
+    progress: 0,
+    status: 'idle',
+  });
+
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [docsSavedSuccess, setDocsSavedSuccess] = useState(false);
+
+  // Simular subida con progreso animado
+  const simulateUpload = (type: 'license' | 'ine' | 'proof', customName?: string, customSize?: string) => {
+    const targetSetter = type === 'license' ? setLicenseDoc : type === 'ine' ? setIneDoc : setProofDoc;
+    const fileName = customName || (type === 'license' ? 'Licencia_conducir_frente_reverso.pdf' : type === 'ine' ? 'INE_identificacion_oficial.pdf' : 'Comprobante_domicilio_reciente.pdf');
+    const fileSize = customSize || (type === 'license' ? '30 MB / 74 MB' : type === 'ine' ? '2.4 MB / 2.4 MB' : '1.8 MB / 1.8 MB');
+    
+    targetSetter({
+      name: fileName,
+      sizeStr: fileSize,
+      progress: 25,
+      status: 'uploading'
+    });
+
+    let current = 25;
+    const timer = setInterval(() => {
+      current += 25;
+      if (current >= 100) {
+        current = 100;
+        clearInterval(timer);
+        targetSetter({
+          name: fileName,
+          sizeStr: fileSize,
+          progress: 100,
+          status: 'completed'
+        });
+      } else {
+        targetSetter(prev => ({
+          ...prev,
+          progress: current
+        }));
+      }
+    }, 280);
+  };
+
+  const handleFileSelect = (type: 'license' | 'ine' | 'proof', e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+      simulateUpload(type, file.name, `${sizeMb} MB / ${sizeMb} MB`);
+    }
+  };
+
+  const handleRemoveDoc = (type: 'license' | 'ine' | 'proof') => {
+    const targetSetter = type === 'license' ? setLicenseDoc : type === 'ine' ? setIneDoc : setProofDoc;
+    targetSetter({
+      name: '',
+      sizeStr: '',
+      progress: 0,
+      status: 'idle'
+    });
+  };
 
   // Inicializar estado desde sessionStorage y checar si es primer login o si viene por enlace modal
   useEffect(() => {
@@ -56,6 +141,11 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
       if (isFirstLogin || urlHasParam || initialOpenCompleteModal) {
         setShowCompleteModal(true);
+      }
+
+      // Si viene con parámetro o hash de documentos, activar tab de documentos
+      if (window.location.search.includes('documentos') || window.location.pathname.includes('documentos')) {
+        setActiveTab('documentos');
       }
     }
   }, [initialOpenCompleteModal]);
@@ -272,66 +362,294 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
           {/* TAB 2: DOCUMENTOS */}
           {activeTab === 'documentos' && (
-            <div className="space-y-6">
+            <div className="space-y-6 text-left">
               <div>
-                <h2 className="text-lg font-heading font-extrabold text-slate-900">
-                  Documentación para validación de contrato
+                <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
+                  Sube tus documentos de identificación y comprobante de domicilio
                 </h2>
-                <p className="text-xs text-slate-500 font-sans mt-0.5">
-                  Documentos necesarios para entrega express sin filas en sucursal
+                <p className="text-xs sm:text-sm text-slate-500 font-sans mt-1">
+                  Documentación requerida para el contrato digital y entrega express sin filas en sucursal
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Licencia */}
-                <div className="border border-slate-200 rounded-2xl p-5 space-y-3">
+              {docsSavedSuccess && (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-sans flex items-center justify-between animate-in fade-in">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                    <span>¡Documentos actualizados con éxito! Quedaron listos para validación de tu reserva.</span>
+                  </div>
+                  <button 
+                    type="button" 
+                    onClick={() => setDocsSavedSuccess(false)}
+                    className="text-emerald-700 hover:text-emerald-900"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
+              <div className="space-y-5">
+                {/* 1. Licencia de conducir */}
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <CreditCard className="w-5 h-5 text-blue-600" />
-                      <h3 className="font-heading font-bold text-slate-900 text-sm">
-                        Licencia de conducir vigente
-                      </h3>
-                    </div>
-                    <span className={`text-[11px] font-heading font-bold px-2 py-0.5 rounded-full ${licenseNumber ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}`}>
-                      {licenseNumber ? 'Registrada' : 'Pendiente'}
+                    <label className="text-sm font-heading font-bold text-slate-900">
+                      Licencia de conducir
+                    </label>
+                    <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
+                      Vigente, ambos lados
                     </span>
                   </div>
-                  <p className="text-xs font-sans text-slate-500">
-                    {licenseNumber ? `Folio: ${licenseNumber}` : 'Indispensable para el seguro de cobertura amplia y entrega de llaves.'}
-                  </p>
+
+                  {licenseDoc.status !== 'idle' ? (
+                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                        <FileText className="w-6 h-6 text-blue-600" />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-0.5">
+                          <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
+                            {licenseDoc.name}
+                          </h4>
+                        </div>
+                        <p className="text-xs font-sans text-slate-500 mb-2">
+                          {licenseDoc.sizeStr}
+                        </p>
+
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                              style={{ width: `${licenseDoc.progress}%` }}
+                            />
+                          </div>
+                          <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
+                            {licenseDoc.progress}%
+                          </span>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveDoc('license')}
+                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-1"
+                        aria-label="Eliminar o cancelar archivo"
+                        title="Eliminar archivo"
+                      >
+                        <X className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
+                      <input
+                        type="file"
+                        accept="image/*,.pdf"
+                        onChange={(e) => handleFileSelect('license', e)}
+                        className="hidden"
+                      />
+                      <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
+                        <UploadCloud className="w-5 h-5 text-slate-600" />
+                      </div>
+                      <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Haz clic para seleccionar archivo
+                      </span>
+                      <span className="text-xs font-sans text-slate-500 mt-0.5">
+                        Imagen (máx. 10MB) o PDF (máx. 3MB)
+                      </span>
+                    </label>
+                  )}
+                </div>
+
+                {/* 2. Identificación oficial */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-heading font-bold text-slate-900">
+                      Identificación oficial
+                    </label>
+                    <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
+                      INE, frente y reverso
+                    </span>
+                  </div>
+
+                  {ineDoc.status !== 'idle' ? (
+                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                        <FileText className="w-6 h-6 text-blue-600" />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-0.5">
+                          <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
+                            {ineDoc.name}
+                          </h4>
+                        </div>
+                        <p className="text-xs font-sans text-slate-500 mb-2">
+                          {ineDoc.sizeStr}
+                        </p>
+
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                              style={{ width: `${ineDoc.progress}%` }}
+                            />
+                          </div>
+                          <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
+                            {ineDoc.progress}%
+                          </span>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveDoc('ine')}
+                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-1"
+                        aria-label="Eliminar o cancelar archivo"
+                        title="Eliminar archivo"
+                      >
+                        <X className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
+                      <input
+                        type="file"
+                        accept="image/*,.pdf"
+                        onChange={(e) => handleFileSelect('ine', e)}
+                        className="hidden"
+                      />
+                      <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
+                        <UploadCloud className="w-5 h-5 text-slate-600" />
+                      </div>
+                      <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Haz clic para seleccionar archivo
+                      </span>
+                      <span className="text-xs font-sans text-slate-500 mt-0.5">
+                        Imagen (máx. 10MB) o PDF (máx. 3MB)
+                      </span>
+                    </label>
+                  )}
+                </div>
+
+                {/* 3. Comprobante de domicilio */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-heading font-bold text-slate-900">
+                      Comprobante de domicilio
+                    </label>
+                    <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">
+                      No mayor a 3 meses
+                    </span>
+                  </div>
+
+                  {proofDoc.status !== 'idle' ? (
+                    <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 shadow-none">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                        <FileText className="w-6 h-6 text-blue-600" />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-0.5">
+                          <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
+                            {proofDoc.name}
+                          </h4>
+                        </div>
+                        <p className="text-xs font-sans text-slate-500 mb-2">
+                          {proofDoc.sizeStr}
+                        </p>
+
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                              style={{ width: `${proofDoc.progress}%` }}
+                            />
+                          </div>
+                          <span className="text-xs font-heading font-medium text-slate-600 shrink-0">
+                            {proofDoc.progress}%
+                          </span>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveDoc('proof')}
+                        className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-1"
+                        aria-label="Eliminar o cancelar archivo"
+                        title="Eliminar archivo"
+                      >
+                        <X className="w-4 h-4" strokeWidth={2} />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
+                      <input
+                        type="file"
+                        accept="image/*,.pdf"
+                        onChange={(e) => handleFileSelect('proof', e)}
+                        className="hidden"
+                      />
+                      <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
+                        <UploadCloud className="w-5 h-5 text-slate-600" />
+                      </div>
+                      <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                        Haz clic para seleccionar archivo
+                      </span>
+                      <span className="text-xs font-sans text-slate-500 mt-0.5">
+                        Imagen (máx. 10MB) o PDF (máx. 3MB)
+                      </span>
+                    </label>
+                  )}
+                </div>
+
+                {/* 4. Información adicional (opcional) */}
+                <div className="space-y-1.5 pt-2">
+                  <label className="block text-sm font-heading font-bold text-slate-900">
+                    Información adicional (opcional)
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={additionalInfo}
+                    onChange={(e) => setAdditionalInfo(e.target.value)}
+                    placeholder="Notas relevantes para tu renta: conductor adicional, requerimientos de facturación o entrega especial en sucursal..."
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
+                  />
+                </div>
+
+                {/* Botones de acción y simulación */}
+                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <button
                     type="button"
-                    onClick={() => setShowCompleteModal(true)}
-                    className="text-xs font-heading font-semibold text-blue-600 hover:underline"
+                    onClick={() => {
+                      setDocsSavedSuccess(true);
+                      setTimeout(() => setDocsSavedSuccess(false), 4000);
+                    }}
+                    className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all shadow-none active:scale-[0.98] cursor-pointer"
                   >
-                    {licenseNumber ? 'Actualizar licencia' : 'Registrar licencia ahora'}
+                    Guardar documentos
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      // Si la licencia está en 79%, completarla a 100%
+                      if (licenseDoc.status === 'uploading') {
+                        setLicenseDoc(prev => ({ ...prev, progress: 100, status: 'completed' }));
+                      } else {
+                        simulateUpload('license', 'Scann_158.pdf', '30 MB / 74 MB');
+                      }
+                      // Si el comprobante está vacío, simular subida
+                      if (proofDoc.status === 'idle') {
+                        simulateUpload('proof', 'Comprobante_CFE_octubre.pdf', '1.6 MB / 1.6 MB');
+                      }
+                    }}
+                    className="px-4 py-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-heading font-medium text-xs sm:text-sm transition-colors flex items-center justify-center gap-2"
+                  >
+                    <RefreshCw className="w-4 h-4 text-slate-500" />
+                    <span>Probar simulación de subida</span>
                   </button>
                 </div>
 
-                {/* Identificación INE */}
-                <div className="border border-slate-200 rounded-2xl p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <FileText className="w-5 h-5 text-blue-600" />
-                      <h3 className="font-heading font-bold text-slate-900 text-sm">
-                        Identificación oficial (INE / Pasaporte)
-                      </h3>
-                    </div>
-                    <span className={`text-[11px] font-heading font-bold px-2 py-0.5 rounded-full ${fullName ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}`}>
-                      {fullName ? 'Validada' : 'Pendiente'}
-                    </span>
-                  </div>
-                  <p className="text-xs font-sans text-slate-500">
-                    {fullName ? `A nombre de: ${fullName}` : 'Requerida para la firma electrónica del contrato de renta digital.'}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setShowCompleteModal(true)}
-                    className="text-xs font-heading font-semibold text-blue-600 hover:underline"
-                  >
-                    {fullName ? 'Ver datos registrados' : 'Registrar identificación'}
-                  </button>
-                </div>
               </div>
             </div>
           )}
