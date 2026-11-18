@@ -426,6 +426,25 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </button>
                 </div>
 
+                {/* 9. Botón Inactivo Prototipo (Permite avanzar) */}
+                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                  <div>
+                    <div className="text-xs font-heading font-bold text-slate-800">9. Botón Inactivo Prototipo</div>
+                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Gris si falta un campo, pero permite clic</div>
+                    <div className="mt-4">
+                      <button className="w-full px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-500 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center cursor-pointer">
+                        <span>Continuar (Pendiente)</span>
+                      </button>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-500 font-heading font-semibold text-sm transition-colors cursor-pointer', 'btn-9')}
+                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
+                  >
+                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-9' ? 'Copiado ✓' : 'Copiar clases'}
+                  </button>
+                </div>
+
                 {/* 9. Botones de Icono / Microacciones */}
                 <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
                   <div>
@@ -622,7 +641,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 </span>
 
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                  v2.2.74
+                  v2.2.75
                 </span>
               </div>
             </div>
@@ -944,7 +963,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
                   <div className="flex items-center gap-3 text-white">
                     <span>Última actualización: <strong>06 Nov 2026</strong></span>
-                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.74</span>
+                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.75</span>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
                       <Palette className="w-3.5 h-3.5 text-pink-400" />
                       <span>Sistema de Diseño</span>

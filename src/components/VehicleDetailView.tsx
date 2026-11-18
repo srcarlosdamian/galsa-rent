@@ -155,7 +155,16 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   ];
 
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
-  const [acceptedTerms, setAcceptedTerms] = useState(true);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  // Validación de condiciones y campos obligatorios
+  const isFormComplete = Boolean(
+    startDate && 
+    endDate && 
+    pickupTime && 
+    returnTime && 
+    acceptedTerms
+  );
 
   const toggleExtra = (id: string) => {
     setSelectedExtras(prev => 
@@ -188,11 +197,14 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   };
 
   const handleBooking = () => {
+    // Si falta algún dato por ser prototipo, usar valores por defecto seguros para poder avanzar sin bloqueo
+    const sDate = startDate || '2026-11-04';
+    const eDate = endDate || '2026-11-07';
     const extrasText = selectedExtras.length > 0 
       ? ` con extras: ${selectedExtras.map(id => EXTRAS_OPTIONS.find(e => e.id === id)?.title).join(', ')}`
       : '';
     const msg = encodeURIComponent(
-      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${startDate} (${pickupTime}) al ${endDate} (${returnTime}) por ${rentalDays} días${extrasText}. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
+      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${sDate} (${pickupTime || '08:00'}) al ${eDate} (${returnTime || '18:00'}) por ${rentalDays} días${extrasText}. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
     );
     window.open(`https://wa.me/526180000000?text=${msg}`, '_blank');
   };
@@ -910,7 +922,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 <button
                   type="button"
                   onClick={handleBooking}
-                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shrink-0"
+                  className={`px-6 py-3 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shrink-0 cursor-pointer ${
+                    isFormComplete
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                  }`}
                 >
                   <span>Continuar</span>
                 </button>
@@ -1032,7 +1048,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <button
                 type="button"
                 onClick={handleBooking}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
+                className={`w-full py-3.5 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer ${
+                  isFormComplete
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                    : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                }`}
               >
                 <span>Continuar</span>
               </button>
@@ -1324,7 +1344,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   handleBooking();
                 }
               }}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5"
+              className={`px-5 py-2.5 rounded-xl font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5 cursor-pointer ${
+                isFormComplete
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+              }`}
             >
               <span>Continuar</span>
             </button>
@@ -1472,7 +1496,11 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     setMobileSheetOpen(false);
                     handleBooking();
                   }}
-                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm"
+                  className={`w-full py-3.5 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer ${
+                    isFormComplete
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+                  }`}
                 >
                   <span>Continuar</span>
                 </button>
