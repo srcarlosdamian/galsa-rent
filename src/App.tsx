@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { SearchContainer } from './components/SearchContainer';
 import { VehicleCard } from './components/VehicleCard';
 import { VehicleDetailView } from './components/VehicleDetailView';
+import { ReservationCheckoutView } from './components/ReservationCheckoutView';
 import { VirtuoExperienceSection } from './components/VirtuoExperienceSection';
 import { FourStepProcess } from './components/FourStepProcess';
 import { UseCasesSection } from './components/UseCasesSection';
@@ -131,6 +132,13 @@ export const App: React.FC = () => {
         target = `/vehiculos/${matched.slug}`;
       }
     }
+    if (target.startsWith('/reservar/')) {
+      const param = target.replace('/reservar/', '');
+      const matched = findVehicleBySlugOrUuid(param);
+      if (matched && matched.slug !== param) {
+        target = `/reservar/${matched.slug}`;
+      }
+    }
 
     const fullUrl = window.location.pathname.startsWith('/galsa-rent') 
       ? `/galsa-rent${target === '/' ? '' : target}` 
@@ -186,10 +194,14 @@ export const App: React.FC = () => {
     }
   }, [currentPath]);
 
-  // Handle direct vehicle detail URLs e.g. /vehiculos/nissan-sentra-sense-2024-durango
+  // Handle direct vehicle detail and checkout URLs e.g. /vehiculos/nissan-sentra-sense-2024-durango or /reservar/...
   const currentVehicle = useMemo(() => {
     if (currentPath.startsWith('/vehiculos/')) {
       const slugOrUuid = currentPath.replace('/vehiculos/', '');
+      return findVehicleBySlugOrUuid(slugOrUuid);
+    }
+    if (currentPath.startsWith('/reservar/')) {
+      const slugOrUuid = currentPath.replace('/reservar/', '');
       return findVehicleBySlugOrUuid(slugOrUuid);
     }
     return null;
@@ -242,6 +254,7 @@ export const App: React.FC = () => {
   const isKnownRoute =
     currentPath === '/' ||
     currentPath.startsWith('/vehiculos/') ||
+    currentPath.startsWith('/reservar/') ||
     currentPath === '/catalogo' ||
     currentPath === '/anfitriones' ||
     currentPath === '/confianza' ||
@@ -271,15 +284,29 @@ export const App: React.FC = () => {
 
       <main className="flex-1">
         
-        {/* ROUTE 1: VEHICLE DETAIL PAGE */}
+        {/* ROUTE 1: VEHICLE DETAIL PAGE (VISTA PURA DE PRODUCTO) */}
         {currentPath.startsWith('/vehiculos/') && (
           currentVehicle ? (
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
               <VehicleDetailView
                 vehicle={currentVehicle}
                 onNavigate={navigateTo}
+                onStartCheckout={() => navigateTo(`/reservar/${currentVehicle.slug}`)}
               />
             </div>
+          ) : (
+            <NotFoundPage onNavigate={navigateTo} />
+          )
+        )}
+
+        {/* ROUTE 1.5: CHECKOUT RESERVATION PAGE (COMPLETA TU RESERVA) */}
+        {currentPath.startsWith('/reservar/') && (
+          currentVehicle ? (
+            <ReservationCheckoutView
+              vehicle={currentVehicle}
+              onNavigate={navigateTo}
+              onBackToVehicle={() => navigateTo(`/vehiculos/${currentVehicle.slug}`)}
+            />
           ) : (
             <NotFoundPage onNavigate={navigateTo} />
           )

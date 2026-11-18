@@ -6,7 +6,7 @@ interface HostSectionProps {
 }
 
 export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) => {
-  // Calculadora interactiva: Tarifa diaria y días al mes (SIN selector de tipo de vehículo por requerimiento)
+  // Calculadora interactiva (SIN selector de tipo de vehículo por requerimiento)
   const [dailyRate, setDailyRate] = useState(1200);
   const [daysPerMonth, setDaysPerMonth] = useState(15);
 
@@ -19,31 +19,37 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
     {
       title: 'Control total',
       description: 'Tú defines precios, disponibilidad y qué reservas aceptas.',
+      image: '/images/host-step-1.jpg',
       icon: Sliders,
     },
     {
       title: 'Pagos a tu cuenta',
       description: 'Cobramos al cliente y te depositamos tu parte en la cuenta que registres.',
+      image: '/images/host-step-3.jpg',
       icon: Award,
     },
     {
       title: 'Seguro y verificación',
       description: 'Cobertura durante la renta y clientes con identidad verificada.',
+      image: '/images/host-step-2.jpg',
       icon: ShieldCheck,
     },
     {
       title: 'Soporte 24/7',
       description: 'Equipo dedicado para anfitriones y asistencia en carretera.',
+      image: '/images/host-step-1.jpg',
       icon: Clock,
     },
     {
       title: 'Tarifa transparente',
       description: 'El 33% de servicio lo paga el cliente. Sin cargos ocultos.',
+      image: '/images/host-step-3.jpg',
       icon: Check,
     },
     {
       title: 'Más ocupación',
       description: 'Recomendaciones de precio dinámico según la demanda de tu ciudad.',
+      image: '/images/host-step-2.jpg',
       icon: ArrowRight,
     },
   ];
@@ -101,12 +107,12 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
 
   return (
     <div className="bg-white min-h-screen">
-      {/* SECCIÓN 1: HERO & CALCULADORA INTERACTIVA */}
-      <section className="pt-10 sm:pt-14 pb-16 sm:pb-20 border-b border-slate-100">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+      {/* SECCIÓN 1: HERO & CALCULADORA A LA DERECHA */}
+      <section className="py-12 sm:py-16 md:py-20 border-b border-neutral-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Eyebrow de cabecera con programa y simulador interactivo */}
-          <div className="flex items-center justify-between pb-6 sm:pb-8 border-b border-slate-100/90 mb-8 sm:mb-10 text-left">
+          {/* Eyebrow de cabecera con programa y simulador interactivo con línea divisora */}
+          <div className="flex items-center justify-between pb-6 sm:pb-8 border-b border-slate-200 mb-8 sm:mb-10 text-left">
             <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400">
               PROGRAMA DE AFILIACIONES GALSA
             </span>
@@ -117,13 +123,16 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             
-            {/* Columna Izquierda: Título, Checks destacados y Controles de la calculadora */}
-            <div className="lg:col-span-7 space-y-6 text-left">
+            {/* LADO IZQUIERDO: Título, Descripción, Checks destacados y Botón CTA */}
+            <div className="lg:col-span-6 space-y-6 text-left">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
                 Convierte tu auto en ingresos
               </h1>
+              <p className="text-sm sm:text-base font-sans text-slate-600 leading-relaxed">
+                Tú fijas precio y disponibilidad, y apruebas cada reserva. GALSA se encarga de verificar clientes, firmar contratos y cobrar. Recibes el 100% de tu tarifa fijada.
+              </p>
 
-              {/* 3 Checks destacados con estilo exacto */}
+              {/* 3 Checks destacados */}
               <div className="space-y-4 pt-2">
                 <div className="flex items-start gap-3.5">
                   <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
@@ -168,16 +177,37 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                 </div>
               </div>
 
-              {/* Controles de la calculadora (SIN selector de tipo de vehículo) */}
-              <div className="pt-6 border-t border-slate-100 space-y-6">
-                <h4 className="text-base font-heading font-bold text-slate-900">
-                  Calcular tus ingresos
-                </h4>
+              {/* Botón CTA oficial */}
+              <div className="pt-4">
+                <a
+                  href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 text-white text-sm font-heading font-semibold px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-700 transition-all active:scale-[0.98]"
+                >
+                  <span>Publicar mi auto en GALSA</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
 
-                {/* Control 1: Tarifa diaria */}
+            {/* LADO DERECHO: SIMULADOR DE INGRESOS A LA DERECHA (Con fondo 50 gris neutral y sin selector de vehículo) */}
+            <div className="lg:col-span-6 w-full text-left">
+              <div className="rounded-[28px] border border-slate-200/90 bg-white p-6 sm:p-8 shadow-none space-y-6">
+                
+                <div>
+                  <h3 className="text-xl font-heading font-extrabold text-slate-900">
+                    Calcula cuánto recibirás al mes
+                  </h3>
+                  <p className="text-xs font-sans text-slate-500 mt-0.5">
+                    Ajusta tu tarifa y días de disponibilidad para proyectar tus ingresos netos.
+                  </p>
+                </div>
+
+                {/* Control 1: Tarifa diaria (SIN selector de tipo de vehículo) */}
                 <div>
                   <div className="flex justify-between items-center text-xs sm:text-sm mb-2.5">
-                    <span className="font-heading font-medium text-slate-600">Tu tarifa fijada por día</span>
+                    <span className="font-heading font-medium text-slate-700">Tu tarifa fijada por día</span>
                     <span className="font-heading font-bold text-slate-900 text-base">
                       ${dailyRate.toLocaleString('es-MX')} MXN
                     </span>
@@ -198,10 +228,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                   </div>
                 </div>
 
-                {/* Control 2: Días de renta al mes */}
+                {/* Control 2: Días al mes */}
                 <div>
                   <div className="flex justify-between items-center text-xs sm:text-sm mb-2.5">
-                    <span className="font-heading font-medium text-slate-600">Días que decides rentarlo al mes</span>
+                    <span className="font-heading font-medium text-slate-700">Días que decides rentarlo al mes</span>
                     <span className="font-heading font-bold text-slate-900 text-base">
                       {daysPerMonth} días
                     </span>
@@ -221,102 +251,87 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                     <span>30 días (Mes completo)</span>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Columna Derecha: Tarjeta de Estimación en Fondo Gris 50 y elementos neutrales */}
-            <div className="lg:col-span-5 w-full">
-              <div className="rounded-[28px] p-7 sm:p-8 text-left bg-slate-50 border border-slate-200/90 shadow-none">
-                <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
-                  TU INGRESO NETO MENSUAL ESTIMADO
-                </span>
-
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-4xl sm:text-5xl font-heading font-extrabold text-slate-900 tracking-tight">
-                    ${hostEarnings.toLocaleString('es-MX')}
+                {/* Tarjeta de estimación con fondo gris 50 y diseño neutral */}
+                <div className="p-6 rounded-2xl border border-slate-200/90 bg-slate-50 space-y-4">
+                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block">
+                    TU INGRESO NETO MENSUAL ESTIMADO
                   </span>
-                  <span className="text-sm font-heading font-bold text-slate-500 uppercase">
-                    MXN
-                  </span>
-                </div>
 
-                {/* Línea divisora */}
-                <div className="border-t border-slate-200/80 my-5" />
-
-                {/* Desglose de ingresos */}
-                <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
-                  <div className="flex justify-between items-center">
-                    <span>Tus rentas del mes</span>
-                    <span className="font-heading font-bold text-slate-900">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
                       ${hostEarnings.toLocaleString('es-MX')}
                     </span>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <span>Tarifa GALSA (33%)</span>
-                    <span className="font-heading font-bold text-slate-900">
-                      ${galsaFee.toLocaleString('es-MX')}
+                    <span className="text-xs font-heading font-bold text-slate-500 uppercase">
+                      MXN
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center">
-                    <span>Lo que pagan clientes</span>
-                    <span className="font-heading font-bold text-slate-900">
-                      ${clientTotal.toLocaleString('es-MX')}
+                  <div className="border-t border-slate-200/80 pt-3 space-y-2 text-xs sm:text-sm font-sans text-slate-600">
+                    <div className="flex justify-between items-center">
+                      <span>Tus rentas del mes</span>
+                      <span className="font-heading font-bold text-slate-900">
+                        ${hostEarnings.toLocaleString('es-MX')}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span>Tarifa GALSA (33%)</span>
+                      <span className="font-heading font-bold text-slate-900">
+                        ${galsaFee.toLocaleString('es-MX')}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span>Lo que pagan clientes</span>
+                      <span className="font-heading font-bold text-slate-900">
+                        ${clientTotal.toLocaleString('es-MX')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-200/80 pt-3">
+                    <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
+                      PROYECCIÓN ANUAL
                     </span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
+                        ${annualProjection.toLocaleString('es-MX')}
+                      </span>
+                      <span className="text-xs font-heading font-bold text-slate-500">
+                        MXN / año
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-200/80 pt-3">
+                    <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
+                      *Estimado sujeto a demanda y ocupación.
+                    </p>
                   </div>
                 </div>
 
-                {/* Línea divisora */}
-                <div className="border-t border-slate-200/80 my-5" />
-
-                {/* Proyección Anual */}
-                <div>
-                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
-                    PROYECCIÓN ANUAL
-                  </span>
-                  <div className="flex items-baseline gap-1.5 mt-1">
-                    <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tracking-tight">
-                      ${annualProjection.toLocaleString('es-MX')}
-                    </span>
-                    <span className="text-xs font-heading font-bold text-slate-500">
-                      MXN / año
-                    </span>
-                  </div>
-                </div>
-
-                {/* Línea divisora */}
-                <div className="border-t border-slate-200/80 my-5" />
-
-                {/* Disclaimer resumido */}
-                <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
-                  *Estimado sujeto a demanda y ocupación.
-                </p>
-
-                {/* Botón de acción */}
                 <a
                   href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20quiero%20publicar%20mi%20auto%20como%20anfitri%C3%B3n%20en%20Durango"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full mt-6 py-4 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
+                  className="w-full block text-center py-3.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs transition-colors"
                 >
-                  <span>Quiero publicar mi auto</span>
-                  <ArrowRight className="w-4 h-4" />
+                  Consultar evaluación de mi vehículo
                 </a>
+
               </div>
             </div>
 
           </div>
+
         </div>
       </section>
 
-      {/* SECCIÓN 2: CÓMO FUNCIONA (Con las 3 imágenes 3D de coches) */}
+      {/* SECCIÓN 2: CÓMO GANAR DINERO (Sin textito 'CÓMO FUNCIONA' y con imágenes cuadradas con bordes redondeados) */}
       <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="max-w-2xl mb-12">
-            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
-              CÓMO FUNCIONA
-            </span>
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
               Cómo ganar dinero con tu auto en GALSA
             </h2>
@@ -328,11 +343,12 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {HOW_IT_WORKS_CARDS.map((card, idx) => (
               <div key={idx} className="space-y-4">
-                <div className="rounded-2xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-2">
+                {/* Imagen Cuadrada con Bordes Redondeados */}
+                <div className="aspect-square w-full rounded-2xl overflow-hidden bg-slate-100/80 border border-slate-200/80 flex items-center justify-center p-3">
                   <img
                     src={card.img}
                     alt={card.title}
-                    className="w-full h-auto object-cover rounded-xl"
+                    className="w-full h-full object-cover rounded-xl"
                   />
                 </div>
                 <div>
@@ -349,13 +365,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
         </div>
       </section>
 
-      {/* SECCIÓN 3: BENEFICIOS */}
+      {/* SECCIÓN 3: BENEFICIOS (Sin el textito 'BENEFICIOS' arriba, con imágenes cuadradas con bordes redondeados) */}
       <section className="py-16 sm:py-20 border-b border-slate-100 bg-slate-50/50">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="max-w-2xl mb-12">
-            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
-              BENEFICIOS
-            </span>
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
               Beneficios de ser anfitrión GALSA
             </h2>
@@ -365,33 +378,32 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BENEFITS.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div key={idx} className="space-y-2">
-                  <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-slate-700 mb-3 shadow-none">
-                    <Icon className="w-5 h-5 text-slate-700" strokeWidth={1.75} />
-                  </div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
-                    {item.description}
-                  </p>
+            {BENEFITS.map((item, idx) => (
+              <div key={idx} className="space-y-3">
+                {/* Imagen Cuadrada con Bordes Redondeados */}
+                <div className="w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-2xl overflow-hidden bg-white border border-slate-200/90 flex items-center justify-center p-1.5 shadow-none">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
                 </div>
-              );
-            })}
+                <h3 className="text-base font-heading font-bold text-slate-900">
+                  {item.title}
+                </h3>
+                <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SECCIÓN 4: PROCESO (Publica tu auto en 6 pasos) */}
+      {/* SECCIÓN 4: PROCESO EN 6 PASOS (Sin el textito 'PROCESO' arriba) */}
       <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
           <div className="max-w-2xl mb-12">
-            <span className="text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
-              PROCESO
-            </span>
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
               Publica tu auto en 6 pasos
             </h2>
@@ -418,9 +430,9 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
         </div>
       </section>
 
-      {/* SECCIÓN 5: BANNER FINAL CTA */}
+      {/* SECCIÓN 5: BANNER FINAL */}
       <section className="py-14 sm:py-16" style={{ backgroundColor: '#8EB5FF' }}>
-        <div className="max-w-[1000px] mx-auto px-4 sm:px-6 text-center space-y-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white tracking-tight">
             Empieza a ganar con tu auto hoy
           </h2>

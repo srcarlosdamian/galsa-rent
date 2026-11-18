@@ -55,7 +55,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate }) => {
-  const isCheckout = currentPath.startsWith('/vehiculos/');
+  // Determinar si estamos en la vista de Checkout / Carrito ("Completa tu reserva")
+  const isCheckout = currentPath.startsWith('/reservar/') || currentPath.endsWith('/checkout');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState<'es' | 'en'>('es');

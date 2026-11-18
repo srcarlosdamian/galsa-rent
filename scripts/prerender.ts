@@ -361,6 +361,24 @@ VEHICLES.forEach((v) => {
 
   writeRouteFile(`/vehiculos/${v.slug}`, vehicleHtml);
 
+  // Also prerender checkout page for this vehicle (/reservar/:slug)
+  const checkoutHtml = renderPage({
+    routePath: `/reservar/${v.slug}`,
+    metadata: {
+      ...meta,
+      title: `Completa tu reserva - ${v.make} ${v.model} | GALSA Rent`,
+      noIndex: true,
+    },
+    schemaJson: null,
+    initialContentHtml: `
+      <main>
+        <h1>Completa tu reserva - ${v.make} ${v.model} ${v.year}</h1>
+        <p>Proceso de reserva segura y firma digital con GALSA Rent.</p>
+      </main>
+    `,
+  });
+  writeRouteFile(`/reservar/${v.slug}`, checkoutHtml);
+
   // Also create 301 / Meta-Refresh redirect for legacy UUID route
   const redirectHtml = `<!DOCTYPE html>
 <html lang="es-MX">

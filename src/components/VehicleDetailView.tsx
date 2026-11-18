@@ -5,17 +5,17 @@ import {
   Users, Fuel, Gauge, Award, CheckCircle2, Clock, 
   HelpCircle, ThumbsUp, CreditCard, Heart, ArrowRight,
   X, Briefcase, Wind, Smartphone, Camera, Car, Zap, Check,
-  ClipboardCheck, Star, Copy, Mail, FileCheck, Eye, PenTool, FileText
+  ClipboardCheck, Star, Copy, Mail
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from './VehicleCard';
 import { DateRangePicker } from './DateRangePicker';
-import { DocumentUploadCard, DocUploadState } from './DocumentUploadCard';
 
 interface VehicleDetailViewProps {
   vehicle: Vehicle;
   onNavigate?: (path: string) => void;
+  onStartCheckout?: () => void;
 }
 
 const TIME_OPTIONS = [
@@ -27,6 +27,7 @@ const TIME_OPTIONS = [
 export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   vehicle,
   onNavigate,
+  onStartCheckout,
 }) => {
   const [startDate, setStartDate] = useState('2026-11-04');
   const [endDate, setEndDate] = useState('2026-11-07');
@@ -41,9 +42,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [contractModalOpen, setContractModalOpen] = useState(false);
-  const [isContractSigned, setIsContractSigned] = useState(false);
-  const [contractSignedAt, setContractSignedAt] = useState<string | null>(null);
 
   // Bloquear scroll y permitir cerrar modales con tecla Escape
   useEffect(() => {
@@ -52,10 +50,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         setGalleryModalOpen(false);
         setMobileSheetOpen(false);
         setShareModalOpen(false);
-        setContractModalOpen(false);
       }
     };
-    if (galleryModalOpen || mobileSheetOpen || shareModalOpen || contractModalOpen) {
+    if (galleryModalOpen || mobileSheetOpen || shareModalOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
@@ -65,12 +62,8 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [galleryModalOpen, mobileSheetOpen, shareModalOpen, contractModalOpen]);
+  }, [galleryModalOpen, mobileSheetOpen, shareModalOpen]);
 
-  const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
-  const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
-
-  // Imagen de las tarjetas del home repetida 5 veces para evitar fotos genéricas
   const cardHomeImage = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793239505248-1-car.webp';
   const images = [cardHomeImage, cardHomeImage, cardHomeImage, cardHomeImage, cardHomeImage];
 
@@ -87,14 +80,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     return diff > 0 ? diff : 1;
   };
 
-  const handleDateRangeChange = (start: string, end: string) => {
-    setStartDate(start);
-    setEndDate(end);
-    if (start && end) {
-      setRentalDays(calculateDays(start, end));
-    }
-  };
-
   const handleStartDateChange = (val: string) => {
     setStartDate(val);
     if (val && endDate) {
@@ -109,14 +94,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     }
   };
 
-  const formatDisplayDate = (dateStr: string) => {
-    if (!dateStr) return '';
-    const [y, m, d] = dateStr.split('-');
-    if (!y || !m || !d) return dateStr;
-    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-    return `${d}/${m}/${y}`;
-  };
-
   const formatRangeSummary = (s: string, e: string) => {
     if (!s || !e) return '4 nov — 7 nov';
     const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -125,147 +102,21 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     return `${sDate.getDate()} ${months[sDate.getMonth()]} — ${eDate.getDate()} ${months[eDate.getMonth()]}`;
   };
 
-  // Catálogo de extras disponibles
-  const EXTRAS_OPTIONS = [
-    {
-      id: 'extra-driver',
-      title: 'Conductor adicional',
-      description: 'Registra un segundo conductor autorizado.',
-      price: 350,
-    },
-    {
-      id: 'baby-seat',
-      title: 'Silla para bebé',
-      description: 'Sistema de retención infantil.',
-      price: 200,
-    },
-    {
-      id: 'gps',
-      title: 'GPS / Navegador',
-      description: 'Dispositivo de navegación.',
-      price: 150,
-    },
-    {
-      id: 'damage-cover',
-      title: 'Cobertura total de daños',
-      description: 'Protección adicional por daños al vehículo.',
-      price: 450,
-    },
-    {
-      id: 'unlimited-km',
-      title: 'Kilometraje ilimitado',
-      description: 'Sin tope de kilómetros por día.',
-      price: 500,
-    },
-  ];
-
-  const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
-  // Estados de carga de documentos solicitados
-  const [licenseDoc, setLicenseDoc] = useState<DocUploadState>({
-    name: 'Scann_158.pdf',
-    sizeStr: '30 MB / 74 MB',
-    progress: 79,
-    status: 'uploading',
-  });
-
-  const [ineDoc, setIneDoc] = useState<DocUploadState>({
-    name: '',
-    sizeStr: '',
-    progress: 0,
-    status: 'idle',
-  });
-
-  const [proofDoc, setProofDoc] = useState<DocUploadState>({
-    name: '',
-    sizeStr: '',
-    progress: 0,
-    status: 'idle',
-  });
-
-  const [additionalDocNotes, setAdditionalDocNotes] = useState('');
-
-  const simulateDocUpload = (type: 'license' | 'ine' | 'proof', customName?: string, customSize?: string) => {
-    const targetSetter = type === 'license' ? setLicenseDoc : type === 'ine' ? setIneDoc : setProofDoc;
-    const fileName = customName || (type === 'license' ? 'Scann_158.pdf' : type === 'ine' ? 'INE_identificacion_oficial.pdf' : 'Comprobante_domicilio_reciente.pdf');
-    const fileSize = customSize || (type === 'license' ? '30 MB / 74 MB' : type === 'ine' ? '2.4 MB / 2.4 MB' : '1.8 MB / 1.8 MB');
-
-    targetSetter({
-      name: fileName,
-      sizeStr: fileSize,
-      progress: 25,
-      status: 'uploading'
-    });
-
-    let current = 25;
-    const timer = setInterval(() => {
-      current += 25;
-      if (current >= 100) {
-        current = 100;
-        clearInterval(timer);
-        targetSetter({
-          name: fileName,
-          sizeStr: fileSize,
-          progress: 100,
-          status: 'completed'
-        });
-      } else {
-        targetSetter(prev => ({
-          ...prev,
-          progress: current
-        }));
-      }
-    }, 280);
-  };
-
-  const handleDocRemove = (type: 'license' | 'ine' | 'proof') => {
-    const targetSetter = type === 'license' ? setLicenseDoc : type === 'ine' ? setIneDoc : setProofDoc;
-    targetSetter({
-      name: '',
-      sizeStr: '',
-      progress: 0,
-      status: 'idle'
-    });
-  };
-
-  // Validación de condiciones y campos obligatorios
-  const isFormComplete = Boolean(
-    startDate && 
-    endDate && 
-    pickupTime && 
-    returnTime && 
-    acceptedTerms &&
-    isContractSigned
-  );
-
-  // Control de acordeones en completa tu reserva (solo uno abierto a la vez)
-  const [openAccordion, setOpenAccordion] = useState<string | null>('extras');
-
-  const toggleAccordion = (id: string) => {
-    setOpenAccordion(prev => (prev === id ? null : id));
-  };
-
-  const toggleExtra = (id: string) => {
-    setSelectedExtras(prev => 
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-    );
-  };
-
-  const extrasTotal = selectedExtras.reduce((sum, id) => {
-    const ex = EXTRAS_OPTIONS.find(e => e.id === id);
-    return sum + (ex ? ex.price : 0);
-  }, 0);
-
-  // Cálculo de precios exactos
+  // Cálculo de precios
   const baseSubtotal = vehicle.pricePerDay * rentalDays;
   const serviceFee = Math.round(baseSubtotal * 0.33);
-  const total = baseSubtotal + serviceFee + extrasTotal;
-  const originalSubtotal = Math.round(baseSubtotal * 1.12);
+  const total = baseSubtotal + serviceFee;
+
+  // Al dar click en Continuar, AVANZAR AL CARRITO / CHECKOUT ("COMPLETA TU RESERVA")
+  const handleProceedToCheckout = () => {
+    if (onStartCheckout) {
+      onStartCheckout();
+    } else if (onNavigate) {
+      onNavigate(`/reservar/${vehicle.slug}`);
+    }
+  };
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://galsarent.com.mx/vehiculos/${vehicle.slug}`;
-  const shareText = `Renta este ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango con GALSA Rent`;
-
   const handleShare = () => {
     setShareModalOpen(true);
   };
@@ -276,111 +127,38 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     setTimeout(() => setLinkCopied(false), 2000);
   };
 
-  const handleBooking = () => {
-    // Si falta algún dato por ser prototipo, usar valores por defecto seguros para poder avanzar sin bloqueo
-    const sDate = startDate || '2026-11-04';
-    const eDate = endDate || '2026-11-07';
-    const extrasText = selectedExtras.length > 0 
-      ? ` con extras: ${selectedExtras.map(id => EXTRAS_OPTIONS.find(e => e.id === id)?.title).join(', ')}`
-      : '';
-    const msg = encodeURIComponent(
-      `Hola GALSA Rent! Me interesa rentar el ${vehicle.make} ${vehicle.model} ${vehicle.year} en Durango (Sucursal Plaza 450) del ${sDate} (${pickupTime || '08:00'}) al ${eDate} (${returnTime || '18:00'}) por ${rentalDays} días${extrasText}. Total: $${total.toLocaleString('es-MX')}. ¿Está disponible?`
-    );
-    window.open(`https://wa.me/526180000000?text=${msg}`, '_blank');
-  };
-
-  // Autos similares para la misma categoría o uso
   const similarVehicles = VEHICLES.filter((v) => v.id !== vehicle.id).slice(0, 3);
-
-  // Calificación y reseñas del vehículo
   const ratingScore = vehicle.rating ? vehicle.rating.toFixed(2) : '4.96';
   const reviewCount = vehicle.reviewCount || 28;
 
   const mockReviews = [
     {
-      id: 'rev-1',
-      author: 'Carlos Mendoza',
-      location: 'Durango, Dgo.',
+      id: 1,
+      name: 'Sofía Valenzuela',
       date: 'Octubre 2026',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
       rating: 5,
-      avatarColor: 'bg-slate-100 text-black',
-      comment: `Excelente experiencia rentando el ${vehicle.make} ${vehicle.model}. El auto estaba impecable, con olor a nuevo, tanque lleno y entrega súper puntual en Plaza 450. El contrato digital se firmó en menos de 2 minutos sin filas ni burocracia.`,
+      comment: 'El auto impecable, entrega rápida en Plaza 450 sin filas. El proceso 100% digital me ahorró más de una hora comparado con las agencias tradicionales.',
     },
     {
-      id: 'rev-2',
-      author: 'Sofía Rodríguez',
-      location: 'Ciudad de México',
-      date: 'Octubre 2026',
-      rating: 5,
-      avatarColor: 'bg-slate-100 text-black',
-      comment: `Viajé por trabajo y carretera en Durango. La unidad se comportó de maravilla, aire acondicionado al 100 y el kilometraje libre te da total tranquilidad para moverte sin preocupaciones. Muy recomendado.`,
-    },
-    {
-      id: 'rev-3',
-      author: 'Alejandro Garza',
-      location: 'Monterrey, N.L.',
+      id: 2,
+      name: 'Carlos Mendoza',
       date: 'Septiembre 2026',
-      rating: 4,
-      avatarColor: 'bg-slate-100 text-black',
-      comment: `El mejor servicio de renta que he probado en México. Cero sorpresas con el precio, depósito en garantía devuelto íntegro y sin demoras a las 24 hrs de la entrega. La atención por WhatsApp fue de 10.`,
-    },
-    {
-      id: 'rev-4',
-      author: 'Mariana Treviño',
-      location: 'Guadalajara, Jal.',
-      date: 'Septiembre 2026',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
       rating: 5,
-      avatarColor: 'bg-slate-100 text-black',
-      comment: `Súper fácil el proceso con el checklist digital al recibir y entregar el auto con fotos. Todo transparente y seguro. El ${vehicle.model} muy cómodo y espacioso para la familia. Definitivamente volveré a rentar aquí.`,
-    },
-    {
-      id: 'rev-5',
-      author: 'David Valenzuela',
-      location: 'Mazatlán, Sin.',
-      date: 'Agosto 2026',
-      rating: 5,
-      avatarColor: 'bg-slate-100 text-black',
-      comment: `Renta rápida y confiable. El auto en óptimas condiciones mecánicas, suspensión perfecta para carretera y frenos impecables. La coordinación de entrega fue rápida y puntual en sucursal.`,
-    },
-    {
-      id: 'rev-6',
-      author: 'Valeria Morales',
-      location: 'Torreón, Coah.',
-      date: 'Agosto 2026',
-      rating: 4,
-      avatarColor: 'bg-slate-100 text-black',
-      comment: `Increíble servicio. Tenía dudas sobre los requisitos pero en WhatsApp me atendieron de inmediato. Auto muy limpio, seguro vigente y contrato con validez legal. 100% recomendable.`,
+      comment: 'Excelente camioneta para recorrer la sierra. El contrato digital y la verificación fue muy rápida desde el celular. Todo transparente.',
     },
   ];
 
-  const prevImage = () => {
-    setActivePhotoIdx((prev) => (prev - 1 + images.length) % images.length);
-  };
-
-  const nextImage = () => {
-    setActivePhotoIdx((prev) => (prev + 1) % images.length);
-  };
-
   return (
-    <div className="w-full py-4 sm:py-8 bg-white pb-28 lg:pb-8">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div className="w-full py-4 sm:py-6 md:py-8 bg-white text-slate-900 text-left">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Breadcrumb & Share */}
-        <div className="pb-4 mb-4 flex items-center justify-between gap-4">
+        {/* ========================================================
+            BARRA DE BREADCRUMBS Y ACCIONES
+           ======================================================== */}
+        <div className="pb-3 flex items-center justify-between gap-4">
           <nav aria-label="Breadcrumb" className="text-xs font-heading font-medium text-slate-500 flex items-center gap-1.5 flex-wrap">
-            <a
-              href="/"
-              onClick={(e) => {
-                if (onNavigate) {
-                  e.preventDefault();
-                  onNavigate('/');
-                }
-              }}
-              className="text-slate-600 hover:text-black transition-colors"
-            >
-              Inicio
-            </a>
-            <span className="text-slate-300">/</span>
             <a
               href="/catalogo"
               onClick={(e) => {
@@ -389,1685 +167,413 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   onNavigate('/catalogo');
                 }
               }}
-              className="text-slate-600 hover:text-black transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors"
             >
-              Vehículos
+              <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+              <span>Volver al catálogo</span>
             </a>
             <span className="text-slate-300">/</span>
-            <span className="text-slate-900 font-semibold truncate max-w-[280px]">
-              {vehicle.make} {vehicle.model}
-            </span>
+            <span className="text-slate-500">{vehicle.category}</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-slate-900 font-semibold truncate max-w-[200px]">{vehicle.make} {vehicle.model}</span>
           </nav>
 
-          <button
-            type="button"
-            onClick={handleShare}
-            aria-label="Compartir este vehículo"
-            className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-700 hover:text-black px-2.5 py-1.5 rounded-[8px] hover:bg-slate-100 transition-colors"
-          >
-            <Share2 className="w-3.5 h-3.5" strokeWidth={1.4} />
-            <span>Compartir</span>
-          </button>
-        </div>
-
-        {/* ========================================================
-            1. GALERÍA DE FOTOS (1 Grande a la izquierda + 2 Pequeñas a la derecha)
-           ======================================================== */}
-        <div className="mb-8 sm:mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-[260px] sm:h-[340px] lg:h-[380px] min-h-0">
-            
-            {/* Foto principal grande (izquierda, 8 columnas en desktop) */}
-            <div 
-              onClick={() => setGalleryModalOpen(true)}
-              className="md:col-span-8 relative h-full min-h-0 rounded-[20px] sm:rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer group"
-            >
-              <img
-                src={images[0]}
-                alt={`${vehicle.make} ${vehicle.model} vista principal`}
-                className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
-              />
-
-              {/* Botón de favoritos flotante traslúcido */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsFav(!isFav);
-                }}
-                aria-label="Favorito"
-                className="absolute top-3.5 right-3.5 w-8 h-8 flex items-center justify-center rounded-full bg-white/70 hover:bg-white text-slate-900 backdrop-blur-md transition-all z-10 shadow-xs"
-              >
-                <Heart
-                  className={`w-4 h-4 transition-colors ${isFav ? 'fill-blue-500 text-blue-500' : 'text-slate-800'}`}
-                  strokeWidth={1.4}
-                />
-              </button>
-
-              {/* En mobile: botón "Ver X fotos" sobre la foto principal */}
-              <div className="md:hidden absolute bottom-3 right-3 bg-white/95 text-slate-900 text-xs font-heading font-medium px-3.5 py-1.5 rounded-full shadow-md">
-                Ver {images.length} fotos
-              </div>
-            </div>
-
-            {/* Dos fotos laterales apiladas a la derecha (4 columnas en desktop) */}
-            <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-3 h-full min-h-0">
-              {/* Foto lateral 1 (arriba) */}
-              <div 
-                onClick={() => setGalleryModalOpen(true)}
-                className="relative h-full min-h-0 rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
-              >
-                <img
-                  src={images[1] || images[0]}
-                  alt={`${vehicle.make} ${vehicle.model} vista lateral`}
-                  className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
-                />
-              </div>
-
-              {/* Foto lateral 2 (abajo con botón "Ver X fotos") */}
-              <div 
-                onClick={() => setGalleryModalOpen(true)}
-                className="relative h-full min-h-0 rounded-[16px] sm:rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
-              >
-                <img
-                  src={images[2] || images[0]}
-                  alt={`${vehicle.make} ${vehicle.model} vista interior`}
-                  className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
-                />
-                <div className="absolute bottom-3 right-3 bg-white/95 text-slate-900 text-xs font-heading font-medium px-3.5 py-1.5 rounded-full shadow-md transition-transform duration-200 group-hover:scale-105">
-                  Ver {images.length} fotos
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        {/* Modal flotante de Galería completa (se cierra con X o dando clic afuera) */}
-        {galleryModalOpen && (
-          <div 
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-150"
-            onClick={() => setGalleryModalOpen(false)}
-          >
-            <div 
-              className="relative w-full max-w-4xl bg-white rounded-[24px] shadow-2xl p-4 sm:p-6 my-auto max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Barra superior del Modal */}
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 sticky top-0 bg-white z-10 -mt-1 pt-1">
-                <div className="flex-1 text-center">
-                  <h3 className="text-sm sm:text-base font-heading font-semibold text-slate-900">
-                    {vehicle.make} {vehicle.model} {vehicle.year} · 5.0 ★
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setGalleryModalOpen(false)}
-                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors shrink-0 ml-2"
-                  aria-label="Cerrar modal"
-                >
-                  <X className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-              </div>
-
-              {/* Contenido de Fotos del Modal */}
-              <div className="space-y-3">
-                {/* Foto Principal grande */}
-                {images.length > 0 && (
-                  <div className="w-full aspect-[16/10] sm:aspect-[16/9] rounded-[16px] overflow-hidden bg-slate-100">
-                    <img
-                      src={images[0]}
-                      alt={`${vehicle.make} ${vehicle.model} foto 1`}
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-                )}
-
-                {/* Grid de fotos secundarias en 2 columnas */}
-                {images.length > 1 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {images.slice(1).map((imgUrl, idx) => (
-                      <div key={idx} className="w-full aspect-[16/10] rounded-[14px] overflow-hidden bg-slate-100">
-                        <img
-                          src={imgUrl}
-                          alt={`${vehicle.make} ${vehicle.model} foto ${idx + 2}`}
-                          className="w-full h-full object-cover object-center"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ========================================================
-            MODAL MINIMALISTA Y NEUTRAL DE COMPARTIR
-           ======================================================== */}
-        {shareModalOpen && (
-          <div 
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150"
-            onClick={() => setShareModalOpen(false)}
-          >
-            <div 
-              className="relative w-full max-w-md bg-white rounded-[24px] shadow-2xl p-6 border border-slate-100 text-left animate-in zoom-in-95 duration-200"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Barra superior */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900 leading-tight">
-                    Compartir vehículo
-                  </h3>
-                  <p className="text-xs text-slate-500 font-sans mt-0.5">
-                    Envía este modelo o cópialo para más tarde
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShareModalOpen(false)}
-                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors shrink-0 ml-2"
-                  aria-label="Cerrar modal"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Ficha previa compacta del vehículo sin fondo gris */}
-              <div className="my-5 flex items-center gap-3.5">
-                <img 
-                  src={mainPhoto} 
-                  alt={`${vehicle.make} ${vehicle.model}`}
-                  className="w-16 h-14 rounded-xl object-cover bg-white border border-slate-200/80 shrink-0"
-                />
-                <div className="min-w-0 flex-1">
-                  <h4 className="text-sm font-heading font-bold text-slate-900 truncate">
-                    {vehicle.make} {vehicle.model} {vehicle.year}
-                  </h4>
-                  <p className="text-xs text-slate-500 truncate mt-0.5">
-                    {vehicle.location || 'Sucursal Plaza 450, Durango'}
-                  </p>
-                  <p className="text-xs font-heading font-semibold text-slate-800 mt-1">
-                    ${vehicle.pricePerDay.toLocaleString('es-MX')} <span className="text-[11px] font-normal text-slate-500">/ día</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Botones de Redes Sociales en diseño neutro y minimalista */}
-              <div className="mb-5">
-                <span className="block text-xs font-heading font-medium text-slate-600 mb-2.5">
-                  Compartir en redes
-                </span>
-                <div className="grid grid-cols-4 gap-2.5 text-center">
-                  {/* WhatsApp */}
-                  <a
-                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' - ' + shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                      </svg>
-                    </div>
-                    <span className="text-[11px] font-heading font-medium text-slate-700">WhatsApp</span>
-                  </a>
-
-                  {/* X (Twitter) */}
-                  <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
-                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                      </svg>
-                    </div>
-                    <span className="text-[11px] font-heading font-medium text-slate-700">X</span>
-                  </a>
-
-                  {/* Facebook */}
-                  <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                      </svg>
-                    </div>
-                    <span className="text-[11px] font-heading font-medium text-slate-700">Facebook</span>
-                  </a>
-
-                  {/* Correo */}
-                  <a
-                    href={`mailto:?subject=${encodeURIComponent(shareText)}&body=${encodeURIComponent('Hola, mira este auto en renta que encontré:\n\n' + shareUrl)}`}
-                    className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border border-slate-200/80 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-800 group"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-800 flex items-center justify-center transition-colors">
-                      <Mail className="w-4 h-4 text-slate-800" />
-                    </div>
-                    <span className="text-[11px] font-heading font-medium text-slate-700">Correo</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Copiar enlace */}
-              <div>
-                <span className="block text-xs font-heading font-medium text-slate-600 mb-1.5">
-                  Copiar enlace directo
-                </span>
-                <div className="flex items-center gap-2 p-1.5 pl-3 rounded-xl border border-slate-200 bg-slate-50">
-                  <input
-                    type="text"
-                    readOnly
-                    value={shareUrl}
-                    className="w-full bg-transparent text-xs text-slate-700 font-mono focus:outline-none select-all truncate"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleCopyLink}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all shrink-0 flex items-center gap-1.5 ${
-                      linkCopied
-                        ? 'bg-slate-900 text-white'
-                        : 'bg-white border border-slate-200 text-slate-800 hover:bg-slate-100'
-                    }`}
-                  >
-                    {linkCopied ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>¡Copiado!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3.5 h-3.5 text-slate-700" />
-                        <span>Copiar</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        )}
-
-        {/* ========================================================
-            MODAL DE CONTRATO MERCANTIL DIGITAL Y FIRMA
-           ======================================================== */}
-        {contractModalOpen && (
-          <div 
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-150 text-left"
-            onClick={() => setContractModalOpen(false)}
-          >
-            <div 
-              className="relative w-full max-w-2xl bg-white rounded-[24px] shadow-2xl border border-slate-100 flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Encabezado del Modal */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 sticky top-0 bg-white z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                    <FileText className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 leading-tight">
-                      Contrato Mercantil de Arrendamiento
-                    </h3>
-                    <p className="text-xs text-slate-500 font-sans mt-0.5">
-                      GALSA Rent México · Folio CTO-2026-{vehicle.slug.slice(0, 10).toUpperCase()}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setContractModalOpen(false)}
-                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors shrink-0 ml-2 cursor-pointer"
-                  aria-label="Cerrar contrato"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Contenido scrolleable con el texto legal y cláusulas importantes */}
-              <div className="p-6 overflow-y-auto space-y-5 text-slate-700 text-xs sm:text-sm font-sans leading-relaxed">
-                
-                {/* Ficha Resumen de la Renta */}
-                <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200/80 space-y-3">
-                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-700 block">
-                    Resumen de datos pactados
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <span className="text-slate-400 block font-medium">Unidad en arrendamiento:</span>
-                      <span className="font-heading font-bold text-slate-900 text-sm">
-                        {vehicle.make} {vehicle.model} {vehicle.year}
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block font-medium">Periodo de renta:</span>
-                      <span className="font-heading font-bold text-slate-900 text-sm">
-                        {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block font-medium">Importe total pactado:</span>
-                      <span className="font-heading font-bold text-slate-900 text-sm">
-                        ${total.toLocaleString('es-MX')} MXN (IVA incluido)
-                      </span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block font-medium">Depósito en garantía reembolsable:</span>
-                      <span className="font-heading font-bold text-slate-900 text-sm">
-                        ${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Cláusulas Legales Importantes */}
-                <div className="space-y-4 pt-1">
-                  <div>
-                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
-                      PRIMERA. Objeto del contrato y estado de la unidad
-                    </h4>
-                    <p className="text-slate-600">
-                      GALSA Rent otorga en arrendamiento temporal al Arrendatario el vehículo automotor antes descrito. La unidad se entrega en óptimas condiciones mecánicas, eléctricas y estéticas, conforme al acta y checklist fotográfico digital registrado al momento de la entrega en sucursal oficial.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
-                      SEGUNDA. Kilometraje libre y combustible
-                    </h4>
-                    <p className="text-slate-600">
-                      La renta incluye kilometraje libre sin límite de recorrido en el territorio de la República Mexicana. El vehículo se entrega con el nivel de combustible consignado en el checklist y el Arrendatario se compromete a devolverlo con el mismo nivel; de lo contrario, se aplicará el cargo de reposición pactado sin recargos abusivos.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
-                      TERCERA. Depósito en garantía y liberación
-                    </h4>
-                    <p className="text-slate-600">
-                      El Arrendatario constituye un depósito en garantía por ${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN. Dicho importe será liberado íntegramente al término de la renta tras cotejar la devolución satisfactoria de la unidad, sin siniestros, infracciones imputables o faltantes.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
-                      CUARTA. Conducción y restricciones de uso
-                    </h4>
-                    <p className="text-slate-600">
-                      El Arrendatario manifiesta ser mayor de 21 años y contar con licencia de conducir oficial y vigente. Se prohíbe expresamente subarrendar la unidad, permitir su manejo a personas no registradas en la reserva, fumar en el habitáculo o destinarla a fines ilícitos.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-heading font-bold text-slate-900 text-sm mb-1">
-                      QUINTA. Validez legal de la firma electrónica
-                    </h4>
-                    <p className="text-slate-600">
-                      Las partes acuerdan que la presente confirmación electrónica posee plena validez jurídica, eficacia probatoria y fuerza ejecutiva al tenor de los Artículos 89 al 114 del Código de Comercio y la Norma Oficial Mexicana NOM-151-SCFI, sustituyendo a la firma autógrafa para todos los efectos legales a que haya lugar.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Certificado de Sello Digital si ya está firmado */}
-                {isContractSigned && (
-                  <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    <div className="text-xs space-y-0.5">
-                      <span className="font-heading font-bold block">
-                        Contrato firmado electrónicamente con éxito
-                      </span>
-                      <p className="text-emerald-700">
-                        Fecha y hora: {contractSignedAt} · Algoritmo SHA-256 con constancia de conservación NOM-151.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-              </div>
-
-              {/* Barra inferior de acciones del Modal */}
-              <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <span className="text-[11px] font-sans text-slate-500">
-                  Al confirmar, aceptas formalmente las cláusulas aquí estipuladas.
-                </span>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setContractModalOpen(false)}
-                    className="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 text-xs sm:text-sm font-heading font-medium transition-colors cursor-pointer"
-                  >
-                    {isContractSigned ? 'Cerrar' : 'Cancelar'}
-                  </button>
-
-                  {!isContractSigned ? (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsContractSigned(true);
-                        const now = new Date();
-                        const dateStr = now.toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
-                        setContractSignedAt(dateStr);
-                        setAcceptedTerms(true);
-                        setTimeout(() => {
-                          setContractModalOpen(false);
-                        }, 500);
-                      }}
-                      className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-heading font-bold transition-all shadow-sm active:scale-95 cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <Check className="w-4 h-4" />
-                      <span>Confirmar y firmar contrato</span>
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setContractModalOpen(false)}
-                      className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-heading font-bold transition-all shadow-sm active:scale-95 cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>Contrato confirmado</span>
-                    </button>
-                  )}
-                </div>
-              </div>
-
-            </div>
-          </div>
-        )}
-
-        {/* ========================================================
-            2. GRID PRINCIPAL (Información Izquierda + Sticky Checkout Derecha)
-           ======================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          
-          {/* COLUMNA IZQUIERDA: Ficha detallada idéntica a la referencia */}
-          <div className="lg:col-span-7 space-y-8 text-left">
-            
-            {/* Título y Subtítulo */}
-            <div>
-              <h1 className="text-2xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
-                {vehicle.make} {vehicle.model}
-              </h1>
-              
-              <div className="mt-2 flex items-center gap-2 flex-wrap text-sm text-slate-600 font-heading">
-                <a
-                  href="#resenas"
-                  className="inline-flex items-center gap-1 text-slate-900 font-bold hover:text-blue-600 transition-colors"
-                >
-                  <Star className="w-4 h-4 fill-blue-300 text-blue-300 shrink-0" />
-                  <span>{ratingScore}</span>
-                  <span className="font-medium text-slate-500 underline ml-0.5">({reviewCount})</span>
-                </a>
-                <span>·</span>
-                <span>{vehicle.year} {vehicle.trim || vehicle.version}</span>
-                <span>·</span>
-                <span className="text-slate-800 font-medium">{vehicle.category}</span>
-                <span>·</span>
-                <span className="text-slate-500">{vehicle.location || 'Sucursal Plaza 450, Durango'}</span>
-              </div>
-
-              {/* Descripción del vehículo en fuente de 16px sin título repetido ni línea divisoria */}
-              <p className="mt-4 text-[16px] font-sans font-normal text-black leading-relaxed">
-                {vehicle.description || 'Unidad inspeccionada mecánicamente con contrato mercantil digital y entrega rápida en nuestras ubicaciones oficiales.'}
-              </p>
-            </div>
-
-            {/* 1. Lo que ofrece este vehículo (Acordeón 1) */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('features')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                    Lo que ofrece este vehículo
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Equipamiento, transmisión, combustible y capacidad
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'features' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'features' && (
-                <div className="pt-5 pb-2 animate-in fade-in duration-200">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8 lg:gap-x-12">
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Users className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.seats} asientos</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Fuel className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Calendar className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Año modelo {vehicle.year}</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Gauge className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Car className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Briefcase className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Aire acondicionado A/C</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Frenos ABS y bolsas de aire</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <Camera className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Cámara de reversa y sensores</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 text-slate-800">
-                      <CarFront className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                      <span className="text-[16px] font-heading font-normal text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 2. Sección: EXTRAS (Acordeón 2) */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('extras')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                      Extras
-                    </h3>
-                    {selectedExtras.length > 0 && (
-                      <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                        {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Personaliza tu viaje con servicios adicionales opcionales
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'extras' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'extras' && (
-                <div className="pt-5 pb-2 space-y-2.5 animate-in fade-in duration-200">
-                  {EXTRAS_OPTIONS.map((extra) => {
-                    const isChecked = selectedExtras.includes(extra.id);
-                    return (
-                      <div
-                        key={extra.id}
-                        onClick={() => toggleExtra(extra.id)}
-                        className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
-                          isChecked
-                            ? 'border-slate-400 bg-slate-50/50'
-                            : 'border-slate-200 hover:border-slate-300 bg-white'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3.5 min-w-0">
-                          {/* Checkbox con diseño neutral */}
-                          <div
-                            className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                              isChecked
-                                ? 'bg-slate-900 border-slate-900 text-white'
-                                : 'bg-white border-slate-300 text-transparent'
-                            }`}
-                          >
-                            <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-                          </div>
-
-                          <div className="text-left min-w-0">
-                            <span className="font-heading font-bold text-slate-900 text-sm block">
-                              {extra.title}
-                            </span>
-                            <span className="text-xs font-sans text-slate-500 block truncate">
-                              {extra.description}
-                            </span>
-                          </div>
-                        </div>
-
-                        <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
-                          +${extra.price} por renta
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* 3. Sección: Condiciones de uso (Acordeón 3) */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('terms')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                      Condiciones de uso
-                    </h3>
-                    {acceptedTerms ? (
-                      <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
-                        Aceptadas ✓
-                      </span>
-                    ) : (
-                      <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                        Pendiente
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Kilometraje libre, combustible, depósitos y términos de renta
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'terms' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'terms' && (
-                <div className="pt-4 pb-2 animate-in fade-in duration-200">
-                  <div className="bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200/60 space-y-4 text-left">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-slate-800">
-                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                          Kilometraje libre.
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-3 text-slate-800">
-                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                          Combustible: se entrega y devuelve con el mismo nivel.
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-3 text-slate-800">
-                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                          Edad mínima del conductor: 21 años con licencia vigente.
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-3 text-slate-800">
-                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                          Depósito en garantía reembolsable al cierre sin incidencias.
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-3 text-slate-800">
-                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                          Prohibido fumar dentro de la unidad.
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Aceptación de términos y condiciones con enlaces en bold sin azul */}
-                    <div className="pt-4 border-t border-slate-200/60">
-                      <label className="flex items-start gap-3 cursor-pointer select-none group">
-                        <div 
-                          onClick={() => setAcceptedTerms(!acceptedTerms)}
-                          className={`w-5 h-5 rounded-md border mt-0.5 flex items-center justify-center transition-colors shrink-0 ${
-                            acceptedTerms ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-300 text-transparent'
-                          }`}
-                        >
-                          <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-                        </div>
-                        <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
-                          Acepto los{' '}
-                          <a
-                            href="/terminos"
-                            onClick={(e) => {
-                              if (onNavigate) {
-                                e.preventDefault();
-                                onNavigate('/terminos');
-                              }
-                            }}
-                            className="font-bold text-slate-900 hover:underline inline"
-                          >
-                            términos y condiciones
-                          </a>{' '}
-                          de renta de GALSA y el{' '}
-                          <a
-                            href="/privacidad"
-                            onClick={(e) => {
-                              if (onNavigate) {
-                                e.preventDefault();
-                                onNavigate('/privacidad');
-                              }
-                            }}
-                            className="font-bold text-slate-900 hover:underline inline"
-                          >
-                            aviso de privacidad
-                          </a>.
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 4. Sección: Sube tus documentos (Acordeón 4) */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('docs')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                      Sube tus documentos
-                    </h3>
-                    {licenseDoc.status !== 'idle' && (
-                      <span className="text-xs font-heading font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200">
-                        Licencia cargada ({licenseDoc.progress}%)
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Licencia de conducir, identificación oficial y comprobante
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'docs' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'docs' && (
-                <div className="pt-5 pb-2 space-y-4 animate-in fade-in duration-200 text-left">
-                  {/* 1. Licencia de conducir */}
-                  <DocumentUploadCard
-                    title="Licencia de conducir"
-                    badge="Vigente, ambos lados"
-                    fileState={licenseDoc}
-                    onFileSelect={(file) => {
-                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                      simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                    }}
-                    onSimulate={() => simulateDocUpload('license')}
-                    onRemove={() => handleDocRemove('license')}
-                  />
-
-                  {/* 2. Identificación oficial */}
-                  <DocumentUploadCard
-                    title="Identificación oficial"
-                    badge="INE, frente y reverso"
-                    fileState={ineDoc}
-                    onFileSelect={(file) => {
-                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                      simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                    }}
-                    onSimulate={() => simulateDocUpload('ine')}
-                    onRemove={() => handleDocRemove('ine')}
-                  />
-
-                  {/* 3. Comprobante de domicilio */}
-                  <DocumentUploadCard
-                    title="Comprobante de domicilio"
-                    badge="No mayor a 3 meses"
-                    fileState={proofDoc}
-                    onFileSelect={(file) => {
-                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                      simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                    }}
-                    onSimulate={() => simulateDocUpload('proof')}
-                    onRemove={() => handleDocRemove('proof')}
-                  />
-
-                  {/* 4. Información adicional (opcional) */}
-                  <div className="space-y-1.5 pt-1">
-                    <label className="block text-sm font-heading font-bold text-slate-900">
-                      Información adicional (opcional)
-                    </label>
-                    <textarea
-                      rows={2}
-                      value={additionalDocNotes}
-                      onChange={(e) => setAdditionalDocNotes(e.target.value)}
-                      placeholder="Notas relevantes para tu renta: conductor adicional, requerimientos de facturación o entrega especial en sucursal..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 5. Sección: Checklist controlado (Acordeón 5) */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('checklist')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                    Checklist controlado
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Inspección 360°, registro de kilometraje y firma digital
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'checklist' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'checklist' && (
-                <div className="pt-5 pb-2 space-y-3.5 animate-in fade-in duration-200">
-                  <div className="flex items-center gap-3.5 text-slate-800">
-                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                    <span className="text-[16px] font-heading font-normal text-slate-800">
-                      Fotos de estado exterior e interior.
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3.5 text-slate-800">
-                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                    <span className="text-[16px] font-heading font-normal text-slate-800">
-                      Registro de kilometraje de salida y entrada.
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3.5 text-slate-800">
-                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                    <span className="text-[16px] font-heading font-normal text-slate-800">
-                      Nivel de combustible verificado.
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3.5 text-slate-800">
-                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                    <span className="text-[16px] font-heading font-normal text-slate-800">
-                      Firma digital de entrega y devolución.
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* 6. Sección: Firmar y contratar (Acordeón 6) */}
-            <div className="pt-6 border-t border-slate-100">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('contract')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                      Firmar y contratar
-                    </h3>
-                    {isContractSigned ? (
-                      <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200 flex items-center gap-1">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                        Firmado digitalmente ✓
-                      </span>
-                    ) : (
-                      <span className="text-xs font-heading font-medium text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200">
-                        Pendiente de firma
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Contrato mercantil digital con validez jurídica NOM-151
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'contract' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'contract' && (
-                <div className="pt-5 pb-2 animate-in fade-in duration-200 text-left">
-                  <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-none">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center shrink-0">
-                        {isContractSigned ? (
-                          <FileCheck className="w-6 h-6 text-emerald-600" />
-                        ) : (
-                          <FileText className="w-6 h-6 text-blue-600" />
-                        )}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="text-base font-heading font-bold text-slate-900">
-                            Contrato Mercantil de Arrendamiento Vehicular
-                          </h4>
-                        </div>
-                        <p className="text-xs font-sans text-slate-500 mt-0.5">
-                          {isContractSigned
-                            ? `Firmado digitalmente · ${contractSignedAt || 'Hoy'} · Folio GALSA-2026-${vehicle.year}`
-                            : 'Revisa las cláusulas oficiales y firma en 1 clic de forma 100% digital.'}
-                        </p>
-                        <div className="mt-2 flex items-center gap-2 text-[11px] font-sans text-slate-400">
-                          <span>Código de Comercio Arts. 89-114</span>
-                          <span>·</span>
-                          <span>Sellado de tiempo NOM-151</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setContractModalOpen(true)}
-                      className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all shrink-0 flex items-center justify-center gap-2 cursor-pointer shadow-xs ${
-                        isContractSigned
-                          ? 'border border-slate-200 hover:bg-slate-50 text-slate-700'
-                          : 'bg-blue-600 hover:bg-blue-700 text-white'
-                      }`}
-                    >
-                      {isContractSigned ? (
-                        <>
-                          <Eye className="w-4 h-4 text-slate-500" />
-                          <span>Ver contrato firmado</span>
-                        </>
-                      ) : (
-                        <>
-                          <PenTool className="w-4 h-4" />
-                          <span>Ver y firmar contrato</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Resumen de reserva y acción en columna izquierda */}
-            <div className="pt-6 border-t border-slate-100">
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <span className="text-xs font-heading uppercase tracking-wider text-slate-400 block mb-0.5">
-                    Resumen de tu renta
-                  </span>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-lg font-heading font-bold text-slate-900">
-                      {vehicle.make} {vehicle.model}
-                    </span>
-                    <span className="text-xs font-heading font-medium text-slate-500">
-                      · {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
-                    </span>
-                  </div>
-                  <span className="text-sm font-heading font-bold text-slate-900 mt-1 block">
-                    Total: ${total.toLocaleString('es-MX')} <span className="text-xs font-normal text-slate-500">· Depósito reembolsable ${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleBooking}
-                  className={`px-6 py-3 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shrink-0 cursor-pointer ${
-                    isFormComplete
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                      : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
-                  }`}
-                >
-                  <span>Continuar</span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* COLUMNA DERECHA: Sticky Card Checkout (Sólo Desktop, en Mobile se usa barra flotante) */}
-          <div className="hidden lg:block lg:col-span-5">
-            <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-lg space-y-6 text-left">
-              
-              {/* Precio (sin calificación repetida abajo) */}
-              <div className="pb-4 border-b border-slate-100">
-                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 block">
-                  ${total.toLocaleString('es-MX')} total
-                </span>
-              </div>
-
-              {/* Inputs de Ciudad, Sucursal y Fechas (sin título 'Fechas y sucursal') */}
-              <div className="space-y-4 pt-1">
-                {/* Fila 1: Ciudad y Sucursal bloqueadas */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Ciudad
-                    </label>
-                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none">
-                      Durango
-                    </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
-                      Ubicación del vehículo
-                    </span>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Sucursal
-                    </label>
-                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none truncate">
-                      Plaza 450
-                    </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
-                      Recogida y devolución
-                    </span>
-                  </div>
-                </div>
-
-                {/* Fila 2: Fecha de recogida y Hora de entrega */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Fecha de recogida
-                    </label>
-                    <input
-                      type="date"
-                      value={startDate}
-                      min={new Date().toISOString().split('T')[0]}
-                      onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de entrega
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Fila 3: Fecha de devolución y Hora de devolución */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Fecha de devolución
-                    </label>
-                    <input
-                      type="date"
-                      value={endDate}
-                      min={startDate || new Date().toISOString().split('T')[0]}
-                      onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de devolución
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Botón CTA Oficial GALSA de Reserva */}
-              <button
-                type="button"
-                onClick={handleBooking}
-                className={`w-full py-3.5 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer ${
-                  isFormComplete
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
-                }`}
-              >
-                <span>Continuar</span>
-              </button>
-
-              {/* Resumen del pago unificado con detalles de precio (va hasta el final y siempre lo muestra) */}
-              <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-3">
-                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
-                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
-                    Resumen del pago
-                  </span>
-                  <span className="text-xs font-heading font-medium text-slate-500">
-                    Disponible del {formatRangeSummary(startDate, endDate)}
-                  </span>
-                </div>
-
-                <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
-                  <div className="flex items-center justify-between">
-                    <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
-                    <span className="font-heading font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span>Tarifa de servicio GALSA</span>
-                    <span className="font-heading font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span>Depósito en garantía (reembolsable)</span>
-                    <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
-                  </div>
-
-                  {extrasTotal > 0 && (
-                    <div className="flex items-center justify-between">
-                      <span>Servicios extras ({selectedExtras.length})</span>
-                      <span className="font-heading font-semibold text-slate-900">+${extrasTotal.toLocaleString('es-MX')}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="pt-3 border-t border-slate-200/80">
-                  <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
-                    <span>Total de la renta</span>
-                    <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        {/* ========================================================
-            RESEÑAS Y CALIFICACIONES (Estilo Airbnb / Turo)
-           ======================================================== */}
-        <section id="resenas" className="mt-14 sm:mt-20 pt-10 border-t border-slate-100 text-left">
-          {/* Header de Reseñas: Primero 22 evaluaciones verificadas, luego badge con estrella 4.92 sin fondo con borde neutro */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold text-slate-900 tracking-tight">
-                  {reviewCount} evaluaciones verificadas
-                </h2>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-transparent text-slate-900 text-sm font-heading font-bold">
-                  <Star className="w-4 h-4 fill-blue-300 text-blue-300 shrink-0" />
-                  <span>{ratingScore}</span>
-                </div>
-              </div>
-              <p className="text-xs sm:text-sm font-sans text-slate-500 mt-2">
-                Calificaciones reales de clientes que completaron su renta con GALSA Rent en Durango y México.
-              </p>
-            </div>
-          </div>
-
-          {/* Desglose de 6 métricas de calidad (gris 50 sin línea) */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 p-5 sm:p-6 rounded-2xl bg-slate-50 border-0 mb-10">
-            <div>
-              <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Limpieza</span>
-              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">4.9 ★</span>
-            </div>
-            <div>
-              <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Puntualidad</span>
-              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">5.0 ★</span>
-            </div>
-            <div>
-              <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Comunicación</span>
-              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">5.0 ★</span>
-            </div>
-            <div>
-              <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Mecánica</span>
-              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">4.9 ★</span>
-            </div>
-            <div>
-              <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Check-in</span>
-              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">5.0 ★</span>
-            </div>
-            <div>
-              <span className="block text-[11px] font-heading uppercase tracking-wider text-slate-500">Calidad-precio</span>
-              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 mt-0.5 block">4.9 ★</span>
-            </div>
-          </div>
-
-          {/* Grid de Reseñas: Avatar gris oscuro, texto negro sin líneas, verificado neutro sin emoji */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mockReviews.map((rev) => (
-              <div 
-                key={rev.id} 
-                className="rounded-2xl border-0 bg-white p-5 sm:p-6 flex flex-col justify-between space-y-4"
-              >
-                <div>
-                  {/* Autor y Avatar gris 100 con texto negro */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-slate-100 text-black font-heading font-bold text-sm flex items-center justify-center shrink-0">
-                      {rev.author.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-heading font-bold text-black">
-                          {rev.author}
-                        </h4>
-                        <span className="inline-flex items-center text-[10px] font-heading font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
-                          Verificado
-                        </span>
-                      </div>
-                      <p className="text-xs font-sans text-slate-500">
-                        {rev.location} · {rev.date}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Estrellas: azul 300 para calificaciones, gris claro para vacías */}
-                  <div className="flex items-center gap-1 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-4 h-4 shrink-0 ${
-                          i < rev.rating 
-                            ? 'fill-blue-300 text-blue-300' 
-                            : 'fill-slate-200 text-slate-200'
-                        }`} 
-                      />
-                    ))}
-                  </div>
-
-                  {/* Texto de la reseña */}
-                  <p className="text-xs sm:text-sm font-sans font-normal text-black leading-relaxed">
-                    "{rev.comment}"
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ========================================================
-            3. AUTOS SIMILARES PARA TUS FECHAS (Idéntico a la segunda imagen)
-           ======================================================== */}
-        <div className="mt-14 sm:mt-20 pt-10 border-t border-slate-100">
-          <div className="flex items-center justify-between mb-6">
-            <div className="text-left">
-              <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                Autos similares para tus fechas
-              </h2>
-              <p className="text-xs sm:text-sm font-heading text-slate-500 mt-0.5">
-                Opciones alternativas con entrega inmediata en México
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <a
-                href="/catalogo"
-                onClick={(e) => {
-                  if (onNavigate) {
-                    e.preventDefault();
-                    onNavigate('/catalogo');
-                  }
-                }}
-                className="text-xs font-heading font-semibold text-slate-700 hover:text-black flex items-center gap-1 transition-colors"
-              >
-                <span>Ver catálogo</span>
-                <ChevronRight className="w-4 h-4" strokeWidth={1.4} />
-              </a>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {similarVehicles.map((simCar) => (
-              <VehicleCard
-                key={simCar.id}
-                vehicle={simCar}
-                onSelect={(v) => {
-                  if (onNavigate) {
-                    onNavigate(`/vehiculos/${v.slug}`);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* ========================================================
-            4. BANNER FINAL: ¿TIENES DUDAS? (Formato idéntico al Home: fondo 50, sin línea, imagen 3D)
-           ======================================================== */}
-        <div className="mt-12 sm:mt-16">
-          <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 lg:p-14 border-0 shadow-none">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
-              
-              {/* Lado Izquierdo: Título, Descripción y CTA */}
-              <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-4 sm:space-y-5">
-                <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
-                  ¿Tienes dudas sobre esta unidad?
-                </h3>
-
-                <p className="text-sm sm:text-[15px] font-sans text-slate-600 leading-relaxed max-w-lg">
-                  Atención local directa y personalizada en México. Resolvemos tus preguntas sobre modelos, requisitos, depósitos en garantía y entregas oficiales.
-                </p>
-
-                {/* Botón CTA único: Hablar por WhatsApp sin icono */}
-                <div className="pt-2">
-                  <a
-                    href={`https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20el%20vehículo%20${encodeURIComponent(vehicle.make + ' ' + vehicle.model)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ backgroundColor: '#3D63FF' }}
-                    className="inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-none"
-                  >
-                    <span>Hablar por WhatsApp</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Lado Derecho: Imagen de dudas con esquinas redondeadas igual al Home */}
-              <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-transparent border-0 shadow-none">
-                  <img
-                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793605036943-0-gemini_generated_image_udcky4udcky4udck.webp"
-                    alt={`Atención y dudas sobre ${vehicle.make} ${vehicle.model} - GALSA Rent`}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        {/* ========================================================
-            BARRA FLOTANTE STEPPER EN MODO MOBILE (Minimalista)
-            Chevron + Total a la izquierda, Continuar a la derecha
-           ======================================================== */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] lg:hidden">
-          <div className="max-w-md mx-auto flex items-center justify-between gap-3">
-            {/* Lado izquierdo: Chevron + Total y resumen de fechas */}
-            <div
-              className="flex items-center gap-2.5 cursor-pointer select-none group min-w-0"
-              onClick={() => setMobileSheetOpen(!mobileSheetOpen)}
-            >
-              <button
-                type="button"
-                aria-label="Levantar configuración de reserva"
-                className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-all"
-              >
-                {mobileSheetOpen ? (
-                  <ChevronDown className="w-4 h-4 text-slate-800" strokeWidth={2.2} />
-                ) : (
-                  <ChevronUp className="w-4 h-4 text-slate-800" strokeWidth={2.2} />
-                )}
-              </button>
-
-              <div className="min-w-0 text-left">
-                <span className="text-base font-heading font-extrabold text-slate-900 block leading-tight truncate">
-                  ${total.toLocaleString('es-MX')} total
-                </span>
-                <span className="text-[11px] font-sans text-slate-500 font-medium block truncate">
-                  {formatRangeSummary(startDate, endDate)} · {rentalDays} día{rentalDays > 1 ? 's' : ''}
-                </span>
-              </div>
-            </div>
-
-            {/* Lado derecho: Botón Continuar */}
+          <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => {
-                if (!mobileSheetOpen) {
-                  setMobileSheetOpen(true);
-                } else {
-                  handleBooking();
-                }
-              }}
-              className={`px-5 py-2.5 rounded-xl font-heading font-semibold text-sm active:scale-95 transition-all shadow-sm shrink-0 flex items-center gap-1.5 cursor-pointer ${
-                isFormComplete
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                  : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
+              onClick={handleShare}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-heading font-semibold transition-colors"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              <span>Compartir</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsFav(!isFav)}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
+                isFav ? 'bg-red-50 border-red-200 text-red-500' : 'border-slate-200 hover:border-slate-300 text-slate-600'
               }`}
             >
-              <span>Continuar</span>
+              <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500' : ''}`} />
             </button>
           </div>
         </div>
 
         {/* ========================================================
-            BOTTOM SHEET DRAWER EN MODO MOBILE (Se levanta con el chevron o al pulsar Continuar)
+            TÍTULO Y ENCABEZADO DEL VEHÍCULO
            ======================================================== */}
-        {mobileSheetOpen && (
-          <div 
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end lg:hidden animate-in fade-in duration-200"
-            onClick={() => setMobileSheetOpen(false)}
-          >
+        <div className="pb-5">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
+            {vehicle.make} {vehicle.model} {vehicle.year}
+          </h1>
+          <div className="flex items-center gap-2 mt-1.5 text-xs sm:text-sm font-sans text-slate-600 flex-wrap">
+            <div className="flex items-center gap-1 text-slate-900 font-semibold">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <span>{ratingScore}</span>
+            </div>
+            <span>·</span>
+            <span className="underline cursor-pointer">{reviewCount} evaluaciones</span>
+            <span>·</span>
+            <span>{vehicle.category}</span>
+            <span>·</span>
+            <span className="flex items-center gap-1 text-slate-500">
+              <MapPin className="w-3.5 h-3.5" />
+              Durango, México (Sucursal Plaza 450)
+            </span>
+          </div>
+        </div>
+
+        {/* ========================================================
+            GALERÍA DE FOTOS (Formato Airbnb)
+           ======================================================== */}
+        <div className="relative rounded-[20px] sm:rounded-[24px] overflow-hidden mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-2 h-[260px] sm:h-[340px] md:h-[420px]">
+            {/* Foto principal grande (izquierda, 2 columnas) */}
             <div 
-              className="bg-white w-full rounded-t-[24px] max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-250 text-left"
-              onClick={(e) => e.stopPropagation()}
+              className="md:col-span-2 h-full cursor-pointer relative group overflow-hidden bg-slate-100"
+              onClick={() => { setActivePhotoIdx(0); setGalleryModalOpen(true); }}
             >
-              {/* Barra / Handle superior */}
-              <div className="pt-3 pb-1 flex justify-center cursor-pointer" onClick={() => setMobileSheetOpen(false)}>
-                <div className="w-10 h-1 bg-slate-300 rounded-full" />
+              <img
+                src={mainPhoto}
+                alt={`${vehicle.make} ${vehicle.model} principal`}
+                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Foto secundaria superior */}
+            <div 
+              className="hidden md:block col-span-1 h-full cursor-pointer relative group overflow-hidden bg-slate-100"
+              onClick={() => { setActivePhotoIdx(1); setGalleryModalOpen(true); }}
+            >
+              <img
+                src={sidePhoto1}
+                alt={`${vehicle.make} ${vehicle.model} lateral`}
+                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Foto secundaria inferior */}
+            <div 
+              className="hidden md:block col-span-1 h-full cursor-pointer relative group overflow-hidden bg-slate-100"
+              onClick={() => { setActivePhotoIdx(2); setGalleryModalOpen(true); }}
+            >
+              <img
+                src={sidePhoto2}
+                alt={`${vehicle.make} ${vehicle.model} detalle`}
+                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-300"
+              />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setGalleryModalOpen(true)}
+            className="absolute bottom-4 right-4 bg-white/95 hover:bg-white text-slate-900 border border-slate-200/80 rounded-xl px-4 py-2 text-xs font-heading font-semibold shadow-sm backdrop-blur-xs flex items-center gap-1.5 transition-all"
+          >
+            <span>Mostrar todas las fotos</span>
+          </button>
+        </div>
+
+        {/* ========================================================
+            GRID PRINCIPAL: DETALLES A LA IZQUIERDA Y STICKY CARD A LA DERECHA
+           ======================================================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          
+          {/* LADO IZQUIERDO: DETALLES DEL AUTO, ESPECIFICACIONES, REGLAS Y RESEÑAS */}
+          <div className="lg:col-span-7 space-y-8">
+            
+            {/* Host info */}
+            <div className="pb-6 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
+                  Unidad verificada por GALSA Rent
+                </h2>
+                <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                  Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
+                </p>
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+            </div>
+
+            {/* Lo que ofrece este vehículo */}
+            <div className="space-y-4">
+              <h3 className="text-xl font-heading font-bold text-slate-900">
+                Lo que ofrece este vehículo
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <Users className="w-5 h-5 text-slate-700 shrink-0" />
+                  <span className="text-sm font-heading font-medium text-slate-800">{vehicle.seats} asientos</span>
+                </div>
+                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <Fuel className="w-5 h-5 text-slate-700 shrink-0" />
+                  <span className="text-sm font-heading font-medium text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
+                </div>
+                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <Gauge className="w-5 h-5 text-slate-700 shrink-0" />
+                  <span className="text-sm font-heading font-medium text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
+                </div>
+                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <Calendar className="w-5 h-5 text-slate-700 shrink-0" />
+                  <span className="text-sm font-heading font-medium text-slate-800">Año modelo {vehicle.year}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Ubicación y entrega */}
+            <div className="pt-6 border-t border-slate-100 space-y-3">
+              <h3 className="text-xl font-heading font-bold text-slate-900">
+                Ubicación y entrega
+              </h3>
+              <p className="text-sm font-sans text-slate-600">
+                Entrega y recepción en <strong>Sucursal Oficial GALSA Plaza 450</strong>, Blvd. Guadiana, Durango. Sin filas, con verificación de identidad y entrega de llaves en minutos.
+              </p>
+            </div>
+
+            {/* Reglas y condiciones */}
+            <div className="pt-6 border-t border-slate-100 space-y-3">
+              <h3 className="text-xl font-heading font-bold text-slate-900">
+                Reglas y condiciones de la renta
+              </h3>
+              <ul className="space-y-2 text-sm font-sans text-slate-600">
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>Kilometraje libre en todo el estado y carreteras nacionales.</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>Entrega y devolución con el mismo nivel de combustible.</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span>Depósito en garantía 100% reembolsable al cierre del contrato.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Calificaciones y opiniones */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <div className="flex items-center gap-2">
+                <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+                <h3 className="text-xl font-heading font-bold text-slate-900">
+                  {ratingScore} · {reviewCount} evaluaciones
+                </h3>
               </div>
 
-              {/* Header del Bottom Sheet */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100">
-                <div>
-                  <span className="text-xl font-heading font-extrabold text-slate-900 block leading-tight">
-                    ${total.toLocaleString('es-MX')} total
-                  </span>
-                  <span className="text-xs font-sans text-slate-500">
-                    {vehicle.make} {vehicle.model} · Plaza 450
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setMobileSheetOpen(false)}
-                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors"
-                  aria-label="Cerrar configuración"
-                >
-                  <ChevronDown className="w-5 h-5" />
-                </button>
+              <div className="space-y-4">
+                {mockReviews.map((rev) => (
+                  <div key={rev.id} className="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading font-bold text-slate-900 text-sm">{rev.name}</span>
+                      <span className="text-xs text-slate-400 font-sans">{rev.date}</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
+                      "{rev.comment}"
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Vehículos similares */}
+            <div className="pt-8 border-t border-slate-100 space-y-4">
+              <h3 className="text-xl font-heading font-bold text-slate-900">
+                Vehículos similares
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {similarVehicles.map((sim) => (
+                  <div 
+                    key={sim.id}
+                    onClick={() => {
+                      if (onNavigate) onNavigate(`/vehiculos/${sim.slug}`);
+                    }}
+                    className="p-3 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all space-y-2 group"
+                  >
+                    <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100">
+                      <img
+                        src={sim.images?.[0]?.url || cardHomeImage}
+                        alt={sim.model}
+                        className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-heading font-bold text-slate-900 text-sm truncate">
+                        {sim.make} {sim.model}
+                      </h4>
+                      <span className="text-xs font-heading font-bold text-slate-900 mt-1 block">
+                        ${sim.pricePerDay.toLocaleString('es-MX')} MXN/día
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* ========================================================
+              COLUMNA DERECHA: STICKY CARD DE PRECIO Y BOTÓN CONTINUAR
+             ======================================================== */}
+          <div className="hidden lg:block lg:col-span-5">
+            <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-sm space-y-6 text-left">
+              
+              {/* Tarifa diaria */}
+              <div>
+                <span className="text-3xl font-heading font-extrabold text-slate-900">
+                  ${vehicle.pricePerDay.toLocaleString('es-MX')}
+                </span>
+                <span className="text-sm font-heading font-medium text-slate-500 ml-1.5">
+                  MXN / día
+                </span>
               </div>
 
-              {/* Contenido con scroll */}
-              <div className="p-5 overflow-y-auto space-y-4">
-                {/* Fila 1: Ciudad y Sucursal */}
+              {/* Selector de Fechas */}
+              <div className="space-y-3 pt-2 border-t border-slate-100">
+                <label className="block text-xs font-heading font-bold uppercase tracking-wider text-slate-600">
+                  Fechas de viaje
+                </label>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Ciudad
-                    </label>
-                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none">
-                      Durango
-                    </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
-                      Ubicación del vehículo
-                    </span>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Sucursal
-                    </label>
-                    <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm cursor-not-allowed select-none truncate">
-                      Plaza 450
-                    </div>
-                    <span className="block text-[11px] font-sans text-slate-400 mt-1">
-                      Recogida y devolución
-                    </span>
-                  </div>
-                </div>
-
-                {/* Fila 2: Fecha de recogida y Hora de entrega */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Fecha de recogida
-                    </label>
+                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Recogida</label>
                     <input
                       type="date"
                       value={startDate}
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-heading font-semibold"
                     />
                   </div>
-
                   <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de entrega
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Fila 3: Fecha de devolución y Hora de devolución */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Fecha de devolución
-                    </label>
+                    <label className="block text-[11px] font-sans text-slate-500 mb-1">Devolución</label>
                     <input
                       type="date"
                       value={endDate}
                       min={startDate || new Date().toISOString().split('T')[0]}
                       onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
+                      className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-heading font-semibold"
                     />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de devolución
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Botón Continuar */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileSheetOpen(false);
-                    handleBooking();
-                  }}
-                  className={`w-full py-3.5 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer ${
-                    isFormComplete
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                      : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
-                  }`}
-                >
-                  <span>Continuar</span>
-                </button>
-
-                {/* Resumen del pago unificado con detalles de precio (va hasta el final y siempre lo muestra) */}
-                <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 space-y-3">
-                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
-                    <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
-                      Resumen del pago
-                    </span>
-                    <span className="text-xs font-heading font-medium text-slate-500">
-                      Disponible del {formatRangeSummary(startDate, endDate)}
-                    </span>
-                  </div>
-
-                  <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
-                    <div className="flex items-center justify-between">
-                      <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
-                      <span className="font-heading font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span>Tarifa de servicio GALSA</span>
-                      <span className="font-heading font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span>Depósito en garantía (reembolsable)</span>
-                      <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
-                    </div>
-
-                    {extrasTotal > 0 && (
-                      <div className="flex items-center justify-between">
-                        <span>Servicios extras ({selectedExtras.length})</span>
-                        <span className="font-heading font-semibold text-slate-900">+${extrasTotal.toLocaleString('es-MX')}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-3 border-t border-slate-200/80">
-                    <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
-                      <span>Total de la renta</span>
-                      <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
-                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Desglose de precios resumido */}
+              <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100 space-y-2 text-xs font-sans text-slate-600">
+                <div className="flex justify-between">
+                  <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
+                  <span className="font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tarifa de servicio (33%)</span>
+                  <span className="font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
+                </div>
+                <div className="pt-2 border-t border-slate-200 flex justify-between text-sm font-heading font-bold text-slate-900">
+                  <span>Total estimado</span>
+                  <span>${total.toLocaleString('es-MX')} MXN</span>
+                </div>
+              </div>
+
+              {/* BOTÓN CONTINUAR -> AVANZA AL CHECKOUT / COMPLETA TU RESERVA */}
+              <button
+                type="button"
+                onClick={handleProceedToCheckout}
+                className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-sm"
+              >
+                <span>Continuar con la reserva</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <p className="text-[11px] text-center font-sans text-slate-400">
+                Cancelación gratuita hasta 48 horas antes de la entrega
+              </p>
+
             </div>
           </div>
-        )}
+
+        </div>
 
       </div>
+
+      {/* BARRA MÓVIL INFERIOR CON PRECIO Y BOTÓN CONTINUAR */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 px-4 py-3 z-40 flex items-center justify-between">
+        <div>
+          <span className="text-lg font-heading font-extrabold text-slate-900 block leading-tight">
+            ${total.toLocaleString('es-MX')} MXN
+          </span>
+          <span className="text-xs font-sans text-slate-500">
+            {rentalDays} {rentalDays === 1 ? 'día' : 'días'} · Total
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={handleProceedToCheckout}
+          className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer shadow-sm"
+        >
+          Continuar
+        </button>
+      </div>
+
+      {/* MODAL DE GALERÍA COMPLETA */}
+      {galleryModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col justify-between p-4 sm:p-8">
+          <div className="flex justify-between items-center text-white">
+            <span className="font-heading font-semibold text-sm">
+              {activePhotoIdx + 1} de {images.length}
+            </span>
+            <button
+              type="button"
+              onClick={() => setGalleryModalOpen(false)}
+              className="p-2 rounded-full hover:bg-white/10 text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="flex items-center justify-center flex-1 max-h-[75vh]">
+            <img
+              src={images[activePhotoIdx]}
+              alt="Vehículo en detalle"
+              className="max-h-full max-w-full object-contain rounded-2xl"
+            />
+          </div>
+          <div className="flex justify-center gap-2 py-4">
+            {images.map((img, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActivePhotoIdx(i)}
+                className={`w-14 h-14 rounded-xl overflow-hidden border-2 ${
+                  activePhotoIdx === i ? 'border-white' : 'border-transparent opacity-50'
+                }`}
+              >
+                <img src={img} alt="Miniatura" className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE COMPARTIR */}
+      {shareModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4">
+            <div className="flex justify-between items-center">
+              <h4 className="font-heading font-bold text-slate-900">Compartir vehículo</h4>
+              <button onClick={() => setShareModalOpen(false)}><X className="w-5 h-5" /></button>
+            </div>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+              <span className="text-xs text-slate-600 truncate mr-2">{shareUrl}</span>
+              <button
+                onClick={handleCopyLink}
+                className="text-xs font-bold text-blue-600 shrink-0"
+              >
+                {linkCopied ? '¡Copiado!' : 'Copiar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
