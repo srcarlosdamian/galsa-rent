@@ -794,6 +794,35 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
+            {/* Resumen de reserva y acción en columna izquierda */}
+            <div className="pt-6 border-t border-slate-100">
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="text-xs font-heading uppercase tracking-wider text-slate-400 block mb-0.5">
+                    Resumen de tu renta
+                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-lg font-heading font-bold text-slate-900">
+                      {vehicle.make} {vehicle.model}
+                    </span>
+                    <span className="text-xs font-heading font-medium text-slate-500">
+                      · {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
+                    </span>
+                  </div>
+                  <span className="text-sm font-heading font-bold text-slate-900 mt-1 block">
+                    Total: ${total.toLocaleString('es-MX')} <span className="text-xs font-normal text-slate-500">· Depósito reembolsable ${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleBooking}
+                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shrink-0"
+                >
+                  <span>Continuar</span>
+                </button>
+              </div>
+            </div>
+
           </div>
 
           {/* COLUMNA DERECHA: Sticky Card Checkout (Sólo Desktop, en Mobile se usa barra flotante) */}
@@ -905,34 +934,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
               </div>
 
-              {/* Desglose y Resumen de Precios */}
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xs space-y-3">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
-                  <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
-                  <span className="font-heading font-semibold text-slate-800">${baseSubtotal.toLocaleString('es-MX')}</span>
-                </div>
-
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
-                  <span>Tarifa de servicio GALSA</span>
-                  <span className="font-heading font-semibold text-slate-800">${serviceFee.toLocaleString('es-MX')}</span>
-                </div>
-
-                <div className="pt-3 border-t border-slate-100">
-                  <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
-                    <span>Total de la renta</span>
-                    <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Depósito en garantía con mismo tamaño de texto que tarifa de servicio y precio homologado */}
-              <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
-                <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
-                  <span>Depósito en garantía (reembolsable)</span>
-                  <span className="font-heading font-semibold text-slate-800">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
-                </div>
-              </div>
-
               {/* Botón CTA Oficial GALSA de Reserva */}
               <button
                 type="button"
@@ -941,6 +942,42 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               >
                 <span>Continuar</span>
               </button>
+
+              {/* Resumen del pago unificado con detalles de precio (va hasta el final y siempre lo muestra) */}
+              <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-3">
+                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
+                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
+                    Resumen del pago
+                  </span>
+                  <span className="text-xs font-heading font-medium text-slate-500">
+                    Disponible del {formatRangeSummary(startDate, endDate)}
+                  </span>
+                </div>
+
+                <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
+                  <div className="flex items-center justify-between">
+                    <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
+                    <span className="font-heading font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span>Tarifa de servicio GALSA</span>
+                    <span className="font-heading font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span>Depósito en garantía (reembolsable)</span>
+                    <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-200/80">
+                  <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
+                    <span>Total de la renta</span>
+                    <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -1327,35 +1364,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   </div>
                 </div>
 
-                {/* Desglose y Resumen de Precios */}
-                <div className="rounded-2xl border border-slate-200/90 bg-slate-50/60 p-4 space-y-3">
-                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
-                    <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} días</span>
-                    <span className="font-heading font-semibold text-slate-800">${baseSubtotal.toLocaleString('es-MX')}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
-                    <span>Tarifa de servicio GALSA</span>
-                    <span className="font-heading font-semibold text-slate-800">${serviceFee.toLocaleString('es-MX')}</span>
-                  </div>
-
-                  <div className="pt-3 border-t border-slate-200">
-                    <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
-                      <span>Total de la renta</span>
-                      <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Depósito en garantía con mismo tamaño de texto que tarifa de servicio y precio homologado */}
-                <div className="rounded-xl border border-slate-200 bg-transparent px-4 py-3">
-                  <div className="flex items-center justify-between text-xs sm:text-sm font-sans text-slate-600">
-                    <span>Depósito en garantía (reembolsable)</span>
-                    <span className="font-heading font-semibold text-slate-800">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
-                  </div>
-                </div>
-
-                {/* Botón Final Continuar */}
+                {/* Botón Continuar */}
                 <button
                   type="button"
                   onClick={() => {
@@ -1366,6 +1375,42 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 >
                   <span>Continuar</span>
                 </button>
+
+                {/* Resumen del pago unificado con detalles de precio (va hasta el final y siempre lo muestra) */}
+                <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 space-y-3">
+                  <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
+                    <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
+                      Resumen del pago
+                    </span>
+                    <span className="text-xs font-heading font-medium text-slate-500">
+                      Disponible del {formatRangeSummary(startDate, endDate)}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
+                    <div className="flex items-center justify-between">
+                      <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
+                      <span className="font-heading font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span>Tarifa de servicio GALSA</span>
+                      <span className="font-heading font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span>Depósito en garantía (reembolsable)</span>
+                      <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-200/80">
+                    <div className="flex items-center justify-between text-sm sm:text-base font-heading font-bold text-slate-900">
+                      <span>Total de la renta</span>
+                      <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
