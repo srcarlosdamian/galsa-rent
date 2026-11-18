@@ -71,31 +71,43 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       num: 1,
       title: 'Regístrate',
       description: 'Crea tu cuenta de anfitrión con tus datos.',
+      image: '/images/step-img-1.webp',
+      icon: UserPlus,
     },
     {
       num: 2,
       title: 'Valida tu identidad',
       description: 'Verificamos tu identidad y documentación.',
+      image: '/images/step-img-2.webp',
+      icon: ShieldCheck,
     },
     {
       num: 3,
       title: 'Carga tu vehículo',
       description: 'Sube fotos, documentos y datos del auto.',
+      image: '/images/step-img-3.webp',
+      icon: Car,
     },
     {
       num: 4,
       title: 'Recibe aprobación',
       description: 'GALSA revisa tu vehículo en 24-48 horas.',
+      image: '/images/step-img-4.webp',
+      icon: CheckCircle2,
     },
     {
       num: 5,
       title: 'Recibe reservas',
       description: 'Tu auto aparece en el catálogo y empieza a recibir solicitudes.',
+      image: '/images/trust-safety.webp',
+      icon: CalendarCheck,
     },
     {
       num: 6,
       title: 'Cobra',
       description: 'Recibes tu parte de cada renta en la cuenta que registraste.',
+      image: '/images/renta-galsa.webp',
+      icon: Wallet,
     },
   ];
 
@@ -260,8 +272,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 </div>
               </div>
 
-              {/* Tarjeta de estimación con fondo gris 50 y diseño neutral */}
-              <div className="p-6 sm:p-7 rounded-2xl border border-slate-200/90 bg-slate-50 space-y-4">
+              {/* Tarjeta de estimación con fondo gris 50 y diseño neutral sin borde exterior */}
+              <div className="p-6 sm:p-7 rounded-2xl bg-slate-50 space-y-4">
                 <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block">
                   TU INGRESO NETO MENSUAL ESTIMADO
                 </span>
@@ -411,22 +423,40 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 sm:gap-x-12">
-            {STEPS.map((step) => (
-              <div key={step.num} className="space-y-4">
-                <div className="w-10 h-10 rounded-xl bg-blue-500 text-white font-heading font-bold text-sm flex items-center justify-center shadow-none">
-                  {step.num}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {STEPS.map((step) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.num} className="flex flex-col items-start">
+                  {/* Contenedor de Imagen con badge flotante idéntico al Home */}
+                  <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
+                    <div className="w-full h-full rounded-2xl overflow-hidden">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+
+                    {/* Badge cuadrado flotante en esquina inferior izquierda con margen */}
+                    <div className="absolute -bottom-3 left-3 w-12 h-12 bg-blue-300 rounded-xl flex items-center justify-center z-10 shadow-xs">
+                      <Icon className="w-5 h-5 text-blue-900" strokeWidth={1.4} />
+                    </div>
+                  </div>
+
+                  {/* Textos del paso */}
+                  <div className="pt-2 flex flex-col items-start text-left">
+                    <h3 className="text-base sm:text-lg font-heading font-semibold text-slate-900 mb-1.5 leading-snug">
+                      {step.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1 leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
