@@ -1227,6 +1227,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
                       simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
                     }}
+                    onSimulate={() => simulateDocUpload('license')}
                     onRemove={() => handleDocRemove('license')}
                   />
 
@@ -1239,6 +1240,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
                       simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
                     }}
+                    onSimulate={() => simulateDocUpload('ine')}
                     onRemove={() => handleDocRemove('ine')}
                   />
 
@@ -1251,6 +1253,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
                       simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
                     }}
+                    onSimulate={() => simulateDocUpload('proof')}
                     onRemove={() => handleDocRemove('proof')}
                   />
 

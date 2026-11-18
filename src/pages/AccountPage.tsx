@@ -392,6 +392,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
                     simulateUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
                   }}
+                  onSimulate={() => simulateUpload('license')}
                   onRemove={() => handleRemoveDoc('license')}
                 />
 
@@ -404,6 +405,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
                     simulateUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
                   }}
+                  onSimulate={() => simulateUpload('ine')}
                   onRemove={() => handleRemoveDoc('ine')}
                 />
 
@@ -416,6 +418,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
                     simulateUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
                   }}
+                  onSimulate={() => simulateUpload('proof')}
                   onRemove={() => handleRemoveDoc('proof')}
                 />
 

@@ -13,6 +13,7 @@ interface DocumentUploadCardProps {
   badge: string;
   fileState: DocUploadState;
   onFileSelect?: (file: File) => void;
+  onSimulate?: () => void;
   onRemove: () => void;
 }
 
@@ -21,6 +22,7 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
   badge,
   fileState,
   onFileSelect,
+  onSimulate,
   onRemove,
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,11 +47,17 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
       {/* Tarjeta de estado: Subiendo / Completado vs Vacío (Idle) */}
       {fileState.status !== 'idle' ? (
         <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 flex items-start gap-3.5 sm:gap-4 shadow-none">
-          {/* Icono: contenedor gris claro 100 sin línea */}
+          {/* Icono: contenedor gris claro 100 sin línea con ícono azul de documento */}
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-100 flex items-center justify-center shrink-0">
-            <svg className="w-6 h-6 text-blue-600" viewBox="0 0 24 24">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" fill="currentColor" />
-              <path d="M14 2v6h6" fill="#bfdbfe" />
+            <svg className="w-6 h-6" viewBox="0 0 24 24">
+              <path
+                d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L13.5 2H6z"
+                fill="#2563eb"
+              />
+              <path
+                d="M13.5 2V7a1.5 1.5 0 0 0 1.5 1.5h5L13.5 2z"
+                fill="#bfdbfe"
+              />
             </svg>
           </div>
 
@@ -84,30 +92,43 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
                   style={{ width: `${fileState.progress}%` }}
                 />
               </div>
-              <span className="text-xs font-sans font-medium text-slate-400 shrink-0">
+              <span className="text-xs font-sans font-medium text-slate-400 shrink-0 select-none">
                 {fileState.progress}%
               </span>
             </div>
           </div>
         </div>
       ) : (
-        <label className="rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-none">
+        <div className="relative rounded-2xl border border-dashed border-slate-200 hover:border-slate-400 bg-white p-5 sm:p-6 flex flex-col items-center justify-center text-center transition-all group shadow-none">
           <input
             type="file"
             accept="image/*,.pdf"
             onChange={handleInputChange}
-            className="hidden"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
-          <div className="w-11 h-11 rounded-2xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors">
+          <div className="w-11 h-11 rounded-2xl bg-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-slate-200 transition-colors pointer-events-none">
             <UploadCloud className="w-5 h-5 text-slate-600" />
           </div>
-          <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+          <span className="text-sm font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors pointer-events-none">
             Haz clic para seleccionar archivo
           </span>
-          <span className="text-xs font-sans text-slate-500 mt-0.5">
+          <span className="text-xs font-sans text-slate-500 mt-0.5 pointer-events-none">
             Imagen (máx. 10MB) o PDF (máx. 3MB)
           </span>
-        </label>
+          {onSimulate && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                onSimulate();
+              }}
+              className="mt-2 text-[11px] font-heading font-semibold text-blue-600 hover:text-blue-700 bg-blue-50/80 hover:bg-blue-100/80 px-2.5 py-1 rounded-md transition-colors cursor-pointer relative z-10"
+            >
+              Simular carga de ejemplo
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
