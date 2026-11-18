@@ -234,6 +234,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     acceptedTerms
   );
 
+  // Control de acordeones en completa tu reserva (solo uno abierto a la vez)
+  const [openAccordion, setOpenAccordion] = useState<string | null>('extras');
+
+  const toggleAccordion = (id: string) => {
+    setOpenAccordion(prev => (prev === id ? null : id));
+  };
+
   const toggleExtra = (id: string) => {
     setSelectedExtras(prev => 
       prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
@@ -722,314 +729,406 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </p>
             </div>
 
-            {/* Sección: Lo que ofrece este vehículo (Estructura idéntica a Airbnb) */}
-            <div className="pt-6 border-t border-slate-100 space-y-6">
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                Lo que ofrece este vehículo
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8 lg:gap-x-12">
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Users className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.seats} asientos</span>
+            {/* 1. Lo que ofrece este vehículo (Acordeón 1) */}
+            <div className="pt-6 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => toggleAccordion('features')}
+                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+              >
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                    Lo que ofrece este vehículo
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Equipamiento, transmisión, combustible y capacidad
+                  </p>
                 </div>
-
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Fuel className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
+                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'features' ? 'rotate-180' : ''}`} />
                 </div>
+              </button>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Calendar className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Año modelo {vehicle.year}</span>
-                </div>
+              {openAccordion === 'features' && (
+                <div className="pt-5 pb-2 animate-in fade-in duration-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-5 gap-x-8 lg:gap-x-12">
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Users className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.seats} asientos</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Gauge className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
-                </div>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Fuel className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Car className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
-                </div>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Calendar className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Año modelo {vehicle.year}</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Briefcase className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
-                </div>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Gauge className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Aire acondicionado A/C</span>
-                </div>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Car className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">{vehicle.specs?.doors || 4} puertas</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Frenos ABS y bolsas de aire</span>
-                </div>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Briefcase className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Espacio para {vehicle.specs?.luggage || 2} maletas</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <Camera className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Cámara de reversa y sensores</span>
-                </div>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Wind className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Aire acondicionado A/C</span>
+                    </div>
 
-                <div className="flex items-center gap-4 text-slate-800">
-                  <CarFront className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <ShieldCheck className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Frenos ABS y bolsas de aire</span>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <Camera className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Cámara de reversa y sensores</span>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-slate-800">
+                      <CarFront className="w-6 h-6 text-slate-800 shrink-0" strokeWidth={1.5} />
+                      <span className="text-[16px] font-heading font-normal text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Sección: EXTRAS */}
-            <div className="pt-6 border-t border-slate-100 space-y-4">
-              <div className="flex items-center justify-between">
+            {/* 2. Sección: EXTRAS (Acordeón 2) */}
+            <div className="pt-6 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => toggleAccordion('extras')}
+                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+              >
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                    Extras
-                  </h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                      Extras
+                    </h3>
+                    {selectedExtras.length > 0 && (
+                      <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                        {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
                     Personaliza tu viaje con servicios adicionales opcionales
                   </p>
                 </div>
-                {selectedExtras.length > 0 && (
-                  <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">
-                    {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
-                  </span>
-                )}
-              </div>
+                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'extras' ? 'rotate-180' : ''}`} />
+                </div>
+              </button>
 
-              <div className="space-y-2.5">
-                {EXTRAS_OPTIONS.map((extra) => {
-                  const isChecked = selectedExtras.includes(extra.id);
-                  return (
-                    <div
-                      key={extra.id}
-                      onClick={() => toggleExtra(extra.id)}
-                      className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
-                        isChecked
-                          ? 'border-slate-400 bg-slate-50/50'
-                          : 'border-slate-200 hover:border-slate-300 bg-white'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3.5 min-w-0">
-                        {/* Checkbox con diseño neutral */}
-                        <div
-                          className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                            isChecked
-                              ? 'bg-slate-900 border-slate-900 text-white'
-                              : 'bg-white border-slate-300 text-transparent'
+              {openAccordion === 'extras' && (
+                <div className="pt-5 pb-2 space-y-2.5 animate-in fade-in duration-200">
+                  {EXTRAS_OPTIONS.map((extra) => {
+                    const isChecked = selectedExtras.includes(extra.id);
+                    return (
+                      <div
+                        key={extra.id}
+                        onClick={() => toggleExtra(extra.id)}
+                        className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
+                          isChecked
+                            ? 'border-slate-400 bg-slate-50/50'
+                            : 'border-slate-200 hover:border-slate-300 bg-white'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3.5 min-w-0">
+                          {/* Checkbox con diseño neutral */}
+                          <div
+                            className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
+                              isChecked
+                                ? 'bg-slate-900 border-slate-900 text-white'
+                                : 'bg-white border-slate-300 text-transparent'
+                            }`}
+                          >
+                            <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                          </div>
+
+                          <div className="text-left min-w-0">
+                            <span className="font-heading font-bold text-slate-900 text-sm block">
+                              {extra.title}
+                            </span>
+                            <span className="text-xs font-sans text-slate-500 block truncate">
+                              {extra.description}
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
+                          +${extra.price} por renta
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 3. Sección: Condiciones de uso (Acordeón 3) */}
+            <div className="pt-6 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => toggleAccordion('terms')}
+                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+              >
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                      Condiciones de uso
+                    </h3>
+                    {acceptedTerms ? (
+                      <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
+                        Aceptadas ✓
+                      </span>
+                    ) : (
+                      <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                        Pendiente
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Kilometraje libre, combustible, depósitos y términos de renta
+                  </p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'terms' ? 'rotate-180' : ''}`} />
+                </div>
+              </button>
+
+              {openAccordion === 'terms' && (
+                <div className="pt-4 pb-2 animate-in fade-in duration-200">
+                  <div className="bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200/60 space-y-4 text-left">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3 text-slate-800">
+                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                          Kilometraje libre.
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3 text-slate-800">
+                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                          Combustible: se entrega y devuelve con el mismo nivel.
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3 text-slate-800">
+                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                          Edad mínima del conductor: 21 años con licencia vigente.
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3 text-slate-800">
+                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                          Depósito en garantía reembolsable al cierre sin incidencias.
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3 text-slate-800">
+                        <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
+                        <span className="text-sm sm:text-[15px] font-sans text-slate-800">
+                          Prohibido fumar dentro de la unidad.
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Aceptación de términos y condiciones con enlaces en bold sin azul */}
+                    <div className="pt-4 border-t border-slate-200/60">
+                      <label className="flex items-start gap-3 cursor-pointer select-none group">
+                        <div 
+                          onClick={() => setAcceptedTerms(!acceptedTerms)}
+                          className={`w-5 h-5 rounded-md border mt-0.5 flex items-center justify-center transition-colors shrink-0 ${
+                            acceptedTerms ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-300 text-transparent'
                           }`}
                         >
                           <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
                         </div>
-
-                        <div className="text-left min-w-0">
-                          <span className="font-heading font-bold text-slate-900 text-sm block">
-                            {extra.title}
-                          </span>
-                          <span className="text-xs font-sans text-slate-500 block truncate">
-                            {extra.description}
-                          </span>
-                        </div>
-                      </div>
-
-                      <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
-                        +${extra.price} por renta
-                      </span>
+                        <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
+                          Acepto los{' '}
+                          <a
+                            href="/terminos"
+                            onClick={(e) => {
+                              if (onNavigate) {
+                                e.preventDefault();
+                                onNavigate('/terminos');
+                              }
+                            }}
+                            className="font-bold text-slate-900 hover:underline inline"
+                          >
+                            términos y condiciones
+                          </a>{' '}
+                          de renta de GALSA y el{' '}
+                          <a
+                            href="/privacidad"
+                            onClick={(e) => {
+                              if (onNavigate) {
+                                e.preventDefault();
+                                onNavigate('/privacidad');
+                              }
+                            }}
+                            className="font-bold text-slate-900 hover:underline inline"
+                          >
+                            aviso de privacidad
+                          </a>.
+                        </span>
+                      </label>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Sección: Condiciones de uso en contenedor gris claro 50 con bordes redondeados */}
+            {/* 4. Sección: Sube tus documentos (Acordeón 4) */}
             <div className="pt-6 border-t border-slate-100">
-              <div className="bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200/60 space-y-4 text-left">
-                <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 tracking-tight">
-                  Condiciones de uso
-                </h3>
-
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-slate-800">
-                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                      Kilometraje libre.
-                    </span>
+              <button
+                type="button"
+                onClick={() => toggleAccordion('docs')}
+                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+              >
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                      Sube tus documentos
+                    </h3>
+                    {licenseDoc.status !== 'idle' && (
+                      <span className="text-xs font-heading font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200">
+                        Licencia cargada ({licenseDoc.progress}%)
+                      </span>
+                    )}
                   </div>
-
-                  <div className="flex items-center gap-3 text-slate-800">
-                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                      Combustible: se entrega y devuelve con el mismo nivel.
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-slate-800">
-                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                      Edad mínima del conductor: 21 años con licencia vigente.
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-slate-800">
-                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                      Depósito en garantía reembolsable al cierre sin incidencias.
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 text-slate-800">
-                    <Check className="w-4 h-4 text-slate-800 shrink-0" strokeWidth={2.2} />
-                    <span className="text-sm sm:text-[15px] font-sans text-slate-800">
-                      Prohibido fumar dentro de la unidad.
-                    </span>
-                  </div>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Licencia de conducir, identificación oficial y comprobante
+                  </p>
                 </div>
-
-                {/* Aceptación de términos y condiciones con enlaces en bold sin azul */}
-                <div className="pt-4 border-t border-slate-200/60">
-                  <label className="flex items-start gap-3 cursor-pointer select-none group">
-                    <div 
-                      onClick={() => setAcceptedTerms(!acceptedTerms)}
-                      className={`w-5 h-5 rounded-md border mt-0.5 flex items-center justify-center transition-colors shrink-0 ${
-                        acceptedTerms ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-300 text-transparent'
-                      }`}
-                    >
-                      <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-                    </div>
-                    <span className="text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
-                      Acepto los{' '}
-                      <a
-                        href="/terminos"
-                        onClick={(e) => {
-                          if (onNavigate) {
-                            e.preventDefault();
-                            onNavigate('/terminos');
-                          }
-                        }}
-                        className="font-bold text-slate-900 hover:underline inline"
-                      >
-                        términos y condiciones
-                      </a>{' '}
-                      de renta de GALSA y el{' '}
-                      <a
-                        href="/privacidad"
-                        onClick={(e) => {
-                          if (onNavigate) {
-                            e.preventDefault();
-                            onNavigate('/privacidad');
-                          }
-                        }}
-                        className="font-bold text-slate-900 hover:underline inline"
-                      >
-                        aviso de privacidad
-                      </a>.
-                    </span>
-                  </label>
+                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'docs' ? 'rotate-180' : ''}`} />
                 </div>
-              </div>
-            </div>
+              </button>
 
-            {/* Sección: Sube tus documentos de identificación y comprobante de domicilio */}
-            <div className="pt-6 border-t border-slate-100 space-y-4 text-left">
-              <div>
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                  Sube tus documentos de identificación y comprobante de domicilio
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-sans mt-1">
-                  Documentación requerida para la elaboración del contrato digital y entrega inmediata sin filas
-                </p>
-              </div>
-
-              <div className="space-y-4 pt-1">
-                {/* 1. Licencia de conducir */}
-                <DocumentUploadCard
-                  title="Licencia de conducir"
-                  badge="Vigente, ambos lados"
-                  fileState={licenseDoc}
-                  onFileSelect={(file) => {
-                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                    simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                  }}
-                  onRemove={() => handleDocRemove('license')}
-                />
-
-                {/* 2. Identificación oficial */}
-                <DocumentUploadCard
-                  title="Identificación oficial"
-                  badge="INE, frente y reverso"
-                  fileState={ineDoc}
-                  onFileSelect={(file) => {
-                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                    simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                  }}
-                  onRemove={() => handleDocRemove('ine')}
-                />
-
-                {/* 3. Comprobante de domicilio */}
-                <DocumentUploadCard
-                  title="Comprobante de domicilio"
-                  badge="No mayor a 3 meses"
-                  fileState={proofDoc}
-                  onFileSelect={(file) => {
-                    const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                    simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                  }}
-                  onRemove={() => handleDocRemove('proof')}
-                />
-
-                {/* 4. Información adicional (opcional) */}
-                <div className="space-y-1.5 pt-1">
-                  <label className="block text-sm font-heading font-bold text-slate-900">
-                    Información adicional (opcional)
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={additionalDocNotes}
-                    onChange={(e) => setAdditionalDocNotes(e.target.value)}
-                    placeholder="Notas relevantes para tu renta: conductor adicional, requerimientos de facturación o entrega especial en sucursal..."
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
+              {openAccordion === 'docs' && (
+                <div className="pt-5 pb-2 space-y-4 animate-in fade-in duration-200 text-left">
+                  {/* 1. Licencia de conducir */}
+                  <DocumentUploadCard
+                    title="Licencia de conducir"
+                    badge="Vigente, ambos lados"
+                    fileState={licenseDoc}
+                    onFileSelect={(file) => {
+                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                      simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                    }}
+                    onRemove={() => handleDocRemove('license')}
                   />
+
+                  {/* 2. Identificación oficial */}
+                  <DocumentUploadCard
+                    title="Identificación oficial"
+                    badge="INE, frente y reverso"
+                    fileState={ineDoc}
+                    onFileSelect={(file) => {
+                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                      simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                    }}
+                    onRemove={() => handleDocRemove('ine')}
+                  />
+
+                  {/* 3. Comprobante de domicilio */}
+                  <DocumentUploadCard
+                    title="Comprobante de domicilio"
+                    badge="No mayor a 3 meses"
+                    fileState={proofDoc}
+                    onFileSelect={(file) => {
+                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                      simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                    }}
+                    onRemove={() => handleDocRemove('proof')}
+                  />
+
+                  {/* 4. Información adicional (opcional) */}
+                  <div className="space-y-1.5 pt-1">
+                    <label className="block text-sm font-heading font-bold text-slate-900">
+                      Información adicional (opcional)
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={additionalDocNotes}
+                      onChange={(e) => setAdditionalDocNotes(e.target.value)}
+                      placeholder="Notas relevantes para tu renta: conductor adicional, requerimientos de facturación o entrega especial en sucursal..."
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Sección: Checklist controlado (Sin contenedor con línea, sin icono en el título, con check en cada ítem) */}
-            <div className="pt-6 border-t border-slate-100 space-y-4">
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-                Checklist controlado
-              </h3>
-
-              <div className="space-y-3.5">
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Fotos de estado exterior e interior.
-                  </span>
+            {/* 5. Sección: Checklist controlado (Acordeón 5) */}
+            <div className="pt-6 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => toggleAccordion('checklist')}
+                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+              >
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                    Checklist controlado
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Inspección 360°, registro de kilometraje y firma digital
+                  </p>
                 </div>
-
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Registro de kilometraje de salida y entrada.
-                  </span>
+                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'checklist' ? 'rotate-180' : ''}`} />
                 </div>
+              </button>
 
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Nivel de combustible verificado.
-                  </span>
-                </div>
+              {openAccordion === 'checklist' && (
+                <div className="pt-5 pb-2 space-y-3.5 animate-in fade-in duration-200">
+                  <div className="flex items-center gap-3.5 text-slate-800">
+                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                    <span className="text-[16px] font-heading font-normal text-slate-800">
+                      Fotos de estado exterior e interior.
+                    </span>
+                  </div>
 
-                <div className="flex items-center gap-3.5 text-slate-800">
-                  <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
-                  <span className="text-[16px] font-heading font-normal text-slate-800">
-                    Firma digital de entrega y devolución.
-                  </span>
+                  <div className="flex items-center gap-3.5 text-slate-800">
+                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                    <span className="text-[16px] font-heading font-normal text-slate-800">
+                      Registro de kilometraje de salida y entrada.
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3.5 text-slate-800">
+                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                    <span className="text-[16px] font-heading font-normal text-slate-800">
+                      Nivel de combustible verificado.
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3.5 text-slate-800">
+                    <Check className="w-5 h-5 text-slate-700 shrink-0" strokeWidth={1.8} />
+                    <span className="text-[16px] font-heading font-normal text-slate-800">
+                      Firma digital de entrega y devolución.
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Resumen de reserva y acción en columna izquierda */}
