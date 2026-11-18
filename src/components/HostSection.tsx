@@ -124,7 +124,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                 en{' '}
                 <span className="relative inline-block whitespace-nowrap">
                   <span className="relative z-10">ingresos</span>
-                  <span className="absolute left-0 bottom-0.5 w-full h-2.5 bg-[#D8E8FF] rounded-none -z-0" />
+                  <span className="absolute left-0 bottom-0 sm:bottom-0.5 w-full h-2 sm:h-2.5 bg-[#D8E8FF] rounded-none -z-0" />
                 </span>
               </h1>
 
@@ -291,7 +291,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true }) =
                   </div>
                 </div>
 
-                <div className="pt-2">
+                <div className="border-t border-slate-200/80 pt-3">
                   <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
                     PROYECCIÓN ANUAL
                   </span>
