@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { VEHICLES } from '../data/vehicles';
 import { DocumentUploadCard, DocUploadState } from '../components/DocumentUploadCard';
+import { CustomDropdown } from '../components/CustomDropdown';
 
 interface AccountPageProps {
   onNavigate: (path: string) => void;
@@ -366,20 +367,20 @@ export const AccountPage: React.FC<AccountPageProps> = ({
   return (
     <div className="min-h-[85vh] bg-surface py-8 sm:py-12">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6">
-        {/* 1. Banner Completa tu perfil (70% completado) de GALSA */}
+        {/* 1. Banner Completa tu perfil (Cinta minimalista sin icono en mobile) */}
         {!profileCompletedBannerDismissed && (
-          <div className="bg-cta-50/60 border-0 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
+          <div className="bg-cta-50/60 border-0 rounded-xl sm:rounded-2xl px-3.5 py-2.5 sm:p-5 flex items-center justify-between gap-3 sm:gap-4">
+            <div className="flex items-center gap-3.5 min-w-0">
               <img
                 src="/galsa-rent/images/cuenta/completa-perfil-lapiz.png"
                 alt="Completa tu perfil"
-                className="w-11 h-11 sm:w-12 sm:h-12 object-contain shrink-0"
+                className="hidden sm:block w-12 h-12 object-contain shrink-0"
               />
-              <div>
-                <h2 className="text-sm font-heading font-bold text-ink-900">
-                  Completa tu perfil (70% completado)
+              <div className="min-w-0">
+                <h2 className="text-xs sm:text-sm font-heading font-bold text-ink-900 truncate sm:whitespace-normal">
+                  Completa tu perfil (70%)
                 </h2>
-                <p className="text-xs font-sans text-ink-600 mt-0.5 leading-relaxed">
+                <p className="hidden sm:block text-xs font-sans text-ink-600 mt-0.5 leading-relaxed">
                   Falta tu nombre, teléfono y licencia de conducir para activar tus contratos digitales y entregas express sin esperas.
                 </p>
               </div>
@@ -387,7 +388,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             <button
               type="button"
               onClick={() => setShowCompleteModal(true)}
-              className="self-start sm:self-auto px-4 py-2 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-ink-900 text-xs font-heading font-semibold transition-colors whitespace-nowrap cursor-pointer"
+              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-ink-900 text-[11px] sm:text-xs font-heading font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               Completar ahora
             </button>
@@ -396,14 +397,42 @@ export const AccountPage: React.FC<AccountPageProps> = ({
 
         {/* 2. Layout de 2 Columnas: Barra lateral izquierda + Panel de contenido derecho */}
         <div className="pt-2 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
-          {/* COLUMNA IZQUIERDA: Configuración de la cuenta + Menú */}
-          <aside className="lg:col-span-4 xl:col-span-4 space-y-5 pb-6 border-b border-edge lg:pb-0 lg:border-b-0 lg:border-r lg:border-edge lg:pr-8">
+          {/* COLUMNA IZQUIERDA: Configuración de la cuenta + Dropdown Mobile / Menú Desktop */}
+          <aside className="lg:col-span-4 xl:col-span-4 space-y-4 lg:space-y-5 lg:border-r lg:border-edge lg:pr-8">
             <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-ink-900 tracking-tight">
               Configuración de la cuenta
             </h2>
 
-            {/* Navegación Vertical */}
-            <nav className="space-y-1" aria-label="Secciones de cuenta">
+            {/* Selector Dropdown en Mobile (< lg) */}
+            <div className="lg:hidden">
+              <CustomDropdown
+                options={[
+                  ...sidebarNavItems.map((item) => ({
+                    value: item.id,
+                    label: item.badge ? `${item.label} (${item.badge})` : item.label,
+                    icon: item.icon,
+                  })),
+                  {
+                    value: 'logout',
+                    label: 'Cerrar sesión',
+                    icon: LogOut,
+                  },
+                ]}
+                value={activeTab}
+                onChange={(val) => {
+                  if (val === 'logout') {
+                    setShowLogoutModal(true);
+                  } else {
+                    setActiveTab(val as AccountSection);
+                  }
+                }}
+                triggerIcon={sidebarNavItems.find((i) => i.id === activeTab)?.icon}
+                menuWidthClass="w-full"
+              />
+            </div>
+
+            {/* Navegación Vertical Desktop (lg+) */}
+            <nav className="hidden lg:block space-y-1" aria-label="Secciones de cuenta">
               {sidebarNavItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
