@@ -324,7 +324,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.9</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.0</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -2603,6 +2603,68 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
+            {/* Organismo: Bloques de Beneficio con Ilustración 3D Sin Borde */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Bloque de Beneficio / Ilustración 3D Sin Borde
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Usado en <code className="font-mono text-slate-700">HostSection.tsx</code> («Beneficios de ser anfitrión GALSA»): contenedor cuadrado <code className="font-mono text-slate-700">rounded-2xl bg-slate-100</code> sin línea de borde (<code className="font-mono text-slate-700">border-0</code>).
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copySnippet(
+                        'w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none',
+                        'org-benefit-icon'
+                      )
+                    }
+                    className="text-xs font-mono text-cta hover:text-cta-700 cursor-pointer shrink-0"
+                  >
+                    {copiedCode === 'org-benefit-icon' ? 'Copiado ✓' : 'Copiar clases'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                  <div className="flex items-start gap-4">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none">
+                      <img
+                        src="/galsa-rent/images/anfitriones/benefit-1-control-total.png"
+                        alt="Control total"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-base font-heading font-bold text-slate-900">Control total</h4>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                        Tú defines precios, disponibilidad y qué reservas aceptas.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none">
+                      <img
+                        src="/galsa-rent/images/anfitriones/benefit-2-pagos.png"
+                        alt="Pagos a tu cuenta"
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-base font-heading font-bold text-slate-900">Pagos a tu cuenta</h4>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                        Cobramos al cliente y te depositamos tu parte en la cuenta que registres.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Organismo 5: Cinta QA & Footer */}
             {showOrgQaRibbon && (
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
@@ -2630,7 +2692,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.9</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.0</span>
                     </div>
                   </div>
                 </div>

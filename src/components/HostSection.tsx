@@ -479,8 +479,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
             {BENEFITS.map((item, idx) => (
               <div key={idx} className="flex items-start gap-4">
-                {/* Imagen Cuadrada con Bordes Redondeados */}
-                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/80 shrink-0 shadow-none">
+                {/* Imagen Cuadrada sin borde (solo fondo claro redondeado) */}
+                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none">
                   <img
                     src={item.image}
                     alt={item.title}

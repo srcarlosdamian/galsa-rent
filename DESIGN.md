@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.7.9)
+description: Minimalist, clean, flat digital mobility platform (v2.8.0)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.7.9`)
+# GALSA Rent Design System & Guidelines (`v2.8.0`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -98,3 +98,6 @@ rounded:
   2. **Soft Azul (`bg-cta-50 text-cta`):** `hover:bg-cta-100`, `active:bg-cta-200 active:scale-[0.98]`, `disabled:bg-slate-100 disabled:text-slate-400`.
   3. **Lineal Gris (`border border-slate-200 bg-transparent text-slate-900`):** `hover:border-slate-300 hover:bg-slate-50`, `active:bg-slate-100 active:scale-[0.98]`, `disabled:border-slate-200 disabled:text-slate-300`.
   4. **Bloqueado (`disabled`):** `cursor-not-allowed` con contraste neutro atenuado.
+
+## 8. Bloques de Ilustración 3D Sin Borde (`HostSection.tsx`)
+- En **Beneficios de ser anfitrión GALSA**, los iconos/ilustraciones 3D usan un contenedor cuadrado limpio (`aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none`) **sin línea de borde** (`border-0`), acompañados de título (`text-base font-heading font-bold`) y descripción (`text-xs sm:text-sm text-slate-500`).
