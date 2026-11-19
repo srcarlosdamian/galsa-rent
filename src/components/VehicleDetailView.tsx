@@ -232,10 +232,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   onNavigate('/catalogo');
                 }
               }}
-              className="inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors"
+              className="text-slate-700 hover:text-black font-semibold transition-colors"
             >
-              <ArrowRight className="w-3.5 h-3.5 rotate-180" />
-              <span>Volver al catálogo</span>
+              Volver al catálogo
             </a>
             <span className="text-slate-300">/</span>
             <span className="text-slate-500">{vehicle.category}</span>

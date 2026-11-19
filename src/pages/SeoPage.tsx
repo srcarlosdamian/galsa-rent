@@ -208,7 +208,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                   className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                   title="Volver al inicio"
                 >
-                  <ArrowLeft className="w-5 h-5" />
+                  <ArrowLeft className="w-4 h-4" />
                 </button>
               )}
               <div>

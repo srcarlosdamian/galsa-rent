@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.4</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.5</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1374,28 +1374,28 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </div>
                 </div>
 
-                {/* CATÁLOGO EXHAUSTIVO DE TODOS LOS BOTONES DE VOLVER / BACK EN LA PLATAFORMA */}
+                {/* CATÁLOGO UNIFICADO DE BOTONES DE RETORNO («BACK / VOLVER») */}
                 <div className="pt-4 border-t border-slate-100 space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <h4 className="text-sm sm:text-base font-heading font-bold text-slate-900">
-                        Catálogo Completo de Botones de Retorno («Back / Volver»)
+                        Botones de Retorno Unificados («Back / Volver» y Breadcrumbs)
                       </h4>
                       <p className="text-xs text-slate-500 mt-0.5">
-                        Las 8 variantes de botones de regreso que existen en toda la aplicación, con vista previa real, ruta donde viven y botón para copiar sus clases.
+                        Mismo estilo, icono (<code className="font-mono">ArrowLeft w-4 h-4</code>) y tamaño en toda la app. Los breadcrumbs no llevan icono y los botones estándar («Volver a iniciar sesión», «Volver al inicio», paginación y calendario) pertenecen a la sección de Botones.
                       </p>
                     </div>
-                    <span className="text-[11px] font-mono text-cta bg-cta-50 border border-cta-200 px-2.5 py-0.5 rounded-full self-start">
-                      8 variantes documentadas
+                    <span className="text-[11px] font-mono text-cta bg-cta-50 border border-cta-200 px-2.5 py-0.5 rounded-full self-start shrink-0">
+                      3 patrones unificados
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
                     {/* Back 1: Circular Solo Icono */}
                     <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
                       <div className="space-y-2">
                         <div className="text-xs font-heading font-bold text-slate-900">
-                          B1. Circular Solo Icono (Auth / Toolbars)
+                          B1. Circular Solo Icono (36×36 · Auth / Toolbars)
                         </div>
                         <div className="text-[10px] font-mono text-slate-400">
                           ForgotPasswordPage · SeoPage · DesignSystemPage
@@ -1403,15 +1403,8 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <div className="pt-2 flex items-center gap-3">
                           <button
                             type="button"
-                            className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
-                            title="Volver (40x40 Auth)"
-                          >
-                            <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
-                          </button>
-                          <button
-                            type="button"
                             className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
-                            title="Volver a la app (36x36 Sticky Header)"
+                            title="Volver (36x36 unificado)"
                           >
                             <ArrowLeft className="w-4 h-4" />
                           </button>
@@ -1421,7 +1414,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         type="button"
                         onClick={() =>
                           copySnippet(
-                            'w-10 h-10 (o w-9 h-9) rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors',
+                            'w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer',
                             'back-1'
                           )
                         }
@@ -1431,16 +1424,16 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       </button>
                     </div>
 
-                    {/* Back 2: Inline Superior de Flujo */}
+                    {/* Back 2: Inline Unificado */}
                     <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
                       <div className="space-y-2">
                         <div className="text-xs font-heading font-bold text-slate-900">
-                          B2. Inline Superior de Flujo (Checkout &amp; Registro)
+                          B2. Botón Back Inline Unificado (Checkout, Registro, Blog)
                         </div>
                         <div className="text-[10px] font-mono text-slate-400">
-                          ReservationCheckoutView · HostRegistrationPage
+                          ReservationCheckoutView · HostRegistrationPage · BlogPage
                         </div>
-                        <div className="pt-2 flex flex-col items-start gap-1.5 bg-white rounded-lg border border-slate-200 p-2.5">
+                        <div className="pt-2 flex flex-col items-start gap-2 bg-white rounded-lg border border-slate-200 p-2.5">
                           <button
                             type="button"
                             className="inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
@@ -1450,10 +1443,10 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                           </button>
                           <button
                             type="button"
-                            className="inline-flex items-center gap-2 text-xs font-heading font-semibold text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
                           >
-                            <ArrowLeft className="w-3.5 h-3.5" />
-                            <span>Editar mi reserva</span>
+                            <ArrowLeft className="w-4 h-4" />
+                            <span>Volver a todos los artículos</span>
                           </button>
                         </div>
                       </div>
@@ -1471,22 +1464,21 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       </button>
                     </div>
 
-                    {/* Back 3: Breadcrumb de Producto */}
+                    {/* Back 3: Breadcrumb sin icono */}
                     <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
                       <div className="space-y-2">
                         <div className="text-xs font-heading font-bold text-slate-900">
-                          B3. Breadcrumb Retorno a Catálogo
+                          B3. Breadcrumb Retorno (Sin icono)
                         </div>
                         <div className="text-[10px] font-mono text-slate-400">
-                          VehicleDetailView.tsx (línea 183)
+                          VehicleDetailView · AboutPage · HowItWorksPage
                         </div>
                         <div className="pt-2 flex items-center gap-1.5 bg-white rounded-lg border border-slate-200 p-2.5 text-xs">
                           <button
                             type="button"
-                            className="inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors cursor-pointer"
+                            className="text-slate-700 hover:text-black font-semibold transition-colors cursor-pointer"
                           >
-                            <ArrowRight className="w-3.5 h-3.5 rotate-180" />
-                            <span>Volver al catálogo</span>
+                            Volver al catálogo
                           </button>
                           <span className="text-slate-300">/</span>
                           <span className="text-slate-500">SUV</span>
@@ -1496,177 +1488,13 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         type="button"
                         onClick={() =>
                           copySnippet(
-                            'inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors',
+                            'text-slate-700 hover:text-black font-semibold transition-colors',
                             'back-3'
                           )
                         }
                         className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
                       >
                         <Copy className="w-3 h-3" /> {copiedCode === 'back-3' ? 'Copiado ✓' : 'Copiar clases'}
-                      </button>
-                    </div>
-
-                    {/* Back 4: Enlace Editorial Blog */}
-                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
-                      <div className="space-y-2">
-                        <div className="text-xs font-heading font-bold text-slate-900">
-                          B4. Enlace Editorial («← Volver a artículos»)
-                        </div>
-                        <div className="text-[10px] font-mono text-slate-400">
-                          BlogPage.tsx (línea 106)
-                        </div>
-                        <div className="pt-2 bg-white rounded-lg border border-slate-200 p-2.5">
-                          <button
-                            type="button"
-                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-semibold text-slate-900 hover:text-cta transition-colors cursor-pointer"
-                          >
-                            <span>← Volver a todos los artículos</span>
-                          </button>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copySnippet(
-                            'inline-flex items-center gap-1.5 text-sm font-heading font-semibold text-slate-900 hover:text-cta transition-colors',
-                            'back-4'
-                          )
-                        }
-                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
-                      >
-                        <Copy className="w-3 h-3" /> {copiedCode === 'back-4' ? 'Copiado ✓' : 'Copiar clases'}
-                      </button>
-                    </div>
-
-                    {/* Back 5: Outline Retorno en Confirmación */}
-                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
-                      <div className="space-y-2">
-                        <div className="text-xs font-heading font-bold text-slate-900">
-                          B5. Botón Outline «Volver al inicio»
-                        </div>
-                        <div className="text-[10px] font-mono text-slate-400">
-                          ReservationCheckoutView · HostRegistrationPage
-                        </div>
-                        <div className="pt-2">
-                          <button
-                            type="button"
-                            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-900 font-heading font-semibold text-xs transition-colors cursor-pointer"
-                          >
-                            Volver al inicio
-                          </button>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copySnippet(
-                            'px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 font-heading font-semibold text-sm transition-colors',
-                            'back-5'
-                          )
-                        }
-                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
-                      >
-                        <Copy className="w-3 h-3" /> {copiedCode === 'back-5' ? 'Copiado ✓' : 'Copiar clases'}
-                      </button>
-                    </div>
-
-                    {/* Back 6: Primario Brand Retorno a Login / Anfitriones */}
-                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
-                      <div className="space-y-2">
-                        <div className="text-xs font-heading font-bold text-slate-900">
-                          B6. CTA Brand «Volver a iniciar sesión / anfitriones»
-                        </div>
-                        <div className="text-[10px] font-mono text-slate-400">
-                          PasswordSentPage · HostRegistrationPage
-                        </div>
-                        <div className="pt-2">
-                          <button
-                            type="button"
-                            className="w-full py-2.5 px-4 rounded-[10px] bg-cta hover:bg-cta-600 text-white text-xs font-heading font-semibold transition-colors cursor-pointer"
-                          >
-                            Volver a iniciar sesión
-                          </button>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copySnippet(
-                            'w-full py-3.5 px-6 rounded-[10px] bg-cta hover:bg-cta-600 text-white text-sm font-heading font-semibold transition-all',
-                            'back-6'
-                          )
-                        }
-                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
-                      >
-                        <Copy className="w-3 h-3" /> {copiedCode === 'back-6' ? 'Copiado ✓' : 'Copiar clases'}
-                      </button>
-                    </div>
-
-                    {/* Back 7: Paginación Página Anterior */}
-                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
-                      <div className="space-y-2">
-                        <div className="text-xs font-heading font-bold text-slate-900">
-                          B7. Paginación «Página anterior»
-                        </div>
-                        <div className="text-[10px] font-mono text-slate-400">
-                          CatalogPage.tsx (línea 936)
-                        </div>
-                        <div className="pt-2 flex items-center gap-2">
-                          <button
-                            type="button"
-                            className="p-2 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
-                            aria-label="Página anterior"
-                          >
-                            <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
-                          </button>
-                          <span className="text-xs font-heading text-slate-500">Página 1 de 2</span>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copySnippet(
-                            'p-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-40 transition-colors',
-                            'back-7'
-                          )
-                        }
-                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
-                      >
-                        <Copy className="w-3 h-3" /> {copiedCode === 'back-7' ? 'Copiado ✓' : 'Copiar clases'}
-                      </button>
-                    </div>
-
-                    {/* Back 8: Mes Anterior en DateRangePicker */}
-                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
-                      <div className="space-y-2">
-                        <div className="text-xs font-heading font-bold text-slate-900">
-                          B8. Calendario «Mes anterior»
-                        </div>
-                        <div className="text-[10px] font-mono text-slate-400">
-                          DateRangePicker.tsx (línea 101)
-                        </div>
-                        <div className="pt-2 flex items-center gap-2">
-                          <button
-                            type="button"
-                            className="p-1.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/70 transition-colors cursor-pointer"
-                            aria-label="Mes anterior"
-                          >
-                            <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
-                          </button>
-                          <span className="text-xs font-heading font-bold text-slate-800">Noviembre 2026</span>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copySnippet(
-                            'p-1.5 rounded-full hover:bg-slate-100 text-slate-700 transition-colors',
-                            'back-8'
-                          )
-                        }
-                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
-                      >
-                        <Copy className="w-3 h-3" /> {copiedCode === 'back-8' ? 'Copiado ✓' : 'Copiar clases'}
                       </button>
                     </div>
                   </div>
@@ -2751,7 +2579,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.4</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.5</span>
                     </div>
                   </div>
                 </div>

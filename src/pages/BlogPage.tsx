@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, ArrowRight, BookOpen, User } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, ArrowLeft, BookOpen, User } from 'lucide-react';
 import { BLOG_POSTS, BlogPost } from '../data/blog';
 
 interface BlogPageProps {
@@ -102,9 +102,10 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
             <a
               href="/blog"
               onClick={(e) => handleLink(e, '/blog')}
-              className="inline-flex items-center gap-1.5 text-sm font-heading font-semibold text-slate-900 hover:text-cta transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
             >
-              <span>← Volver a todos los artículos</span>
+              <ArrowLeft className="w-4 h-4" />
+              <span>Volver a todos los artículos</span>
             </a>
           </div>
 
