@@ -555,10 +555,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
               <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-4 sm:space-y-5">
                 <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
-                  Empieza a ganar con tu auto hoy
+                  Tu auto genera ingresos para tu familia
                 </h2>
                 <p className="text-sm sm:text-[15px] font-sans text-slate-600 leading-relaxed max-w-lg">
-                  Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
+                  Publica tu vehículo en menos de 10 minutos. Conectamos tu auto con familias y viajeros verificados mientras tú decides fechas y tarifas.
                 </p>
                 <div className="pt-2">
                   <a
@@ -572,7 +572,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
               </div>
 
               <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-transparent border-0 shadow-none flex items-center justify-center">
+                <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-slate-100 p-4 sm:p-6 border-0 shadow-none flex items-center justify-center">
                   <img
                     src="/galsa-rent/images/anfitriones/cta-familia-anfitrion.png"
                     alt="Empieza a ganar con tu auto hoy en GALSA Rent"
