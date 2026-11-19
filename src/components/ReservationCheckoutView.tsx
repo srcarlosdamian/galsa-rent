@@ -456,7 +456,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
 
   return (
     <div className="w-full py-8 md:py-12 pb-24 lg:pb-12 bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Barra superior de navegación para volver a la vista del automóvil */}
         <div className="mb-8 flex items-center justify-between text-left">
