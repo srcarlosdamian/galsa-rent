@@ -133,7 +133,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
   return (
     <div className="bg-white min-h-screen">
       {/* SECCIÓN 1: HERO & CALCULADORA A LA DERECHA */}
-      <section className="py-12 sm:py-16 md:py-20 border-b border-edge">
+      <section className="py-12 sm:py-16 md:py-24">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
@@ -343,7 +343,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       </section>
 
       {/* SECCIÓN 2: CÓMO GANAR DINERO EN GALSA (Con imágenes apaisadas 16:9 con esquinas redondeadas) */}
-      <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
           <div className="max-w-3xl mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-heading font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -378,7 +378,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
           </div>
 
           {/* Sub-sección: Banner de transparencia + 2 tarjetas (Tarifa del marketplace y Quién puede rentar tu auto) */}
-          <div className="mt-14 space-y-6">
+          <div className="mt-20 sm:mt-28 space-y-6">
             <div className="relative rounded-[24px] bg-gradient-to-r from-cta-50 via-cta-100 to-cta-200 overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-12 items-center">
                 <div className="md:col-span-7 p-6 sm:p-10 space-y-2.5 text-left">
@@ -468,7 +468,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       </section>
 
       {/* SECCIÓN 3: BENEFICIOS (Sin el textito 'BENEFICIOS' arriba, con imágenes cuadradas con bordes redondeados al lado del texto) */}
-      <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
           <div className="max-w-2xl mb-12">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
@@ -505,7 +505,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       </section>
 
       {/* SECCIÓN 4: PUBLICA TU AUTO EN 6 PASOS (Sin 'PROCESO' arriba, diseño exacto a la captura oficial) */}
-      <section className="py-16 sm:py-20 border-b border-slate-100 bg-white">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
           <div className="max-w-2xl mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 tracking-tight">
