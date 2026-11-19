@@ -472,32 +472,37 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Banner: ¿Tienes dudas sobre esta unidad? */}
+            {/* Banner: ¿Tienes dudas sobre tu renta? */}
             <div className="pt-8">
-              <div className="rounded-[28px] border border-slate-200/90 bg-slate-50/70 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="space-y-3 max-w-md text-left">
-                  <h3 className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
-                    ¿Tienes dudas sobre esta unidad?
+              <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 lg:p-10 border-0 shadow-none flex flex-col md:flex-row items-center justify-between gap-6 lg:gap-8">
+                <div className="w-full md:w-1/2 flex flex-col items-start text-left space-y-3 sm:space-y-4">
+                  <h3 className="text-2xl sm:text-[26px] font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
+                    ¿Tienes dudas sobre tu renta?
                   </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 leading-relaxed">
+                  <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
                     Atención local directa y personalizada en México. Resolvemos tus preguntas sobre modelos, requisitos, depósitos en garantía y entregas oficiales.
                   </p>
                   <div className="pt-2">
                     <a
-                      href="mailto:contacto@galsarent.com?subject=Dudas%20sobre%20vehiculo"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-95"
+                      href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20la%20renta%20de%20un%20auto"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-xs sm:text-sm transition-all shadow-none"
                     >
-                      Escríbenos por correo
+                      Hablar por WhatsApp
                     </a>
                   </div>
                 </div>
 
-                <div className="w-full md:w-64 aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 shrink-0">
-                  <img
-                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601312824-0-348388.webp"
-                    alt="Atención GALSA"
-                    className="w-full h-full object-contain"
-                  />
+                <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+                  <div className="relative w-full max-w-[340px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-transparent border-0 shadow-none">
+                    <img
+                      src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793602180349-0-gemini_generated_image_jh5gb1jh5gb1jh5g-2.webp"
+                      alt="Atención y renta de autos en México con GALSA Rent"
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
