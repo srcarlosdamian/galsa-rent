@@ -264,7 +264,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           <div className="p-4 border-t border-slate-200 bg-white">
             <a
               href="tel:+526180000000"
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs"
+              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
             >
               <span>Llamar a un asesor</span>
             </a>

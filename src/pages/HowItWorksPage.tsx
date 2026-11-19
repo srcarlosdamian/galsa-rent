@@ -160,7 +160,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
               href="/catalogo"
               onClick={(e) => handleLink(e, '/catalogo')}
               style={{ backgroundColor: '#3D63FF' }}
-              className="py-3.5 px-6 rounded-2xl text-white font-bold text-xs uppercase tracking-wider text-center transition-all shadow-sm hover:brightness-105 active:scale-[0.98]"
+              className="py-3.5 px-6 rounded-2xl text-white font-bold text-xs uppercase tracking-wider text-center transition-all hover:brightness-105 active:scale-[0.98]"
             >
               Ver autos disponibles
             </a>

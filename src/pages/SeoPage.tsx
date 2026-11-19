@@ -121,7 +121,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                 onClick={() => setActiveTab('serp')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
                   activeTab === 'serp'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-white text-slate-900'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -132,7 +132,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                 onClick={() => setActiveTab('og')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
                   activeTab === 'og'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-white text-slate-900'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -143,7 +143,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                 onClick={() => setActiveTab('chat')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all ${
                   activeTab === 'chat'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-white text-slate-900'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -179,7 +179,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                   onClick={() => setCategoryFilter(tab.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-heading font-medium whitespace-nowrap transition-all ${
                     categoryFilter === tab.id
-                      ? 'bg-slate-900 text-white shadow-sm'
+                      ? 'bg-slate-900 text-white'
                       : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                   }`}
                 >

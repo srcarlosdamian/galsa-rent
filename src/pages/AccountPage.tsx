@@ -216,7 +216,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <button
                 type="button"
                 onClick={() => setShowCompleteModal(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs sm:text-sm font-heading font-semibold shadow-xs transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs sm:text-sm font-heading font-semibold transition-all"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Completar información</span>
@@ -225,7 +225,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
               <button
                 type="button"
                 onClick={() => setShowCompleteModal(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 bg-white text-slate-700 text-xs sm:text-sm font-heading font-semibold shadow-xs transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 bg-white text-slate-700 text-xs sm:text-sm font-heading font-semibold transition-all"
               >
                 <Edit3 className="w-4 h-4 text-slate-500" />
                 <span>Editar información</span>
@@ -263,7 +263,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             <button
               type="button"
               onClick={() => setShowCompleteModal(true)}
-              className="self-start sm:self-auto px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-heading font-bold shadow-xs transition-all whitespace-nowrap"
+              className="self-start sm:self-auto px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-heading font-bold transition-all whitespace-nowrap"
             >
               Completar ahora
             </button>
@@ -311,7 +311,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigate('/catalogo')}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-heading font-bold transition-all shadow-xs"
+                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-heading font-bold transition-all"
                 >
                   Rentar otro auto
                 </button>
@@ -679,7 +679,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <div className="pt-3 space-y-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-xs active:scale-[0.99] cursor-pointer"
+                      className="w-full py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-[0.99] cursor-pointer"
                     >
                       Guardar y verificar perfil
                     </button>

@@ -148,7 +148,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     onClick={() => setActiveTab(tab.id as TabType)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all whitespace-nowrap ${
                       activeTab === tab.id
-                        ? 'bg-slate-900 text-white shadow-xs'
+                        ? 'bg-slate-900 text-white'
                         : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
                     }`}
                   >
@@ -334,14 +334,14 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <div className="text-xs font-heading font-bold text-slate-800">1. Botón Brand Azul (Hero & CTAs)</div>
                     <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción primaria de alta conversión</div>
                     <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm shadow-xs transition-all hover:shadow-md active:scale-98 flex items-center justify-center gap-2">
+                      <button className="w-full px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-98 flex items-center justify-center gap-2">
                         <span>Explorar vehículos</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                   <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm shadow-xs transition-all hover:shadow-md active:scale-98 flex items-center justify-center gap-2', 'btn-1')}
+                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-98 flex items-center justify-center gap-2','btn-1')}
                     className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
                   >
                     <Copy className="w-3 h-3" /> {copiedCode === 'btn-1' ? 'Copiado ✓' : 'Copiar clases'}
@@ -354,14 +354,14 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <div className="text-xs font-heading font-bold text-slate-800">2. Botón Negro (Catálogo & Reserva)</div>
                     <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción decisiva / Finalizar renta</div>
                     <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm shadow-xs transition-all active:scale-98 flex items-center justify-center gap-2">
+                      <button className="w-full px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm transition-all active:scale-98 flex items-center justify-center gap-2">
                         <span>Reservar vehículo</span>
                         <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                       </button>
                     </div>
                   </div>
                   <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-sm shadow-xs transition-all active:scale-98', 'btn-2')}
+                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-sm transition-all active:scale-98','btn-2')}
                     className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
                   >
                     <Copy className="w-3 h-3" /> {copiedCode === 'btn-2' ? 'Copiado ✓' : 'Copiar clases'}
@@ -394,14 +394,14 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <div className="text-xs font-heading font-bold text-slate-800">4. Botón WhatsApp Oficial</div>
                     <div className="text-[11px] text-slate-400 font-mono mt-0.5">Canal de soporte y contacto directo</div>
                     <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-xs sm:text-sm shadow-2xs transition-transform active:scale-98 flex items-center justify-center gap-2">
+                      <button className="w-full px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-xs sm:text-sm transition-transform active:scale-98 flex items-center justify-center gap-2">
                         <MessageCircle className="w-4 h-4 fill-white" />
                         <span>Chat en WhatsApp</span>
                       </button>
                     </div>
                   </div>
                   <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-sm shadow-2xs transition-transform active:scale-98 flex items-center justify-center gap-2', 'btn-4')}
+                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-sm transition-transform active:scale-98 flex items-center justify-center gap-2','btn-4')}
                     className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
                   >
                     <Copy className="w-3 h-3" /> {copiedCode === 'btn-4' ? 'Copiado ✓' : 'Copiar clases'}
@@ -513,14 +513,14 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <div className="mt-4 flex items-center justify-center gap-3">
                       <button 
                         onClick={() => setLikeState(!likeState)}
-                        className="w-9 h-9 rounded-full bg-white border border-slate-200 shadow-2xs flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+                        className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
                         title="Favorito"
                       >
                         <Heart className={`w-4 h-4 ${likeState ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
                       </button>
                       <button 
                         onClick={() => copySnippet('Ejemplo de texto', 'icon-copy')}
-                        className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center shadow-2xs transition-colors"
+                        className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center transition-colors"
                         title="Copiar"
                       >
                         <Copy className="w-4 h-4" />
@@ -534,7 +534,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </div>
                   </div>
                   <button 
-                    onClick={() => copySnippet('w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center shadow-2xs transition-colors', 'btn-9')}
+                    onClick={() => copySnippet('w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center transition-colors','btn-9')}
                     className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
                   >
                     <Copy className="w-3 h-3" /> {copiedCode === 'btn-9' ? 'Copiado ✓' : 'Copiar clases'}
@@ -547,7 +547,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <div className="text-xs font-heading font-bold text-slate-800">10. Chips / Píldoras de Filtro</div>
                     <div className="text-[11px] text-slate-400 font-mono mt-0.5">Filtro de categorías de catálogo</div>
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <button className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-heading font-medium shadow-xs">
+                      <button className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-heading font-medium">
                         Todos (Activo)
                       </button>
                       <button className="px-3 py-1.5 rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-heading font-medium transition-colors">
@@ -577,7 +577,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                           onClick={() => setViewMode('grid')}
                           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading transition-all ${
                             viewMode === 'grid'
-                              ? 'bg-white text-slate-900 font-bold shadow-xs'
+                              ? 'bg-white text-slate-900 font-bold'
                               : 'text-slate-600 hover:text-slate-900 font-medium'
                           }`}
                         >
@@ -588,7 +588,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                           onClick={() => setViewMode('map')}
                           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading transition-all ${
                             viewMode === 'map'
-                              ? 'bg-white text-slate-900 font-bold shadow-xs'
+                              ? 'bg-white text-slate-900 font-bold'
                               : 'text-slate-600 hover:text-slate-900 font-medium'
                           }`}
                         >
@@ -737,7 +737,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 </span>
 
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                  v2.2.95
+                  v2.2.96
                 </span>
               </div>
             </div>
@@ -806,7 +806,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </div>
                   </div>
 
-                  <button className="w-full md:w-auto px-6 py-3 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shrink-0 transition-all shadow-xs">
+                  <button className="w-full md:w-auto px-6 py-3 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shrink-0 transition-all">
                     <Search className="w-4 h-4" />
                     <span>Buscar</span>
                   </button>
@@ -1245,7 +1245,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
                   <div className="flex items-center gap-3 text-white">
                     <span>Última actualización: <strong>06 Nov 2026</strong></span>
-                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.95</span>
+                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.96</span>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
                       <Palette className="w-3.5 h-3.5 text-pink-400" />
                       <span>Sistema de Diseño</span>

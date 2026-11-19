@@ -53,7 +53,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
               </button>
               <button
                 type="button"
-                className="flex-1 py-2 px-3 rounded-[8px] text-xs sm:text-sm font-heading font-semibold bg-white text-slate-900 shadow-xs transition-all"
+                className="flex-1 py-2 px-3 rounded-[8px] text-xs sm:text-sm font-heading font-semibold bg-white text-slate-900 transition-all"
               >
                 Crear cuenta
               </button>

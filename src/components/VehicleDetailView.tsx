@@ -250,7 +250,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 setIsFav(!isFav);
               }}
               aria-label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-              className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm backdrop-blur-xs cursor-pointer z-10 ${
+              className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all backdrop-blur-xs cursor-pointer z-10 ${
                 isFav
                   ? 'bg-white text-red-500'
                   : 'bg-white/90 hover:bg-white text-slate-700'
@@ -266,7 +266,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 e.stopPropagation();
                 setGalleryModalOpen(true);
               }}
-              className="md:hidden absolute bottom-3.5 right-3.5 bg-white/95 hover:bg-white text-slate-900 rounded-full px-4 py-1.5 text-xs font-heading font-semibold shadow-sm transition-all cursor-pointer z-10"
+              className="md:hidden absolute bottom-3.5 right-3.5 bg-white/95 hover:bg-white text-slate-900 rounded-full px-4 py-1.5 text-xs font-heading font-semibold transition-all cursor-pointer z-10"
             >
               Ver {images.length} fotos
             </button>
@@ -303,7 +303,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   e.stopPropagation();
                   setGalleryModalOpen(true);
                 }}
-                className="absolute bottom-3.5 right-3.5 bg-white/95 hover:bg-white text-slate-900 rounded-full px-4 py-1.5 text-xs font-heading font-semibold shadow-sm transition-all cursor-pointer z-10"
+                className="absolute bottom-3.5 right-3.5 bg-white/95 hover:bg-white text-slate-900 rounded-full px-4 py-1.5 text-xs font-heading font-semibold transition-all cursor-pointer z-10"
               >
                 Ver {images.length} fotos
               </button>
@@ -482,7 +482,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   <div className="pt-2">
                     <a
                       href="mailto:contacto@galsarent.com?subject=Dudas%20sobre%20vehiculo"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all shadow-sm active:scale-95"
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-95"
                     >
                       Escríbenos por correo
                     </a>
@@ -635,7 +635,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <button
                 type="button"
                 onClick={handleProceedToCheckout}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-[0.98] cursor-pointer shadow-sm text-center"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-[0.98] cursor-pointer text-center"
               >
                 Continuar
               </button>
@@ -664,7 +664,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <button
           type="button"
           onClick={handleProceedToCheckout}
-          className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer shadow-sm"
+          className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer"
         >
           Continuar
         </button>

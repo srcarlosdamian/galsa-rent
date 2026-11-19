@@ -94,7 +94,7 @@ export const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ onNavigate
               <div className="pt-2">
                 <button
                   type="submit"
-                  className={`w-full py-3.5 rounded-[10px] text-sm font-heading font-semibold transition-all shadow-xs cursor-pointer active:scale-[0.99] ${
+                  className={`w-full py-3.5 rounded-[10px] text-sm font-heading font-semibold transition-all cursor-pointer active:scale-[0.99] ${
                     isFilled
                       ? 'bg-blue-600 hover:bg-blue-700 text-white'
                       : 'bg-slate-200 hover:bg-slate-300 text-slate-500'

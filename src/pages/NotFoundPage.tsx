@@ -51,7 +51,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate }) => {
           <button
             type="button"
             onClick={() => handleNav('/catalogo')}
-            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center px-6 py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-sm font-heading font-bold transition-all shadow-xs cursor-pointer"
+            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center px-6 py-3.5 rounded-[10px] bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-sm font-heading font-bold transition-all cursor-pointer"
           >
             Renta un auto
           </button>
@@ -59,7 +59,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate }) => {
           <button
             type="button"
             onClick={() => handleNav('/anfitriones')}
-            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center px-6 py-3.5 rounded-[10px] border border-slate-300 hover:border-slate-400 hover:bg-slate-50 active:scale-[0.99] text-slate-800 text-sm font-heading font-semibold transition-all bg-white cursor-pointer shadow-xs"
+            className="w-full sm:w-auto flex-1 inline-flex items-center justify-center px-6 py-3.5 rounded-[10px] border border-slate-300 hover:border-slate-400 hover:bg-slate-50 active:scale-[0.99] text-slate-800 text-sm font-heading font-semibold transition-all bg-white cursor-pointer"
           >
             Pon tu auto a trabajar
           </button>

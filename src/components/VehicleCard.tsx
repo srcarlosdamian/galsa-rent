@@ -74,7 +74,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
             type="button"
             onClick={toggleFavorite}
             aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-            className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/50 md:hover:bg-white/80 text-slate-800 backdrop-blur-md transition-all z-10 shadow-xs"
+            className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/50 md:hover:bg-white/80 text-slate-800 backdrop-blur-md transition-all z-10"
           >
             <Heart
               className={`w-3.5 h-3.5 transition-colors ${
@@ -200,7 +200,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           type="button"
           onClick={toggleFavorite}
           aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-          className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/40 md:hover:bg-white/60 text-slate-800 backdrop-blur-md transition-all z-10 shadow-sm"
+          className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full bg-white/40 md:hover:bg-white/60 text-slate-800 backdrop-blur-md transition-all z-10"
         >
           <Heart
             className={`w-3.5 h-3.5 transition-colors ${

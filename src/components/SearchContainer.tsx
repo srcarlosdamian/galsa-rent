@@ -396,7 +396,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           type="submit"
           className={`w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center gap-2 shrink-0 transition-all font-heading font-semibold text-[14px] cursor-pointer ${
             hasLocation
-              ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm active:scale-95'
+              ? 'bg-blue-600 hover:bg-blue-700 text-white active:scale-95'
               : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-300 active:scale-95'
           }`}
           aria-label="Buscar vehículos"

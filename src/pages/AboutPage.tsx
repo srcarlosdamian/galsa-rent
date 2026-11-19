@@ -143,7 +143,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
               target="_blank"
               rel="noopener noreferrer"
               style={{ backgroundColor: '#3D63FF' }}
-              className="py-3 px-5 rounded-xl text-white font-bold text-xs uppercase tracking-wider transition-all shadow-sm hover:brightness-105"
+              className="py-3 px-5 rounded-xl text-white font-bold text-xs uppercase tracking-wider transition-all hover:brightness-105"
             >
               WhatsApp oficial
             </a>

@@ -101,14 +101,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <a
               href="/design-system"
               onClick={(e) => handleLink(e, '/design-system')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-pink-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 shadow-2xs group"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-pink-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 group"
               title="Abrir Sistema de Diseño (Atomic Design)"
             >
               <Palette className="w-3.5 h-3.5 text-pink-400 group-hover:rotate-12 transition-transform" />
               <span>Sistema de Diseño</span>
             </a>
             <span>Última actualización: <strong>06 Nov 2026, 10:50 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.95</span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.96</span>
           </div>
         </div>
       </div>

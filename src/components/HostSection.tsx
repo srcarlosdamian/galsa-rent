@@ -202,7 +202,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 <a
                   href="/registro"
                   onClick={handlePublish}
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-sm active:scale-95"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-95"
                 >
                   Quiero publicar mi auto
                 </a>
@@ -478,7 +478,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
               <a
                 href="/registro"
                   onClick={handlePublish}
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all shadow-sm active:scale-95"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-95"
               >
                 Quiero publicar mi auto
               </a>

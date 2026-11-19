@@ -451,7 +451,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 onClick={() => setViewMode('grid')}
                 className={`inline-flex items-center justify-center h-full px-4 rounded-[8px] text-xs font-heading transition-all ${
                   viewMode === 'grid'
-                    ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                    ? 'bg-white text-slate-900 font-semibold'
                     : 'text-slate-600 hover:text-slate-900 font-medium'
                 }`}
               >
@@ -462,7 +462,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 onClick={() => setViewMode('map')}
                 className={`inline-flex items-center justify-center h-full px-4 rounded-[8px] text-xs font-heading transition-all ${
                   viewMode === 'map'
-                    ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                    ? 'bg-white text-slate-900 font-semibold'
                     : 'text-slate-600 hover:text-slate-900 font-medium'
                 }`}
               >
@@ -475,7 +475,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               <button
                 type="button"
                 onClick={() => toggleDropdown('sort')}
-                className="inline-flex items-center gap-2 h-[38px] px-3.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 h-[38px] px-3.5 rounded-[10px] border border-slate-300 bg-white text-[13px] font-heading font-medium text-slate-800 hover:border-slate-400 transition-colors"
               >
                 <span>
                   {sortBy === 'recommended' && 'Recomendados'}
@@ -529,7 +529,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               e.stopPropagation();
               setMobileFiltersOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 px-2.5 h-[36px] rounded-[8px] border border-slate-300 bg-white text-xs font-heading font-semibold text-slate-800 shadow-xs hover:bg-slate-50 active:bg-slate-100 transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 px-2.5 h-[36px] rounded-[8px] border border-slate-300 bg-white text-xs font-heading font-semibold text-slate-800 hover:bg-slate-50 active:bg-slate-100 transition-colors shrink-0"
           >
             <SlidersHorizontal className="w-3.5 h-3.5 text-slate-700" strokeWidth={1.8} />
             <span>Filtros</span>
@@ -547,7 +547,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               onClick={() => setViewMode('grid')}
               className={`inline-flex items-center justify-center h-full px-2.5 rounded-[6px] text-xs font-heading transition-all ${
                 viewMode === 'grid'
-                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                  ? 'bg-white text-slate-900 font-semibold'
                   : 'text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
@@ -558,7 +558,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               onClick={() => setViewMode('map')}
               className={`inline-flex items-center justify-center h-full px-2.5 rounded-[6px] text-xs font-heading transition-all ${
                 viewMode === 'map'
-                  ? 'bg-white text-slate-900 font-semibold shadow-xs'
+                  ? 'bg-white text-slate-900 font-semibold'
                   : 'text-slate-600 hover:text-slate-900 font-medium'
               }`}
             >
@@ -1022,7 +1022,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en WhatsApp"
-              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 transition-colors"
             >
               <span>WhatsApp</span>
             </a>
@@ -1032,7 +1032,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en Facebook"
-              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 transition-colors"
             >
               <span>Facebook</span>
             </a>
@@ -1042,7 +1042,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Compartir en X / Twitter"
-              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 transition-colors"
             >
               <span>X (Twitter)</span>
             </a>
@@ -1050,7 +1050,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={handleCopyLink}
-              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 shadow-xs transition-colors"
+              className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-heading font-semibold text-slate-700 transition-colors"
             >
               <span>{copied ? '¡Copiado!' : 'Copiar enlace'}</span>
             </button>
@@ -1422,7 +1422,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                         }}
                         className={`px-3 py-1.5 rounded-[10px] text-xs font-heading transition-colors border ${
                           isSelected
-                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold shadow-xs'
+                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold'
                             : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 font-medium'
                         }`}
                       >
@@ -1451,7 +1451,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                         }}
                         className={`px-3 py-1.5 rounded-[10px] text-xs font-heading transition-colors border ${
                           isSelected
-                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold shadow-xs'
+                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold'
                             : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 font-medium'
                         }`}
                       >
@@ -1480,7 +1480,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                         }}
                         className={`px-3 py-1.5 rounded-[10px] text-xs font-heading transition-colors border ${
                           isSelected
-                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold shadow-xs'
+                            ? 'bg-slate-100 text-slate-900 border-slate-400 font-bold'
                             : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 font-medium'
                         }`}
                       >
@@ -1566,7 +1566,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(false)}
-                className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-heading font-bold transition-colors shadow-md text-center"
+                className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-heading font-bold transition-colors text-center"
               >
                 Mostrar {filteredVehicles.length} {filteredVehicles.length === 1 ? 'auto' : 'autos'}
               </button>
