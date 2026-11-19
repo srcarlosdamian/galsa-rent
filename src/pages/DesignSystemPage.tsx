@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.0</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.1</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -859,14 +859,13 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
                     <div>
                       <div className="text-xs font-heading font-bold text-slate-800">3. Botón Secundario Outline</div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Navegación secundaria o retorno</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acciones secundarias (Leer y firmar contrato, Ver resumen, Especificaciones)</div>
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="w-full px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-100 text-slate-800 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
                         >
-                          <span>Ver especificaciones</span>
-                          <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                          <span>Leer y firmar contrato</span>
                         </button>
                       </div>
                     </div>
@@ -1260,6 +1259,32 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                             Enlace &quot;Ver catálogo&quot; y migas de pan en páginas informativas.
                           </p>
                           <span className="text-[10px] font-mono text-slate-400 block">VehicleDetailView, AboutPage, HowItWorksPage</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 14. Mapa Completo de Uso de Botones en la App */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4 md:col-span-2 lg:col-span-3">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">14. Mapa de Todos los Botones en la App</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Donde vive cada variante de botón</div>
+                      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left text-[11px]">
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1">
+                          <span className="font-heading font-bold text-cta block">CTA Primario Azul</span>
+                          <span className="text-slate-500 block">Continuar, Publicar auto, Hablar por WhatsApp, Entrar/Registrarse</span>
+                        </div>
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1">
+                          <span className="font-heading font-bold text-slate-800 block">Lineal Neutral (Outline)</span>
+                          <span className="text-slate-500 block">Leer y firmar contrato, Ver resumen móvil, Compartir, Favorito</span>
+                        </div>
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1">
+                          <span className="font-heading font-bold text-slate-900 block">Sólido Oscuro (Dark)</span>
+                          <span className="text-slate-500 block">Aplicar fechas en DateRangePicker y acciones de confirmación modal</span>
+                        </div>
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1">
+                          <span className="font-heading font-bold text-slate-600 block">Ghost / Volver / Iconos</span>
+                          <span className="text-slate-500 block">Volver al catálogo, Borrar filtros, Toggles y Chevrons circulares</span>
                         </div>
                       </div>
                     </div>
@@ -2607,7 +2632,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.0</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.1</span>
                     </div>
                   </div>
                 </div>

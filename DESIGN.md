@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.7.0)
+description: Minimalist, clean, flat digital mobility platform (v2.7.1)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.7.0`)
+# GALSA Rent Design System & Guidelines (`v2.7.1`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -90,3 +90,9 @@ rounded:
 4. **Pill Folio / Filtro Activo (`bg-cta-50 text-cta rounded-full px-3 py-1 text-xs`):** en `HostRegistrationPage.tsx` y `CatalogPage.tsx`.
 5. **Chips de Estado (`emerald-50` positivo / `amber-50` pendiente):** en `SeoPage.tsx` y `AccountPage.tsx`.
 6. **Chips Técnicos (`bg-slate-100 font-mono` rutas y `bg-neutral-800 text-emerald-400` versión QA):** en `Footer.tsx`, `SeoPage.tsx` y `DesignSystemPage.tsx`.
+
+## 7. Catálogo de Botones (`DesignSystemPage.tsx`)
+1. **CTA Primario Azul (`bg-cta hover:bg-cta-600 text-white rounded-xl`):** `Continuar`, `Continuar al pago y confirmación`, `Hablar por WhatsApp`, `Quiero publicar mi auto`.
+2. **Secundario Lineal Neutral (`border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 rounded-xl`):** `Leer y firmar contrato` (`ReservationCheckoutView.tsx`), `Ver resumen` (barra móvil Checkout).
+3. **Sólido Oscuro (`bg-slate-900 text-white rounded-xl`):** `Aplicar` en `DateRangePicker.tsx`.
+4. **Ghost / Volver / Iconos Circulares (`w-8 h-8 rounded-full bg-slate-100`):** botones de retorno, limpiar filtros y chevrons desplegables.

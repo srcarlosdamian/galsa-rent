@@ -1109,7 +1109,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       <button
                         type="button"
                         onClick={() => setContractModalOpen(true)}
-                        className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer shrink-0"
+                        className="px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer shrink-0"
                       >
                         {isContractSigned ? 'Ver contrato firmado' : 'Leer y firmar contrato'}
                       </button>
