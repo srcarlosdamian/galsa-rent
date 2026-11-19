@@ -143,7 +143,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     setTimeout(() => setLinkCopied(false), 2000);
   };
 
-  const similarVehicles = VEHICLES.filter((v) => v.id !== vehicle.id).slice(0, 3);
+  const similarVehicles = VEHICLES.filter((v) => v.id !== vehicle.id).slice(0, 4);
   const ratingScore = vehicle.rating ? vehicle.rating.toFixed(2) : '4.96';
   const reviewCount = vehicle.reviewCount || 28;
 
@@ -417,61 +417,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
             </div>
 
-            {/* Autos similares para tus fechas */}
-            <div className="pt-8 border-t border-slate-100 space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-heading font-bold text-slate-900">
-                    Autos similares para tus fechas
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Opciones alternativas con entrega inmediata en México
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (onNavigate) onNavigate('/catalogo');
-                  }}
-                  className="text-xs font-heading font-bold text-slate-900 hover:text-cta transition-colors flex items-center gap-1 cursor-pointer"
-                >
-                  <span>Ver catálogo</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {similarVehicles.map((sim) => (
-                  <div 
-                    key={sim.id}
-                    onClick={() => {
-                      if (onNavigate) onNavigate(`/vehiculos/${sim.slug}`);
-                    }}
-                    className="p-3 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all space-y-2 group"
-                  >
-                    <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100">
-                      <img
-                        src={sim.images?.[0]?.url || cardHomeImage}
-                        alt={sim.model}
-                        className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                      />
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-sans text-slate-400 block truncate">
-                        {sim.year} · {sim.category}
-                      </span>
-                      <h4 className="font-heading font-bold text-slate-900 text-sm truncate mt-0.5">
-                        {sim.make} {sim.model}
-                      </h4>
-                      <span className="text-xs font-heading font-bold text-slate-900 mt-1 block">
-                        ${sim.pricePerDay.toLocaleString('es-MX')} <span className="font-normal text-slate-400 text-[10px]">Por día, estimado</span>
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* Banner: ¿Tienes dudas sobre tu renta? */}
             <div className="pt-8">
               <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 lg:p-10 border-0 shadow-none flex flex-col md:flex-row items-center justify-between gap-6 lg:gap-8">
@@ -655,6 +600,44 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             </div>
           </div>
 
+        </div>
+
+        {/* ========================================================
+            AUTOS SIMILARES PARA TUS FECHAS (ANCHO COMPLETO DEL CONTENEDOR)
+           ======================================================== */}
+        <div className="mt-12 pt-10 border-t border-slate-100 space-y-6">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-slate-900">
+                Autos similares para tus fechas
+              </h3>
+              <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                Opciones alternativas con entrega inmediata en México
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                if (onNavigate) onNavigate('/catalogo');
+              }}
+              className="text-xs sm:text-sm font-heading font-bold text-slate-900 hover:text-cta transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+            >
+              <span>Ver catálogo</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {similarVehicles.map((sim) => (
+              <VehicleCard
+                key={sim.id}
+                vehicle={sim}
+                onSelect={(selected) => {
+                  if (onNavigate) onNavigate(`/vehiculos/${selected.slug}`);
+                }}
+              />
+            ))}
+          </div>
         </div>
 
       </div>
