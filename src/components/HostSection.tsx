@@ -442,24 +442,21 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
         </div>
       </section>
 
-      {/* SECCIÓN 5: BANNER FINAL (Respeta estrictamente el max-width con contenedor redondeado) */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
+      {/* SECCIÓN 5: BANNER FINAL (Usa variables oficiales cta-50 + ink-900 + cta) */}
+      <section className="py-12 sm:py-16 md:py-20 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div 
-            style={{ backgroundColor: '#8EB5FF' }}
-            className="rounded-[28px] sm:rounded-[36px] py-14 sm:py-16 px-6 sm:px-12 text-center space-y-4 shadow-none"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white tracking-tight">
+          <div className="bg-cta-50 rounded-[28px] sm:rounded-[36px] py-14 sm:py-16 px-6 sm:px-12 text-center space-y-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-ink-900 tracking-tight">
               Empieza a ganar con tu auto hoy
             </h2>
-            <p className="text-sm sm:text-base font-sans text-white/95 max-w-xl mx-auto">
+            <p className="text-sm sm:text-base font-sans text-ink-700 max-w-xl mx-auto">
               Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
             </p>
             <div className="pt-3">
               <a
                 href="/anfitriones/registro"
-                  onClick={handlePublish}
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-95"
+                onClick={handlePublish}
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-bold text-sm transition-colors active:scale-95"
               >
                 Quiero publicar mi auto
               </a>

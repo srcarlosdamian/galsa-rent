@@ -1,18 +1,27 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform inspired by Virtuo and Airbnb (v2.3.0)
+description: Minimalist, clean, flat digital mobility platform inspired by Virtuo and Airbnb (v2.3.1)
 colors:
-  primary: "#3D63FF"
-  primary-hover: "#1D4ED8"
-  highlight-blue: "#D8E8FF"
-  host-sky: "#8EB5FF"
-  neutral-bg: "#FFFFFF"
-  neutral-surface: "#F8FAFC"
-  neutral-border: "#E2E8F0"
-  neutral-dark: "#0F172A"
-  text-primary: "#0F172A"
-  text-secondary: "#475569"
-  text-muted: "#64748B"
+  cta-50: "#F3F6FC"
+  cta-100: "#E5ECF9"
+  cta-200: "#C6D7F1"
+  cta-300: "#93B6E6"
+  cta-400: "#5A90D6"
+  cta-500: "#3D63FF"
+  cta-600: "#2A4EEB"
+  cta-700: "#1F3DD4"
+  cta-800: "#172FB0"
+  cta-900: "#132488"
+  surface: "#FFFFFF"
+  subtle: "#FAFAFA"
+  edge: "#EBEBEB"
+  edge-light: "#F0F0F0"
+  ink-900: "#111827"
+  ink-800: "#1F2937"
+  ink-700: "#374151"
+  ink-600: "#4B5563"
+  ink-500: "#6B7280"
+  ink-400: "#9CA3AF"
 typography:
   display:
     fontFamily: '"Google Sans", "Google Sans Display", "Inter", system-ui, sans-serif'
@@ -31,23 +40,27 @@ typography:
     lineHeight: 1.6
     numericVariant: "tabular-nums"
 rounded:
+  input: "8px (rounded-[8px])"
   button: "12px (rounded-xl)"
   card: "16px (rounded-2xl)"
-  summary-card: "24px (rounded-[24px])"
   popover: "20px (rounded-[20px])"
+  summary-card: "24px (rounded-[24px])"
+  banner: "36px (rounded-[36px])"
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.3.0`)
+# GALSA Rent Design System & Guidelines (`v2.3.1`)
 
-## 1. Principios de Diseño
-- **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`. La retroalimentación visual se logra con cambio de tono, borde o escala táctil (`active:scale-[0.98]`).
-- **Contenedores lineales:** formularios, pasos de checkout (`ReservationCheckoutView`), registro de anfitriones (`HostRegistrationPage`) y desgloses de precio (`VehicleDetailView`) usan contornos lineales `rounded-2xl border border-slate-200` y divisores `divide-y divide-slate-100` sobre blanco limpio (`bg-transparent` en desgloses de producto).
-- **Popovers flotantes elevados:** la elevación (`shadow-2xl` con `rounded-[20px]`) se reserva exclusivamente para menús emergentes (`CustomDropdown`, `DateRangePicker`, buscador) dentro de padres con `overflow-visible`.
-- **Cero `<select>` nativos:** todo selector usa `CustomDropdown` con cápsula gris cuadrada `w-9 h-9 rounded-[8px]` y estado activo `bg-blue-50/70`.
-- **Modo prototipo:** los formularios y pasos secuenciales siempre permiten avanzar o enviar solicitudes para facilitar pruebas de flujo de extremo a extremo.
+## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
+- **Brand Azul (`cta-50`..`cta-900`):** desde `bg-cta-50` (`#F3F6FC`, usado en el banner de Anfitriones con texto `text-ink-900`) hasta `bg-cta` / `bg-cta-500` (`#3D63FF`, CTA principal) y `bg-cta-600` (`#2A4EEB`, hover).
+- **Superficies y textos (`surface`, `subtle`, `edge`, `edge-light`, `ink-900`..`ink-400`):** expuestos como clases Tailwind y variables CSS `--color-*`.
+- **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`.
+- **Popovers flotantes elevados:** `shadow-search`, `shadow-dropdown`, `shadow-float` y `shadow-2xl` se reservan exclusivamente para menús emergentes (`CustomDropdown`, `DateRangePicker`) dentro de padres `overflow-visible`.
 
-## 2. Arquitectura Atómica y Componentes Consolidados
-- **Datos compartidos:** `src/data/dropdownOptions.ts` centraliza `SEARCH_LOCATION_OPTIONS`, `SEARCH_VEHICLE_TYPES`, `HOST_CITY_OPTIONS` y `CATALOG_SORT_OPTIONS`.
-- **Átomos & Moléculas clave:** `GalsaLogo`, `CustomDropdown`, `DateRangePicker`, `DocumentUploadCard`, `StepFeatureCard` (compartido por `FourStepProcess` y `HostSection`).
-- **Layouts & Organismos:** `AuthCardLayout` (compartido por `LoginPage`, `RegisterPage` y `ForgotPasswordPage`), `SearchContainer`, `VehicleCard`, `VehicleDetailView`, `ReservationCheckoutView`, `HostRegistrationPage`, `SeoPage` y `DesignSystemPage`.
+## 2. Colores Extra Monitoreados (`/design-system`)
+- **`#D8E8FF`** (`HostSection` subrayado y `HostBanner`), **`#94BDC9/25`** (`BlogPage` caja CTA) y **`#2563EB` / `#BFDBFE`** (`DocumentUploadCard` SVG) quedan documentados en la sección de variables extra del Sistema de Diseño para decisión de unificación. `#8EB5FF` ya fue migrado en `v2.3.1` a `bg-cta-50` + `text-ink-900` + `bg-cta`.
+
+## 3. Arquitectura Atómica y Componentes Consolidados
+- **Datos compartidos:** `src/data/dropdownOptions.ts`.
+- **Átomos & Moléculas clave:** `GalsaLogo`, `CustomDropdown`, `DateRangePicker`, `DocumentUploadCard`, `StepFeatureCard`.
+- **Layouts & Organismos:** `AuthCardLayout`, `SearchContainer`, `VehicleCard`, `VehicleDetailView`, `ReservationCheckoutView`, `HostRegistrationPage`, `SeoPage` y `DesignSystemPage`.

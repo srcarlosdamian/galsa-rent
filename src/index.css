@@ -3,6 +3,50 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Escala Brand CTA (tailwind.config.js) */
+    --color-cta-50: #F3F6FC;
+    --color-cta-100: #E5ECF9;
+    --color-cta-200: #C6D7F1;
+    --color-cta-300: #93B6E6;
+    --color-cta-400: #5A90D6;
+    --color-cta-500: #3D63FF;
+    --color-cta-600: #2A4EEB;
+    --color-cta-700: #1F3DD4;
+    --color-cta-800: #172FB0;
+    --color-cta-900: #132488;
+
+    /* Superficies y Bordes */
+    --color-surface: #FFFFFF;
+    --color-subtle: #FAFAFA;
+    --color-edge: #EBEBEB;
+    --color-edge-light: #F0F0F0;
+
+    /* Escala Ink (Textos) */
+    --color-ink-900: #111827;
+    --color-ink-800: #1F2937;
+    --color-ink-700: #374151;
+    --color-ink-600: #4B5563;
+    --color-ink-500: #6B7280;
+    --color-ink-400: #9CA3AF;
+
+    /* Semánticos */
+    --color-success: #10B981;
+    --color-success-soft: #ECFDF5;
+    --color-warning: #F59E0B;
+    --color-warning-soft: #FFFBEB;
+    --color-error: #E11D48;
+    --color-error-soft: #FFF1F2;
+
+    /* Fuentes y Radios */
+    --font-heading: "Google Sans", "Google Sans Display", "Inter", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --radius-button: 12px;
+    --radius-card: 16px;
+    --radius-popover: 20px;
+    --radius-banner: 36px;
+  }
+
   html {
     color-scheme: light;
     scroll-behavior: smooth;

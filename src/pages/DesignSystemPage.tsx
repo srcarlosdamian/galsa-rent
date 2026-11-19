@@ -182,7 +182,22 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   // Visibilidad individual para garantizar búsqueda precisa y estado vacío real
   const showTokensColors =
     shouldShowSection('tokens') &&
-    matchesSearch('Paleta de Colores Oficial Brand Highlight Host Sky', 'color hex tailwind d8e8ff 8eb5ff 3d63ff');
+    matchesSearch(
+      'Escala Oficial Brand Azul cta-50 cta-500 cta-900 Superficies surface subtle edge ink-900 ink-400 Semánticos emerald amber rose',
+      'color hex tailwind css variables root f3f6fc 3d63ff 111827 ebebeb'
+    );
+  const showTokensRadii =
+    shouldShowSection('tokens') &&
+    matchesSearch(
+      'Tokens de Radios Espaciado Sombras shadow-search shadow-dropdown shadow-float rounded-xl rounded-2xl',
+      'border radius tailwind config spacing'
+    );
+  const showTokensExtras =
+    shouldShowSection('tokens') &&
+    matchesSearch(
+      'Variables Colores Extra Detectados Código Revisión d8e8ff 94bdc9 2563eb bfdbfe blue-300 slate neutral serp 8eb5ff',
+      'huerfanos candidatos unificar migrado banner cta-50'
+    );
   const showTokensSurfaces =
     shouldShowSection('tokens') &&
     matchesSearch('Reglas de Superficies Bordes Elevación Cero Sombras', 'botones cta rounded-2xl border bg-transparent popover shadow-2xl');
@@ -198,7 +213,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     matchesSearch('Inputs Controles Formulario Nombre Search Datepicker Checkbox Switch', 'campo texto placeholder accent-');
   const showAtomsBadges =
     shouldShowSection('atoms') &&
-    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.3.0', 'pills etiquetas estatus');
+    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.3.1', 'pills etiquetas estatus');
 
   const showMolSearch =
     shouldShowSection('molecules') &&
@@ -231,9 +246,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const showOrgConfirmation =
     shouldShowSection('organisms') &&
     matchesSearch('Confirmación Minimalista 1 Columna Reserva creada Solicitud enviada', 'folio anf gal estado');
+  const showOrgBanner =
+    shouldShowSection('organisms') &&
+    matchesSearch('Banner CTA Variables Oficiales bg-cta-50 text-ink-900 bg-cta Anfitriones', 'empieza a ganar quiero publicar mi auto');
   const showOrgQaRibbon =
     shouldShowSection('organisms') &&
-    matchesSearch('Listón Control QA Footer Auditor SEO Sistema de Diseño', 'v2.3.0 barra inferior');
+    matchesSearch('Listón Control QA Footer Auditor SEO Sistema de Diseño', 'v2.3.1 barra inferior');
 
   const showAuditKpis =
     shouldShowSection('audit') &&
@@ -250,6 +268,8 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
   const hasAnyVisibleBlock =
     showTokensColors ||
+    showTokensRadii ||
+    showTokensExtras ||
     showTokensSurfaces ||
     showTokensTypo ||
     showAtomsButtons ||
@@ -265,6 +285,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     showOrgVehicleCard ||
     showOrgGallery ||
     showOrgConfirmation ||
+    showOrgBanner ||
     showOrgQaRibbon ||
     showAuditKpis ||
     showAuditDedupe ||
@@ -297,7 +318,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.0</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.1</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -384,58 +405,346 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
         {/* ============================================================ */}
         {/* 1. TOKENS & FUNDAMENTOS */}
         {/* ============================================================ */}
-        {(showTokensColors || showTokensSurfaces || showTokensTypo) && (
+        {(showTokensColors || showTokensRadii || showTokensExtras || showTokensSurfaces || showTokensTypo) && (
           <section id="tokens" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-pink-600 font-mono text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-4 h-4" /> Nivel 0 · Fundamentos
+                <Sparkles className="w-4 h-4" /> Nivel 0 · Fundamentos &amp; Variables
               </div>
               <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
-                Tokens de Diseño
+                Variables Oficiales, Radios y Colores Extra
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Paleta vigente, reglas de elevación plana, tipografía oficial y superficies lineales usadas en toda la plataforma.
+                Sincronización 1:1 entre <code className="font-mono text-slate-700">tailwind.config.js</code> y <code className="font-mono text-slate-700">:root</code> en <code className="font-mono text-slate-700">src/index.css</code>, más auditoría de tonos extra en el código.
               </p>
             </div>
 
-            {/* Colores */}
+            {/* Variables Oficiales de Color */}
             {showTokensColors && (
-              <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                <h3 className="text-sm font-heading font-bold text-slate-900 mb-4 flex items-center justify-between">
-                  <span>Paleta de Colores Oficial</span>
-                  <span className="text-xs text-slate-400 font-mono">Tailwind CSS + HEX</span>
-                </h3>
+              <div className="space-y-5">
+                {/* 1. Escala Oficial Brand Azul (cta-50 a cta-900) */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div>
+                      <h3 className="text-sm font-heading font-bold text-slate-900">
+                        1. Escala Brand Azul (<code className="font-mono text-cta">cta-50</code> a <code className="font-mono text-cta">cta-900</code>)
+                      </h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Tokens oficiales en <code className="font-mono text-slate-700">tailwind.config.js</code> y variables CSS <code className="font-mono text-slate-700">--color-cta-*</code>. Haz clic en cualquier tarjeta para copiar su clase.
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">10 tonos</span>
+                  </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                    {[
+                      { token: 'cta-50', tw: 'bg-cta-50', cssVar: '--color-cta-50', hex: '#F3F6FC', usage: 'Banner Anfitriones (v2.3.1)', light: true },
+                      { token: 'cta-100', tw: 'bg-cta-100', cssVar: '--color-cta-100', hex: '#E5ECF9', usage: 'Badges / Selección suave', light: true },
+                      { token: 'cta-200', tw: 'bg-cta-200', cssVar: '--color-cta-200', hex: '#C6D7F1', usage: 'Acentos suaves / Bordes', light: true },
+                      { token: 'cta-300', tw: 'bg-cta-300', cssVar: '--color-cta-300', hex: '#93B6E6', usage: 'Subrayados / Iconos medios', light: true },
+                      { token: 'cta-400', tw: 'bg-cta-400', cssVar: '--color-cta-400', hex: '#5A90D6', usage: 'Acentos intermedios', light: false },
+                      { token: 'cta-500 (DEFAULT)', tw: 'bg-cta-500', cssVar: '--color-cta-500', hex: '#3D63FF', usage: 'CTA Principal (bg-cta)', light: false },
+                      { token: 'cta-600', tw: 'bg-cta-600', cssVar: '--color-cta-600', hex: '#2A4EEB', usage: 'Hover botón primario', light: false },
+                      { token: 'cta-700', tw: 'bg-cta-700', cssVar: '--color-cta-700', hex: '#1F3DD4', usage: 'Estado activo / Pressed', light: false },
+                      { token: 'cta-800', tw: 'bg-cta-800', cssVar: '--color-cta-800', hex: '#172FB0', usage: 'Texto alto contraste azul', light: false },
+                      { token: 'cta-900', tw: 'bg-cta-900', cssVar: '--color-cta-900', hex: '#132488', usage: 'Azul profundo', light: false },
+                    ].map((c) => (
+                      <div
+                        key={c.token}
+                        onClick={() => copySnippet(`${c.tw} | var(${c.cssVar}) | ${c.hex}`, `cta-${c.token}`)}
+                        className="group cursor-pointer rounded-xl border border-slate-200/80 p-3 hover:border-cta-500 transition-colors text-left"
+                      >
+                        <div className={`h-11 rounded-lg ${c.tw} ${c.light ? 'border border-slate-200/80' : ''} mb-2 flex items-center justify-center`}>
+                          {copiedCode === `cta-${c.token}` && (
+                            <Check className={`w-4 h-4 ${c.light ? 'text-ink-900' : 'text-white'}`} />
+                          )}
+                        </div>
+                        <div className="text-xs font-heading font-bold text-ink-900 truncate">{c.token}</div>
+                        <div className="text-[10px] font-mono text-ink-500 truncate mt-0.5">{c.cssVar}</div>
+                        <div className="text-[10px] font-mono text-ink-400 flex items-center justify-between mt-0.5">
+                          <span>{c.hex}</span>
+                          <Copy className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-ink-500" />
+                        </div>
+                        <div className="text-[10px] text-ink-500 mt-1 truncate">{c.usage}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 2. Superficies, Bordes y Escala Ink */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <div>
+                      <h3 className="text-sm font-heading font-bold text-slate-900">
+                        2. Superficies, Bordes (<code className="font-mono">surface / subtle / edge</code>) &amp; Escala Ink (<code className="font-mono">ink-900..400</code>)
+                      </h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Variables neutras oficiales para fondos, líneas divisorias y jerarquía de textos (<code className="font-mono text-slate-700">--color-surface</code>, <code className="font-mono text-slate-700">--color-ink-*</code>).
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">10 variables</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                    {[
+                      { token: 'surface', tw: 'bg-surface', cssVar: '--color-surface', hex: '#FFFFFF', usage: 'Fondo base de página', light: true },
+                      { token: 'subtle', tw: 'bg-subtle', cssVar: '--color-subtle', hex: '#FAFAFA', usage: 'Superficie sutil', light: true },
+                      { token: 'edge', tw: 'bg-edge', cssVar: '--color-edge', hex: '#EBEBEB', usage: 'Borde estructural', light: true },
+                      { token: 'edge-light', tw: 'bg-edge-light', cssVar: '--color-edge-light', hex: '#F0F0F0', usage: 'Divisor interno suave', light: true },
+                      { token: 'ink-900', tw: 'bg-ink-900', cssVar: '--color-ink-900', hex: '#111827', usage: 'Títulos y texto negro CTA', light: false },
+                      { token: 'ink-800', tw: 'bg-ink-800', cssVar: '--color-ink-800', hex: '#1F2937', usage: 'Subtítulos y labels', light: false },
+                      { token: 'ink-700', tw: 'bg-ink-700', cssVar: '--color-ink-700', hex: '#374151', usage: 'Párrafos sobre cta-50', light: false },
+                      { token: 'ink-600', tw: 'bg-ink-600', cssVar: '--color-ink-600', hex: '#4B5563', usage: 'Texto secundario', light: false },
+                      { token: 'ink-500', tw: 'bg-ink-500', cssVar: '--color-ink-500', hex: '#6B7280', usage: 'Metadatos y ayudas', light: false },
+                      { token: 'ink-400', tw: 'bg-ink-400', cssVar: '--color-ink-400', hex: '#9CA3AF', usage: 'Placeholders / Deshabilitado', light: false },
+                    ].map((c) => (
+                      <div
+                        key={c.token}
+                        onClick={() => copySnippet(`${c.tw} | var(${c.cssVar}) | ${c.hex}`, `ink-${c.token}`)}
+                        className="group cursor-pointer rounded-xl border border-slate-200/80 p-3 hover:border-cta-500 transition-colors text-left"
+                      >
+                        <div className={`h-11 rounded-lg ${c.tw} ${c.light ? 'border border-slate-200' : ''} mb-2 flex items-center justify-center`}>
+                          {copiedCode === `ink-${c.token}` && (
+                            <Check className={`w-4 h-4 ${c.light ? 'text-ink-900' : 'text-white'}`} />
+                          )}
+                        </div>
+                        <div className="text-xs font-heading font-bold text-ink-900 truncate">{c.token}</div>
+                        <div className="text-[10px] font-mono text-ink-500 truncate mt-0.5">{c.cssVar}</div>
+                        <div className="text-[10px] font-mono text-ink-400 flex items-center justify-between mt-0.5">
+                          <span>{c.hex}</span>
+                          <Copy className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-ink-500" />
+                        </div>
+                        <div className="text-[10px] text-ink-500 mt-1 truncate">{c.usage}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. Colores Semánticos */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div>
+                      <h3 className="text-sm font-heading font-bold text-slate-900">
+                        3. Colores Semánticos (Éxito, Revisión / Alerta, Error)
+                      </h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Estados de contrato firmado, validación de documentos, badges SEO (<code className="font-mono text-slate-700">index, follow</code>) y acciones destructivas.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      {
+                        group: 'Éxito / Verificado',
+                        cssVar: '--color-success / --color-success-soft',
+                        swatches: [
+                          { label: 'emerald-500', hex: '#10B981', tw: 'bg-emerald-500', light: false },
+                          { label: 'emerald-50', hex: '#ECFDF5', tw: 'bg-emerald-50', light: true },
+                          { label: 'emerald-700', hex: '#047857', tw: 'bg-emerald-700', light: false },
+                        ],
+                      },
+                      {
+                        group: 'Alerta / En revisión',
+                        cssVar: '--color-warning / --color-warning-soft',
+                        swatches: [
+                          { label: 'amber-500', hex: '#F59E0B', tw: 'bg-amber-500', light: false },
+                          { label: 'amber-50', hex: '#FFFBEB', tw: 'bg-amber-50', light: true },
+                          { label: 'amber-800', hex: '#92400E', tw: 'bg-amber-800', light: false },
+                        ],
+                      },
+                      {
+                        group: 'Error / Cancelación',
+                        cssVar: '--color-error / --color-error-soft',
+                        swatches: [
+                          { label: 'rose-600', hex: '#E11D48', tw: 'bg-rose-600', light: false },
+                          { label: 'rose-50', hex: '#FFF1F2', tw: 'bg-rose-50', light: true },
+                          { label: 'rose-700', hex: '#BE123C', tw: 'bg-rose-700', light: false },
+                        ],
+                      },
+                    ].map((sem) => (
+                      <div key={sem.group} className="rounded-xl border border-slate-200/90 p-4 space-y-3 text-left">
+                        <div>
+                          <div className="text-xs font-heading font-bold text-slate-900">{sem.group}</div>
+                          <div className="text-[10px] font-mono text-slate-400">{sem.cssVar}</div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          {sem.swatches.map((sw) => (
+                            <div
+                              key={sw.label}
+                              onClick={() => copySnippet(`${sw.tw} (${sw.hex})`, `sem-${sw.label}`)}
+                              className="cursor-pointer group"
+                            >
+                              <div className={`h-9 rounded-lg ${sw.tw} ${sw.light ? 'border border-slate-200' : ''} mb-1 flex items-center justify-center`}>
+                                {copiedCode === `sem-${sw.label}` && (
+                                  <Check className={`w-3.5 h-3.5 ${sw.light ? 'text-slate-900' : 'text-white'}`} />
+                                )}
+                              </div>
+                              <div className="text-[10px] font-mono font-semibold text-slate-700 truncate">{sw.label}</div>
+                              <div className="text-[10px] font-mono text-slate-400">{sw.hex}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Tokens de Radios, Espaciado y Sombras */}
+            {showTokensRadii && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="text-sm font-heading font-bold text-slate-900">
+                      Tokens de Radios, Variables de Espaciado y Sombras (<code className="font-mono">tailwind.config.js</code>)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Todos los radios de curvatura vigentes y las 3 sombras de elevación flotante declaradas en el proyecto.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 text-left">
                   {[
-                    { name: 'Brand Primary', hex: '#3D63FF', bgClass: 'bg-[#3D63FF]' },
-                    { name: 'Brand Dark', hex: '#1D4ED8', bgClass: 'bg-blue-700' },
-                    { name: 'Brand Light', hex: '#EFF6FF', bgClass: 'bg-blue-50', border: true },
-                    { name: 'Highlight Blue', hex: '#D8E8FF', bgClass: 'bg-[#D8E8FF]', border: true },
-                    { name: 'Host Sky', hex: '#8EB5FF', bgClass: 'bg-[#8EB5FF]' },
-                    { name: 'Neutral Dark', hex: '#0F172A', bgClass: 'bg-slate-900' },
-                    { name: 'Neutral Mid', hex: '#64748B', bgClass: 'bg-slate-500' },
-                    { name: 'Neutral Surface', hex: '#F8FAFC', bgClass: 'bg-slate-50', border: true },
-                    { name: 'Success / Activo', hex: '#10B981', bgClass: 'bg-emerald-500' },
-                    { name: 'Success Soft', hex: '#ECFDF5', bgClass: 'bg-emerald-50', border: true },
-                    { name: 'Warning / Revisión', hex: '#F59E0B', bgClass: 'bg-amber-500' },
-                    { name: 'Error / Cancelación', hex: '#E11D48', bgClass: 'bg-rose-600' },
-                  ].map((color) => (
+                    { name: 'Mini Pill', cls: 'rounded-[6px]', px: '6px' },
+                    { name: 'Input / Search', cls: 'rounded-[8px]', px: '8px' },
+                    { name: 'Botón / CTA', cls: 'rounded-xl', px: '12px' },
+                    { name: 'Card Lineal', cls: 'rounded-2xl', px: '16px' },
+                    { name: 'Popover / Foto', cls: 'rounded-[20px]', px: '20px' },
+                    { name: 'Resumen Card', cls: 'rounded-[24px]', px: '24px' },
+                    { name: 'Banner Hero', cls: 'rounded-[36px]', px: '28–36px' },
+                    { name: 'Pill / Avatar', cls: 'rounded-full', px: '9999px' },
+                  ].map((r) => (
                     <div
-                      key={color.name}
-                      onClick={() => copySnippet(color.hex, `color-${color.name}`)}
-                      className="group cursor-pointer rounded-xl border border-slate-200/80 p-3 hover:border-blue-400 transition-colors"
+                      key={r.name}
+                      onClick={() => copySnippet(r.cls, `rad-${r.name}`)}
+                      className="cursor-pointer p-3 rounded-xl border border-slate-200 hover:border-cta-500 transition-colors space-y-2"
                     >
-                      <div className={`h-12 rounded-lg ${color.bgClass} ${color.border ? 'border border-slate-200' : ''} mb-2 flex items-center justify-center`}>
-                        {copiedCode === `color-${color.name}` ? (
-                          <Check className={`w-4 h-4 ${color.border ? 'text-slate-900' : 'text-white'}`} />
-                        ) : null}
+                      <div className={`h-10 w-full bg-cta-50 border border-cta-200 ${r.cls} flex items-center justify-center`}>
+                        {copiedCode === `rad-${r.name}` && <Check className="w-3.5 h-3.5 text-cta" />}
                       </div>
-                      <div className="text-xs font-heading font-bold text-slate-800 truncate">{color.name}</div>
-                      <div className="text-[11px] font-mono text-slate-400 flex items-center justify-between mt-0.5">
-                        <span>{color.hex}</span>
-                        <Copy className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-slate-500" />
+                      <div className="text-[11px] font-heading font-bold text-slate-900 truncate">{r.name}</div>
+                      <div className="text-[10px] font-mono text-slate-500 truncate">{r.cls}</div>
+                      <div className="text-[10px] font-mono text-slate-400">{r.px}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 text-left">
+                  {[
+                    { name: 'shadow-search', cls: 'shadow-search', desc: 'Buscador flotante Hero (uso opcional sobre hero)' },
+                    { name: 'shadow-dropdown', cls: 'shadow-dropdown', desc: 'Menús desplegables y selectores flotantes' },
+                    { name: 'shadow-float', cls: 'shadow-float', desc: 'Modales y paneles superpuestos principales' },
+                  ].map((sh) => (
+                    <div key={sh.name} className={`p-4 rounded-2xl border border-slate-200 bg-white ${sh.cls} space-y-1`}>
+                      <div className="text-xs font-mono font-bold text-slate-900">{sh.name}</div>
+                      <p className="text-[11px] text-slate-500 leading-relaxed">{sh.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Colores / Variables Extra Detectados en el Código */}
+            {showTokensExtras && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="text-sm font-heading font-bold text-slate-900">
+                      Variables y Colores Extra Detectados en el Código (Para Revisión)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Colores hexadecimales o escalas paralelas encontradas fuera de <code className="font-mono text-slate-700">cta-* / ink-*</code> para decidir si se unifican o promueven a variable.
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-mono text-amber-800 bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 rounded-full self-start">
+                    Auditoría de tokens
+                  </span>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 divide-y divide-slate-100">
+                  {[
+                    {
+                      swatchClass: 'bg-[#D8E8FF]',
+                      hex: '#D8E8FF',
+                      name: 'Highlight Blue (Subrayado «ingresos» y HostBanner)',
+                      where: 'src/components/HostSection.tsx · src/components/HostBanner.tsx',
+                      note: 'Candidato a promover a variable o unificar con cta-100 (#E5ECF9) / cta-200 (#C6D7F1).',
+                      status: 'En revisión',
+                      statusClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
+                    },
+                    {
+                      swatchClass: 'bg-[#94BDC9]/25',
+                      hex: '#94BDC9/25',
+                      name: 'Teal Suave en CTA de Blog',
+                      where: 'src/pages/BlogPage.tsx (línea 82)',
+                      note: 'Tono huérfano único fuera de paleta; candidato claro a migrar a bg-cta-50.',
+                      status: 'Candidato a cta-50',
+                      statusClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
+                    },
+                    {
+                      swatchClass: 'bg-[#2563EB]',
+                      hex: '#2563EB · #BFDBFE',
+                      name: 'Anillo SVG de progreso en carga de archivos',
+                      where: 'src/components/DocumentUploadCard.tsx (líneas 55–59)',
+                      note: 'Colores hex hardcoded en SVG stroke; pueden leer var(--color-cta-500) y var(--color-cta-200).',
+                      status: 'Candidato a CSS var',
+                      statusClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
+                    },
+                    {
+                      swatchClass: 'bg-blue-300',
+                      hex: 'blue-50..700 (#EFF6FF..#1D4ED8)',
+                      name: 'Escala Tailwind blue-* paralela a cta-*',
+                      where: 'StepFeatureCard (bg-blue-300), App.tsx Hero, CatalogPage, Header',
+                      note: 'Coexiste con cta-50..900. Útil mantener blue-300 para badges o crear token específico.',
+                      status: 'En revisión',
+                      statusClass: 'bg-slate-100 text-slate-700 border-slate-200',
+                    },
+                    {
+                      swatchClass: 'bg-slate-200',
+                      hex: 'slate-* y neutral-*',
+                      name: 'Escalas neutras paralelas a ink-* / surface',
+                      where: 'Toda la app (slate-50..900) + páginas legales/marketing (neutral-200..900)',
+                      note: 'Ambas escalas producen tonos fríos vs neutros. ink-900..400 y surface/edge están ya expuestos en :root.',
+                      status: 'En revisión',
+                      statusClass: 'bg-slate-100 text-slate-700 border-slate-200',
+                    },
+                    {
+                      swatchClass: 'bg-[#1a0dab]',
+                      hex: '#1A0DAB · #4D5156 · #EEF3F6',
+                      name: 'Colores de simulador Google SERP y Chat',
+                      where: 'src/pages/SeoPage.tsx',
+                      note: 'Exclusivos para fidelidad visual de resultados de búsqueda y vista previa de enlaces.',
+                      status: 'Intencional',
+                      statusClass: 'bg-blue-50 text-cta border-blue-200/80',
+                    },
+                    {
+                      swatchClass: 'bg-cta-50',
+                      hex: '#8EB5FF → bg-cta-50',
+                      name: 'Banner final «Empieza a ganar con tu auto hoy»',
+                      where: 'src/components/HostSection.tsx (línea 448)',
+                      note: 'Eliminado #8EB5FF con texto blanco; migrado a variables oficiales bg-cta-50 + text-ink-900 + bg-cta.',
+                      status: 'Migrado v2.3.1 ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+                    },
+                  ].map((extra) => (
+                    <div key={extra.name} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-start gap-3.5 min-w-0">
+                        <div className={`w-10 h-10 rounded-xl border border-slate-200 shrink-0 ${extra.swatchClass}`} />
+                        <div className="min-w-0 space-y-0.5">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs sm:text-sm font-heading font-bold text-slate-900">{extra.name}</span>
+                            <span className="font-mono text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{extra.hex}</span>
+                          </div>
+                          <div className="text-[11px] font-mono text-slate-400 truncate">{extra.where}</div>
+                          <p className="text-xs text-slate-600 leading-relaxed">{extra.note}</p>
+                        </div>
                       </div>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full border text-[11px] font-heading font-semibold shrink-0 self-start sm:self-center ${extra.statusClass}`}>
+                        {extra.status}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -448,7 +757,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
-                      Reglas de Superficies, Bordes y Elevación (v2.3.0)
+                      Reglas de Superficies, Bordes y Elevación (v2.3.1)
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Estandarización lineal: cero sombras en botones y enlaces CTA; elevación reservada exclusivamente para popovers y modales.
@@ -1112,7 +1421,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </span>
 
                   <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                    v2.3.0
+                    v2.3.1
                   </span>
                 </div>
               </div>
@@ -1627,7 +1936,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
         {/* ============================================================ */}
         {/* 4. ORGANISMOS (ORGANISMS) */}
         {/* ============================================================ */}
-        {(showOrgVehicleCard || showOrgGallery || showOrgConfirmation || showOrgQaRibbon) && (
+        {(showOrgVehicleCard || showOrgGallery || showOrgConfirmation || showOrgBanner || showOrgQaRibbon) && (
           <section id="organisms" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-emerald-600 font-mono text-xs font-bold uppercase tracking-wider">
@@ -1818,7 +2127,53 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
-            {/* Organismo 4: Cinta QA & Footer */}
+            {/* Organismo 4: Banner CTA Oficial (Variables cta-50 + ink-900 + cta) */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Banner CTA Final con Variables Oficiales (<code className="font-mono">bg-cta-50</code> + <code className="font-mono">text-ink-900</code>)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Implementado en <code className="font-mono text-slate-700">HostSection.tsx</code> usando variables del sistema (<code className="font-mono text-slate-700">cta-50</code>, <code className="font-mono text-slate-700">ink-900</code>, <code className="font-mono text-slate-700">ink-700</code>, <code className="font-mono text-slate-700">bg-cta</code>)
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copySnippet(
+                        'bg-cta-50 rounded-[28px] sm:rounded-[36px] | Título: text-ink-900 | Subtítulo: text-ink-700 | CTA: bg-cta hover:bg-cta-600 text-white rounded-xl',
+                        'org-banner'
+                      )
+                    }
+                    className="text-xs font-mono text-blue-600 hover:text-blue-700 cursor-pointer"
+                  >
+                    {copiedCode === 'org-banner' ? 'Copiado ✓' : 'Copiar clases'}
+                  </button>
+                </div>
+
+                <div className="bg-cta-50 rounded-[28px] py-10 px-6 sm:px-10 text-center space-y-3">
+                  <h4 className="text-xl sm:text-2xl font-heading font-bold text-ink-900 tracking-tight">
+                    Empieza a ganar con tu auto hoy
+                  </h4>
+                  <p className="text-xs sm:text-sm font-sans text-ink-700 max-w-lg mx-auto">
+                    Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
+                  </p>
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={() => onNavigate && onNavigate('/anfitriones/registro')}
+                      className="inline-flex items-center justify-center px-7 py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                    >
+                      Quiero publicar mi auto
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Organismo 5: Cinta QA & Footer */}
             {showOrgQaRibbon && (
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
                 <h3 className="text-base font-heading font-bold text-slate-900">
@@ -1845,7 +2200,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.0</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.1</span>
                     </div>
                   </div>
                 </div>
