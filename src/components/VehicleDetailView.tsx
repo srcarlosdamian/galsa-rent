@@ -10,7 +10,7 @@ import {
 import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from './VehicleCard';
-import { DateRangePicker } from './DateRangePicker';
+import { SingleDatePicker } from './SingleDatePicker';
 import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from './CustomDropdown';
 
 interface VehicleDetailViewProps {
@@ -28,7 +28,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [endDate, setEndDate] = useState('2026-11-07');
   const [pickupTime, setPickupTime] = useState('08:00');
   const [returnTime, setReturnTime] = useState('18:00');
-  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [activeDatePicker, setActiveDatePicker] = useState<'pickup' | 'return' | null>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
   const [rentalDays, setRentalDays] = useState(3);
   const [copied, setCopied] = useState(false);
@@ -38,7 +38,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
 
-  const [mobileCalendarOpen, setMobileCalendarOpen] = useState(false);
+  const [mobileDatePicker, setMobileDatePicker] = useState<'pickup' | 'return' | null>(null);
   const mobileCalendarRef = useRef<HTMLDivElement>(null);
 
   // Bloquear scroll y permitir cerrar modales con tecla Escape
@@ -73,16 +73,16 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
-        setCalendarOpen(false);
+        setActiveDatePicker(null);
       }
     };
-    if (calendarOpen) {
+    if (activeDatePicker) {
       document.addEventListener('mousedown', handleOutsideClick);
     }
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [calendarOpen]);
+  }, [activeDatePicker]);
 
   // Cálculo de fechas
   const calculateDays = (start: string, end: string) => {
@@ -93,12 +93,21 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     return diff > 0 ? diff : 1;
   };
 
-  const handleDateRangeChange = (start: string, end: string) => {
-    setStartDate(start);
-    setEndDate(end);
-    if (start && end) {
-      setRentalDays(calculateDays(start, end));
+  const handlePickupDateChange = (newStart: string) => {
+    setStartDate(newStart);
+    let nextEnd = endDate;
+    if (!endDate || newStart >= endDate) {
+      const d = new Date(`${newStart}T12:00:00`);
+      d.setDate(d.getDate() + 1);
+      nextEnd = d.toISOString().slice(0, 10);
+      setEndDate(nextEnd);
     }
+    setRentalDays(calculateDays(newStart, nextEnd));
+  };
+
+  const handleReturnDateChange = (newEnd: string) => {
+    setEndDate(newEnd);
+    setRentalDays(calculateDays(startDate, newEnd));
   };
 
   const formatDisplayDate = (dateStr: string) => {
@@ -508,15 +517,15 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               {/* Selector de Fechas y Horarios */}
-              <div ref={calendarRef} className="relative space-y-3">
+              <div ref={calendarRef} className="space-y-3">
                 <div className="grid grid-cols-2 gap-3">
-                  <div>
+                  <div className="relative">
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Fecha de recogida</label>
                     <button
                       type="button"
-                      onClick={() => setCalendarOpen((prev) => !prev)}
+                      onClick={() => setActiveDatePicker((prev) => (prev === 'pickup' ? null : 'pickup'))}
                       className={`w-full px-3 py-2 rounded-xl border bg-white text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
-                        calendarOpen
+                        activeDatePicker === 'pickup'
                           ? 'border-cta ring-2 ring-cta/15 text-slate-900'
                           : 'border-slate-300 hover:border-slate-400 text-slate-900'
                       }`}
@@ -524,6 +533,15 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       <span className="truncate">{formatDisplayDate(startDate)}</span>
                       <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.5} />
                     </button>
+                    {activeDatePicker === 'pickup' && (
+                      <div className="absolute top-full left-0 mt-2 z-[70]">
+                        <SingleDatePicker
+                          value={startDate}
+                          onChange={handlePickupDateChange}
+                          onClose={() => setActiveDatePicker(null)}
+                        />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Hora de entrega</label>
@@ -542,13 +560,13 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <div>
+                  <div className="relative">
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Fecha de devolución</label>
                     <button
                       type="button"
-                      onClick={() => setCalendarOpen((prev) => !prev)}
+                      onClick={() => setActiveDatePicker((prev) => (prev === 'return' ? null : 'return'))}
                       className={`w-full px-3 py-2 rounded-xl border bg-white text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
-                        calendarOpen
+                        activeDatePicker === 'return'
                           ? 'border-cta ring-2 ring-cta/15 text-slate-900'
                           : 'border-slate-300 hover:border-slate-400 text-slate-900'
                       }`}
@@ -556,6 +574,16 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       <span className="truncate">{formatDisplayDate(endDate)}</span>
                       <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.5} />
                     </button>
+                    {activeDatePicker === 'return' && (
+                      <div className="absolute top-full left-0 mt-2 z-[70]">
+                        <SingleDatePicker
+                          value={endDate}
+                          minDate={startDate}
+                          onChange={handleReturnDateChange}
+                          onClose={() => setActiveDatePicker(null)}
+                        />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Hora de devolución</label>
@@ -572,17 +600,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     />
                   </div>
                 </div>
-
-                {calendarOpen && (
-                  <div className="absolute top-full right-0 mt-2 z-[70]">
-                    <DateRangePicker
-                      startDate={startDate}
-                      endDate={endDate}
-                      onChange={handleDateRangeChange}
-                      onClose={() => setCalendarOpen(false)}
-                    />
-                  </div>
-                )}
               </div>
 
               {/* Desglose de precios exacto al diseño */}
@@ -709,7 +726,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <div
           className="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-30"
           onClick={() => {
-            setMobileCalendarOpen(false);
+            setMobileDatePicker(null);
             setMobileSheetOpen(false);
           }}
         />
@@ -732,7 +749,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  setMobileCalendarOpen(false);
+                  setMobileDatePicker(null);
                   setMobileSheetOpen(false);
                 }}
                 aria-label="Cerrar cotizador"
@@ -763,9 +780,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   <label className="block text-[11px] font-sans text-ink-500 mb-1">Fecha de recogida</label>
                   <button
                     type="button"
-                    onClick={() => setMobileCalendarOpen((prev) => !prev)}
+                    onClick={() => setMobileDatePicker((prev) => (prev === 'pickup' ? null : 'pickup'))}
                     className={`w-full px-3 py-2 rounded-xl border bg-surface text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
-                      mobileCalendarOpen
+                      mobileDatePicker === 'pickup'
                         ? 'border-cta ring-2 ring-cta/15 text-ink-900'
                         : 'border-slate-300 text-ink-900'
                     }`}
@@ -795,9 +812,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   <label className="block text-[11px] font-sans text-ink-500 mb-1">Fecha de devolución</label>
                   <button
                     type="button"
-                    onClick={() => setMobileCalendarOpen((prev) => !prev)}
+                    onClick={() => setMobileDatePicker((prev) => (prev === 'return' ? null : 'return'))}
                     className={`w-full px-3 py-2 rounded-xl border bg-surface text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
-                      mobileCalendarOpen
+                      mobileDatePicker === 'return'
                         ? 'border-cta ring-2 ring-cta/15 text-ink-900'
                         : 'border-slate-300 text-ink-900'
                     }`}
@@ -822,13 +839,23 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 </div>
               </div>
 
-              {mobileCalendarOpen && (
+              {mobileDatePicker === 'pickup' && (
                 <div className="pt-1 flex justify-center">
-                  <DateRangePicker
-                    startDate={startDate}
-                    endDate={endDate}
-                    onChange={handleDateRangeChange}
-                    onClose={() => setMobileCalendarOpen(false)}
+                  <SingleDatePicker
+                    value={startDate}
+                    onChange={handlePickupDateChange}
+                    onClose={() => setMobileDatePicker(null)}
+                  />
+                </div>
+              )}
+
+              {mobileDatePicker === 'return' && (
+                <div className="pt-1 flex justify-center">
+                  <SingleDatePicker
+                    value={endDate}
+                    minDate={startDate}
+                    onChange={handleReturnDateChange}
+                    onClose={() => setMobileDatePicker(null)}
                   />
                 </div>
               )}
