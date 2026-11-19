@@ -911,13 +911,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                           Extras, seguro y condiciones
                         </h3>
                         {selectedExtras.length > 0 && (
-                          <span className="text-xs font-heading font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200/70">
+                          <span className="text-xs font-heading font-medium text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full">
                             {selectedExtras.length} extra{selectedExtras.length > 1 ? 's' : ''} · +${extrasTotal.toLocaleString('es-MX')}
-                          </span>
-                        )}
-                        {acceptedTerms && (
-                          <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
-                            Condiciones aceptadas ✓
                           </span>
                         )}
                       </div>

@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.6.9)
+description: Minimalist, clean, flat digital mobility platform (v2.7.0)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.6.9`)
+# GALSA Rent Design System & Guidelines (`v2.7.0`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -82,3 +82,11 @@ rounded:
 6. **Input Solo Lectura (`readOnly`):** fondo `bg-slate-50` (`ReservationCheckoutView.tsx`).
 7. **Selector de Fecha (`SingleDatePicker` trigger):** botón con borde e icono `Calendar` (`VehicleDetailView.tsx`).
 8. **Range Slider y Checkbox:** en `CatalogPage.tsx`, `HostSection.tsx` y `ReservationCheckoutView.tsx`.
+
+## 6. Catálogo de Chips y Badges (`DesignSystemPage.tsx`)
+1. **Chip Neutro de Paso (`bg-slate-100 text-slate-600 rounded-full px-2.5 py-0.5 text-xs`):** resumen discreto de fechas y extras en los acordeones de `ReservationCheckoutView.tsx`.
+2. **Chip de Especificación (`border border-slate-200 bg-white text-slate-700 rounded-lg px-2 py-0.5 text-[11px]`):** plazas, transmisión y combustible en `VehicleCard.tsx`.
+3. **Chip Verificado / Marca (`bg-cta-50 text-cta rounded-md px-2.5 py-0.5 text-[11px]`):** en `ReservationCheckoutView.tsx` y `HostRegistrationPage.tsx`.
+4. **Pill Folio / Filtro Activo (`bg-cta-50 text-cta rounded-full px-3 py-1 text-xs`):** en `HostRegistrationPage.tsx` y `CatalogPage.tsx`.
+5. **Chips de Estado (`emerald-50` positivo / `amber-50` pendiente):** en `SeoPage.tsx` y `AccountPage.tsx`.
+6. **Chips Técnicos (`bg-slate-100 font-mono` rutas y `bg-neutral-800 text-emerald-400` versión QA):** en `Footer.tsx`, `SeoPage.tsx` y `DesignSystemPage.tsx`.

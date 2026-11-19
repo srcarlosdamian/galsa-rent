@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.6.9</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.0</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1721,36 +1721,81 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <h3 className="text-base font-heading font-bold text-slate-900">
-                    Badges, Tags &amp; Indicadores de Estado
+                    Badges, Chips &amp; Indicadores de Estado (Catálogo Completo)
                   </h3>
-                  <span className="text-xs text-slate-400 font-mono">Micro-indicadores reales</span>
+                  <span className="text-xs text-slate-400 font-mono">Todos los chips existentes en la app</span>
                 </div>
 
-                <div className="flex flex-wrap gap-2.5">
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-heading font-semibold">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    index, follow
-                  </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-left">
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-heading font-medium">
+                      5 extras · +$1,650
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">1. Chip Neutro de Paso</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">ReservationCheckoutView (Fechas, Extras)</span>
+                  </div>
 
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
-                    Pendiente de confirmación
-                  </span>
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <div className="flex flex-wrap gap-1.5">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-[11px] font-sans">
+                        5 plazas
+                      </span>
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-lg border border-slate-200 bg-white text-slate-700 text-[11px] font-sans">
+                        Automática
+                      </span>
+                    </div>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">2. Chip de Especificación</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">VehicleCard (Catálogo y Similares)</span>
+                  </div>
 
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
-                    Folio: ANF-842910
-                  </span>
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-cta-50 text-cta text-[11px] font-heading font-semibold">
+                      Verificado GALSA
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">3. Chip Marca / Verificado</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">ReservationCheckoutView, HostRegistration</span>
+                  </div>
 
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-cta-50 text-cta text-[11px] font-heading font-semibold">
-                    Revisión 24-48 hrs
-                  </span>
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
+                      Folio: ANF-842910
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">4. Pill Folio / Filtro Activo</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">HostRegistration, CatalogPage</span>
+                  </div>
 
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono text-xs font-semibold">
-                    /anfitriones/registro
-                  </span>
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-heading font-semibold">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      index, follow
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">5. Chip Estado Positivo / SEO</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">SeoPage, AccountPage</span>
+                  </div>
 
-                  <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                    v2.3.4
-                  </span>
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                      Pendiente de confirmación
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">6. Chip Estado Pendiente</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">AccountPage, HostRegistration</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono text-xs font-semibold">
+                      /anfitriones/registro
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">7. Chip de Ruta / Código</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">SeoPage, DesignSystemPage</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
+                      v2.7.0
+                    </span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">8. Chip de Versión QA</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">Footer, DesignSystemPage</span>
+                  </div>
                 </div>
               </div>
             )}
@@ -2562,7 +2607,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.6.9</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.0</span>
                     </div>
                   </div>
                 </div>
