@@ -72,14 +72,14 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       num: 1,
       title: 'Regístrate',
       description: 'Crea tu cuenta de anfitrión con tus datos.',
-      image: '/images/step-img-1.webp',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794389847378-0-349394.webp',
       icon: UserPlus,
     },
     {
       num: 2,
       title: 'Valida tu identidad',
       description: 'Verificamos tu identidad y documentación.',
-      image: '/images/step-img-2.webp',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601314439-2-348385.webp',
       icon: ShieldCheck,
     },
     {
