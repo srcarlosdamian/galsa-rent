@@ -615,13 +615,6 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       )}
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-xs font-sans text-slate-500 pt-0.5">
-                      <Check className="w-3.5 h-3.5 text-[#3D63FF] shrink-0" strokeWidth={2.5} />
-                      <span>
-                        Disponible del {formatDisplayDate(startDate)} — {formatDisplayDate(endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
-                      </span>
-                    </div>
-
                     <div className="pt-2 flex justify-start">
                       <button
                         type="button"
