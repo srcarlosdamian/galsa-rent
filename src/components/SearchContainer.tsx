@@ -160,10 +160,10 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                           setLocationOpen(false);
                         }
                       }}
-                      className="w-full text-left p-2.5 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3.5 group"
+                      className="w-full text-left p-2.5 rounded-[12px] hover:bg-slate-100/80 transition-colors flex items-center gap-3.5 group"
                     >
                       {/* Icon Container: Cuadrado con el mismo border radius de los botones (rounded-[8px]) */}
-                      <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
+                      <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200/80 transition-colors">
                         <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} />
                       </div>
 
@@ -290,12 +290,14 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                         });
                         setTypeOpen(false);
                       }}
-                      className={`w-full text-left p-2.5 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3.5 group ${
-                        isSelected ? 'bg-slate-50/80' : ''
+                      className={`w-full text-left p-2.5 rounded-[12px] transition-colors flex items-center gap-3.5 group ${
+                        isSelected ? 'bg-cta-50' : 'hover:bg-slate-100/80'
                       }`}
                     >
                       {/* Icon Container: Cuadrado con el mismo border radius de los botones (rounded-[8px]) */}
-                      <div className="w-10 h-10 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
+                      <div className={`w-10 h-10 rounded-[8px] flex items-center justify-center shrink-0 transition-colors ${
+                        isSelected ? 'bg-cta-100 text-cta-700' : 'bg-slate-100 text-slate-800 group-hover:bg-slate-200/80'
+                      }`}>
                         <Icon className="w-[18px] h-[18px]" strokeWidth={1.4} />
                       </div>
 

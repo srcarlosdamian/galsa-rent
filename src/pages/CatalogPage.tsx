@@ -464,7 +464,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             setOpenDropdown(null);
                           }}
                           className={`w-full text-left p-2.5 rounded-[12px] text-[13px] font-heading transition-colors flex items-center justify-between gap-2 cursor-pointer ${
-                            isSelected ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                            isSelected ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-100/80 font-medium'
                           }`}
                         >
                           <span>{opt.label}</span>
@@ -559,7 +559,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           setOpenDropdown(null);
                         }}
                         className={`w-full text-left p-2.5 rounded-[12px] text-[13px] font-heading transition-colors flex items-center justify-between gap-2 cursor-pointer ${
-                          isSelected ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                          isSelected ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-100/80 font-medium'
                         }`}
                       >
                         <span>{opt.label}</span>
@@ -709,7 +709,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setOpenDropdown(null);
                     }}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm font-sans transition-colors cursor-pointer ${
-                      vehicleTypeFilter === type ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                      vehicleTypeFilter === type ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-100/80 font-medium'
                     }`}
                   >
                     {type === 'Todos' ? 'Todos los tipos' : type}
@@ -746,7 +746,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setOpenDropdown(null);
                     }}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm font-sans transition-colors cursor-pointer ${
-                      seatsFilter === seats ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                      seatsFilter === seats ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-100/80 font-medium'
                     }`}
                   >
                     {seats === 'Todos' ? 'Cualquier capacidad' : `${seats}+ plazas`}
@@ -783,7 +783,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setOpenDropdown(null);
                     }}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm font-sans transition-colors cursor-pointer ${
-                      transmissionFilter === trans ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                      transmissionFilter === trans ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-100/80 font-medium'
                     }`}
                   >
                     {trans === 'Todos' ? 'Cualquiera' : trans}

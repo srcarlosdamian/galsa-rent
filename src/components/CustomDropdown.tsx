@@ -93,7 +93,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
         className={`w-full flex items-center justify-between gap-2 border bg-white font-sans text-left transition-colors cursor-pointer ${sizeClasses} ${
           open
             ? 'border-cta ring-1 ring-cta'
-            : 'border-slate-200 hover:border-slate-300'
+            : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60'
         } ${buttonClassName}`}
         aria-expanded={open}
       >
@@ -131,7 +131,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
                     setOpen(false);
                   }}
                   className={`w-full text-left p-2.5 rounded-[12px] transition-colors flex items-center gap-3 group cursor-pointer ${
-                    isSelected ? 'bg-cta-50' : 'hover:bg-slate-50'
+                    isSelected ? 'bg-cta-50' : 'hover:bg-slate-100/80'
                   }`}
                 >
                   {Icon && (
@@ -139,7 +139,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
                       className={`w-9 h-9 rounded-[8px] flex items-center justify-center shrink-0 transition-colors ${
                         isSelected
                           ? 'bg-cta-100 text-cta-700'
-                          : 'bg-slate-100 text-slate-700 group-hover:bg-slate-200'
+                          : 'bg-slate-100 text-slate-700 group-hover:bg-slate-200/80'
                       }`}
                     >
                       <Icon className="w-4 h-4" strokeWidth={1.5} />
