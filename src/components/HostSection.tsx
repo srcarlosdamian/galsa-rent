@@ -4,6 +4,7 @@ import {
   UserPlus, Car, CheckCircle2, CalendarCheck, Wallet
 } from 'lucide-react';
 import { StepFeatureCard } from './StepFeatureCard';
+import { MinimalMobileSlider } from './MinimalMobileSlider';
 
 interface HostSectionProps {
   isFullPage?: boolean;
@@ -354,7 +355,11 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <MinimalMobileSlider
+            itemCount={HOW_IT_WORKS_CARDS.length}
+            desktopGridClassName="md:grid md:grid-cols-3 md:gap-8"
+            ariaLabel="Cómo ganar dinero con tu auto en GALSA"
+          >
             {HOW_IT_WORKS_CARDS.map((card, idx) => (
               <div key={idx} className="space-y-4">
                 {/* Imagen Apaisada 16:9 con Bordes Redondeados limpia sin bordes ni padding extra */}
@@ -375,7 +380,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 </div>
               </div>
             ))}
-          </div>
+          </MinimalMobileSlider>
 
           {/* Sub-sección: Banner de transparencia + 2 tarjetas (Tarifa del marketplace y Quién puede rentar tu auto) */}
           <div className="mt-20 sm:mt-28 space-y-6">
@@ -476,7 +481,11 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+          <MinimalMobileSlider
+            itemCount={BENEFITS.length}
+            desktopGridClassName="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-10"
+            ariaLabel="Beneficios de ser anfitrión GALSA"
+          >
             {BENEFITS.map((item, idx) => (
               <div key={idx} className="flex items-start gap-4">
                 {/* Imagen Cuadrada sin borde (solo fondo claro redondeado) */}
@@ -497,7 +506,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 </div>
               </div>
             ))}
-          </div>
+          </MinimalMobileSlider>
         </div>
       </section>
 
@@ -513,7 +522,11 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <MinimalMobileSlider
+            itemCount={STEPS.length}
+            desktopGridClassName="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8"
+            ariaLabel="Publica tu auto en 6 pasos"
+          >
             {STEPS.map((step) => (
               <StepFeatureCard
                 key={step.num}
@@ -523,7 +536,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 icon={step.icon}
               />
             ))}
-          </div>
+          </MinimalMobileSlider>
         </div>
       </section>
 
