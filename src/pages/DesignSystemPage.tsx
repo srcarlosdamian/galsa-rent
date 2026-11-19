@@ -32,13 +32,18 @@ import {
   ClipboardCheck,
   UserPlus,
   Car,
+  Plus,
+  Minus,
+  Mail,
 } from 'lucide-react';
+import { GalsaLogo } from '../components/GalsaLogo';
 import { DocumentUploadCard } from '../components/DocumentUploadCard';
 import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from '../components/CustomDropdown';
 import { DateRangePicker } from '../components/DateRangePicker';
 import { SearchContainer } from '../components/SearchContainer';
 import { VehicleCard } from '../components/VehicleCard';
 import { StepFeatureCard } from '../components/StepFeatureCard';
+import { AuthCardLayout } from '../components/AuthCardLayout';
 import { VEHICLES } from '../data/vehicles';
 import {
   LOCATION_DROPDOWN_OPTIONS,
@@ -90,10 +95,13 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [isFaqOpen, setIsFaqOpen] = useState(false);
-  const [toggleState, setToggleState] = useState(true);
   const [termsChecked, setTermsChecked] = useState(true);
   const [likeState, setLikeState] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
+  const [demoCarVal, setDemoCarVal] = useState(450000);
+  const [demoDaysVal, setDemoDaysVal] = useState(15);
+  const [demoPriceVal, setDemoPriceVal] = useState(1200);
+  const [demoEmailConfirmed, setDemoEmailConfirmed] = useState(false);
 
   // Estados interactivos reales para moléculas y organismos
   const [demoChevronOpen, setDemoChevronOpen] = useState(false);
@@ -318,7 +326,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.3</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.4</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1042,18 +1050,25 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </button>
                   </div>
 
-                  {/* 6. Destructive / Danger */}
+                  {/* 6. Botón de Búsqueda Hero (<SearchContainer /> real: bg-slate-100 sin borde -> bg-cta activo) */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
                     <div>
-                      <div className="text-xs font-heading font-bold text-slate-800">6. Botón Alerta / Destructivo</div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Cancelaciones o eliminación de datos</div>
-                      <div className="mt-4">
+                      <div className="text-xs font-heading font-bold text-slate-800">6. Botón Buscar Hero (Inactivo / Activo)</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">SearchContainer · Fondo gris sin borde y estado activo CTA</div>
+                      <div className="mt-4 flex items-center justify-center gap-4">
                         <button
                           type="button"
-                          className="w-full px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                          className="h-[52px] w-[52px] rounded-[8px] bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-all cursor-pointer"
+                          title="Estado en reposo (sin borde)"
                         >
-                          <AlertCircle className="w-4 h-4" />
-                          <span>Cancelar reserva</span>
+                          <Search className="w-5 h-5" strokeWidth={1.6} />
+                        </button>
+                        <button
+                          type="button"
+                          className="h-[52px] w-[52px] rounded-[8px] bg-cta hover:bg-cta-600 text-white flex items-center justify-center transition-all cursor-pointer"
+                          title="Estado activo con filtros"
+                        >
+                          <Search className="w-5 h-5" strokeWidth={1.6} />
                         </button>
                       </div>
                     </div>
@@ -1061,7 +1076,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-heading font-semibold text-sm transition-colors',
+                          'h-[52px] w-[52px] rounded-[8px] (Reposo: bg-slate-100 hover:bg-slate-200 text-slate-600 | Activo: bg-cta hover:bg-cta-600 text-white)',
                           'btn-6'
                         )
                       }
@@ -1071,26 +1086,22 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </button>
                   </div>
 
-                  {/* 7. Estados Loading & Disabled */}
+                  {/* 7. Isotipo Oficial (<GalsaLogo /> Real) + Estados Deshabilitados */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
                     <div>
-                      <div className="text-xs font-heading font-bold text-slate-800">7. Estados Loading &amp; Disabled</div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Peticiones en curso o sin disponibilidad</div>
-                      <div className="mt-4 space-y-2">
-                        <button
-                          type="button"
-                          disabled
-                          className="w-full px-4 py-2 rounded-xl bg-cta/90 text-white font-heading font-semibold text-xs flex items-center justify-center gap-2 cursor-wait"
-                        >
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span>Verificando...</span>
-                        </button>
+                      <div className="text-xs font-heading font-bold text-slate-800">7. Isotipo Oficial (&lt;GalsaLogo /&gt;) &amp; Disabled</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Header, Footer y botones deshabilitados reales</div>
+                      <div className="mt-4 space-y-2.5">
+                        <div className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                          <GalsaLogo className="h-5 w-auto text-cta" />
+                          <span className="text-[10px] font-mono text-slate-400">text-cta</span>
+                        </div>
                         <button
                           type="button"
                           disabled
                           className="w-full px-4 py-2 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 font-heading font-medium text-xs cursor-not-allowed flex items-center justify-center"
                         >
-                          <span>Vehículo no disponible</span>
+                          <span>Estado deshabilitado (disabled)</span>
                         </button>
                       </div>
                     </div>
@@ -1098,7 +1109,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'bg-cta/90 text-white cursor-wait | Disabled: bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed',
+                          '<GalsaLogo className="h-6 w-auto text-cta" /> | Disabled: bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed',
                           'btn-7'
                         )
                       }
@@ -1655,23 +1666,22 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </div>
                   </div>
 
-                  {/* Checkbox & Toggle Switch */}
+                  {/* Range Slider Oficial & Checkbox Real */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3 text-left">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-slate-700 font-medium">Kilometraje libre</span>
-                      <button
-                        type="button"
-                        onClick={() => setToggleState(!toggleState)}
-                        className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
-                          toggleState ? 'bg-cta' : 'bg-slate-300'
-                        }`}
-                      >
-                        <div
-                          className={`bg-white w-4 h-4 rounded-full transform transition-transform ${
-                            toggleState ? 'translate-x-5' : 'translate-x-0'
-                          }`}
-                        />
-                      </button>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-semibold text-slate-800">Range Slider (Catálogo / Ingresos)</span>
+                        <span className="font-bold text-slate-900 tabular-nums">${demoPriceVal.toLocaleString('es-MX')}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min={600}
+                        max={3000}
+                        step={50}
+                        value={demoPriceVal}
+                        onChange={(e) => setDemoPriceVal(Number(e.target.value))}
+                        className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-cta"
+                      />
                     </div>
                     <label className="flex items-center gap-2.5 text-xs text-slate-600 cursor-pointer pt-1 border-t border-slate-200/70">
                       <input
@@ -1720,7 +1730,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </span>
 
                   <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                    v2.3.1
+                    v2.3.4
                   </span>
                 </div>
               </div>
@@ -2158,73 +2168,107 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
-            {/* 7. Specs Grid + Acordeón FAQ */}
+            {/* 7. Specs Grid Real (VehicleDetailView) + Acordeón FAQ Real (FaqSection con Plus/Minus) + Tarjeta Confirma tu correo */}
             {showMolSpecsFaq && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* 7A. Parrilla Real de Especificaciones de VehicleDetailView.tsx */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    Parrilla de Especificaciones (Vehicle Specs)
-                  </h3>
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Especificaciones Reales (<code className="font-mono text-xs">VehicleDetailView</code>)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Bloque «Lo que ofrece este vehículo» en la ficha de producto.
+                    </p>
+                  </div>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
-                        <Users className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Pasajeros</div>
-                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">5 Asientos</div>
-                      </div>
+                    <div className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                      <Users className="w-4 h-4 text-slate-700 shrink-0" />
+                      <span className="text-xs font-heading font-medium text-slate-800">5 asientos</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
-                        <SlidersHorizontal className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Transmisión</div>
-                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Automática</div>
-                      </div>
+                    <div className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                      <Fuel className="w-4 h-4 text-slate-700 shrink-0" />
+                      <span className="text-xs font-heading font-medium text-slate-800">Gasolina</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
-                        <Gauge className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Kilometraje</div>
-                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Libre</div>
-                      </div>
+                    <div className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                      <Gauge className="w-4 h-4 text-slate-700 shrink-0" />
+                      <span className="text-xs font-heading font-medium text-slate-800">Automática</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
-                        <Fuel className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Combustible</div>
-                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Gasolina</div>
-                      </div>
+                    <div className="flex items-center gap-2.5 p-3 rounded-xl border border-slate-100 bg-slate-50/50">
+                      <Calendar className="w-4 h-4 text-slate-700 shrink-0" />
+                      <span className="text-xs font-heading font-medium text-slate-800">Modelo 2026</span>
                     </div>
                   </div>
                 </div>
 
+                {/* 7B. Item de Acordeón FAQ Real (FaqSection.tsx con botón circular Plus / Minus) */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    Item de Acordeón FAQ (Collapsible Molecule)
-                  </h3>
-                  <div className="rounded-xl border border-slate-200 overflow-hidden">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Acordeón FAQ Real (<code className="font-mono text-xs">FaqSection.tsx</code>)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Usa contenedor <code className="font-mono text-slate-700">border-edge</code> y botón circular <code className="font-mono text-slate-700">Plus / Minus</code>.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-edge bg-white overflow-hidden transition-all duration-200">
                     <button
                       type="button"
                       onClick={() => setIsFaqOpen(!isFaqOpen)}
-                      className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors bg-white cursor-pointer"
+                      className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 hover:bg-subtle/50 transition-colors cursor-pointer"
                     >
-                      <span className="font-heading font-semibold text-slate-900 text-sm">
-                        ¿Qué requisitos necesito para rentar un auto en GALSA Rent?
+                      <span className="text-sm font-heading font-semibold text-slate-900 tracking-tight leading-snug">
+                        ¿Qué requisitos necesito para rentar un auto?
                       </span>
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0 ${isFaqOpen ? 'rotate-180' : ''}`} />
+                      <div className="w-8 h-8 rounded-full border border-edge flex items-center justify-center shrink-0 text-ink-700">
+                        {isFaqOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                      </div>
                     </button>
                     {isFaqOpen && (
-                      <div className="px-4 pb-4 pt-2 bg-white text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed">
-                        Identificación oficial vigente (INE o pasaporte), licencia de conducir vigente, comprobante de domicilio y método de pago para el depósito reembolsable.
+                      <div className="px-4 sm:px-5 pb-4 pt-2 text-xs sm:text-sm font-sans text-slate-600 leading-relaxed border-t border-edge-light">
+                        Identificación oficial vigente (INE o pasaporte), licencia de conducir vigente, comprobante de domicilio y método de pago.
                       </div>
                     )}
+                  </div>
+                </div>
+
+                {/* 7C. Tarjeta Confirma tu correo electrónico (AccountPage.tsx) */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Tarjeta «Confirma tu correo» (<code className="font-mono text-xs">AccountPage</code>)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Molécula lateral en Configuración de la cuenta.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl bg-subtle border border-edge p-4 space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start gap-2.5">
+                        <Mail className="w-4 h-4 text-ink-900 shrink-0 mt-0.5" strokeWidth={1.8} />
+                        <div>
+                          <h4 className="text-xs sm:text-sm font-heading font-bold text-ink-900 leading-snug">
+                            Confirma tu correo electrónico
+                          </h4>
+                          <p className="text-xs font-sans text-ink-600 mt-0.5 leading-relaxed">
+                            {demoEmailConfirmed
+                              ? 'Código verificado para contact@carlosdamian.com.'
+                              : 'Te enviaremos un código a tu bandeja de mensajes.'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setDemoEmailConfirmed((prev) => !prev)}
+                      className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-heading font-semibold transition-colors cursor-pointer ${
+                        demoEmailConfirmed
+                          ? 'bg-cta-50 text-cta border border-cta-200'
+                          : 'bg-surface hover:bg-cta-50 text-ink-900 border border-edge'
+                      }`}
+                    >
+                      {demoEmailConfirmed ? 'Correo electrónico confirmado ✓' : 'Confirma tu correo electrónico'}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2499,9 +2543,205 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.3</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.4</span>
                     </div>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Organismo 6: Calculadora de Ingresos Estimados Unificada (HostSection.tsx) */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Calculadora de Ingresos Estimados en 2 Bloques (<code className="font-mono text-xs">HostSection.tsx</code>)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Contenedor gris claro unificado (<code className="font-mono text-slate-700">rounded-2xl bg-slate-50 divide-y divide-slate-200/80</code>) con sliders arriba e ingreso neto abajo.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="max-w-xl rounded-2xl bg-slate-50 divide-y divide-slate-200/80">
+                  <div className="p-5 sm:p-6 space-y-4">
+                    <h4 className="text-base sm:text-lg font-heading font-bold text-slate-900">
+                      Calcula tus ingresos estimados
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-4">
+                        <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">Valor del auto</span>
+                        <input
+                          type="range"
+                          min={150000}
+                          max={1200000}
+                          step={25000}
+                          value={demoCarVal}
+                          onChange={(e) => setDemoCarVal(Number(e.target.value))}
+                          className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+                        />
+                        <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0 tabular-nums">
+                          ${demoCarVal.toLocaleString('es-MX')}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">Días rentados</span>
+                        <input
+                          type="range"
+                          min={3}
+                          max={30}
+                          step={1}
+                          value={demoDaysVal}
+                          onChange={(e) => setDemoDaysVal(Number(e.target.value))}
+                          className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+                        />
+                        <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0 tabular-nums">
+                          {demoDaysVal} d
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">Precio/día</span>
+                        <input
+                          type="range"
+                          min={600}
+                          max={3000}
+                          step={50}
+                          value={demoPriceVal}
+                          onChange={(e) => setDemoPriceVal(Number(e.target.value))}
+                          className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+                        />
+                        <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0 tabular-nums">
+                          ${demoPriceVal.toLocaleString('es-MX')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-5 sm:p-6 space-y-3">
+                    <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block">
+                      TU INGRESO NETO MENSUAL ESTIMADO
+                    </span>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tracking-tight tabular-nums">
+                        ${(demoDaysVal * demoPriceVal).toLocaleString('es-MX')}
+                      </span>
+                      <span className="text-xs font-heading font-bold text-slate-500 uppercase">MXN</span>
+                    </div>
+                    <div className="border-t border-slate-200/80 pt-2.5 space-y-1.5 text-xs text-slate-600">
+                      <div className="flex justify-between">
+                        <span>Tus rentas del mes</span>
+                        <span className="font-heading font-bold text-slate-900 tabular-nums">
+                          ${(demoDaysVal * demoPriceVal).toLocaleString('es-MX')}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Tarifa GALSA (33%)</span>
+                        <span className="font-heading font-bold text-slate-900 tabular-nums">
+                          ${Math.round(demoDaysVal * demoPriceVal * 0.33).toLocaleString('es-MX')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Organismo 7: Configuración de la Cuenta (2 Columnas + Filas Divididas de AccountPage.tsx) */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Estructura de «Mi Cuenta» en 2 Columnas y Filas con Divisores (<code className="font-mono text-xs">AccountPage.tsx</code>)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Menú lateral con tarjeta de confirmación de correo + panel derecho con filas divididas (<code className="font-mono text-slate-700">divide-y divide-edge border-t border-b border-edge</code>).
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-1">
+                  <div className="lg:col-span-4 space-y-3 lg:border-r lg:border-edge lg:pr-6">
+                    <div className="text-base font-heading font-extrabold text-ink-900">Configuración de la cuenta</div>
+                    <div className="space-y-1">
+                      <div className="px-3 py-2.5 rounded-xl bg-subtle text-ink-900 font-heading font-bold text-xs flex items-center justify-between">
+                        <span>Datos personales</span>
+                        <span className="text-[10px] font-mono text-cta">Activo</span>
+                      </div>
+                      <div className="px-3 py-2.5 rounded-xl text-ink-600 font-heading font-medium text-xs flex items-center justify-between">
+                        <span>Mis reservaciones</span>
+                        <span className="px-2 py-0.5 rounded-full bg-subtle text-ink-600 text-[10px] font-bold">2</span>
+                      </div>
+                      <div className="px-3 py-2.5 rounded-xl text-ink-600 font-heading font-medium text-xs">
+                        Documentos &amp; Licencia
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-8 divide-y divide-edge border-t border-b border-edge">
+                    <div className="py-3.5 flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-xs sm:text-sm font-heading font-bold text-ink-900">Nombre completo</div>
+                        <div className="text-xs text-ink-600 mt-0.5">Carlos Damián</div>
+                      </div>
+                      <span className="text-xs font-heading font-semibold text-ink-900 underline underline-offset-4">Editar</span>
+                    </div>
+                    <div className="py-3.5 flex items-start justify-between gap-4">
+                      <div className="space-y-2">
+                        <div>
+                          <div className="text-xs sm:text-sm font-heading font-bold text-ink-900">Correo electrónico</div>
+                          <div className="text-xs text-ink-600 mt-0.5">contact@carlosdamian.com</div>
+                        </div>
+                        <span className="inline-flex items-center px-3 py-1 rounded-lg border border-edge bg-surface text-xs font-heading font-semibold text-ink-900">
+                          Confirmar
+                        </span>
+                      </div>
+                      <span className="text-xs font-heading font-semibold text-ink-900 underline underline-offset-4">Editar</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Organismo 8: Cascarón Dividido de Autenticación (<AuthCardLayout />) & Header Mínimo */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 text-left">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Header Mínimo de Checkout / Registro &amp; Cascarón de Autenticación (<code className="font-mono text-xs">&lt;AuthCardLayout /&gt;</code>)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Variante limpia de <code className="font-mono text-slate-700">Header.tsx</code> para flujos de 2 pasos y componente <code className="font-mono text-slate-700">AuthCardLayout.tsx</code> usado en Login, Registro y Recuperar contraseña.
+                  </p>
+                </div>
+
+                {/* Preview de Header Mínimo */}
+                <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <GalsaLogo className="h-5 w-auto text-cta" />
+                    <div className="h-4 w-px bg-slate-200" />
+                    <div className="flex items-center gap-1.5 text-slate-500 text-xs font-heading font-medium">
+                      <ShieldCheck className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Reserva protegida / Registro de anfitriones</span>
+                    </div>
+                  </div>
+                  <span className="text-xs font-heading font-semibold text-slate-600">¿Necesitas ayuda?</span>
+                </div>
+
+                {/* Preview compacta del AuthCardLayout */}
+                <div className="rounded-2xl border border-slate-200 bg-slate-100 p-4">
+                  <AuthCardLayout imageAlt="Vista previa AuthCardLayout" imageMinHeightClass="min-h-[220px]">
+                    <div className="space-y-2 text-left">
+                      <span className="inline-flex px-2.5 py-0.5 rounded-full bg-cta-50 text-cta text-[11px] font-heading font-bold">
+                        &lt;AuthCardLayout /&gt; Real
+                      </span>
+                      <h4 className="text-lg font-heading font-bold text-slate-900">
+                        Cascarón compartido de Autenticación
+                      </h4>
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        Renderiza la columna de ilustración 3D a la izquierda y el formulario a la derecha en LoginPage, RegisterPage y ForgotPasswordPage.
+                      </p>
+                    </div>
+                  </AuthCardLayout>
                 </div>
               </div>
             )}
