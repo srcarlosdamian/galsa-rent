@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.5</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.6</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1530,14 +1530,14 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                   {/* 2. Textarea (Información adicional) */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left md:col-span-2">
-                    <div className="space-y-1.5">
-                      <label className="block text-sm font-heading font-bold text-slate-900">
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
                         2. Textarea — Información adicional (opcional)
                       </label>
                       <textarea
                         rows={2}
                         placeholder="Notas para tu renta: horario de llegada de vuelo, requerimientos de entrega..."
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors resize-y placeholder:text-slate-400"
                       />
                     </div>
                     <span className="text-[10px] font-mono text-slate-400">ReservationCheckoutView (Docs), AccountPage (Notas)</span>
@@ -1546,13 +1546,15 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   {/* 3. Search Input */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
                     <div className="space-y-2">
-                      <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">3. Input Búsqueda</div>
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                        3. Input Búsqueda
+                      </label>
                       <div className="relative">
-                        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                         <input
                           type="text"
                           placeholder="Marca o modelo..."
-                          className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cta/20 focus:border-cta transition-all placeholder:text-slate-400"
+                          className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                         />
                       </div>
                     </div>
@@ -1568,7 +1570,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <input
                         type="password"
                         defaultValue="••••••••"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-2 focus:ring-cta/15 bg-white text-slate-900 font-sans text-sm outline-none transition-all"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                       />
                     </div>
                     <span className="text-[10px] font-mono text-slate-400">LoginPage, RegisterPage, ResetPassword</span>
@@ -1581,13 +1583,13 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         5. Input Numérico / Tarifa
                       </label>
                       <div className="relative">
-                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-heading font-bold text-slate-400">$</span>
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-sans text-slate-400">$</span>
                         <input
                           type="number"
                           defaultValue={1500}
-                          className="w-full pl-7 pr-12 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-heading font-bold text-sm outline-none tabular-nums"
+                          className="w-full pl-7 pr-12 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors tabular-nums"
                         />
-                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] font-sans text-slate-400">MXN</span>
+                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-sans text-slate-400">MXN</span>
                       </div>
                     </div>
                     <span className="text-[10px] font-mono text-slate-400">HostSection, HostRegistrationPage</span>
@@ -1603,7 +1605,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         type="text"
                         readOnly
                         value="Durango, Dgo."
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-heading font-semibold text-sm outline-none cursor-default"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 font-sans text-sm outline-none cursor-default"
                       />
                     </div>
                     <span className="text-[10px] font-mono text-slate-400">ReservationCheckoutView (Ciudad/Sucursal)</span>
@@ -1612,10 +1614,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   {/* 7. Datepicker Trigger Input */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
                     <div className="space-y-2">
-                      <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">7. Selector de Fecha (Trigger)</div>
-                      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm font-heading font-semibold text-slate-900 cursor-pointer hover:border-slate-400 transition-colors">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                        7. Selector de Fecha (Trigger)
+                      </label>
+                      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-sm font-sans text-slate-900 cursor-pointer transition-colors">
                         <span>4 nov 2026</span>
-                        <Calendar className="w-4 h-4 text-slate-500" />
+                        <Calendar className="w-4 h-4 text-slate-400" />
                       </div>
                     </div>
                     <span className="text-[10px] font-mono text-slate-400">VehicleDetailView (SingleDatePicker)</span>
@@ -2579,7 +2583,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.5</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.6</span>
                     </div>
                   </div>
                 </div>

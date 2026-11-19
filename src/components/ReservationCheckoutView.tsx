@@ -855,7 +855,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     />
 
                     <div className="space-y-1.5 pt-1">
-                      <label className="block text-sm font-heading font-bold text-slate-900">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
                         Información adicional (opcional)
                       </label>
                       <textarea
@@ -863,7 +863,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                         value={additionalDocNotes}
                         onChange={(e) => setAdditionalDocNotes(e.target.value)}
                         placeholder="Notas para tu renta: horario de llegada de vuelo, requerimientos de entrega..."
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 text-sm font-sans outline-none transition-colors resize-y placeholder:text-slate-400"
                       />
                     </div>
 
