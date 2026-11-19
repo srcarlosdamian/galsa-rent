@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Menu, X, Globe, Check, ShieldCheck, HelpCircle, Phone, Mail, 
-  MapPin, Clock, MessageSquare, ChevronDown, ExternalLink 
+  MapPin, Clock, MessageSquare, ChevronDown, ExternalLink, User, Settings, LogOut 
 } from 'lucide-react';
 import { GalsaLogo } from './GalsaLogo';
 
@@ -58,20 +58,38 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
   // Determinar si estamos en la vista de Checkout / Carrito ("Completa tu reserva") o Registro de anfitriones
   const isCheckout = currentPath.startsWith('/reservar/') || currentPath.endsWith('/checkout');
   const isHostRegistration = currentPath === '/anfitriones/registro';
+  const isAccountRoute = currentPath.startsWith('/cuenta') || currentPath === '/completar-perfil';
+  const [isLoggedIn, setIsLoggedIn] = useState(isAccountRoute);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState<'es' | 'en'>('es');
   const [helpDrawerOpen, setHelpDrawerOpen] = useState(false);
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
   const langDropdownRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('galsa_logged_in') === 'true';
+      setIsLoggedIn(isAccountRoute || stored);
+    }
+  }, [currentPath, isAccountRoute]);
 
   // Escuchar tecla Escape y evento externo para abrir centro de ayuda
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setHelpDrawerOpen(false);
+        setUserMenuOpen(false);
       }
     };
+    const handleClickOutsideUser = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutsideUser);
     const handleOpenHelp = () => setHelpDrawerOpen(true);
 
     if (helpDrawerOpen) {
@@ -86,6 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('open-galsa-help', handleOpenHelp);
+      document.removeEventListener('mousedown', handleClickOutsideUser);
     };
   }, [helpDrawerOpen]);
 
@@ -422,23 +441,81 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
               </div>
             </nav>
 
-            {/* Account & Register Actions */}
+            {/* Account & Register Actions (or Minimalist Avatar Menu when logged in) */}
             <div className="flex items-center space-x-3 shrink-0">
-              <a
-                href="/login"
-                onClick={(e) => handleLinkClick(e, '/login')}
-                className="inline-flex items-center justify-center px-4 py-2 rounded-[8px] border border-slate-200 bg-white text-slate-900 text-[14px] font-medium hover:bg-slate-50 transition-colors"
-              >
-                Inicia sesión
-              </a>
+              {isLoggedIn ? (
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    type="button"
+                    onClick={() => setUserMenuOpen((prev) => !prev)}
+                    aria-expanded={userMenuOpen}
+                    aria-label="Menú de cuenta"
+                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-full border bg-transparent text-slate-800 text-xs sm:text-sm font-heading font-semibold transition-colors cursor-pointer ${
+                      userMenuOpen
+                        ? 'border-slate-400 bg-slate-50/70'
+                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60'
+                    }`}
+                  >
+                    <User className="w-4 h-4 text-slate-600 shrink-0" strokeWidth={1.7} />
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${
+                        userMenuOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
 
-              <a
-                href="/registro"
-                onClick={(e) => handleLinkClick(e, '/registro')}
-                className="inline-flex items-center justify-center px-4 py-2 rounded-[8px] bg-cta hover:bg-cta-600 text-white text-[14px] font-medium transition-colors"
-              >
-                Crear cuenta
-              </a>
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2.5 w-52 bg-white rounded-[16px] border border-slate-200/80 shadow-2xl p-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          if (onNavigate) onNavigate('/cuenta');
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-[10px] text-left text-xs sm:text-sm font-heading font-medium text-slate-800 hover:bg-slate-100/80 transition-colors cursor-pointer"
+                      >
+                        <Settings className="w-4 h-4 text-slate-600 shrink-0" strokeWidth={1.7} />
+                        <span>Configuración</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          if (typeof window !== 'undefined') {
+                            sessionStorage.removeItem('galsa_user_email');
+                            sessionStorage.removeItem('galsa_first_login');
+                            sessionStorage.removeItem('galsa_logged_in');
+                          }
+                          setIsLoggedIn(false);
+                          if (onNavigate) onNavigate('/login');
+                        }}
+                        className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-[10px] text-left text-xs sm:text-sm font-heading font-medium text-slate-700 hover:bg-slate-100/80 transition-colors cursor-pointer"
+                      >
+                        <LogOut className="w-4 h-4 text-slate-600 shrink-0" strokeWidth={1.7} />
+                        <span>Cerrar sesión</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <a
+                    href="/login"
+                    onClick={(e) => handleLinkClick(e, '/login')}
+                    className="inline-flex items-center justify-center px-4 py-2 rounded-[8px] border border-slate-200 bg-white text-slate-900 text-[14px] font-medium hover:bg-slate-50 transition-colors"
+                  >
+                    Inicia sesión
+                  </a>
+
+                  <a
+                    href="/registro"
+                    onClick={(e) => handleLinkClick(e, '/registro')}
+                    className="inline-flex items-center justify-center px-4 py-2 rounded-[8px] bg-cta hover:bg-cta-600 text-white text-[14px] font-medium transition-colors"
+                  >
+                    Crear cuenta
+                  </a>
+                </>
+              )}
             </div>
           </div>
 
@@ -518,20 +595,52 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           </div>
 
           <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-3">
-            <a
-              href="/login"
-              onClick={(e) => handleLinkClick(e, '/login')}
-              className="flex items-center justify-center text-center py-2.5 rounded-[8px] border border-slate-200 bg-white text-slate-900 font-medium text-sm hover:bg-slate-50"
-            >
-              Inicia sesión
-            </a>
-            <a
-              href="/registro"
-              onClick={(e) => handleLinkClick(e, '/registro')}
-              className="flex items-center justify-center text-center py-2.5 rounded-[8px] bg-cta hover:bg-cta-600 text-white font-medium text-sm transition-colors"
-            >
-              Crear cuenta
-            </a>
+            {isLoggedIn ? (
+              <>
+                <a
+                  href="/cuenta"
+                  onClick={(e) => handleLinkClick(e, '/cuenta')}
+                  className="flex items-center justify-center gap-2 text-center py-2.5 rounded-[8px] border border-slate-200 bg-transparent text-slate-900 font-medium text-sm hover:bg-slate-50"
+                >
+                  <Settings className="w-4 h-4 text-slate-600" strokeWidth={1.7} />
+                  <span>Configuración</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (typeof window !== 'undefined') {
+                      sessionStorage.removeItem('galsa_user_email');
+                      sessionStorage.removeItem('galsa_first_login');
+                      sessionStorage.removeItem('galsa_logged_in');
+                    }
+                    setIsLoggedIn(false);
+                    if (onNavigate) onNavigate('/login');
+                  }}
+                  className="flex items-center justify-center gap-2 text-center py-2.5 rounded-[8px] border border-slate-200 bg-transparent text-slate-700 font-medium text-sm hover:bg-slate-50 cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4 text-slate-600" strokeWidth={1.7} />
+                  <span>Cerrar sesión</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/login"
+                  onClick={(e) => handleLinkClick(e, '/login')}
+                  className="flex items-center justify-center text-center py-2.5 rounded-[8px] border border-slate-200 bg-white text-slate-900 font-medium text-sm hover:bg-slate-50"
+                >
+                  Inicia sesión
+                </a>
+                <a
+                  href="/registro"
+                  onClick={(e) => handleLinkClick(e, '/registro')}
+                  className="flex items-center justify-center text-center py-2.5 rounded-[8px] bg-cta hover:bg-cta-600 text-white font-medium text-sm transition-colors"
+                >
+                  Crear cuenta
+                </a>
+              </>
+            )}
           </div>
         </div>
       )}
