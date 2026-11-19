@@ -330,7 +330,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
 
                   <div className="pt-2">
                     <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
-                      Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
+                      Estimación ilustrativa sujeta a demanda y ocupación.
                     </p>
                   </div>
                 </div>
