@@ -38,6 +38,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
 
+  const [mobileCalendarOpen, setMobileCalendarOpen] = useState(false);
+  const mobileCalendarRef = useRef<HTMLDivElement>(null);
+
   // Bloquear scroll y permitir cerrar modales con tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -164,7 +167,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   ];
 
   return (
-    <div className="w-full py-4 sm:py-6 md:py-8 bg-white text-slate-900 text-left">
+    <div className="w-full pt-4 sm:pt-6 md:pt-8 pb-24 lg:pb-8 bg-white text-slate-900 text-left">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* ========================================================
@@ -491,9 +494,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
                 <div className="w-full md:w-64 aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 shrink-0">
                   <img
-                    src="/images/host-step-2.jpg"
+                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601312824-0-348388.webp"
                     alt="Atención GALSA"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
@@ -651,23 +654,193 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
       </div>
 
-      {/* BARRA MÓVIL INFERIOR CON PRECIO Y BOTÓN CONTINUAR */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 px-4 py-3 z-40 flex items-center justify-between">
-        <div>
-          <span className="text-lg font-heading font-extrabold text-slate-900 block leading-tight">
-            ${total.toLocaleString('es-MX')} MXN
-          </span>
-          <span className="text-xs font-sans text-slate-500">
-            {rentalDays} {rentalDays === 1 ? 'día' : 'días'} · Total
-          </span>
+      {/* BACKDROP MÓVIL PARA COTIZADOR FLOTANTE */}
+      {mobileSheetOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-30"
+          onClick={() => {
+            setMobileCalendarOpen(false);
+            setMobileSheetOpen(false);
+          }}
+        />
+      )}
+
+      {/* BARRA MÓVIL INFERIOR FLOTANTE CON CHEVRON PARA ABRIR/CERRAR COTIZADOR */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40">
+        {mobileSheetOpen && (
+          <div className="bg-surface border-t border-edge rounded-t-[24px] max-h-[80vh] overflow-y-auto px-4 sm:px-5 pt-4 pb-5 space-y-4">
+            {/* Cabecera del panel desplegable */}
+            <div className="flex items-center justify-between pb-3 border-b border-edge-light">
+              <div>
+                <h3 className="text-base font-heading font-extrabold text-ink-900">
+                  Cotiza tu renta
+                </h3>
+                <p className="text-xs font-sans text-ink-500">
+                  {vehicle.make} {vehicle.model} {vehicle.year}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileCalendarOpen(false);
+                  setMobileSheetOpen(false);
+                }}
+                aria-label="Cerrar cotizador"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-ink-700 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Ciudad y Sucursal */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <div className="p-3 rounded-xl border border-edge bg-subtle">
+                <span className="text-[10px] font-sans text-ink-400 block">Ciudad</span>
+                <span className="text-xs font-heading font-bold text-ink-900 block mt-0.5">Durango</span>
+                <span className="text-[10px] font-sans text-ink-400 block mt-0.5">Ubicación del vehículo</span>
+              </div>
+              <div className="p-3 rounded-xl border border-edge bg-subtle">
+                <span className="text-[10px] font-sans text-ink-400 block">Sucursal</span>
+                <span className="text-xs font-heading font-bold text-ink-900 block mt-0.5">Plaza 450</span>
+                <span className="text-[10px] font-sans text-ink-400 block mt-0.5">Recogida y devolución</span>
+              </div>
+            </div>
+
+            {/* Fechas y Horarios */}
+            <div ref={mobileCalendarRef} className="space-y-3">
+              <div className="grid grid-cols-2 gap-2.5">
+                <div>
+                  <label className="block text-[11px] font-sans text-ink-500 mb-1">Fecha de recogida</label>
+                  <button
+                    type="button"
+                    onClick={() => setMobileCalendarOpen((prev) => !prev)}
+                    className={`w-full px-3 py-2 rounded-xl border bg-surface text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
+                      mobileCalendarOpen
+                        ? 'border-cta ring-2 ring-cta/15 text-ink-900'
+                        : 'border-slate-300 text-ink-900'
+                    }`}
+                  >
+                    <span className="truncate">{formatDisplayDate(startDate)}</span>
+                    <Calendar className="w-3.5 h-3.5 text-ink-500 shrink-0" strokeWidth={1.5} />
+                  </button>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-sans text-ink-500 mb-1">Hora de entrega</label>
+                  <CustomDropdown
+                    options={TIME_DROPDOWN_OPTIONS}
+                    value={pickupTime}
+                    onChange={setPickupTime}
+                    displayValue={pickupTime}
+                    size="sm"
+                    align="right"
+                    triggerIcon={Clock}
+                    menuWidthClass="w-[220px]"
+                    footer="Horario: 08:00 a 20:00 hrs"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <div>
+                  <label className="block text-[11px] font-sans text-ink-500 mb-1">Fecha de devolución</label>
+                  <button
+                    type="button"
+                    onClick={() => setMobileCalendarOpen((prev) => !prev)}
+                    className={`w-full px-3 py-2 rounded-xl border bg-surface text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
+                      mobileCalendarOpen
+                        ? 'border-cta ring-2 ring-cta/15 text-ink-900'
+                        : 'border-slate-300 text-ink-900'
+                    }`}
+                  >
+                    <span className="truncate">{formatDisplayDate(endDate)}</span>
+                    <Calendar className="w-3.5 h-3.5 text-ink-500 shrink-0" strokeWidth={1.5} />
+                  </button>
+                </div>
+                <div>
+                  <label className="block text-[11px] font-sans text-ink-500 mb-1">Hora de devolución</label>
+                  <CustomDropdown
+                    options={TIME_DROPDOWN_OPTIONS}
+                    value={returnTime}
+                    onChange={setReturnTime}
+                    displayValue={returnTime}
+                    size="sm"
+                    align="right"
+                    triggerIcon={Clock}
+                    menuWidthClass="w-[220px]"
+                    footer="Horario: 08:00 a 20:00 hrs"
+                  />
+                </div>
+              </div>
+
+              {mobileCalendarOpen && (
+                <div className="pt-1 flex justify-center">
+                  <DateRangePicker
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={handleDateRangeChange}
+                    onClose={() => setMobileCalendarOpen(false)}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Desglose y Depósito */}
+            <div className="rounded-2xl bg-transparent p-3.5 border border-edge space-y-2 text-xs font-sans text-ink-600">
+              <div className="flex justify-between">
+                <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
+                <span className="font-semibold text-ink-900 tabular-nums">${baseSubtotal.toLocaleString('es-MX')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Tarifa de servicio GALSA</span>
+                <span className="font-semibold text-ink-900 tabular-nums">${serviceFee.toLocaleString('es-MX')}</span>
+              </div>
+              <div className="pt-2 border-t border-edge-light flex justify-between text-sm font-heading font-bold text-ink-900">
+                <span>Total de la renta</span>
+                <span className="tabular-nums">${total.toLocaleString('es-MX')}</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center p-3 rounded-xl border border-edge bg-transparent text-xs font-sans">
+              <span className="text-ink-600">Depósito en garantía (reembolsable)</span>
+              <span className="font-heading font-bold text-ink-900 tabular-nums">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+            </div>
+
+            <p className="text-[11px] text-center font-sans text-ink-400">
+              Cancelación gratuita hasta 48 horas antes de la entrega
+            </p>
+          </div>
+        )}
+
+        {/* Barra flotante siempre visible con botón de chevron + CTA Continuar */}
+        <div className="bg-surface border-t border-edge px-4 py-3 flex items-center justify-between gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileSheetOpen((prev) => !prev)}
+            aria-expanded={mobileSheetOpen}
+            aria-label={mobileSheetOpen ? 'Cerrar detalles de cotización' : 'Abrir detalles de cotización'}
+            className="flex items-center gap-2.5 text-left min-w-0 cursor-pointer"
+          >
+            <div className="min-w-0">
+              <span className="text-lg font-heading font-extrabold text-ink-900 block leading-tight tabular-nums">
+                ${total.toLocaleString('es-MX')} MXN
+              </span>
+              <span className="text-xs font-sans text-ink-500 block truncate">
+                {rentalDays} {rentalDays === 1 ? 'día' : 'días'} · Plaza 450
+              </span>
+            </div>
+            <span className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-ink-700 flex items-center justify-center shrink-0 transition-colors">
+              {mobileSheetOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleProceedToCheckout}
+            className="px-6 py-2.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer shrink-0 transition-colors"
+          >
+            Continuar
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={handleProceedToCheckout}
-          className="px-6 py-2.5 rounded-xl bg-cta text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer"
-        >
-          Continuar
-        </button>
       </div>
 
       {/* MODAL DE GALERÍA COMPLETA */}
