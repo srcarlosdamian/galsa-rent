@@ -20,8 +20,8 @@ export const StepFeatureCard: React.FC<StepFeatureCardProps> = ({
 }) => {
   return (
     <div className={`flex flex-col items-start ${className}`}>
-      <div className={`relative w-full ${aspectClassName} rounded-2xl overflow-visible bg-slate-100 mb-6`}>
-        <div className="absolute inset-0 rounded-2xl overflow-hidden bg-slate-100 flex items-center justify-center">
+      <div className={`relative w-full ${aspectClassName} rounded-2xl overflow-visible bg-slate-50 border-0 shadow-none mb-6`}>
+        <div className="absolute inset-0 rounded-2xl overflow-hidden bg-slate-50 border-0 shadow-none flex items-center justify-center">
           <img
             src={image}
             alt={title}
