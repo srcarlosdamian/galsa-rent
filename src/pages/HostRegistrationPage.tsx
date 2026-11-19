@@ -77,10 +77,10 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
               .
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
                 Folio: {folioCode}
               </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-heading font-semibold">
                 En revisión · 24-48 hrs
               </span>
             </div>
@@ -429,7 +429,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                     <span className="text-xs font-sans text-slate-500">
                       Marketplace GALSA
                     </span>
-                    <span className="text-[11px] font-heading font-semibold text-cta bg-cta-50 px-2 py-0.5 rounded-md">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-heading font-semibold text-cta bg-cta-50">
                       Revisión 24-48 hrs
                     </span>
                   </div>

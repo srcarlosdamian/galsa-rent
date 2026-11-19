@@ -665,7 +665,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                           </div>
                         )}
                         <div>
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-heading font-bold bg-cta-50 text-cta mb-1.5">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-heading font-semibold bg-cta-50 text-cta mb-1.5">
                             {res.statusBadge}
                           </span>
                           <h3 className="text-sm sm:text-base font-heading font-bold text-ink-900">

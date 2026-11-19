@@ -299,16 +299,16 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               <span className="font-semibold text-slate-900">{clientEmail || 'tu correo'}</span>.
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
                 Código: {reservationCode}
               </span>
               {isCardPaid ? (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-heading font-semibold">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-heading font-semibold">
                   <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
                   Pago de prueba registrado
                 </span>
               ) : (
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-heading font-semibold">
                   Pendiente de confirmación
                 </span>
               )}
@@ -1165,11 +1165,11 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                           Contrato digital y firma
                         </h3>
                         {isContractSigned ? (
-                          <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-heading font-semibold text-emerald-700 bg-emerald-50">
                             Firmado digitalmente ✓
                           </span>
                         ) : (
-                          <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-heading font-semibold text-slate-700 bg-slate-100">
                             Pendiente de firma
                           </span>
                         )}
@@ -1263,7 +1263,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <span className="text-xs font-sans text-slate-500">
                       {vehicle.category}
                     </span>
-                    <span className="text-[11px] font-heading font-semibold text-[#3D63FF] bg-blue-50 px-2 py-0.5 rounded-md">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-heading font-semibold text-cta bg-cta-50">
                       Verificado GALSA
                     </span>
                   </div>

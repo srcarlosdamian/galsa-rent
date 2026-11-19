@@ -331,7 +331,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.32</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.33</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1714,11 +1714,11 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-left">
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-heading font-medium">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-heading font-semibold">
                       5 extras · +$1,650
                     </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">1. Chip Neutro de Paso</div>
-                    <span className="text-[10px] font-mono text-slate-400 block">ReservationCheckoutView (Fechas, Extras)</span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">1. Chip Gris Neutral (Sin línea)</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">ReservationCheckoutView, SeoPage</span>
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
@@ -1735,51 +1735,51 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-cta-50 text-cta text-[11px] font-heading font-semibold">
-                      Verificado GALSA
-                    </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">3. Chip Marca / Verificado</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
+                        Verificado GALSA
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Folio: ANF-842910
+                      </span>
+                    </div>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">3. Chip Azul (Marca / Folio · Sin línea)</div>
                     <span className="text-[10px] font-mono text-slate-400 block">ReservationCheckoutView, HostRegistration</span>
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
-                      Folio: ANF-842910
-                    </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">4. Pill Folio / Filtro Activo</div>
-                    <span className="text-[10px] font-mono text-slate-400 block">HostRegistration, CatalogPage</span>
-                  </div>
-
-                  <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-heading font-semibold">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-heading font-semibold">
                       <ShieldCheck className="w-3.5 h-3.5" />
                       index, follow
                     </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">5. Chip Estado Positivo / SEO</div>
-                    <span className="text-[10px] font-mono text-slate-400 block">SeoPage, AccountPage</span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">4. Chip Verde Positivo (Sin línea)</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">SeoPage, AccountPage, Checkout</span>
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-heading font-semibold">
+                      <Clock className="w-3.5 h-3.5" />
                       Pendiente de confirmación
                     </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">6. Chip Estado Pendiente</div>
-                    <span className="text-[10px] font-mono text-slate-400 block">AccountPage, HostRegistration</span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">5. Chip Amarillo Pendiente (Sin línea)</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">AccountPage, HostRegistration, Checkout</span>
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono text-xs font-semibold">
-                      /anfitriones/registro
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-700 text-xs font-heading font-semibold">
+                      <AlertCircle className="w-3.5 h-3.5" />
+                      Cancelada / Alerta
                     </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">7. Chip de Ruta / Código</div>
-                    <span className="text-[10px] font-mono text-slate-400 block">SeoPage, DesignSystemPage</span>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">6. Chip Rojo Alerta (Sin línea)</div>
+                    <span className="text-[10px] font-mono text-slate-400 block">AccountPage, Estados de error</span>
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                      v2.7.0
+                      v2.8.33
                     </span>
-                    <div className="text-[11px] font-heading font-bold text-slate-800">8. Chip de Versión QA</div>
+                    <div className="text-[11px] font-heading font-bold text-slate-800">7. Chip de Versión QA</div>
                     <span className="text-[10px] font-mono text-slate-400 block">Footer, DesignSystemPage</span>
                   </div>
                 </div>
@@ -2603,10 +2603,10 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       ¡Solicitud / Reserva registrada!
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
                         Folio: ANF-842910
                       </span>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-heading font-semibold">
                         En revisión · 24-48 hrs
                       </span>
                     </div>
@@ -3032,7 +3032,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.32</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.33</span>
                     </div>
                   </div>
                 </div>
