@@ -207,30 +207,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         </div>
 
         {/* ========================================================
-            TÍTULO Y ENCABEZADO DEL VEHÍCULO
-           ======================================================== */}
-        <div className="pb-5">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
-            {vehicle.make} {vehicle.model} {vehicle.year}
-          </h1>
-          <div className="flex items-center gap-2 mt-1.5 text-xs sm:text-sm font-sans text-slate-600 flex-wrap">
-            <div className="flex items-center gap-1 text-slate-900 font-semibold">
-              <Star className="w-4 h-4 fill-cta-300 text-cta-300" />
-              <span>{ratingScore}</span>
-            </div>
-            <span>·</span>
-            <span className="underline cursor-pointer">{reviewCount} evaluaciones</span>
-            <span>·</span>
-            <span>{vehicle.category}</span>
-            <span>·</span>
-            <span className="flex items-center gap-1 text-slate-500">
-              <MapPin className="w-3.5 h-3.5" />
-              Durango, México (Sucursal Plaza 450)
-            </span>
-          </div>
-        </div>
-
-        {/* ========================================================
             GALERÍA DE FOTOS (1 principal izquierda + 2 apiladas derecha)
            ======================================================== */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 mb-8 sm:mb-10">
@@ -322,24 +298,46 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           {/* LADO IZQUIERDO: DETALLES DEL AUTO, ESPECIFICACIONES, REGLAS Y RESEÑAS */}
           <div className="lg:col-span-7 space-y-8">
             
-            {/* Host info */}
+            {/* TÍTULO, ENCABEZADO Y DESCRIPCIÓN DEL VEHÍCULO (Debajo de la galería) */}
             <div className="pb-6 border-b border-slate-100 space-y-4">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
-                    Unidad verificada por GALSA Rent
-                  </h2>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
-                  </p>
-                </div>
-                <div className="w-12 h-12 rounded-2xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-6 h-6" />
+              <div>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
+                  {vehicle.make} {vehicle.model} {vehicle.year}
+                </h1>
+                <div className="flex items-center gap-2 mt-1.5 text-xs sm:text-sm font-sans text-slate-600 flex-wrap">
+                  <div className="flex items-center gap-1 text-slate-900 font-semibold">
+                    <Star className="w-4 h-4 fill-cta-300 text-cta-300" />
+                    <span>{ratingScore}</span>
+                  </div>
+                  <span>·</span>
+                  <span className="underline cursor-pointer">{reviewCount} evaluaciones</span>
+                  <span>·</span>
+                  <span>{vehicle.category}</span>
+                  <span>·</span>
+                  <span className="flex items-center gap-1 text-slate-500">
+                    <MapPin className="w-3.5 h-3.5" />
+                    Durango, México (Sucursal Plaza 450)
+                  </span>
                 </div>
               </div>
               <p className="text-sm font-sans text-slate-600 leading-relaxed">
                 {vehicle.make} {vehicle.model} {vehicle.year} verificado para entrega inmediata sin filas en México. Kilometraje libre, contrato digital firmado desde tu celular y depósito reembolsable.
               </p>
+            </div>
+
+            {/* Host info */}
+            <div className="pb-6 border-b border-slate-100 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
+                  Unidad verificada por GALSA Rent
+                </h2>
+                <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                  Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
+                </p>
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
             </div>
 
             {/* Lo que ofrece este vehículo */}
