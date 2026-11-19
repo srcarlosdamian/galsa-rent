@@ -28,6 +28,7 @@ interface SeoItem {
   category: SeoCategory;
   title: string;
   description: string;
+  focusKeyword?: string;
   canonical: string;
   image: string;
   imageAlt?: string;
@@ -89,6 +90,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
         category,
         title: meta.title,
         description: meta.description,
+        focusKeyword: meta.focusKeyword,
         canonical: meta.canonical,
         image: meta.ogImage.url,
         imageAlt: meta.ogImage.alt,
@@ -105,6 +107,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
         category: 'vehicles',
         title: meta.title,
         description: meta.description,
+        focusKeyword: meta.focusKeyword,
         canonical: meta.canonical,
         image: meta.ogImage.url,
         imageAlt: meta.ogImage.alt,
@@ -121,6 +124,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
         category: 'blog',
         title: meta.title,
         description: meta.description,
+        focusKeyword: meta.focusKeyword,
         canonical: meta.canonical,
         image: meta.ogImage.url,
         imageAlt: meta.ogImage.alt,
@@ -137,6 +141,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
         category: 'checkout',
         title: meta.title,
         description: meta.description,
+        focusKeyword: meta.focusKeyword,
         canonical: meta.canonical,
         image: meta.ogImage.url,
         imageAlt: meta.ogImage.alt,
@@ -174,7 +179,8 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
       const matchesSearch =
         item.path.toLowerCase().includes(q) ||
         item.title.toLowerCase().includes(q) ||
-        item.description.toLowerCase().includes(q);
+        item.description.toLowerCase().includes(q) ||
+        (item.focusKeyword || '').toLowerCase().includes(q);
 
       const matchesCategory =
         categoryFilter === 'all' || item.category === categoryFilter;
@@ -448,6 +454,11 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[11px] font-heading font-semibold">
                           <ShieldCheck className="w-3 h-3" />
                           index, follow
+                        </span>
+                      )}
+                      {item.focusKeyword && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-cta-50 text-cta border border-cta-200/70 text-[11px] font-heading font-semibold">
+                          Frase clave: {item.focusKeyword}
                         </span>
                       )}
                     </div>

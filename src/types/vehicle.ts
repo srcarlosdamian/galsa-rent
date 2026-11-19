@@ -60,6 +60,7 @@ export interface SearchState {
 export interface RouteMetadata {
   title: string;
   description: string;
+  focusKeyword?: string;
   canonical: string;
   ogTitle: string;
   ogDescription: string;
