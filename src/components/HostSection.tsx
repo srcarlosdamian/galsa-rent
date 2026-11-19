@@ -382,14 +382,11 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             <div className="relative rounded-[24px] bg-gradient-to-r from-cta-50 via-cta-100 to-cta-200 overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-12 items-center">
                 <div className="md:col-span-7 p-6 sm:p-10 space-y-2.5 text-left">
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-ink-500 block">
-                    CÓMO FUNCIONA
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-ink-900 tracking-tight leading-tight">
-                    Cómo ganar dinero con tu auto en<br className="hidden sm:inline" /> GALSA
+                  <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-extrabold text-ink-900 tracking-tight leading-[1.15]">
+                    Tarifas claras y clientes<br className="hidden sm:inline" /> 100% verificados
                   </h3>
                   <p className="text-xs sm:text-sm font-sans text-ink-600 leading-relaxed">
-                    Lo que cuesta publicar tu auto y quién puede rentarlo.
+                    Recibe el 100% de tu tarifa diaria con conductores validados.
                   </p>
                 </div>
                 <div className="md:col-span-5 h-44 sm:h-52 md:h-56 flex items-end justify-end overflow-hidden">
