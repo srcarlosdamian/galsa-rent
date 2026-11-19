@@ -317,9 +317,10 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       </section>
 
       {/* BANDA DESTACADA: 3 pilares de izquierda a derecha en desktop, scroll infinito en mobile */}
-      <section className="py-10 sm:py-12 bg-white border-y border-slate-100 overflow-hidden">
+      <section className="bg-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
-          <div className="overflow-hidden -mx-4 md:mx-0 md:overflow-visible">
+          <div className="py-10 sm:py-12 border-y border-slate-100">
+            <div className="overflow-hidden -mx-4 md:mx-0 md:overflow-visible">
             <div className="animate-infinite-scroll-mobile md:grid-cols-3 md:gap-8">
               {[...HERO_HIGHLIGHTS, ...HERO_HIGHLIGHTS].map((item, idx) => {
                 const Icon = item.icon;
@@ -347,6 +348,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 );
               })}
             </div>
+          </div>
           </div>
         </div>
       </section>
