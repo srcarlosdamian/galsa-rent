@@ -379,7 +379,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
 
           {/* Sub-sección: Banner de transparencia + 2 tarjetas (Tarifa del marketplace y Quién puede rentar tu auto) */}
           <div className="mt-20 sm:mt-28 space-y-6">
-            <div className="relative rounded-[24px] bg-gradient-to-r from-cta-50 via-cta-100 to-cta-200 overflow-hidden">
+            <div className="relative rounded-[24px] bg-cta-50 overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-12 items-center">
                 <div className="md:col-span-7 p-6 sm:p-10 space-y-2.5 text-left">
                   <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-extrabold text-ink-900 tracking-tight leading-[1.15]">
