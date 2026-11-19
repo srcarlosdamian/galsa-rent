@@ -5,10 +5,20 @@ import { CatalogMap } from '../components/CatalogMap';
 import { Vehicle, SearchState } from '../types/vehicle';
 import { DateRangePicker } from '../components/DateRangePicker';
 import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from '../components/CustomDropdown';
-import { 
-  Check, ChevronDown, SlidersHorizontal, RotateCcw, 
-  ArrowLeft, ArrowRight, Copy, Clock,
-  MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X, Search
+import { SEARCH_LOCATION_OPTIONS } from '../data/dropdownOptions';
+import {
+  Check,
+  ChevronDown,
+  SlidersHorizontal,
+  RotateCcw,
+  ArrowLeft,
+  ArrowRight,
+  Copy,
+  Clock,
+  MapPin,
+  Calendar,
+  X,
+  Search,
 } from 'lucide-react';
 
 interface CatalogPageProps {
@@ -17,57 +27,6 @@ interface CatalogPageProps {
   searchState?: SearchState;
   onSearchChange?: (newSearch: SearchState) => void;
 }
-
-const LOCATION_OPTIONS = [
-  {
-    id: 'current',
-    title: 'Ubicación actual',
-    subtitle: null,
-    icon: Navigation,
-    value: 'Mi ubicación actual',
-  },
-  {
-    id: 'anywhere',
-    title: 'Cualquier lugar',
-    subtitle: 'Ver todos los autos',
-    icon: Globe,
-    value: '',
-  },
-  {
-    id: 'durango-main',
-    title: 'Sucursal Plaza 450, Durango',
-    subtitle: 'Punto oficial de entrega · Blvd. Guadiana',
-    icon: Building2,
-    value: 'Sucursal Plaza 450, Durango',
-  },
-  {
-    id: 'dgo-airport',
-    title: 'DGO – Aeropuerto Internacional de Durango',
-    subtitle: 'Entrega programada en terminal aérea',
-    icon: Plane,
-    value: 'Aeropuerto Internacional de Durango (DGO)',
-  },
-  {
-    id: 'centro-durango',
-    title: 'Centro Histórico, Durango',
-    subtitle: 'Zona turística y comercial',
-    icon: Hotel,
-    value: 'Centro Histórico, Durango',
-  },
-  {
-    id: 'central-camionera',
-    title: 'Central de Autobuses de Durango',
-    subtitle: 'Terminal terrestre Blvd. Francisco Villa',
-    icon: Train,
-    value: 'Central de Autobuses de Durango',
-  },
-];
-
-const TIME_OPTIONS = [
-  '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
-  '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
-  '19:00', '20:00', '21:00', '22:00'
-];
 
 export const CatalogPage: React.FC<CatalogPageProps> = ({ 
   onSelectVehicle, 
@@ -239,9 +198,9 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
 
   // Opciones de ubicación filtradas para el buscador móvil
   const filteredLocationOptions = useMemo(() => {
-    if (!mobileLocationSearch.trim()) return LOCATION_OPTIONS;
+    if (!mobileLocationSearch.trim()) return SEARCH_LOCATION_OPTIONS;
     const q = mobileLocationSearch.toLowerCase();
-    return LOCATION_OPTIONS.filter(
+    return SEARCH_LOCATION_OPTIONS.filter(
       (loc) => loc.title.toLowerCase().includes(q) || (loc.subtitle && loc.subtitle.toLowerCase().includes(q)) || loc.value.toLowerCase().includes(q)
     );
   }, [mobileLocationSearch]);
@@ -641,7 +600,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="space-y-1">
-                  {LOCATION_OPTIONS.map((loc) => {
+                  {SEARCH_LOCATION_OPTIONS.map((loc) => {
                     const Icon = loc.icon;
                     return (
                       <button

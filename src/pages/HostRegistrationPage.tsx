@@ -8,75 +8,13 @@ import {
   MapPin,
   ShieldCheck,
 } from 'lucide-react';
-import { CustomDropdown, DropdownOption } from '../components/CustomDropdown';
+import { CustomDropdown } from '../components/CustomDropdown';
+import { HOST_CITY_OPTIONS } from '../data/dropdownOptions';
 
 interface HostRegistrationPageProps {
   onNavigate?: (path: string) => void;
   onBack?: () => void;
 }
-
-const CITY_DROPDOWN_OPTIONS: DropdownOption[] = [
-  {
-    value: 'Durango, Dgo.',
-    label: 'Durango, Dgo.',
-    subtitle: 'Durango · Sucursal Plaza 450',
-    icon: MapPin,
-  },
-  {
-    value: 'Ciudad de México',
-    label: 'Ciudad de México',
-    subtitle: 'CDMX · Zona Metropolitana',
-    icon: MapPin,
-  },
-  {
-    value: 'Guadalajara, Jal.',
-    label: 'Guadalajara, Jal.',
-    subtitle: 'Jalisco · Área Metropolitana',
-    icon: MapPin,
-  },
-  {
-    value: 'Monterrey, N.L.',
-    label: 'Monterrey, N.L.',
-    subtitle: 'Nuevo León · Área Metropolitana',
-    icon: MapPin,
-  },
-  {
-    value: 'Mazatlán, Sin.',
-    label: 'Mazatlán, Sin.',
-    subtitle: 'Sinaloa · Zona Turística',
-    icon: MapPin,
-  },
-  {
-    value: 'Torreón, Coah.',
-    label: 'Torreón, Coah.',
-    subtitle: 'Coahuila · Comarca Lagunera',
-    icon: MapPin,
-  },
-  {
-    value: 'Querétaro, Qro.',
-    label: 'Querétaro, Qro.',
-    subtitle: 'Querétaro · Centro',
-    icon: MapPin,
-  },
-  {
-    value: 'Puebla, Pue.',
-    label: 'Puebla, Pue.',
-    subtitle: 'Puebla · Área Metropolitana',
-    icon: MapPin,
-  },
-  {
-    value: 'Cancún, Q.R.',
-    label: 'Cancún, Q.R.',
-    subtitle: 'Quintana Roo · Riviera Maya',
-    icon: MapPin,
-  },
-  {
-    value: 'Otra ciudad',
-    label: 'Otra ciudad en México',
-    subtitle: 'Cobertura nacional en expansión',
-    icon: MapPin,
-  },
-];
 
 export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
   onNavigate,
@@ -370,7 +308,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                         Ciudad
                       </label>
                       <CustomDropdown
-                        options={CITY_DROPDOWN_OPTIONS}
+                        options={HOST_CITY_OPTIONS}
                         value={city}
                         onChange={setCity}
                         placeholder="Selecciona tu ciudad"

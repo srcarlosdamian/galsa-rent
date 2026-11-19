@@ -1,63 +1,53 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, premium digital mobility platform inspired by Virtuo and Airbnb
+description: Minimalist, clean, flat digital mobility platform inspired by Virtuo and Airbnb (v2.2.99)
 colors:
   primary: "#3D63FF"
-  primary-hover: "#2A4EEB"
+  primary-hover: "#1D4ED8"
+  highlight-blue: "#D8E8FF"
+  host-sky: "#8EB5FF"
   neutral-bg: "#FFFFFF"
-  neutral-surface: "#FFFFFF"
-  neutral-subtle: "#FAFAFA"
-  neutral-border: "#EBEBEB"
-  neutral-dark: "#111827"
-  text-primary: "#111827"
-  text-secondary: "#4B5563"
-  text-muted: "#6B7280"
+  neutral-surface: "#F8FAFC"
+  neutral-border: "#E2E8F0"
+  neutral-dark: "#0F172A"
+  text-primary: "#0F172A"
+  text-secondary: "#475569"
+  text-muted: "#64748B"
 typography:
   display:
-    fontFamily: '"Google Sans", "Google Sans Display", system-ui, sans-serif'
-    fontSize: "3.75rem"
-    fontWeight: 900
-    lineHeight: 1.08
-    letterSpacing: "-0.03em"
-  heading:
-    fontFamily: '"Google Sans", "Google Sans Display", system-ui, sans-serif'
-    fontSize: "2.25rem"
+    fontFamily: '"Google Sans", "Google Sans Display", "Inter", system-ui, sans-serif'
     fontWeight: 800
-    lineHeight: 1.2
+    lineHeight: 1.08
     letterSpacing: "-0.02em"
+  heading:
+    fontFamily: '"Google Sans", "Google Sans Display", "Inter", system-ui, sans-serif'
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: "-0.015em"
   body:
     fontFamily: '"Inter", system-ui, sans-serif'
     fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.6
-    letterSpacing: "0em"
+    numericVariant: "tabular-nums"
 rounded:
-  sm: "8px"
-  md: "12px"
-  lg: "16px"
-  xl: "24px"
-  pill: "9999px"
-spacing:
-  xs: "4px"
-  sm: "8px"
-  md: "16px"
-  lg: "24px"
-  xl: "32px"
-  2xl: "48px"
-components:
-  button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.neutral-bg}"
-    rounded: "{rounded.pill}"
-    padding: "14px 28px"
-  button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
+  button: "12px (rounded-xl)"
+  card: "16px (rounded-2xl)"
+  summary-card: "24px (rounded-[24px])"
+  popover: "20px (rounded-[20px])"
+  pill: "9999px (rounded-full)"
 ---
 
-# Design System & Guidelines
+# GALSA Rent Design System & Guidelines (`v2.2.99`)
 
-## 1. Design Principles
-- **Clarity over Clutter**: Extreme minimalism inspired by Airbnb and Virtuo. Generous white space, clear contrast, flat design without heavy muddy gray backgrounds or stacked drop shadows.
-- **Sparing Color Usage**: Primary CTA (`#3D63FF` de Figma) is strictly reserved for primary call-to-actions (hero action, checkout/pay button). Everything else is pristine black, white, and subtle edge borders.
-- **Micro-Delight & Finish**: Browser custom scrollbars, cohesive selection highlight, interactive carousels with smooth easing, and tabular numerals.
-- **Typography**: Google Sans / Plus Jakarta Sans with crisp hierarchy and tight tracking for headings.
+## 1. Principios de Diseño
+- **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`. La retroalimentación visual se logra con cambio de tono, borde o escala táctil (`active:scale-[0.98]`).
+- **Contenedores lineales:** formularios, pasos de checkout (`ReservationCheckoutView`), registro de anfitriones (`HostRegistrationPage`) y desgloses de precio (`VehicleDetailView`) usan contornos lineales `rounded-2xl border border-slate-200` y divisores `divide-y divide-slate-100` sobre blanco limpio (`bg-transparent` en desgloses de producto).
+- **Popovers flotantes elevados:** la elevación (`shadow-2xl` con `rounded-[20px]`) se reserva exclusivamente para menús emergentes (`CustomDropdown`, `DateRangePicker`, buscador) dentro de padres con `overflow-visible`.
+- **Cero `<select>` nativos:** todo selector usa `CustomDropdown` con cápsula gris cuadrada `w-9 h-9 rounded-[8px]` y estado activo `bg-blue-50/70`.
+- **Modo prototipo:** los formularios y pasos secuenciales siempre permiten avanzar o enviar solicitudes para facilitar pruebas de flujo de extremo a extremo.
+
+## 2. Arquitectura Atómica y Componentes Consolidados
+- **Datos compartidos:** `src/data/dropdownOptions.ts` centraliza `SEARCH_LOCATION_OPTIONS`, `SEARCH_VEHICLE_TYPES`, `HOST_CITY_OPTIONS` y `CATALOG_SORT_OPTIONS`.
+- **Átomos & Moléculas clave:** `GalsaLogo`, `CustomDropdown`, `DateRangePicker`, `DocumentUploadCard`, `StepFeatureCard` (compartido por `FourStepProcess` y `HostSection`).
+- **Layouts & Organismos:** `AuthCardLayout` (compartido por `LoginPage`, `RegisterPage` y `ForgotPasswordPage`), `SearchContainer`, `VehicleCard`, `VehicleDetailView`, `ReservationCheckoutView`, `HostRegistrationPage`, `SeoPage` y `DesignSystemPage`.

@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  MapPin, Calendar, Search, ChevronDown, 
-  Navigation, Globe, Plane, Building2, Train, Hotel,
-  CarFront, Compass, Briefcase, Zap, Sparkles
+import {
+  MapPin,
+  Calendar,
+  Search,
+  ChevronDown,
+  CarFront,
 } from 'lucide-react';
 import { SearchState } from '../types/vehicle';
 import { DateRangePicker } from './DateRangePicker';
+import { SEARCH_LOCATION_OPTIONS, SEARCH_VEHICLE_TYPES } from '../data/dropdownOptions';
 
 interface SearchContainerProps {
   searchState: SearchState;
@@ -14,82 +17,6 @@ interface SearchContainerProps {
   totalResultsCount: number;
   className?: string;
 }
-
-const LOCATION_OPTIONS = [
-  {
-    id: 'current',
-    title: 'Ubicación actual',
-    subtitle: null,
-    icon: Navigation,
-    value: 'Mi ubicación actual',
-  },
-  {
-    id: 'anywhere',
-    title: 'Cualquier lugar',
-    subtitle: 'Ver todos los autos',
-    icon: Globe,
-    value: '',
-  },
-  {
-    id: 'durango-main',
-    title: 'Sucursal Plaza 450, Durango',
-    subtitle: 'Punto oficial de entrega · Blvd. Guadiana',
-    icon: Building2,
-    value: 'Sucursal Plaza 450, Durango',
-  },
-  {
-    id: 'dgo-airport',
-    title: 'DGO – Aeropuerto Internacional de Durango',
-    subtitle: 'Entrega programada en terminal aérea',
-    icon: Plane,
-    value: 'Aeropuerto Internacional de Durango (DGO)',
-  },
-  {
-    id: 'centro-durango',
-    title: 'Centro Histórico, Durango',
-    subtitle: 'Zona turística y comercial',
-    icon: Hotel,
-    value: 'Centro Histórico, Durango',
-  },
-  {
-    id: 'central-camionera',
-    title: 'Central de Autobuses de Durango',
-    subtitle: 'Terminal terrestre Blvd. Francisco Villa',
-    icon: Train,
-    value: 'Central de Autobuses de Durango',
-  },
-];
-
-const VEHICLE_TYPES = [
-  {
-    id: 'all',
-    title: 'Todos los vehículos',
-    subtitle: 'Ver toda la flota disponible',
-    icon: Sparkles,
-    value: '',
-  },
-  {
-    id: 'suv',
-    title: 'SUV / Aventura',
-    subtitle: 'Camionetas y espacio para viajes',
-    icon: Compass,
-    value: 'SUV / Aventura',
-  },
-  {
-    id: 'sedan',
-    title: 'Sedán / Negocios',
-    subtitle: 'Confort ejecutivo y traslados urbanos',
-    icon: Briefcase,
-    value: 'Sedán / Negocios',
-  },
-  {
-    id: 'deportivo',
-    title: 'Deportivo / Estilo',
-    subtitle: 'Diseño prémium y alta gama',
-    icon: Zap,
-    value: 'Deportivo / Estilo',
-  },
-];
 
 export const SearchContainer: React.FC<SearchContainerProps> = ({
   searchState,
@@ -219,7 +146,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="space-y-1">
-                {LOCATION_OPTIONS.map((loc) => {
+                {SEARCH_LOCATION_OPTIONS.map((loc) => {
                   const Icon = loc.icon;
                   return (
                     <button
@@ -349,7 +276,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="space-y-1">
-                {VEHICLE_TYPES.map((typeItem) => {
+                {SEARCH_VEHICLE_TYPES.map((typeItem) => {
                   const Icon = typeItem.icon;
                   const isSelected = (!searchState.category && typeItem.value === '') || searchState.category === typeItem.value;
                   return (

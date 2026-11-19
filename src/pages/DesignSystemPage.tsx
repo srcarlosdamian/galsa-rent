@@ -1,41 +1,88 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Palette, Layers, Box, Sparkles, Copy, Check, ArrowRight, ArrowLeft,
-  Search, Calendar, Car, ChevronDown, Star, ShieldCheck, Loader2,
-  ExternalLink, MessageCircle, Heart, Filter, Grid, MapPin, 
-  CheckCircle2, AlertCircle, Info, Fuel, Users, Gauge, Clock, SlidersHorizontal,
-  FileText, UploadCloud, X, Navigation, Globe, Building2, Plane, CarFront,
-  Compass, Briefcase, Zap, ArrowUpDown
+import {
+  Palette,
+  Layers,
+  Box,
+  Sparkles,
+  Copy,
+  Check,
+  ArrowRight,
+  ArrowLeft,
+  Search,
+  Calendar,
+  ChevronDown,
+  ShieldCheck,
+  Loader2,
+  ExternalLink,
+  Heart,
+  Grid,
+  MapPin,
+  CheckCircle2,
+  AlertCircle,
+  Fuel,
+  Users,
+  Gauge,
+  Clock,
+  SlidersHorizontal,
+  X,
+  CarFront,
+  ArrowUpDown,
+  Landmark,
+  Globe,
+  ClipboardCheck,
+  UserPlus,
+  Car,
 } from 'lucide-react';
 import { DocumentUploadCard } from '../components/DocumentUploadCard';
-import { CustomDropdown, TIME_DROPDOWN_OPTIONS, DropdownOption } from '../components/CustomDropdown';
+import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from '../components/CustomDropdown';
 import { DateRangePicker } from '../components/DateRangePicker';
+import { SearchContainer } from '../components/SearchContainer';
+import { VehicleCard } from '../components/VehicleCard';
+import { StepFeatureCard } from '../components/StepFeatureCard';
+import { VEHICLES } from '../data/vehicles';
+import {
+  LOCATION_DROPDOWN_OPTIONS,
+  VEHICLE_TYPE_DROPDOWN_OPTIONS,
+  HOST_CITY_OPTIONS,
+  CATALOG_SORT_OPTIONS,
+} from '../data/dropdownOptions';
+import { SearchState } from '../types/vehicle';
 
 interface DesignSystemPageProps {
   onNavigate?: (path: string) => void;
 }
 
-type TabType = 'all' | 'tokens' | 'atoms' | 'molecules' | 'organisms';
+type TabType = 'all' | 'tokens' | 'atoms' | 'molecules' | 'organisms' | 'audit';
 
-const DS_LOCATION_OPTIONS: DropdownOption[] = [
-  { value: 'Mi ubicación actual', label: 'Ubicación actual', icon: Navigation },
-  { value: 'Cualquier lugar', label: 'Cualquier lugar', subtitle: 'Ver todos los autos', icon: Globe },
-  { value: 'Sucursal Plaza 450, Durango', label: 'Sucursal Plaza 450, Durango', subtitle: 'Punto oficial de entrega · Blvd. Guadiana', icon: Building2 },
-  { value: 'Aeropuerto Internacional de Durango (DGO)', label: 'DGO – Aeropuerto Internacional', subtitle: 'Entrega programada en terminal aérea', icon: Plane },
-];
+interface AuditComponentEntry {
+  file: string;
+  level: 'Átomo' | 'Molécula' | 'Organismo' | 'Layout / Vista';
+  purpose: string;
+  consumers: string;
+}
 
-const DS_VEHICLE_OPTIONS: DropdownOption[] = [
-  { value: '', label: 'Todos los vehículos', subtitle: 'Ver toda la flota disponible', icon: Sparkles },
-  { value: 'SUV / Aventura', label: 'SUV / Aventura', subtitle: 'Camionetas y espacio para viajes', icon: Compass },
-  { value: 'Sedán / Negocios', label: 'Sedán / Negocios', subtitle: 'Confort ejecutivo y traslados urbanos', icon: Briefcase },
-  { value: 'Deportivo / Estilo', label: 'Deportivo / Estilo', subtitle: 'Diseño prémium y alta gama', icon: Zap },
-];
-
-const DS_SORT_OPTIONS: DropdownOption[] = [
-  { value: 'recommended', label: 'Recomendados', subtitle: 'Selección destacada GALSA', icon: Sparkles },
-  { value: 'price-asc', label: 'Precio: menor a mayor', subtitle: 'Desde la tarifa más accesible', icon: ArrowUpDown },
-  { value: 'price-desc', label: 'Precio: mayor a menor', subtitle: 'Gama alta y equipamiento completo', icon: ArrowUpDown },
-  { value: 'year-desc', label: 'Año más reciente', subtitle: 'Modelos 2025 y 2026 primero', icon: Calendar },
+const COMPONENT_INVENTORY: AuditComponentEntry[] = [
+  { file: 'GalsaLogo.tsx', level: 'Átomo', purpose: 'Isotipo / logotipo vectorial de marca', consumers: 'Header, Footer' },
+  { file: 'CustomDropdown.tsx', level: 'Molécula', purpose: 'Selector flotante estilo Home (z-[70])', consumers: 'VehicleDetailView, CatalogPage, Checkout, HostRegistrationPage, DS' },
+  { file: 'DateRangePicker.tsx', level: 'Molécula', purpose: 'Calendario doble mes de rango de fechas', consumers: 'SearchContainer, CatalogPage, VehicleDetailView, Checkout, DS' },
+  { file: 'DocumentUploadCard.tsx', level: 'Molécula', purpose: 'Carga de documentos con progreso e idle', consumers: 'ReservationCheckoutView, AccountPage, DesignSystemPage' },
+  { file: 'StepFeatureCard.tsx', level: 'Molécula', purpose: 'Tarjeta 16:10/4:3 con badge flotante azul', consumers: 'FourStepProcess, HostSection, DesignSystemPage' },
+  { file: 'AuthCardLayout.tsx', level: 'Layout / Vista', purpose: 'Cascarón dividido 2 columnas para auth', consumers: 'LoginPage, RegisterPage, ForgotPasswordPage' },
+  { file: 'SearchContainer.tsx', level: 'Organismo', purpose: 'Buscador principal Hero (ubicación, fechas, tipo)', consumers: 'Home (App.tsx), DesignSystemPage' },
+  { file: 'VehicleCard.tsx', level: 'Organismo', purpose: 'Tarjeta de auto (grid, horizontal y skeleton)', consumers: 'Home (App.tsx), CatalogPage, DesignSystemPage' },
+  { file: 'CatalogMap.tsx', level: 'Organismo', purpose: 'Mapa interactivo Leaflet con pines de precio', consumers: 'CatalogPage' },
+  { file: 'VehicleDetailView.tsx', level: 'Organismo', purpose: 'Vista de producto: galería, modal 1+2 y cotizador', consumers: 'App.tsx (/vehiculos/:slug)' },
+  { file: 'ReservationCheckoutView.tsx', level: 'Organismo', purpose: 'Checkout en 5 pasos lineales + confirmación', consumers: 'App.tsx (/reservar/:slug)' },
+  { file: 'Header.tsx', level: 'Organismo', purpose: 'Cabecera principal y header mínimo checkout/registro', consumers: 'App.tsx (global)' },
+  { file: 'Footer.tsx', level: 'Organismo', purpose: 'Pie de página + listón QA (SEO & DS)', consumers: 'App.tsx (global)' },
+  { file: 'VirtuoExperienceSection.tsx', level: 'Organismo', purpose: 'Bloque de propuesta de valor en Home', consumers: 'App.tsx (Home)' },
+  { file: 'FourStepProcess.tsx', level: 'Organismo', purpose: 'Flujo de renta en 4 pasos (móvil + desktop)', consumers: 'App.tsx (Home)' },
+  { file: 'UseCasesSection.tsx', level: 'Organismo', purpose: 'Tarjetas de casos de uso por categoría', consumers: 'App.tsx (Home)' },
+  { file: 'TrustSafetySection.tsx', level: 'Organismo', purpose: 'Garantías de cobertura y verificación', consumers: 'App.tsx (Home), TrustPage' },
+  { file: 'HostBanner.tsx', level: 'Organismo', purpose: 'Banner promocional hacia /anfitriones', consumers: 'App.tsx (Home)' },
+  { file: 'HostSection.tsx', level: 'Organismo', purpose: 'Landing de anfitriones con calculadora e ingresos', consumers: 'App.tsx (/anfitriones)' },
+  { file: 'FaqSection.tsx', level: 'Organismo', purpose: 'Preguntas frecuentes en acordeón de 2 cols', consumers: 'App.tsx (Home), FaqPage' },
+  { file: 'FinalCtaSection.tsx', level: 'Organismo', purpose: 'Sección de cierre y llamado a catálogo', consumers: 'App.tsx (Home)' },
 ];
 
 export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }) => {
@@ -44,20 +91,36 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [isFaqOpen, setIsFaqOpen] = useState(false);
   const [toggleState, setToggleState] = useState(true);
+  const [termsChecked, setTermsChecked] = useState(true);
   const [likeState, setLikeState] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
 
-  // Estados interactivos para Chevron Circular, Acordeón Checkout y Catálogo Completo de Dropdowns
+  // Estados interactivos reales para moléculas y organismos
   const [demoChevronOpen, setDemoChevronOpen] = useState(false);
   const [demoCheckoutStepOpen, setDemoCheckoutStepOpen] = useState(true);
   const [demoLocation, setDemoLocation] = useState('Sucursal Plaza 450, Durango');
   const [demoVehicleType, setDemoVehicleType] = useState('');
   const [demoTime, setDemoTime] = useState('10:00');
   const [demoSort, setDemoSort] = useState('recommended');
+  const [demoHostCity, setDemoHostCity] = useState('');
   const [demoStartDate, setDemoStartDate] = useState('2026-11-04');
   const [demoEndDate, setDemoEndDate] = useState('2026-11-07');
   const [demoCalendarOpen, setDemoCalendarOpen] = useState(false);
   const demoCalendarRef = useRef<HTMLDivElement>(null);
+
+  const [demoSearchState, setDemoSearchState] = useState<SearchState>({
+    location: 'Sucursal Plaza 450, Durango',
+    startDate: '2026-11-04',
+    startTime: '10:00',
+    endDate: '2026-11-07',
+    endTime: '18:00',
+    category: '',
+  });
+  const [demoGalleryOpen, setDemoGalleryOpen] = useState(false);
+  const [demoGalleryFav, setDemoGalleryFav] = useState(false);
+
+  const demoVehicle = VEHICLES[0];
+  const demoGalleryImages = demoVehicle.images.slice(0, 3);
 
   useEffect(() => {
     const handleOutside = (e: MouseEvent) => {
@@ -72,6 +135,24 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       document.removeEventListener('mousedown', handleOutside);
     };
   }, [demoCalendarOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setDemoGalleryOpen(false);
+      }
+    };
+    if (demoGalleryOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleEsc);
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [demoGalleryOpen]);
 
   const formatDsDate = (dateStr: string) => {
     if (!dateStr) return 'Seleccionar fecha';
@@ -98,17 +179,110 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     return activeTab === 'all' || activeTab === section;
   };
 
+  // Visibilidad individual para garantizar búsqueda precisa y estado vacío real
+  const showTokensColors =
+    shouldShowSection('tokens') &&
+    matchesSearch('Paleta de Colores Oficial Brand Highlight Host Sky', 'color hex tailwind d8e8ff 8eb5ff 3d63ff');
+  const showTokensSurfaces =
+    shouldShowSection('tokens') &&
+    matchesSearch('Reglas de Superficies Bordes Elevación Cero Sombras', 'botones cta rounded-2xl border bg-transparent popover shadow-2xl');
+  const showTokensTypo =
+    shouldShowSection('tokens') &&
+    matchesSearch('Escala Tipográfica Google Sans Inter tabular-nums', 'fuente texto heading body scale');
+
+  const showAtomsButtons =
+    shouldShowSection('atoms') &&
+    matchesSearch('Botones Buttons Volver Brand Negro Outline Ghost Loading Disabled Prototipo Icono Chips Toggle Chevron Circular', 'cta btn-1 btn-12');
+  const showAtomsInputs =
+    shouldShowSection('atoms') &&
+    matchesSearch('Inputs Controles Formulario Nombre Search Datepicker Checkbox Switch', 'campo texto placeholder accent-');
+  const showAtomsBadges =
+    shouldShowSection('atoms') &&
+    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.2.99', 'pills etiquetas estatus');
+
+  const showMolSearch =
+    shouldShowSection('molecules') &&
+    matchesSearch('SearchContainer Barra de Búsqueda Flotante Hero', 'ubicacion fechas tipo vehiculo');
+  const showMolDropdowns =
+    shouldShowSection('molecules') &&
+    matchesSearch('Dropdowns Selectores CustomDropdown DateRangePicker Ubicación Horarios Ordenamiento Ciudad Anfitrión Fechas', 'rounded-[20px] shadow-2xl');
+  const showMolAccordionStep =
+    shouldShowSection('molecules') &&
+    matchesSearch('Contenedor Lineal Acordeón Chevron Circular Checkout Step Card', 'paso fechas sucursal');
+  const showMolLinearCards =
+    shouldShowSection('molecules') &&
+    matchesSearch('Desglose Precio sin Fondo bg-transparent Bloque Informativo Lineal Dividido divide-y', 'tarifa galsa deposito verificacion bancaria');
+  const showMolUpload =
+    shouldShowSection('molecules') &&
+    matchesSearch('DocumentUploadCard Subida Archivos Progreso Idle', 'licencia ine comprobante');
+  const showMolStepCards =
+    shouldShowSection('molecules') &&
+    matchesSearch('StepFeatureCard Tarjetas de Paso Badge Flotante Azul', '4 pasos 6 pasos anfitriones bg-blue-300');
+  const showMolSpecsFaq =
+    shouldShowSection('molecules') &&
+    matchesSearch('Especificaciones Técnicas Acordeón FAQ Collapsible', 'pasajeros transmision kilometraje requisitos');
+
+  const showOrgVehicleCard =
+    shouldShowSection('organisms') &&
+    matchesSearch('VehicleCard Oficial Grid Horizontal Mapa Skeleton', 'tarjeta auto flota real');
+  const showOrgGallery =
+    shouldShowSection('organisms') &&
+    matchesSearch('Galería de Producto 3 Fotos Modal Blanco', 'ver 3 fotos favorito jeep rubicon');
+  const showOrgConfirmation =
+    shouldShowSection('organisms') &&
+    matchesSearch('Confirmación Minimalista 1 Columna Reserva creada Solicitud enviada', 'folio anf gal estado');
+  const showOrgQaRibbon =
+    shouldShowSection('organisms') &&
+    matchesSearch('Listón Control QA Footer Auditor SEO Sistema de Diseño', 'v2.2.99 barra inferior');
+
+  const showAuditKpis =
+    shouldShowSection('audit') &&
+    matchesSearch('Auditoría Componentes KPI Resumen Inventario', '21 componentes duplicados codigo muerto');
+  const showAuditDedupe =
+    shouldShowSection('audit') &&
+    matchesSearch('Duplicados Detectados Consolidados Código Muerto Eliminado', 'dropdownOptions StepFeatureCard AuthCardLayout LoginPage showForgot TIME_OPTIONS');
+  const showAuditIntentional =
+    shouldShowSection('audit') &&
+    matchesSearch('Patrones Compartidos Vigentes Variantes Intencionales', 'CustomDropdown SearchContainer ReservationCheckoutView HostRegistrationPage');
+  const showAuditInventory =
+    shouldShowSection('audit') &&
+    matchesSearch('Inventario Completo src/components Atómico Consumidores', COMPONENT_INVENTORY.map((c) => `${c.file} ${c.purpose} ${c.consumers}`).join(' '));
+
+  const hasAnyVisibleBlock =
+    showTokensColors ||
+    showTokensSurfaces ||
+    showTokensTypo ||
+    showAtomsButtons ||
+    showAtomsInputs ||
+    showAtomsBadges ||
+    showMolSearch ||
+    showMolDropdowns ||
+    showMolAccordionStep ||
+    showMolLinearCards ||
+    showMolUpload ||
+    showMolStepCards ||
+    showMolSpecsFaq ||
+    showOrgVehicleCard ||
+    showOrgGallery ||
+    showOrgConfirmation ||
+    showOrgQaRibbon ||
+    showAuditKpis ||
+    showAuditDedupe ||
+    showAuditIntentional ||
+    showAuditInventory;
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-28">
       {/* Top Header Sticky */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               {onNavigate && (
                 <button
+                  type="button"
                   onClick={() => onNavigate('/')}
-                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors shrink-0"
+                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                   title="Volver a la app"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -123,10 +297,10 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.2</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.2.99</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
-                    Sistema de Diseño & UI Kit
+                    Sistema de Diseño, UI Kit &amp; Auditoría
                   </h1>
                 </div>
               </div>
@@ -140,13 +314,15 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 { id: 'atoms', label: 'Átomos', icon: Box },
                 { id: 'molecules', label: 'Moléculas', icon: Box },
                 { id: 'organisms', label: 'Organismos', icon: Layers },
+                { id: 'audit', label: 'Auditoría', icon: ClipboardCheck },
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
+                    type="button"
                     onClick={() => setActiveTab(tab.id as TabType)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-all whitespace-nowrap ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-colors whitespace-nowrap cursor-pointer ${
                       activeTab === tab.id
                         ? 'bg-slate-900 text-white'
                         : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
@@ -168,12 +344,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar componente por nombre o estilo..."
+                placeholder="Buscar token, componente, botón o duplicado..."
                 className="w-full pl-9 pr-4 py-1.5 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
             <div className="text-xs text-slate-500 hidden sm:block">
-              Presiona <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-[11px] font-semibold text-slate-700">Copiar</span> para obtener las clases de Tailwind
+              Presiona <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-[11px] font-semibold text-slate-700">Copiar</span> para obtener tokens o clases de Tailwind
             </div>
           </div>
         </div>
@@ -181,11 +357,34 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        {!hasAnyVisibleBlock && (
+          <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center space-y-3">
+            <AlertCircle className="w-8 h-8 text-slate-400 mx-auto" strokeWidth={1.6} />
+            <h2 className="text-base font-heading font-bold text-slate-900">
+              No se encontraron bloques con «{searchQuery}»
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+              Ajusta el término de búsqueda o cambia la pestaña activa para explorar todo el sistema de diseño.
+            </p>
+            <div className="pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  setActiveTab('all');
+                }}
+                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs transition-colors cursor-pointer"
+              >
+                Restablecer búsqueda
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* ============================================================ */}
         {/* 1. TOKENS & FUNDAMENTOS */}
         {/* ============================================================ */}
-        {shouldShowSection('tokens') && (
+        {(showTokensColors || showTokensSurfaces || showTokensTypo) && (
           <section id="tokens" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-pink-600 font-mono text-xs font-bold uppercase tracking-wider">
@@ -195,13 +394,13 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 Tokens de Diseño
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Variables elementales de color, tipografía, radios de curvatura y sombras utilizadas en toda la plataforma.
+                Paleta vigente, reglas de elevación plana, tipografía oficial y superficies lineales usadas en toda la plataforma.
               </p>
             </div>
 
             {/* Colores */}
-            {matchesSearch('color', 'paleta brand primario secundario') && (
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+            {showTokensColors && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6">
                 <h3 className="text-sm font-heading font-bold text-slate-900 mb-4 flex items-center justify-between">
                   <span>Paleta de Colores Oficial</span>
                   <span className="text-xs text-slate-400 font-mono">Tailwind CSS + HEX</span>
@@ -209,27 +408,27 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                   {[
-                    { name: 'Brand Primary', hex: '#3D63FF', bgClass: 'bg-[#3D63FF]', text: 'text-white' },
-                    { name: 'Brand Dark', hex: '#1D4ED8', bgClass: 'bg-blue-700', text: 'text-white' },
-                    { name: 'Brand Light', hex: '#EFF6FF', bgClass: 'bg-blue-50', text: 'text-blue-900', border: true },
-                    { name: 'Neutral Dark', hex: '#0F172A', bgClass: 'bg-slate-900', text: 'text-white' },
-                    { name: 'Neutral Mid', hex: '#64748B', bgClass: 'bg-slate-500', text: 'text-white' },
-                    { name: 'Neutral Surface', hex: '#F8FAFC', bgClass: 'bg-slate-50', text: 'text-slate-800', border: true },
-                    { name: 'Success / Activo', hex: '#10B981', bgClass: 'bg-emerald-500', text: 'text-white' },
-                    { name: 'Success Soft', hex: '#ECFDF5', bgClass: 'bg-emerald-50', text: 'text-emerald-800', border: true },
-                    { name: 'Warning / Reserva', hex: '#F59E0B', bgClass: 'bg-amber-500', text: 'text-white' },
-                    { name: 'Warning Soft', hex: '#FFFBEB', bgClass: 'bg-amber-50', text: 'text-amber-800', border: true },
-                    { name: 'Error / Cancelación', hex: '#E11D48', bgClass: 'bg-rose-600', text: 'text-white' },
-                    { name: 'WhatsApp Brand', hex: '#25D366', bgClass: 'bg-[#25D366]', text: 'text-white' },
+                    { name: 'Brand Primary', hex: '#3D63FF', bgClass: 'bg-[#3D63FF]' },
+                    { name: 'Brand Dark', hex: '#1D4ED8', bgClass: 'bg-blue-700' },
+                    { name: 'Brand Light', hex: '#EFF6FF', bgClass: 'bg-blue-50', border: true },
+                    { name: 'Highlight Blue', hex: '#D8E8FF', bgClass: 'bg-[#D8E8FF]', border: true },
+                    { name: 'Host Sky', hex: '#8EB5FF', bgClass: 'bg-[#8EB5FF]' },
+                    { name: 'Neutral Dark', hex: '#0F172A', bgClass: 'bg-slate-900' },
+                    { name: 'Neutral Mid', hex: '#64748B', bgClass: 'bg-slate-500' },
+                    { name: 'Neutral Surface', hex: '#F8FAFC', bgClass: 'bg-slate-50', border: true },
+                    { name: 'Success / Activo', hex: '#10B981', bgClass: 'bg-emerald-500' },
+                    { name: 'Success Soft', hex: '#ECFDF5', bgClass: 'bg-emerald-50', border: true },
+                    { name: 'Warning / Revisión', hex: '#F59E0B', bgClass: 'bg-amber-500' },
+                    { name: 'Error / Cancelación', hex: '#E11D48', bgClass: 'bg-rose-600' },
                   ].map((color) => (
-                    <div 
+                    <div
                       key={color.name}
                       onClick={() => copySnippet(color.hex, `color-${color.name}`)}
-                      className="group cursor-pointer rounded-xl border border-slate-200/80 p-3 hover:border-blue-400 transition-all hover:shadow-sm"
+                      className="group cursor-pointer rounded-xl border border-slate-200/80 p-3 hover:border-blue-400 transition-colors"
                     >
                       <div className={`h-12 rounded-lg ${color.bgClass} ${color.border ? 'border border-slate-200' : ''} mb-2 flex items-center justify-center`}>
                         {copiedCode === `color-${color.name}` ? (
-                          <Check className="w-4 h-4 text-white drop-shadow-sm" />
+                          <Check className={`w-4 h-4 ${color.border ? 'text-slate-900' : 'text-white'}`} />
                         ) : null}
                       </div>
                       <div className="text-xs font-heading font-bold text-slate-800 truncate">{color.name}</div>
@@ -243,23 +442,82 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
+            {/* Reglas de Superficies, Bordes y Elevación */}
+            {showTokensSurfaces && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="text-sm font-heading font-bold text-slate-900">
+                      Reglas de Superficies, Bordes y Elevación (v2.2.99)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Estandarización lineal: cero sombras en botones y enlaces CTA; elevación reservada exclusivamente para popovers y modales.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                  <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-1.5 text-left">
+                    <span className="inline-flex px-2 py-0.5 rounded bg-blue-50 text-[#3D63FF] font-mono text-[10px] font-bold">
+                      Cero sombras CTA
+                    </span>
+                    <div className="text-xs font-heading font-bold text-slate-900">Botones y enlaces planos</div>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      Ningún <code className="font-mono text-slate-700">&lt;button&gt;</code> o <code className="font-mono text-slate-700">&lt;a&gt;</code> usa <code className="font-mono text-slate-700">shadow-*</code>. Transición por color/borde.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-1.5 text-left">
+                    <span className="inline-flex px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-mono text-[10px] font-bold">
+                      rounded-2xl border
+                    </span>
+                    <div className="text-xs font-heading font-bold text-slate-900">Contenedores lineales</div>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      Pasos de checkout, tarjetas informativas y registro usan <code className="font-mono text-slate-700">border-slate-200</code> sobre fondo blanco.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-slate-200 bg-transparent space-y-1.5 text-left">
+                    <span className="inline-flex px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-mono text-[10px] font-bold">
+                      bg-transparent
+                    </span>
+                    <div className="text-xs font-heading font-bold text-slate-900">Precios sin fondo gris</div>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      En Producto, desglose y depósito usan solo línea exterior y divisor horizontal sutil sin relleno.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-1.5 text-left">
+                    <span className="inline-flex px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 font-mono text-[10px] font-bold">
+                      rounded-[20px] shadow-2xl
+                    </span>
+                    <div className="text-xs font-heading font-bold text-slate-900">Popovers y calendarios</div>
+                    <p className="text-[11px] text-slate-500 leading-relaxed">
+                      Menús flotantes (`CustomDropdown`, `DateRangePicker`) dentro de padres con <code className="font-mono text-slate-700">overflow-visible</code>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Tipografías & Escalas */}
-            {matchesSearch('tipografia', 'fuente texto scale heading') && (
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+            {showTokensTypo && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6">
                 <h3 className="text-sm font-heading font-bold text-slate-900 mb-4">
                   Escala Tipográfica (Google Sans + Inter)
                 </h3>
                 <div className="space-y-4">
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                      <div className="text-xs text-slate-400 font-mono">Display / Hero · font-heading font-black text-3xl sm:text-4xl</div>
+                      <div className="text-xs text-slate-400 font-mono">Display / Hero · font-heading font-extrabold text-3xl sm:text-4xl</div>
                       <div className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 mt-1">
                         Renta de autos sin complicaciones
                       </div>
                     </div>
-                    <button 
+                    <button
+                      type="button"
                       onClick={() => copySnippet('font-heading font-extrabold text-3xl sm:text-4xl', 'typo-hero')}
-                      className="px-2.5 py-1 text-xs rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 self-start shrink-0"
+                      className="px-2.5 py-1 text-xs rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 self-start shrink-0 cursor-pointer"
                     >
                       {copiedCode === 'typo-hero' ? 'Copiado ✓' : 'Copiar'}
                     </button>
@@ -272,9 +530,10 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         Autos verificados listos para entrega
                       </div>
                     </div>
-                    <button 
+                    <button
+                      type="button"
                       onClick={() => copySnippet('font-heading font-bold text-xl sm:text-2xl', 'typo-h2')}
-                      className="px-2.5 py-1 text-xs rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 self-start shrink-0"
+                      className="px-2.5 py-1 text-xs rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 self-start shrink-0 cursor-pointer"
                     >
                       {copiedCode === 'typo-h2' ? 'Copiado ✓' : 'Copiar'}
                     </button>
@@ -282,14 +541,15 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                      <div className="text-xs text-slate-400 font-mono">Body / Descripción · font-sans text-sm text-slate-600 leading-relaxed</div>
+                      <div className="text-xs text-slate-400 font-mono">Body + Tabular Nums · font-sans text-sm text-slate-600 | tabular-nums</div>
                       <div className="text-sm font-sans text-slate-600 mt-1 max-w-2xl leading-relaxed">
-                        Explora autos verificados en México: sedanes económicos, SUVs familiares y camionetas 4x4. Firma digital y kilometraje libre sin filas.
+                        Explora autos verificados en México. Tarifa diaria: <span className="font-heading font-bold text-slate-900 tabular-nums">$2,300 MXN</span> · Servicio <span className="font-heading font-bold text-slate-900 tabular-nums">33%</span>.
                       </div>
                     </div>
-                    <button 
-                      onClick={() => copySnippet('font-sans text-sm text-slate-600 leading-relaxed', 'typo-body')}
-                      className="px-2.5 py-1 text-xs rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 self-start shrink-0"
+                    <button
+                      type="button"
+                      onClick={() => copySnippet('font-sans text-sm text-slate-600 leading-relaxed tabular-nums', 'typo-body')}
+                      className="px-2.5 py-1 text-xs rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 self-start shrink-0 cursor-pointer"
                     >
                       {copiedCode === 'typo-body' ? 'Copiado ✓' : 'Copiar'}
                     </button>
@@ -303,7 +563,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
         {/* ============================================================ */}
         {/* 2. ÁTOMOS (ATOMS) */}
         {/* ============================================================ */}
-        {shouldShowSection('atoms') && (
+        {(showAtomsButtons || showAtomsInputs || showAtomsBadges) && (
           <section id="atoms" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-blue-600 font-mono text-xs font-bold uppercase tracking-wider">
@@ -313,952 +573,1519 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 Colección Completa de Botones y Elementos Base
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Todos los estilos de botones, inputs, badges e iconos interactivos construidos para la aplicación.
+                Todos los botones planos (cero sombras), inputs con etiquetas uppercase, checkboxes y badges oficiales.
               </p>
             </div>
 
             {/* BOTONES */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-base font-heading font-bold text-slate-900">
-                  Botones (Buttons & Actions)
-                </h3>
-                <span className="text-xs text-slate-400 font-mono">12 variantes implementadas</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                {/* 1. Primario Brand */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">1. Botón Brand Azul (Hero & CTAs)</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción primaria de alta conversión</div>
-                    <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-98 flex items-center justify-center gap-2">
-                        <span>Explorar vehículos</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-98 flex items-center justify-center gap-2','btn-1')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-1' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
+            {showAtomsButtons && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Botones (Buttons &amp; Actions · Sin sombras)
+                  </h3>
+                  <span className="text-xs text-slate-400 font-mono">12 variantes limpias (btn-1 a btn-12)</span>
                 </div>
 
-                {/* 2. Primario Dark */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">2. Botón Negro (Catálogo & Reserva)</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción decisiva / Finalizar renta</div>
-                    <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm transition-all active:scale-98 flex items-center justify-center gap-2">
-                        <span>Reservar vehículo</span>
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-sm transition-all active:scale-98','btn-2')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-2' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 3. Secundario Outline */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">3. Botón Secundario Outline</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Navegación secundaria o detalles</div>
-                    <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-800 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2">
-                        <span>Ver especificaciones</span>
-                        <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-800 font-heading font-semibold text-sm transition-colors', 'btn-3')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-3' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 4. WhatsApp CTA */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">4. Botón WhatsApp Oficial</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Canal de soporte y contacto directo</div>
-                    <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-xs sm:text-sm transition-transform active:scale-98 flex items-center justify-center gap-2">
-                        <MessageCircle className="w-4 h-4 fill-white" />
-                        <span>Chat en WhatsApp</span>
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-heading font-bold text-sm transition-transform active:scale-98 flex items-center justify-center gap-2','btn-4')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-4' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 5. Ghost / Text Button */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">5. Botón Ghost / Minimal</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acciones terciarias o cancelar</div>
-                    <div className="mt-4">
-                      <button className="w-full px-4 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 font-heading font-medium text-xs sm:text-sm hover:bg-slate-200/60 transition-colors flex items-center justify-center">
-                        <span>Limpiar filtros</span>
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-4 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 font-heading font-medium text-sm hover:bg-slate-200/60 transition-colors', 'btn-5')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-5' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 6. Destructive / Danger */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">6. Botón Alerta / Destructivo</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Cancelaciones o eliminación de datos</div>
-                    <div className="mt-4">
-                      <button className="w-full px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2">
-                        <AlertCircle className="w-4 h-4" />
-                        <span>Cancelar reserva</span>
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-heading font-semibold text-sm transition-colors', 'btn-6')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-6' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 7. Loading / Spinner */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">7. Botón Estado de Carga (Loading)</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Para firmas y peticiones en curso</div>
-                    <div className="mt-4">
-                      <button disabled className="w-full px-5 py-2.5 rounded-xl bg-blue-600/90 text-white font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-wait">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Verificando documentos...</span>
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-blue-600/90 text-white font-heading font-semibold text-sm flex items-center justify-center gap-2 cursor-wait', 'btn-7')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-7' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 8. Disabled State */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">8. Botón Deshabilitado (Disabled)</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Sin disponibilidad o datos pendientes</div>
-                    <div className="mt-4">
-                      <button disabled className="w-full px-5 py-2.5 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 font-heading font-medium text-xs sm:text-sm cursor-not-allowed flex items-center justify-center">
-                        <span>Vehículo reservado</span>
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 font-heading font-medium text-sm cursor-not-allowed', 'btn-8')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-8' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 9. Botón Inactivo Prototipo (Permite avanzar) */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">9. Botón Inactivo Prototipo</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Gris si falta un campo, pero permite clic</div>
-                    <div className="mt-4">
-                      <button className="w-full px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-500 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center cursor-pointer">
-                        <span>Continuar (Pendiente)</span>
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-500 font-heading font-semibold text-sm transition-colors cursor-pointer', 'btn-9')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-9' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 9. Botones de Icono / Microacciones */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">9. Botones de Icono / Acción Rápida</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Copiar, favorito, volver y filtros</div>
-                    <div className="mt-4 flex items-center justify-center gap-3">
-                      <button 
-                        onClick={() => setLikeState(!likeState)}
-                        className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
-                        title="Favorito"
-                      >
-                        <Heart className={`w-4 h-4 ${likeState ? 'fill-rose-500 text-rose-500' : 'text-slate-400'}`} />
-                      </button>
-                      <button 
-                        onClick={() => copySnippet('Ejemplo de texto', 'icon-copy')}
-                        className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center transition-colors"
-                        title="Copiar"
-                      >
-                        <Copy className="w-4 h-4" />
-                      </button>
-                      <button 
-                        className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition-colors"
-                        title="Abrir"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center transition-colors','btn-9')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-9' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 10. Filter Chips / Category Tabs */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">10. Chips / Píldoras de Filtro</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Filtro de categorías de catálogo</div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <button className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-heading font-medium">
-                        Todos (Activo)
-                      </button>
-                      <button className="px-3 py-1.5 rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-heading font-medium transition-colors">
-                        SUVs & 4x4
-                      </button>
-                      <button className="px-3 py-1.5 rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-heading font-medium transition-colors">
-                        Económicos
-                      </button>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('px-3 py-1.5 rounded-lg text-xs font-heading font-medium transition-all (Active: bg-slate-900 text-white | Default: bg-white text-slate-600 border border-slate-200)', 'btn-10')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-10' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 11. View Toggle Pill */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">11. Toggle de Vista (Cuadrícula / Mapa)</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Control segmented de cambio de modo</div>
-                    <div className="mt-4 flex justify-center">
-                      <div className="bg-slate-200/70 p-1 rounded-xl inline-flex items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* 1. Primario Brand */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">1. Botón Brand Azul (Hero &amp; CTAs)</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción primaria en Checkout y Anfitriones</div>
+                      <div className="mt-4">
                         <button
-                          onClick={() => setViewMode('grid')}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading transition-all ${
-                            viewMode === 'grid'
-                              ? 'bg-white text-slate-900 font-bold'
-                              : 'text-slate-600 hover:text-slate-900 font-medium'
-                          }`}
+                          type="button"
+                          className="w-full px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                         >
-                          <Grid className="w-3.5 h-3.5" />
-                          <span>Cuadrícula</span>
-                        </button>
-                        <button
-                          onClick={() => setViewMode('map')}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading transition-all ${
-                            viewMode === 'map'
-                              ? 'bg-white text-slate-900 font-bold'
-                              : 'text-slate-600 hover:text-slate-900 font-medium'
-                          }`}
-                        >
-                          <MapPin className="w-3.5 h-3.5" />
-                          <span>Mapa</span>
+                          <span>Continuar</span>
+                          <ArrowRight className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
-                  </div>
-                  <button 
-                    onClick={() => copySnippet('bg-slate-200/70 p-1 rounded-xl inline-flex items-center', 'btn-11')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-11' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-                {/* 12. Indicador Chevron con Fondo Circular (Accordion Toggle) */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-heading font-bold text-slate-800">12. Indicador Chevron con Fondo Circular</div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Toggle circular para acordeones (Checkout)</div>
-                    <div className="mt-4 flex items-center justify-center gap-5">
-                      <button
-                        type="button"
-                        onClick={() => setDemoChevronOpen((prev) => !prev)}
-                        className="group inline-flex items-center gap-2 cursor-pointer"
-                        title="Haz clic para probar rotación"
-                      >
-                        <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors">
-                          <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${demoChevronOpen ? 'rotate-180' : ''}`} />
-                        </div>
-                        <span className="text-[11px] font-heading font-medium text-slate-600">
-                          {demoChevronOpen ? 'Abierto' : 'Reposo'}
-                        </span>
-                      </button>
-
-                      <div className="inline-flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-slate-200/90 text-slate-700 flex items-center justify-center">
-                          <ChevronDown className="w-4 h-4 text-slate-700 rotate-180" />
-                        </div>
-                        <span className="text-[11px] font-heading font-medium text-slate-500">Activo</span>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => copySnippet('w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-colors', 'btn-12')}
-                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
-                  >
-                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-12' ? 'Copiado ✓' : 'Copiar clases'}
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-            {/* INPUTS Y FORMULARIOS */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-base font-heading font-bold text-slate-900">
-                  Inputs & Controles de Formulario
-                </h3>
-                <span className="text-xs text-slate-400 font-mono">Campos limpios y accesibles</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                {/* Search Input */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3">
-                  <div className="text-xs font-heading font-bold text-slate-800">Input con Icono de Búsqueda</div>
-                  <div className="relative">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input 
-                      type="text" 
-                      placeholder="Buscar por marca o modelo..."
-                      className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400"
-                    />
-                  </div>
-                </div>
-
-                {/* Datepicker Trigger Input */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3">
-                  <div className="text-xs font-heading font-bold text-slate-800">Selector de Fecha / Triggers</div>
-                  <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 cursor-pointer hover:border-blue-400 transition-colors">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-blue-600" />
-                      <span>06/11/2026</span>
-                    </div>
-                    <span className="text-[11px] font-mono text-slate-400">10:00 hrs</span>
-                  </div>
-                </div>
-
-                {/* Toggle Switch */}
-                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3">
-                  <div className="text-xs font-heading font-bold text-slate-800">Switch Interactivo ON/OFF</div>
-                  <div className="flex items-center justify-between pt-1">
-                    <span className="text-xs text-slate-600 font-medium">Kilometraje ilimitado</span>
                     <button
-                      onClick={() => setToggleState(!toggleState)}
-                      className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
-                        toggleState ? 'bg-blue-600' : 'bg-slate-300'
-                      }`}
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-7 py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-colors active:scale-[0.98]',
+                          'btn-1'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
                     >
-                      <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${
-                        toggleState ? 'translate-x-5' : 'translate-x-0'
-                      }`} />
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-1' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 2. Primario Dark */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">2. Botón Negro (Catálogo &amp; Contrato)</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción decisiva / Firma digital</div>
+                      <div className="mt-4">
+                        <button
+                          type="button"
+                          className="w-full px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          <span>Reservar vehículo</span>
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-sm transition-colors',
+                          'btn-2'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-2' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 3. Secundario Outline */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">3. Botón Secundario Outline</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Navegación secundaria o retorno</div>
+                      <div className="mt-4">
+                        <button
+                          type="button"
+                          className="w-full px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-100 text-slate-800 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          <span>Ver especificaciones</span>
+                          <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-900 font-heading font-semibold text-sm transition-colors',
+                          'btn-3'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-3' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 4. Botón Volver Superior */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">4. Botón Volver Superior (← Volver)</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Cabecera de Checkout y Registro de Anfitriones</div>
+                      <div className="mt-4 flex items-center justify-start bg-white rounded-xl border border-slate-200 px-4 py-3">
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+                        >
+                          <ArrowLeft className="w-4 h-4" />
+                          <span>Volver</span>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer',
+                          'btn-4'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-4' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 5. Ghost / Minimal */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">5. Botón Ghost / Minimal</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acciones terciarias o limpiar filtros</div>
+                      <div className="mt-4">
+                        <button
+                          type="button"
+                          className="w-full px-4 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 font-heading font-medium text-xs sm:text-sm hover:bg-slate-200/60 transition-colors flex items-center justify-center cursor-pointer"
+                        >
+                          <span>Limpiar filtros</span>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-4 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 font-heading font-medium text-sm hover:bg-slate-200/60 transition-colors',
+                          'btn-5'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-5' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 6. Destructive / Danger */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">6. Botón Alerta / Destructivo</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Cancelaciones o eliminación de datos</div>
+                      <div className="mt-4">
+                        <button
+                          type="button"
+                          className="w-full px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          <AlertCircle className="w-4 h-4" />
+                          <span>Cancelar reserva</span>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-heading font-semibold text-sm transition-colors',
+                          'btn-6'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-6' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 7. Estados Loading & Disabled */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">7. Estados Loading &amp; Disabled</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Peticiones en curso o sin disponibilidad</div>
+                      <div className="mt-4 space-y-2">
+                        <button
+                          type="button"
+                          disabled
+                          className="w-full px-4 py-2 rounded-xl bg-blue-600/90 text-white font-heading font-semibold text-xs flex items-center justify-center gap-2 cursor-wait"
+                        >
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>Verificando...</span>
+                        </button>
+                        <button
+                          type="button"
+                          disabled
+                          className="w-full px-4 py-2 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 font-heading font-medium text-xs cursor-not-allowed flex items-center justify-center"
+                        >
+                          <span>Vehículo no disponible</span>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'bg-blue-600/90 text-white cursor-wait | Disabled: bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed',
+                          'btn-7'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-7' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 8. Botón Inactivo Prototipo (Permite avanzar) */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">8. Botón Inactivo Prototipo</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Visual neutro cuando faltan campos, pero clicable</div>
+                      <div className="mt-4">
+                        <button
+                          type="button"
+                          className="w-full px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-600 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center cursor-pointer"
+                        >
+                          <span>Continuar (Prototipo)</span>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-600 font-heading font-semibold text-sm transition-colors cursor-pointer',
+                          'btn-8'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-8' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 9. Botones de Icono / Microacciones */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">9. Botones de Icono / Acción Rápida</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Favorito en galería, copiar enlace y abrir</div>
+                      <div className="mt-4 flex items-center justify-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setLikeState(!likeState)}
+                          className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+                          title="Favorito"
+                        >
+                          <Heart className={`w-4 h-4 ${likeState ? 'fill-rose-500 text-rose-500' : 'text-slate-500'}`} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => copySnippet('Ejemplo de texto', 'icon-copy')}
+                          className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center transition-colors cursor-pointer"
+                          title="Copiar"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition-colors cursor-pointer"
+                          title="Abrir"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center transition-colors',
+                          'btn-9'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-9' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 10. Filter Chips / Category Tabs */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">10. Chips / Píldoras de Filtro</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Filtros en Home, Catálogo y SEO</div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-heading font-medium cursor-pointer"
+                        >
+                          Todos (Activo)
+                        </button>
+                        <button
+                          type="button"
+                          className="px-3 py-1.5 rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-heading font-medium transition-colors cursor-pointer"
+                        >
+                          SUVs &amp; 4x4
+                        </button>
+                        <button
+                          type="button"
+                          className="px-3 py-1.5 rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 text-xs font-heading font-medium transition-colors cursor-pointer"
+                        >
+                          Económicos
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'px-3 py-1.5 rounded-lg text-xs font-heading font-medium (Active: bg-slate-900 text-white | Default: bg-white text-slate-600 border border-slate-200)',
+                          'btn-10'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-10' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 11. View Toggle Pill */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">11. Toggle de Vista (Cuadrícula / Mapa)</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Control segmentado plano en Catálogo</div>
+                      <div className="mt-4 flex justify-center">
+                        <div className="bg-slate-200/70 p-1 rounded-xl inline-flex items-center">
+                          <button
+                            type="button"
+                            onClick={() => setViewMode('grid')}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading transition-colors cursor-pointer ${
+                              viewMode === 'grid'
+                                ? 'bg-white text-slate-900 font-bold'
+                                : 'text-slate-600 hover:text-slate-900 font-medium'
+                            }`}
+                          >
+                            <Grid className="w-3.5 h-3.5" />
+                            <span>Cuadrícula</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setViewMode('map')}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading transition-colors cursor-pointer ${
+                              viewMode === 'map'
+                                ? 'bg-white text-slate-900 font-bold'
+                                : 'text-slate-600 hover:text-slate-900 font-medium'
+                            }`}
+                          >
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span>Mapa</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => copySnippet('bg-slate-200/70 p-1 rounded-xl inline-flex items-center', 'btn-11')}
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-11' ? 'Copiado ✓' : 'Copiar clases'}
+                    </button>
+                  </div>
+
+                  {/* 12. Indicador Chevron con Fondo Circular */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">12. Indicador Chevron con Fondo Circular</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Toggle circular de acordeones en Checkout</div>
+                      <div className="mt-4 flex items-center justify-center gap-5">
+                        <button
+                          type="button"
+                          onClick={() => setDemoChevronOpen((prev) => !prev)}
+                          className="group inline-flex items-center gap-2 cursor-pointer"
+                          title="Haz clic para probar rotación"
+                        >
+                          <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors">
+                            <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${demoChevronOpen ? 'rotate-180' : ''}`} />
+                          </div>
+                          <span className="text-[11px] font-heading font-medium text-slate-600">
+                            {demoChevronOpen ? 'Abierto' : 'Reposo'}
+                          </span>
+                        </button>
+
+                        <div className="inline-flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-slate-200/90 text-slate-700 flex items-center justify-center">
+                            <ChevronDown className="w-4 h-4 text-slate-700 rotate-180" />
+                          </div>
+                          <span className="text-[11px] font-heading font-medium text-slate-500">Activo</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        copySnippet(
+                          'w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-colors',
+                          'btn-12'
+                        )
+                      }
+                      className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                    >
+                      <Copy className="w-3 h-3" /> {copiedCode === 'btn-12' ? 'Copiado ✓' : 'Copiar clases'}
                     </button>
                   </div>
                 </div>
-
               </div>
-            </div>
+            )}
+
+            {/* INPUTS Y FORMULARIOS */}
+            {showAtomsInputs && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Inputs &amp; Controles de Formulario
+                  </h3>
+                  <span className="text-xs text-slate-400 font-mono">Campos limpios con etiqueta uppercase</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {/* Campo Oficial Formulario */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
+                    <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                      Nombre(s)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej. Carlos"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                    />
+                  </div>
+
+                  {/* Search Input */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
+                    <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">Búsqueda</div>
+                    <div className="relative">
+                      <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        placeholder="Marca o modelo..."
+                        className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Datepicker Trigger Input */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
+                    <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">Selector de Fecha</div>
+                    <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 cursor-pointer hover:border-blue-400 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-blue-600" />
+                        <span>18/11/2026</span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400">10:00 hrs</span>
+                    </div>
+                  </div>
+
+                  {/* Checkbox & Toggle Switch */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3 text-left">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-slate-700 font-medium">Kilometraje libre</span>
+                      <button
+                        type="button"
+                        onClick={() => setToggleState(!toggleState)}
+                        className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
+                          toggleState ? 'bg-[#3D63FF]' : 'bg-slate-300'
+                        }`}
+                      >
+                        <div
+                          className={`bg-white w-4 h-4 rounded-full transform transition-transform ${
+                            toggleState ? 'translate-x-5' : 'translate-x-0'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                    <label className="flex items-center gap-2.5 text-xs text-slate-600 cursor-pointer pt-1 border-t border-slate-200/70">
+                      <input
+                        type="checkbox"
+                        checked={termsChecked}
+                        onChange={(e) => setTermsChecked(e.target.checked)}
+                        className="w-4 h-4 rounded border-slate-300 text-[#3D63FF] focus:ring-[#3D63FF] accent-[#3D63FF] cursor-pointer"
+                      />
+                      <span>Acepto términos y privacidad</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* BADGES & CHIPS */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-base font-heading font-bold text-slate-900">
-                  Badges, Tags & Indicadores de Estado
-                </h3>
-                <span className="text-xs text-slate-400 font-mono">Micro-indicadores visuales</span>
+            {showAtomsBadges && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Badges, Tags &amp; Indicadores de Estado
+                  </h3>
+                  <span className="text-xs text-slate-400 font-mono">Micro-indicadores reales</span>
+                </div>
+
+                <div className="flex flex-wrap gap-2.5">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-heading font-semibold">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    index, follow
+                  </span>
+
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                    Pendiente de confirmación
+                  </span>
+
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+                    Folio: ANF-842910
+                  </span>
+
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-blue-50 text-[#3D63FF] text-[11px] font-heading font-semibold">
+                    Revisión 24-48 hrs
+                  </span>
+
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono text-xs font-semibold">
+                    /anfitriones/registro
+                  </span>
+
+                  <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
+                    v2.2.99
+                  </span>
+                </div>
               </div>
-
-              <div className="flex flex-wrap gap-3">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-medium">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  Auto Verificado
-                </span>
-
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60 text-xs font-medium">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
-                  Seguro Amplio
-                </span>
-
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/60 text-xs font-medium">
-                  <Clock className="w-3.5 h-3.5 text-amber-600" />
-                  Entrega Inmediata
-                </span>
-
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-200/60 text-xs font-medium">
-                  <Star className="w-3.5 h-3.5 fill-purple-600 text-purple-600" />
-                  4.98 (29 reseñas)
-                </span>
-
-                <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-mono text-xs font-semibold">
-                  /catalogo
-                </span>
-
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                  v2.2.98
-                </span>
-              </div>
-            </div>
-
+            )}
           </section>
         )}
 
         {/* ============================================================ */}
         {/* 3. MOLÉCULAS (MOLECULES) */}
         {/* ============================================================ */}
-        {shouldShowSection('molecules') && (
+        {(showMolSearch ||
+          showMolDropdowns ||
+          showMolAccordionStep ||
+          showMolLinearCards ||
+          showMolUpload ||
+          showMolStepCards ||
+          showMolSpecsFaq) && (
           <section id="molecules" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-indigo-600 font-mono text-xs font-bold uppercase tracking-wider">
                 <Box className="w-4 h-4" /> Nivel 2 · Moléculas
               </div>
               <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
-                Combinaciones Moleculares de Componentes
+                Componentes Moleculares Reales
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Conjuntos de átomos combinados para realizar funciones concretas de búsqueda, calificación o información.
+                Componentes vivos importados directamente de <code className="font-mono text-slate-700">src/components/</code> — cero mockups estáticos duplicados.
               </p>
             </div>
 
-            {/* 1. Barra de Búsqueda Rápida Hero */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    Barra de Búsqueda Flotante (Hero Search Pill Bar)
-                  </h3>
-                  <p className="text-xs text-slate-500">Componente central de reservación en Home y Catálogo</p>
-                </div>
-                <button 
-                  onClick={() => copySnippet('<SearchContainer />', 'mol-search')}
-                  className="text-xs font-mono text-blue-600 hover:text-blue-700"
-                >
-                  {copiedCode === 'mol-search' ? 'Copiado ✓' : 'Copiar'}
-                </button>
-              </div>
-
-              {/* Render visual real */}
-              <div className="p-4 rounded-2xl bg-slate-100/70 border border-slate-200/60">
-                <div className="bg-white rounded-2xl p-2 sm:p-2.5 shadow-md border border-slate-100 flex flex-col md:flex-row items-center gap-2">
-                  <div className="flex-1 w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors border border-slate-200/80 cursor-pointer">
-                    <MapPin className="w-4 h-4 text-blue-600 shrink-0" />
-                    <div className="text-left">
-                      <div className="text-[10px] uppercase font-bold text-slate-400">Entrega</div>
-                      <div className="text-xs sm:text-sm font-heading font-semibold text-slate-800 truncate">Sucursal o Aeropuerto</div>
-                    </div>
+            {/* 1. Barra de Búsqueda Rápida Hero REAL (<SearchContainer />) */}
+            {showMolSearch && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 overflow-visible">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Barra de Búsqueda Principal (&lt;SearchContainer /&gt; Real)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Conectado a <code className="font-mono text-slate-700">SEARCH_LOCATION_OPTIONS</code> y <code className="font-mono text-slate-700">SEARCH_VEHICLE_TYPES</code>
+                    </p>
                   </div>
-
-                  <div className="flex-1 w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors border border-slate-200/80 cursor-pointer">
-                    <Calendar className="w-4 h-4 text-slate-500 shrink-0" />
-                    <div className="text-left">
-                      <div className="text-[10px] uppercase font-bold text-slate-400">Periodo</div>
-                      <div className="text-xs sm:text-sm font-heading font-semibold text-slate-800 truncate">06 Nov — 09 Nov</div>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl hover:bg-slate-50 transition-colors border border-slate-200/80 cursor-pointer">
-                    <Car className="w-4 h-4 text-slate-500 shrink-0" />
-                    <div className="text-left">
-                      <div className="text-[10px] uppercase font-bold text-slate-400">Tipo de auto</div>
-                      <div className="text-xs sm:text-sm font-heading font-semibold text-slate-800 truncate">Todos los modelos</div>
-                    </div>
-                  </div>
-
-                  <button className="w-full md:w-auto px-6 py-3 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shrink-0 transition-all">
-                    <Search className="w-4 h-4" />
-                    <span>Buscar</span>
+                  <button
+                    type="button"
+                    onClick={() => copySnippet('<SearchContainer searchState={state} onSearchChange={setState} onExecuteSearch={fn} totalResultsCount={VEHICLES.length} />', 'mol-search')}
+                    className="text-xs font-mono text-blue-600 hover:text-blue-700 cursor-pointer"
+                  >
+                    {copiedCode === 'mol-search' ? 'Copiado ✓' : 'Copiar'}
                   </button>
                 </div>
-              </div>
-            </div>
 
-            {/* 2. Specs Grid de Auto */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <h3 className="text-base font-heading font-bold text-slate-900">
-                Parrilla de Especificaciones Técnicas (Vehicle Specs Molecule)
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-2xs shrink-0">
-                    <Users className="w-4 h-4" />
-                  </div>
+                <div className="p-4 sm:p-5 rounded-2xl bg-slate-100/80 overflow-visible">
+                  <SearchContainer
+                    searchState={demoSearchState}
+                    onSearchChange={setDemoSearchState}
+                    onExecuteSearch={() => onNavigate && onNavigate('/catalogo')}
+                    totalResultsCount={VEHICLES.length}
+                    className="border border-slate-200/80 shadow-none"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 2. Catálogo Completo de Dropdowns & Selectores (6 controles) */}
+            {showMolDropdowns && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 overflow-visible">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
                   <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Pasajeros</div>
-                    <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">5 Asientos</div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Catálogo Completo de Dropdowns &amp; Selectores (6 variantes unificadas)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Incluye ubicación, vehículo, horario, ordenamiento, ciudad de anfitrión (<code className="font-mono text-slate-700">HOST_CITY_OPTIONS</code>) y rango de fechas. Cero <code className="font-mono text-slate-700">&lt;select&gt;</code> nativos.
+                    </p>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copySnippet(
+                        'bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2 | Contenedor padre: overflow-visible',
+                        'mol-dropdowns'
+                      )
+                    }
+                    className="text-xs font-mono text-blue-600 hover:text-blue-700 self-start sm:self-center shrink-0 cursor-pointer"
+                  >
+                    {copiedCode === 'mol-dropdowns' ? 'Copiado ✓' : 'Copiar tokens'}
+                  </button>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-2xs shrink-0">
-                    <SlidersHorizontal className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Transmisión</div>
-                    <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Automática</div>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-2xs shrink-0">
-                    <Gauge className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Kilometraje</div>
-                    <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Libre / Sin límite</div>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-2xs shrink-0">
-                    <Fuel className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-semibold">Combustible</div>
-                    <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Tanque Lleno</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 3. Acordeón Interactivo de FAQ */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <h3 className="text-base font-heading font-bold text-slate-900">
-                Item de Acordeón FAQ (Collapsible Molecule)
-              </h3>
-              <div className="rounded-xl border border-slate-200 overflow-hidden transition-all">
-                <button
-                  onClick={() => setIsFaqOpen(!isFaqOpen)}
-                  className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors bg-white"
-                >
-                  <span className="font-heading font-semibold text-slate-900 text-sm">
-                    ¿Qué requisitos necesito para rentar un auto en GALSA Rent?
-                  </span>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0 ${isFaqOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isFaqOpen && (
-                  <div className="px-4 pb-4 pt-1 bg-white text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed">
-                    Solo requieres identificación oficial vigente (INE o pasaporte), licencia de conducir vigente y tarjeta de crédito o débito para el depósito reembolsable en garantía.
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* 4. Carga y Subida de Archivos (File Upload & Progress Molecule) */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    Subida de Archivos & Progreso (File Upload Molecule)
-                  </h3>
-                  <p className="text-xs text-slate-500 font-sans mt-0.5">
-                    Estilo neutral minimalista sin sombras, sin degradados y con icono gris 100 sin línea
-                  </p>
-                </div>
-                <span className="text-[11px] font-mono text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
-                  Molecule
-                </span>
-              </div>
-
-              {/* Estado en progreso de subida (79%) */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-heading font-medium text-slate-500">1. Estado en progreso de subida (79%):</span>
-                <DocumentUploadCard
-                  title="Licencia de conducir"
-                  badge="Vigente, ambos lados"
-                  fileState={{
-                    name: 'Scann_158.pdf',
-                    sizeStr: '30 MB / 74 MB',
-                    progress: 79,
-                    status: 'uploading'
-                  }}
-                  onRemove={() => {}}
-                />
-              </div>
-
-              {/* Estado completado (100%) */}
-              <div className="space-y-1.5 pt-2">
-                <span className="text-xs font-heading font-medium text-slate-500">2. Estado completado exitosamente (100%):</span>
-                <DocumentUploadCard
-                  title="Identificación oficial"
-                  badge="INE, frente y reverso"
-                  fileState={{
-                    name: 'INE_frente_y_reverso.pdf',
-                    sizeStr: '2.4 MB / 2.4 MB',
-                    progress: 100,
-                    status: 'completed'
-                  }}
-                  onRemove={() => {}}
-                />
-              </div>
-
-              {/* Estado inicial (Idle) */}
-              <div className="space-y-1.5 pt-2">
-                <span className="text-xs font-heading font-medium text-slate-500">3. Estado inicial para selección (Idle):</span>
-                <DocumentUploadCard
-                  title="Comprobante de domicilio"
-                  badge="No mayor a 3 meses"
-                  fileState={{
-                    name: '',
-                    sizeStr: '',
-                    progress: 0,
-                    status: 'idle'
-                  }}
-                  onRemove={() => {}}
-                />
-              </div>
-            </div>
-
-            {/* 5. Contenedor Lineal de Acordeón con Chevron Circular (Checkout Step Card) */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    Contenedor Lineal de Acordeón con Chevron Circular (Checkout Step Card)
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Estructura oficial de pasos en Completa tu reserva: contorno lineal rounded-2xl, número circular azul y toggle chevron con fondo gris circular
-                  </p>
-                </div>
-                <button
-                  onClick={() => copySnippet('rounded-2xl border border-slate-200 bg-white overflow-visible | Chevron: w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200', 'mol-checkout-card')}
-                  className="text-xs font-mono text-blue-600 hover:text-blue-700 shrink-0"
-                >
-                  {copiedCode === 'mol-checkout-card' ? 'Copiado ✓' : 'Copiar'}
-                </button>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 hover:border-slate-300 bg-white overflow-visible transition-colors">
-                <button
-                  type="button"
-                  onClick={() => setDemoCheckoutStepOpen((prev) => !prev)}
-                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
-                >
-                  <div className="flex items-center gap-3.5 min-w-0">
-                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
-                      1
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 overflow-visible">
+                  {/* 1. Ubicación / Sucursal */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        1. Ubicación / Sucursal
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">Home · Catálogo</span>
                     </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="text-base font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Fechas y sucursal
-                        </h4>
-                        <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                          4 nov — 7 nov (3 días)
-                        </span>
+                    <CustomDropdown
+                      options={LOCATION_DROPDOWN_OPTIONS}
+                      value={demoLocation}
+                      onChange={setDemoLocation}
+                      placeholder="Dirección, ciudad o aeropuerto"
+                      triggerIcon={MapPin}
+                      footer={<span>powered by <strong className="text-slate-600">Google</strong></span>}
+                    />
+                  </div>
+
+                  {/* 2. Tipo de Vehículo */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        2. Tipo de Vehículo
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">Home · Catálogo</span>
+                    </div>
+                    <CustomDropdown
+                      options={VEHICLE_TYPE_DROPDOWN_OPTIONS}
+                      value={demoVehicleType}
+                      onChange={setDemoVehicleType}
+                      placeholder="Todos los vehículos"
+                      triggerIcon={CarFront}
+                    />
+                  </div>
+
+                  {/* 3. Horarios */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        3. Horarios
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">Producto · Checkout</span>
+                    </div>
+                    <CustomDropdown
+                      options={TIME_DROPDOWN_OPTIONS}
+                      value={demoTime}
+                      onChange={setDemoTime}
+                      triggerIcon={Clock}
+                      footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                    />
+                  </div>
+
+                  {/* 4. Ordenamiento */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        4. Ordenamiento (Sort)
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">Catálogo</span>
+                    </div>
+                    <CustomDropdown
+                      options={CATALOG_SORT_OPTIONS}
+                      value={demoSort}
+                      onChange={setDemoSort}
+                      triggerIcon={ArrowUpDown}
+                    />
+                  </div>
+
+                  {/* 5. Ciudad de Anfitrión */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        5. Ciudad de Anfitrión
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">/anfitriones/registro</span>
+                    </div>
+                    <CustomDropdown
+                      options={HOST_CITY_OPTIONS}
+                      value={demoHostCity}
+                      onChange={setDemoHostCity}
+                      placeholder="Selecciona tu ciudad"
+                      triggerIcon={MapPin}
+                      buttonClassName="border-slate-200 hover:border-slate-300 font-sans font-normal"
+                    />
+                  </div>
+
+                  {/* 6. Rango de Fechas */}
+                  <div ref={demoCalendarRef} className="relative space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        6. Rango de Fechas
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">Home · Producto · Checkout</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setDemoCalendarOpen((prev) => !prev)}
+                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
+                        demoCalendarOpen
+                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                      }`}
+                    >
+                      <span className="truncate">
+                        {formatDsDate(demoStartDate)} — {formatDsDate(demoEndDate)}
+                      </span>
+                      <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
+                    </button>
+
+                    {demoCalendarOpen && (
+                      <div className="absolute top-full right-0 mt-2 z-[70]">
+                        <DateRangePicker
+                          startDate={demoStartDate}
+                          endDate={demoEndDate}
+                          onChange={(s, e) => {
+                            setDemoStartDate(s);
+                            setDemoEndDate(e);
+                          }}
+                          onClose={() => setDemoCalendarOpen(false)}
+                        />
                       </div>
-                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Durango · Sucursal Plaza 450
-                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Contenedor Lineal de Acordeón con Chevron Circular */}
+            {showMolAccordionStep && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Contenedor Lineal de Acordeón con Chevron Circular (Checkout Step Card)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Estructura oficial de pasos en <code className="font-mono text-slate-700">ReservationCheckoutView</code> y <code className="font-mono text-slate-700">HostRegistrationPage</code>
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copySnippet(
+                        'rounded-2xl border border-slate-200 bg-white overflow-visible | Chevron: w-8 h-8 rounded-full bg-slate-100',
+                        'mol-checkout-card'
+                      )
+                    }
+                    className="text-xs font-mono text-blue-600 hover:text-blue-700 shrink-0 cursor-pointer"
+                  >
+                    {copiedCode === 'mol-checkout-card' ? 'Copiado ✓' : 'Copiar'}
+                  </button>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 hover:border-slate-300 bg-white overflow-visible transition-colors">
+                  <button
+                    type="button"
+                    onClick={() => setDemoCheckoutStepOpen((prev) => !prev)}
+                    className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                        1
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="text-base font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            Fechas y sucursal
+                          </h4>
+                          <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                            4 nov — 7 nov (3 días)
+                          </span>
+                        </div>
+                        <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                          Durango · Sucursal Plaza 450
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${demoCheckoutStepOpen ? 'rotate-180' : ''}`} />
-                  </div>
-                </button>
+                    <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                      <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${demoCheckoutStepOpen ? 'rotate-180' : ''}`} />
+                    </div>
+                  </button>
 
-                {demoCheckoutStepOpen && (
-                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 text-xs sm:text-sm font-sans text-slate-600">
-                    Contenido desplegable del paso dentro del contenedor lineal con separación superior sutil (<span className="font-mono text-slate-700">border-t border-slate-100</span>).
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* 6. Catálogo Completo de Dropdowns & Selectores (Todos Juntos para Revisión) */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-5 overflow-visible">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    Catálogo Completo de Dropdowns & Selectores (Estilo Unificado Home)
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Todos los selectores de GALSA en un solo lugar: panel flotante <span className="font-mono text-slate-700">rounded-[20px] shadow-2xl</span>, cápsula gris <span className="font-mono text-slate-700">w-9 h-9 rounded-[8px]</span> y selección activa <span className="font-mono text-slate-700">bg-blue-50/70</span>
-                  </p>
-                </div>
-                <button
-                  onClick={() => copySnippet('bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2 | Item: p-2.5 rounded-[12px] hover:bg-slate-50 | Active: bg-blue-50/70 + Check | Icon: w-9 h-9 rounded-[8px] bg-slate-100', 'mol-dropdowns')}
-                  className="text-xs font-mono text-blue-600 hover:text-blue-700 self-start sm:self-center shrink-0"
-                >
-                  {copiedCode === 'mol-dropdowns' ? 'Copiado ✓' : 'Copiar tokens'}
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible">
-                {/* 1. Ubicación / Sucursal */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-heading font-bold text-slate-800">
-                      1. Dropdown de Ubicación / Sucursal
-                    </label>
-                    <span className="text-[10px] font-mono text-slate-400">Home · Catálogo</span>
-                  </div>
-                  <CustomDropdown
-                    options={DS_LOCATION_OPTIONS}
-                    value={demoLocation}
-                    onChange={setDemoLocation}
-                    placeholder="Dirección, ciudad o aeropuerto"
-                    triggerIcon={MapPin}
-                    footer={<span>powered by <strong className="text-slate-600">Google</strong></span>}
-                  />
-                </div>
-
-                {/* 2. Tipo de Vehículo */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-heading font-bold text-slate-800">
-                      2. Dropdown de Tipo de Vehículo
-                    </label>
-                    <span className="text-[10px] font-mono text-slate-400">Home · Catálogo</span>
-                  </div>
-                  <CustomDropdown
-                    options={DS_VEHICLE_OPTIONS}
-                    value={demoVehicleType}
-                    onChange={setDemoVehicleType}
-                    placeholder="Todos los vehículos"
-                    triggerIcon={CarFront}
-                  />
-                </div>
-
-                {/* 3. Horarios */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-heading font-bold text-slate-800">
-                      3. Dropdown de Horarios (Entrega / Devolución)
-                    </label>
-                    <span className="text-[10px] font-mono text-slate-400">Producto · Checkout · Catálogo</span>
-                  </div>
-                  <CustomDropdown
-                    options={TIME_DROPDOWN_OPTIONS}
-                    value={demoTime}
-                    onChange={setDemoTime}
-                    triggerIcon={Clock}
-                    footer="Horario de sucursal: 08:00 a 20:00 hrs"
-                  />
-                </div>
-
-                {/* 4. Ordenamiento */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-heading font-bold text-slate-800">
-                      4. Dropdown de Ordenamiento (Sort)
-                    </label>
-                    <span className="text-[10px] font-mono text-slate-400">Catálogo</span>
-                  </div>
-                  <CustomDropdown
-                    options={DS_SORT_OPTIONS}
-                    value={demoSort}
-                    onChange={setDemoSort}
-                    triggerIcon={ArrowUpDown}
-                  />
-                </div>
-
-                {/* 5. Selector Flotante de Rango de Fechas */}
-                <div ref={demoCalendarRef} className="md:col-span-2 relative space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-heading font-bold text-slate-800">
-                      5. Selector Flotante de Rango de Fechas (DateRangePicker)
-                    </label>
-                    <span className="text-[10px] font-mono text-slate-400">Home · Producto · Checkout</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setDemoCalendarOpen((prev) => !prev)}
-                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
-                        demoCalendarOpen
-                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
-                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
-                      }`}
-                    >
-                      <span className="truncate">Recogida: {formatDsDate(demoStartDate)}</span>
-                      <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDemoCalendarOpen((prev) => !prev)}
-                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
-                        demoCalendarOpen
-                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
-                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
-                      }`}
-                    >
-                      <span className="truncate">Devolución: {formatDsDate(demoEndDate)}</span>
-                      <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
-                    </button>
-                  </div>
-
-                  {demoCalendarOpen && (
-                    <div className="absolute top-full left-0 mt-2 z-[70]">
-                      <DateRangePicker
-                        startDate={demoStartDate}
-                        endDate={demoEndDate}
-                        onChange={(s, e) => {
-                          setDemoStartDate(s);
-                          setDemoEndDate(e);
-                        }}
-                        onClose={() => setDemoCalendarOpen(false)}
-                      />
+                  {demoCheckoutStepOpen && (
+                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 text-xs sm:text-sm font-sans text-slate-600">
+                      Contenido desplegable del paso con botón primario izquierdo y separación superior <code className="font-mono text-slate-700">border-t border-slate-100</code>.
                     </div>
                   )}
                 </div>
               </div>
-            </div>
+            )}
 
+            {/* 4. Contenedores de Precio sin Fondo + Bloque Informativo Lineal */}
+            {showMolLinearCards && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Contenedores de Desglose sin Fondo &amp; Bloque Informativo Dividido
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Patrones lineales puros sin fondo gris en Producto (<code className="font-mono text-slate-700">VehicleDetailView</code>) y Registro de Anfitriones (<code className="font-mono text-slate-700">HostRegistrationPage</code>).
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                  {/* Izquierda: Desglose de Precio Transparente (Producto) */}
+                  <div className="space-y-3 text-left">
+                    <span className="text-[11px] font-mono text-slate-400 block">
+                      VehicleDetailView · Desglose + Depósito (bg-transparent)
+                    </span>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-transparent border border-slate-200 space-y-2.5 text-sm">
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>$1,400 × 3 días</span>
+                        <span className="font-heading font-semibold text-slate-900 tabular-nums">$4,200</span>
+                      </div>
+                      <div className="flex justify-between items-center text-slate-600">
+                        <span>Tarifa de servicio GALSA</span>
+                        <span className="font-heading font-semibold text-slate-900 tabular-nums">$1,386</span>
+                      </div>
+                      <div className="pt-2.5 border-t border-slate-200 flex justify-between items-center">
+                        <span className="font-heading font-bold text-slate-900">Total de la renta</span>
+                        <span className="font-heading font-bold text-slate-900 text-base tabular-nums">$5,586</span>
+                      </div>
+                    </div>
+
+                    <div className="px-4 py-3 sm:px-5 rounded-2xl bg-transparent border border-slate-200 flex items-center justify-between text-xs sm:text-sm">
+                      <span className="text-slate-600">Depósito en garantía (reembolsable)</span>
+                      <span className="font-heading font-semibold text-slate-900 tabular-nums">$15,000</span>
+                    </div>
+                  </div>
+
+                  {/* Derecha: Bloque Informativo Lineal Dividido (HostRegistrationPage) */}
+                  <div className="space-y-3 text-left">
+                    <span className="text-[11px] font-mono text-slate-400 block">
+                      HostRegistrationPage · Callout Lineal (divide-y divide-slate-100)
+                    </span>
+                    <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
+                      <div className="p-4 flex items-start gap-3.5">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+                          <ShieldCheck className="w-4 h-4" strokeWidth={1.8} />
+                        </div>
+                        <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
+                          GALSA verifica la identidad y propiedad de cada vehículo antes de publicarlo. La carga de documentos se realiza desde la app.
+                        </p>
+                      </div>
+                      <div className="p-4 flex items-start gap-3.5">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+                          <Landmark className="w-4 h-4" strokeWidth={1.8} />
+                        </div>
+                        <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
+                          Tu parte de cada renta se deposita en la cuenta bancaria que registres desde la app cuando aprobemos tu registro.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 5. Carga y Subida de Archivos (<DocumentUploadCard />) */}
+            {showMolUpload && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Subida de Archivos &amp; Progreso (&lt;DocumentUploadCard /&gt; Real)
+                    </h3>
+                    <p className="text-xs text-slate-500 font-sans mt-0.5">
+                      Estilo neutral minimalista sin sombras con icono gris 100
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-mono text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
+                    Molecule
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  <DocumentUploadCard
+                    title="Licencia de conducir"
+                    badge="Vigente, ambos lados"
+                    fileState={{
+                      name: 'Scann_158.pdf',
+                      sizeStr: '30 MB / 74 MB',
+                      progress: 79,
+                      status: 'uploading',
+                    }}
+                    onRemove={() => {}}
+                  />
+                  <DocumentUploadCard
+                    title="Identificación oficial"
+                    badge="INE, frente y reverso"
+                    fileState={{
+                      name: 'INE_frente_y_reverso.pdf',
+                      sizeStr: '2.4 MB / 2.4 MB',
+                      progress: 100,
+                      status: 'completed',
+                    }}
+                    onRemove={() => {}}
+                  />
+                  <DocumentUploadCard
+                    title="Comprobante de domicilio"
+                    badge="No mayor a 3 meses"
+                    fileState={{
+                      name: '',
+                      sizeStr: '',
+                      progress: 0,
+                      status: 'idle',
+                    }}
+                    onRemove={() => {}}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 6. Tarjetas de Paso con Badge Flotante (<StepFeatureCard />) */}
+            {showMolStepCards && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Tarjetas de Paso con Badge Flotante (&lt;StepFeatureCard /&gt; Real)
+                    </h3>
+                    <p className="text-xs text-slate-500 font-sans mt-0.5">
+                      Componente consolidado de <code className="font-mono text-slate-700">FourStepProcess</code> (4 pasos) y <code className="font-mono text-slate-700">HostSection</code> (6 pasos)
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-md">
+                    Consolidado
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl">
+                  <StepFeatureCard
+                    title="Regístrate"
+                    description="Crea tu cuenta de anfitrión con tus datos en menos de 2 minutos."
+                    image="/images/step-img-1.webp"
+                    icon={UserPlus}
+                  />
+                  <StepFeatureCard
+                    title="Carga tu vehículo"
+                    description="Sube fotos, documentos oficiales y define tu tarifa diaria."
+                    image="/images/step-img-3.webp"
+                    icon={Car}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 7. Specs Grid + Acordeón FAQ */}
+            {showMolSpecsFaq && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Parrilla de Especificaciones (Vehicle Specs)
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                        <Users className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Pasajeros</div>
+                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">5 Asientos</div>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                        <SlidersHorizontal className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Transmisión</div>
+                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Automática</div>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                        <Gauge className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Kilometraje</div>
+                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Libre</div>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                        <Fuel className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Combustible</div>
+                        <div className="text-xs sm:text-sm font-heading font-bold text-slate-800">Gasolina</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Item de Acordeón FAQ (Collapsible Molecule)
+                  </h3>
+                  <div className="rounded-xl border border-slate-200 overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setIsFaqOpen(!isFaqOpen)}
+                      className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors bg-white cursor-pointer"
+                    >
+                      <span className="font-heading font-semibold text-slate-900 text-sm">
+                        ¿Qué requisitos necesito para rentar un auto en GALSA Rent?
+                      </span>
+                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 shrink-0 ${isFaqOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {isFaqOpen && (
+                      <div className="px-4 pb-4 pt-2 bg-white text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed">
+                        Identificación oficial vigente (INE o pasaporte), licencia de conducir vigente, comprobante de domicilio y método de pago para el depósito reembolsable.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </section>
         )}
 
         {/* ============================================================ */}
         {/* 4. ORGANISMOS (ORGANISMS) */}
         {/* ============================================================ */}
-        {shouldShowSection('organisms') && (
+        {(showOrgVehicleCard || showOrgGallery || showOrgConfirmation || showOrgQaRibbon) && (
           <section id="organisms" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-emerald-600 font-mono text-xs font-bold uppercase tracking-wider">
                 <Layers className="w-4 h-4" /> Nivel 3 · Organismos
               </div>
               <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
-                Estructuras UI Completas
+                Estructuras UI Completas en Producción
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Módulos integrados de interfaz compuestos por múltiples moléculas y átomos funcionando al unísono.
+                Organismos reales de catálogo, galería de producto, confirmación de 1 columna y listón QA.
               </p>
             </div>
 
-            {/* Organismo 1: Tarjeta de Vehículo Oficial */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-base font-heading font-bold text-slate-900">
-                    VehicleCard Oficial
-                  </h3>
-                  <p className="text-xs text-slate-500">Unidad fundamental de visualización de flota</p>
+            {/* Organismo 1: <VehicleCard /> Oficial REAL (3 modos) */}
+            {showOrgVehicleCard && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      &lt;VehicleCard /&gt; Oficial Real (3 modos: Grid, Horizontal Mapa y Skeleton)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Importado directamente de <code className="font-mono text-slate-700">src/components/VehicleCard.tsx</code> con datos reales de <code className="font-mono text-slate-700">VEHICLES[0]</code>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                  <div className="lg:col-span-4 space-y-2 text-left">
+                    <span className="text-[11px] font-mono text-slate-400 block">layout=&quot;grid&quot;</span>
+                    <VehicleCard
+                      vehicle={demoVehicle}
+                      onSelect={(v) => onNavigate && onNavigate(`/vehiculos/${v.slug}`)}
+                    />
+                  </div>
+                  <div className="lg:col-span-4 space-y-2 text-left">
+                    <span className="text-[11px] font-mono text-slate-400 block">isLoading=&#123;true&#125; (Skeleton)</span>
+                    <VehicleCard isLoading={true} />
+                  </div>
+                  <div className="lg:col-span-12 space-y-2 text-left">
+                    <span className="text-[11px] font-mono text-slate-400 block">layout=&quot;horizontal&quot; (Vista Mapa)</span>
+                    <div className="max-w-2xl">
+                      <VehicleCard
+                        vehicle={demoVehicle}
+                        layout="horizontal"
+                        onSelect={(v) => onNavigate && onNavigate(`/vehiculos/${v.slug}`)}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
+            )}
 
-              <div className="max-w-sm rounded-2xl border border-slate-200 overflow-hidden bg-white shadow-xs hover:shadow-md transition-shadow">
-                <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80"
-                    alt="Volkswagen Virtus 2026"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-xs text-[11px] font-heading font-bold text-slate-800 shadow-xs">
-                      Sedán
-                    </span>
-                  </div>
-                  <div className="absolute top-3 right-3">
-                    <span className="px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[11px] font-heading font-bold shadow-xs">
-                      Verificado
-                    </span>
+            {/* Organismo 2: Galería de Producto (3 fotos + Modal blanco 1+2) */}
+            {showOrgGallery && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Galería de Producto (3 Tarjetas Redondeadas + Modal Blanco 1+2)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Haz clic en cualquier imagen o en el pill <strong className="text-slate-700">Ver 3 fotos</strong> para abrir el modal blanco interactivo.
+                    </p>
                   </div>
                 </div>
 
-                <div className="p-5">
-                  <div className="flex items-baseline justify-between">
-                    <div>
-                      <h4 className="text-base font-heading font-extrabold text-slate-900">
-                        Volkswagen Virtus
-                      </h4>
-                      <div className="text-xs text-slate-500">Trendline 2026 · Automático</div>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+                  <div
+                    onClick={() => setDemoGalleryOpen(true)}
+                    className="md:col-span-8 relative rounded-[20px] overflow-hidden bg-slate-100 h-[240px] sm:h-[320px] cursor-pointer group"
+                  >
+                    <img
+                      src={demoGalleryImages[0].url}
+                      alt={demoGalleryImages[0].alt}
+                      className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDemoGalleryFav((prev) => !prev);
+                      }}
+                      aria-label="Favorito galería"
+                      className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+                        demoGalleryFav ? 'bg-white text-rose-500' : 'bg-white/90 hover:bg-white text-slate-700'
+                      }`}
+                    >
+                      <Heart className={`w-4 h-4 ${demoGalleryFav ? 'fill-rose-500 text-rose-500' : ''}`} strokeWidth={1.8} />
+                    </button>
+                  </div>
+
+                  <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-3 h-[320px]">
+                    <div
+                      onClick={() => setDemoGalleryOpen(true)}
+                      className="relative rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+                    >
+                      <img
+                        src={demoGalleryImages[1].url}
+                        alt={demoGalleryImages[1].alt}
+                        className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
+                      />
                     </div>
-                    <div className="text-right">
-                      <div className="text-base font-heading font-extrabold text-blue-600">
-                        $1,100 <span className="text-xs font-normal text-slate-400">/día</span>
+                    <div
+                      onClick={() => setDemoGalleryOpen(true)}
+                      className="relative rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+                    >
+                      <img
+                        src={demoGalleryImages[2].url}
+                        alt={demoGalleryImages[2].alt}
+                        className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDemoGalleryOpen(true);
+                        }}
+                        className="absolute bottom-3 right-3 bg-white/95 hover:bg-white text-slate-900 rounded-full px-3.5 py-1.5 text-xs font-heading font-semibold transition-colors cursor-pointer"
+                      >
+                        Ver {demoGalleryImages.length} fotos
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Organismo 3: Confirmación Minimalista de 1 Columna */}
+            {showOrgConfirmation && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Patrón de Confirmación Minimalista de 1 Columna
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Utilizado tras finalizar en <code className="font-mono text-slate-700">¡Reserva creada!</code> y <code className="font-mono text-slate-700">¡Solicitud enviada!</code>
+                  </p>
+                </div>
+
+                <div className="max-w-xl space-y-4 pt-1">
+                  <div className="space-y-2">
+                    <div className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
+                      ¡Solicitud / Reserva registrada!
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+                        Folio: ANF-842910
+                      </span>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                        En revisión · 24-48 hrs
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
+                    <div className="p-4 space-y-2 text-xs sm:text-sm">
+                      <div className="flex justify-between gap-4">
+                        <span className="text-slate-500">Titular</span>
+                        <span className="font-heading font-semibold text-slate-900">Carlos Medina Robles</span>
                       </div>
-                      <div className="text-[10px] text-slate-400">Tarifa garantizada</div>
+                      <div className="flex justify-between gap-4">
+                        <span className="text-slate-500">Ciudad / Sucursal</span>
+                        <span className="font-heading font-semibold text-slate-900">Durango · Plaza 450</span>
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 bg-slate-50/60 rounded-b-2xl flex items-center gap-2 text-xs text-slate-600">
+                      <ShieldCheck className="w-4 h-4 text-slate-500 shrink-0" />
+                      <span>Un solo contenedor lineal con siguientes pasos y acciones planas al pie.</span>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span className="flex items-center gap-1">
-                      <Gauge className="w-3.5 h-3.5 text-slate-400" /> Km Libre
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Users className="w-3.5 h-3.5 text-slate-400" /> 5 Lugares
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /> 4.97
-                    </span>
-                  </div>
-
-                  <div className="mt-4">
-                    <button className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs sm:text-sm transition-colors">
-                      Ver auto y reservar
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <button
+                      type="button"
+                      className="px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                    >
+                      Acción principal
+                    </button>
+                    <button
+                      type="button"
+                      className="px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                    >
+                      Volver al inicio
                     </button>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Organismo 2: Cinta QA & Footer */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <h3 className="text-base font-heading font-bold text-slate-900">
-                Listón de Control QA & Botón de Sistema de Diseño
-              </h3>
-              <p className="text-xs text-slate-500">Ubicado en la parte inferior del Footer para auditorías y navegación rápida</p>
+            {/* Organismo 4: Cinta QA & Footer */}
+            {showOrgQaRibbon && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                <h3 className="text-base font-heading font-bold text-slate-900">
+                  Listón de Control QA (Auditor SEO + Sistema de Diseño)
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Ubicado en la parte inferior del <code className="font-mono text-slate-700">Footer</code> con enlaces directos para auditoría interna
+                </p>
 
-              <div className="bg-black text-white text-[11px] font-mono py-2.5 px-4 rounded-xl border border-neutral-800">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-neutral-400">
-                  <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
-                  <div className="flex items-center gap-3 text-white">
-                    <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.98</span>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
-                      <Palette className="w-3.5 h-3.5 text-pink-400" />
-                      <span>Sistema de Diseño</span>
-                    </span>
+                <div className="bg-black text-white text-[11px] font-mono py-2.5 px-4 rounded-xl border border-neutral-800">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-neutral-400">
+                    <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
+                    <div className="flex flex-wrap items-center gap-3 text-white">
+                      <button
+                        type="button"
+                        onClick={() => onNavigate && onNavigate('/seo')}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-blue-300 text-[11px] font-medium border border-neutral-700/60 cursor-pointer"
+                      >
+                        <Globe className="w-3.5 h-3.5 text-blue-400" />
+                        <span>Auditor SEO</span>
+                      </button>
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
+                        <Palette className="w-3.5 h-3.5 text-pink-400" />
+                        <span>Sistema de Diseño</span>
+                      </span>
+                      <span>Última actualización: <strong>18 Nov 2026</strong></span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.99</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
+            )}
           </section>
         )}
 
+        {/* ============================================================ */}
+        {/* 5. AUDITORÍA DE COMPONENTES & DUPLICADOS */}
+        {/* ============================================================ */}
+        {(showAuditKpis || showAuditDedupe || showAuditIntentional || showAuditInventory) && (
+          <section id="audit" className="space-y-6">
+            <div className="border-b border-slate-200 pb-3">
+              <div className="flex items-center gap-2 text-slate-800 font-mono text-xs font-bold uppercase tracking-wider">
+                <ClipboardCheck className="w-4 h-4 text-[#3D63FF]" /> Nivel 4 · Auditoría de Código &amp; UI
+              </div>
+              <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
+                Auditoría de Componentes Repetidos e Inventario
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                Resultado de la revisión de <code className="font-mono text-slate-700">src/components/</code> y <code className="font-mono text-slate-700">src/pages/</code>: duplicados consolidados, código muerto eliminado y separación intencional.
+              </p>
+            </div>
+
+            {/* KPI Summary Cards */}
+            {showAuditKpis && (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 text-left">
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-400 block">
+                    Componentes UI
+                  </span>
+                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 mt-1">
+                    {COMPONENT_INVENTORY.length}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">Archivos en src/components/</p>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 text-left">
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-400 block">
+                    Duplicados consolidados
+                  </span>
+                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-emerald-700 mt-1">
+                    5
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">Opciones, tarjetas, auth y DS</p>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 text-left">
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-400 block">
+                    Código muerto depurado
+                  </span>
+                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-[#3D63FF] mt-1">
+                    3 bloques
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">showForgot, TIME_OPTIONS, heroCarImg</p>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 text-left">
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-400 block">
+                    &lt;select&gt; / Sombras CTA
+                  </span>
+                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 mt-1">
+                    0
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">100% CustomDropdown + botones planos</p>
+                </div>
+              </div>
+            )}
+
+            {/* Duplicados detectados y consolidados */}
+            {showAuditDedupe && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Duplicados Detectados y Consolidados en esta Revisión
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Bloques repetidos entre archivos que fueron unificados en una sola fuente de verdad.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-200 divide-y divide-slate-100">
+                  {[
+                    {
+                      title: '1. Catálogos de opciones de ubicación, vehículos y ciudades',
+                      status: 'Consolidado',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+                      detail: 'LOCATION_OPTIONS, VEHICLE_TYPES y HOST_CITY_OPTIONS repetidos en SearchContainer, CatalogPage, HostRegistrationPage y DesignSystemPage → centralizados en src/data/dropdownOptions.ts.',
+                    },
+                    {
+                      title: '2. Tarjetas de paso con imagen 16:10/4:3 y badge flotante azul',
+                      status: 'Consolidado',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+                      detail: 'Markup duplicado 3 veces entre FourStepProcess (móvil + desktop) y HostSection (6 pasos) → extraído a src/components/StepFeatureCard.tsx.',
+                    },
+                    {
+                      title: '3. Cascarón dividido de autenticación (imagen 3D + formulario)',
+                      status: 'Consolidado',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+                      detail: 'Layout repetido en LoginPage, RegisterPage y ForgotPasswordPage → unificado en src/components/AuthCardLayout.tsx.',
+                    },
+                    {
+                      title: '4. Mockups duplicados y botón #9 repetido en DesignSystemPage',
+                      status: 'Consolidado',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
+                      detail: 'Tarjetas estáticas falsas de buscador y vehículo reemplazadas por <SearchContainer /> y <VehicleCard /> reales + numeración limpia btn-1..btn-12.',
+                    },
+                    {
+                      title: '5. Código muerto y constantes sin uso',
+                      status: 'Depurado',
+                      statusClass: 'bg-blue-50 text-[#3D63FF] border-blue-200/80',
+                      detail: 'Eliminado flujo inline inalcanzable showForgot en LoginPage (duplicaba ForgotPasswordPage), TIME_OPTIONS en CatalogPage y baseUrl/heroCarImg en FourStepProcess.',
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                      <div className="space-y-1">
+                        <div className="text-sm font-heading font-bold text-slate-900">{item.title}</div>
+                        <p className="text-xs text-slate-600 leading-relaxed">{item.detail}</p>
+                      </div>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full border text-[11px] font-heading font-semibold shrink-0 self-start ${item.statusClass}`}>
+                        {item.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Variantes intencionales */}
+            {showAuditIntentional && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-3 text-left">
+                <h3 className="text-base font-heading font-bold text-slate-900">
+                  Variantes Intencionales (No Duplicadas por Diseño)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                  <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-1">
+                    <div className="font-heading font-bold text-slate-900">
+                      CustomDropdown vs. Popovers con Geolocalización
+                    </div>
+                    <p className="text-slate-600 text-xs leading-relaxed">
+                      <code className="font-mono text-slate-700">CustomDropdown</code> cubre selectores estándar, mientras los popovers de ubicación en <code className="font-mono text-slate-700">SearchContainer</code> y <code className="font-mono text-slate-700">CatalogPage</code> conservan detección GPS en vivo e estado &quot;Detectando...&quot;, compartiendo datos desde <code className="font-mono text-slate-700">dropdownOptions.ts</code>.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-1">
+                    <div className="font-heading font-bold text-slate-900">
+                      ReservationCheckoutView vs. HostRegistrationPage
+                    </div>
+                    <p className="text-slate-600 text-xs leading-relaxed">
+                      Comparten el patrón de 12 columnas (<code className="font-mono text-slate-700">lg:col-span-7</code> + <code className="font-mono text-slate-700">lg:col-span-5</code> sticky), botones izquierdos planos y confirmación de 1 columna, pero se mantienen desacopladas para evolucionar renta vs. onboarding de anfitriones sin riesgo de regresión.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Inventario completo de src/components/ */}
+            {showAuditInventory && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Inventario Completo de Componentes (<code className="font-mono text-sm">src/components/</code>)
+                  </h3>
+                  <span className="text-xs font-mono text-slate-400">{COMPONENT_INVENTORY.length} módulos activos</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {COMPONENT_INVENTORY.map((comp) => (
+                    <div
+                      key={comp.file}
+                      className="p-3.5 rounded-xl border border-slate-200 bg-white space-y-1.5"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-mono text-xs font-bold text-slate-900 truncate">
+                          {comp.file}
+                        </span>
+                        <span className="text-[10px] font-heading font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 shrink-0">
+                          {comp.level}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-600 leading-snug">{comp.purpose}</p>
+                      <p className="text-[11px] font-mono text-slate-400 truncate">Uso: {comp.consumers}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
       </main>
+
+      {/* MODAL BLANCO INTERACTIVO DE GALERÍA DE PRODUCTO */}
+      {demoGalleryOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+          onClick={() => setDemoGalleryOpen(false)}
+        >
+          <div
+            className="bg-white rounded-[24px] sm:rounded-[28px] max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-center shrink-0">
+              <h3 className="font-heading font-bold text-slate-900 text-base sm:text-lg text-center">
+                {demoVehicle.make} {demoVehicle.model} {demoVehicle.year}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setDemoGalleryOpen(false)}
+                aria-label="Cerrar galería"
+                className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="px-5 sm:px-6 pb-6 pt-1 overflow-y-auto space-y-3.5">
+              <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100">
+                <img
+                  src={demoGalleryImages[0].url}
+                  alt={demoGalleryImages[0].alt}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {demoGalleryImages.slice(1).map((img, i) => (
+                  <div key={i} className="w-full aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100">
+                    <img
+                      src={img.url}
+                      alt={img.alt}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

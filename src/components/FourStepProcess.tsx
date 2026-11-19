@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Search, UploadCloud, FileSignature, KeyRound } from 'lucide-react';
+import { StepFeatureCard } from './StepFeatureCard';
 
 export const FourStepProcess: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const baseUrl = ((import.meta as any).env?.BASE_URL || '/');
-  const heroCarImg = `${baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'}images/figma-hero.webp`;
 
   const steps = [
     {
@@ -58,34 +57,17 @@ export const FourStepProcess: React.FC = () => {
               className="flex transition-transform duration-300 ease-out will-change-transform"
               style={{ transform: `translateX(-${activeSlide * 100}%)` }}
             >
-              {steps.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <div key={s.number} className="w-full shrink-0 flex flex-col items-start px-0.5">
-                    <div className="relative w-full aspect-[16/10] rounded-2xl overflow-visible bg-slate-100 mb-6">
-                      <div className="w-full h-full rounded-2xl overflow-hidden">
-                        <img
-                          src={s.image}
-                          alt={s.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="absolute -bottom-3 left-3 w-12 h-12 bg-blue-300 rounded-xl flex items-center justify-center z-10 shadow-xs">
-                        <Icon className="w-5 h-5 text-blue-900" strokeWidth={1.4} />
-                      </div>
-                    </div>
-                    <div className="pt-2 flex flex-col items-start text-left">
-                      <h3 className="text-lg font-heading font-semibold text-slate-900 mb-1.5 leading-snug">
-                        {s.title}
-                      </h3>
-                      <p className="text-xs font-sans text-slate-600 leading-relaxed">
-                        {s.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+              {steps.map((s) => (
+                <StepFeatureCard
+                  key={s.number}
+                  title={s.title}
+                  description={s.description}
+                  image={s.image}
+                  icon={s.icon}
+                  aspectClassName="aspect-[16/10]"
+                  className="w-full shrink-0 px-0.5"
+                />
+              ))}
             </div>
           </div>
 
@@ -117,41 +99,15 @@ export const FourStepProcess: React.FC = () => {
 
         {/* Desktop / Tablet: Grid completo estándar de 4 columnas */}
         <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {steps.map((s) => {
-            const Icon = s.icon;
-            return (
-              <div key={s.number} className="flex flex-col items-start">
-                
-                {/* Contenedor de Imagen estático sin efectos de zoom ni traslación */}
-                <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
-                  <div className="w-full h-full rounded-2xl overflow-hidden">
-                    <img
-                      src={s.image}
-                      alt={s.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-
-                  {/* Badge cuadrado flotante en esquina inferior izquierda con fondo azul 300 e icono azul 900 */}
-                  <div className="absolute -bottom-3 left-3 w-12 h-12 bg-blue-300 rounded-xl flex items-center justify-center z-10">
-                    <Icon className="w-5 h-5 text-blue-900" strokeWidth={1.4} />
-                  </div>
-                </div>
-
-                {/* Textos del paso */}
-                <div className="pt-2 flex flex-col items-start text-left">
-                  <h3 className="text-base sm:text-lg font-heading font-semibold text-slate-900 mb-1.5 leading-snug">
-                    {s.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-                    {s.description}
-                  </p>
-                </div>
-
-              </div>
-            );
-          })}
+          {steps.map((s) => (
+            <StepFeatureCard
+              key={s.number}
+              title={s.title}
+              description={s.description}
+              image={s.image}
+              icon={s.icon}
+            />
+          ))}
         </div>
 
       </div>

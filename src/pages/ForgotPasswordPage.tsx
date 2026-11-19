@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, ArrowLeft } from 'lucide-react';
+import { AuthCardLayout } from '../components/AuthCardLayout';
 
 interface ForgotPasswordPageProps {
   onNavigate: (path: string) => void;
@@ -20,26 +21,10 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
   };
 
   return (
-    <div className="min-h-[85vh] bg-slate-100 py-8 sm:py-14 px-4 sm:px-6 flex flex-col justify-center items-center">
-      
-      {/* Contenedor blanco principal */}
-      <div className="w-full max-w-[1020px] bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-6 lg:p-8 border-0 shadow-none">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 items-stretch">
-          
-          {/* Columna Izquierda: Imagen 3D en contenedor redondeado */}
-          <div className="hidden md:block relative rounded-[22px] overflow-hidden min-h-[460px] bg-slate-50">
-            <img
-              src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793605709248-0-gemini_generated_image_vkzt4nvkzt4nvkzt.webp"
-              alt="Recuperación de contraseña GALSA Rent"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Columna Derecha: Formulario */}
-          <div className="flex flex-col justify-center p-2 sm:p-5 lg:p-7 text-left">
-            
-            {/* Botón Volver con fondo claro sólo icono sin texto (sin breadcrumb) */}
-            <div className="mb-4">
+    <AuthCardLayout imageAlt="Recuperación de contraseña GALSA Rent" imageMinHeightClass="min-h-[460px]">
+      <div className="text-left">
+        {/* Botón Volver con fondo claro sólo icono sin texto (sin breadcrumb) */}
+        <div className="mb-4">
               <button
                 type="button"
                 onClick={() => onNavigate('/login')}
@@ -106,12 +91,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNaviga
                 </button>
               </p>
             </div>
-
-          </div>
-
-        </div>
       </div>
-
-    </div>
+    </AuthCardLayout>
   );
 };

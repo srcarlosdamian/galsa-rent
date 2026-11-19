@@ -3,6 +3,7 @@ import {
   Check, ShieldCheck, Clock, Award, Sliders, ArrowRight,
   UserPlus, Car, CheckCircle2, CalendarCheck, Wallet
 } from 'lucide-react';
+import { StepFeatureCard } from './StepFeatureCard';
 
 interface HostSectionProps {
   isFullPage?: boolean;
@@ -424,39 +425,15 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {STEPS.map((step) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.num} className="flex flex-col items-start">
-                  {/* Contenedor de Imagen con badge flotante idéntico al Home */}
-                  <div className="relative w-full aspect-[16/10] sm:aspect-[4/3] rounded-2xl overflow-visible bg-slate-100 mb-6">
-                    <div className="w-full h-full rounded-2xl overflow-hidden">
-                      <img
-                        src={step.image}
-                        alt={step.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-
-                    {/* Badge cuadrado flotante en esquina inferior izquierda con margen */}
-                    <div className="absolute -bottom-3 left-3 w-12 h-12 bg-blue-300 rounded-xl flex items-center justify-center z-10 shadow-xs">
-                      <Icon className="w-5 h-5 text-blue-900" strokeWidth={1.4} />
-                    </div>
-                  </div>
-
-                  {/* Textos del paso */}
-                  <div className="pt-2 flex flex-col items-start text-left">
-                    <h3 className="text-base sm:text-lg font-heading font-semibold text-slate-900 mb-1.5 leading-snug">
-                      {step.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+            {STEPS.map((step) => (
+              <StepFeatureCard
+                key={step.num}
+                title={step.title}
+                description={step.description}
+                image={step.image}
+                icon={step.icon}
+              />
+            ))}
           </div>
         </div>
       </section>
