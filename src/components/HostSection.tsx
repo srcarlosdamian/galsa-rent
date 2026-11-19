@@ -114,17 +114,17 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
 
   const HOW_IT_WORKS_CARDS = [
     {
-      img: '/images/host-step-1.jpg',
+      img: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388656934-2-gemini_generated_image_s8fcyrs8fcyrs8fc.webp',
       title: 'Publica tu auto',
       description: 'Registra tu vehículo, define tu disponibilidad y elige tu precio con ayuda de nuestro motor de tarifas.',
     },
     {
-      img: '/images/host-step-2.jpg',
+      img: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388656485-1-gemini_generated_image_jmm2n3jmm2n3jmm2.webp',
       title: 'Aprueba reservas',
       description: 'Clientes verificados solicitan tu auto y tú decides a quién le dices que sí.',
     },
     {
-      img: '/images/host-step-3.jpg',
+      img: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388656934-2-gemini_generated_image_s8fcyrs8fcyrs8fc.webp',
       title: 'Cobra tu tarifa',
       description: 'GALSA cobra al cliente la renta más su tarifa de servicio y te deposita tu parte en la cuenta que registres.',
     },
