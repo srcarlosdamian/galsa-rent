@@ -331,7 +331,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.23</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.24</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1803,6 +1803,10 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </span>
                 </div>
 
+                <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 text-xs text-slate-600 leading-relaxed">
+                  <strong className="font-heading text-slate-900">Regla de color en Menú Lateral (<code className="font-mono text-slate-700">AccountPage.tsx</code> — Configuración de la cuenta):</strong> Los iconos del menú lateral nunca cambian a azul (<code className="font-mono text-slate-700">text-cta</code>) en estado reposo, hover ni activo/presionado; mantienen escala neutral (<code className="font-mono text-slate-700">text-ink-600</code> en reposo, <code className="font-mono text-slate-700">text-ink-900</code> en hover y activo).
+                </div>
+
                 {/* Parte A: 81 Iconos Lucide nombrados */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -3028,7 +3032,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.23</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.24</span>
                     </div>
                   </div>
                 </div>

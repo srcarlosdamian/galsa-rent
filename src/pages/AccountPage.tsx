@@ -412,7 +412,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     key={item.id}
                     type="button"
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-left text-xs sm:text-sm font-heading transition-colors cursor-pointer ${
+                    className={`group w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-left text-xs sm:text-sm font-heading transition-colors cursor-pointer ${
                       isActive
                         ? 'bg-subtle text-ink-900 font-bold'
                         : 'text-ink-600 hover:bg-subtle/60 hover:text-ink-900 font-medium'
@@ -420,8 +420,8 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   >
                     <span className="flex items-center gap-3">
                       <Icon
-                        className={`w-4 h-4 shrink-0 ${
-                          isActive ? 'text-cta' : 'text-ink-600'
+                        className={`w-4 h-4 shrink-0 transition-colors ${
+                          isActive ? 'text-ink-900' : 'text-ink-600 group-hover:text-ink-900'
                         }`}
                       />
                       <span>{item.label}</span>
@@ -429,7 +429,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                     {item.badge && (
                       <span
                         className={`px-2 py-0.5 rounded-full text-[11px] font-heading font-bold ${
-                          isActive ? 'bg-cta-50 text-cta' : 'bg-subtle text-ink-600'
+                          isActive ? 'bg-slate-200/80 text-ink-900' : 'bg-subtle text-ink-600'
                         }`}
                       >
                         {item.badge}
