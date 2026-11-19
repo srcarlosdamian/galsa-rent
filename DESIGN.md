@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.8.14)
+description: Minimalist, clean, flat digital mobility platform (v2.8.15)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.8.14`)
+# GALSA Rent Design System & Guidelines (`v2.8.15`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -103,3 +103,8 @@ rounded:
 - En **Beneficios de ser anfitrión GALSA**, los iconos/ilustraciones 3D usan un contenedor cuadrado limpio (`aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none`) **sin línea de borde** (`border-0`), acompañados de título (`text-base font-heading font-bold`) y descripción (`text-xs sm:text-sm text-slate-500`).
 - **Modales, Drawers & Sheets del Sistema (6 Variantes):** Confirmación (`AccountPage.tsx`, `max-w-[420px]`), Formulario (`AccountPage.tsx`, `max-w-[500px]`), Contrato Digital (`ReservationCheckoutView.tsx`, `max-w-2xl`), Galería/Compartir (`VehicleDetailView.tsx`), Drawer Lateral (`Header.tsx`, `max-w-md`) y Bottom Sheet Mobile (`CatalogPage.tsx`). Todos usan backdrop `bg-black/50 backdrop-blur-xs`, `rounded-[24px]` y botón circular de cierre `w-8 h-8 rounded-full bg-subtle`.
 - **Vista de Cuenta (`/cuenta`):** Contenedor `max-w-[1200px]`, banner *Completa tu perfil* en `bg-cta-50/60 border-cta-200/80` con ilustración 3D (`/galsa-rent/images/cuenta/completa-perfil-lapiz.png`) y botón lineal `Completar ahora`; acciones `Editar` sin subrayado; `DocumentUploadCard` oculta la barra de progreso al llegar al `100%` (`status === 'completed'`).
+- **FAQs & Acordeones del Sistema (4 Variantes):**
+  1. **FAQ Principal** (`FaqSection.tsx`, Home y `/faq`): `rounded-2xl border border-edge bg-white`, botón circular `w-8 h-8` con `Plus`/`Minus`.
+  2. **FAQ Compacto** (`Header.tsx`, Drawer de Ayuda): `rounded-xl border border-slate-200`, `ChevronDown` con `rotate-180`.
+  3. **Acordeón de Pasos** (`ReservationCheckoutView.tsx`, Pasos 1–5): badge numérico `w-7 h-7 rounded-full bg-blue-50 text-blue-600`, botón circular `w-8 h-8 bg-slate-100` con `ChevronDown`.
+  4. **Sheet Resumen Mobile** (`VehicleDetailView.tsx` / `ReservationCheckoutView.tsx`): barra inferior fija `lg:hidden` desplegable con `ChevronUp`/`ChevronDown`.

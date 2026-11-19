@@ -324,7 +324,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.14</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.15</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -2782,6 +2782,126 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
+            {/* Organismo: Catálogo Completo de FAQs & Acordeones (4 Variantes Reales) */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Catálogo Completo de FAQs &amp; Acordeones (4 Variantes Reales)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Todos los acordeones desplegables del sistema: FAQ principal (<code className="font-mono text-slate-700">Plus/Minus</code>), FAQ compacto de ayuda (<code className="font-mono text-slate-700">ChevronDown</code>), pasos de checkout (<code className="font-mono text-slate-700">ReservationCheckoutView</code>) y sheet móvil de resumen.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copySnippet(
+                        'rounded-2xl border border-edge bg-white overflow-hidden transition-all duration-200',
+                        'org-accordions'
+                      )
+                    }
+                    className="text-xs font-mono text-cta hover:text-cta-700 cursor-pointer shrink-0"
+                  >
+                    {copiedCode === 'org-accordions' ? 'Copiado ✓' : 'Copiar clases'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* 1. FAQ Principal (FaqSection.tsx) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono text-cta font-semibold">1. FAQ Principal · FaqSection.tsx</span>
+                      <span className="text-[10px] font-mono text-slate-400">Home · /faq</span>
+                    </div>
+                    <div className="rounded-2xl border border-edge bg-white overflow-hidden">
+                      <button
+                        type="button"
+                        onClick={() => setIsFaqOpen(!isFaqOpen)}
+                        className="w-full p-4 text-left flex items-center justify-between gap-3 hover:bg-subtle/50 transition-colors cursor-pointer"
+                      >
+                        <span className="text-xs sm:text-sm font-heading font-semibold text-slate-900">
+                          ¿Qué requisitos necesito para rentar un auto?
+                        </span>
+                        <span className="w-7 h-7 rounded-full border border-edge flex items-center justify-center shrink-0 text-ink-700">
+                          {isFaqOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                        </span>
+                      </button>
+                      {isFaqOpen && (
+                        <div className="px-4 pb-3.5 pt-2 text-xs font-sans text-slate-600 border-t border-edge-light">
+                          INE o pasaporte, licencia vigente, comprobante de domicilio y método de pago.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 2. FAQ Compacto Centro de Ayuda (Header.tsx) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono text-cta font-semibold">2. FAQ Compacto · Header.tsx (Ayuda)</span>
+                      <span className="text-[10px] font-mono text-slate-400">Drawer Ayuda</span>
+                    </div>
+                    <div className="rounded-xl border border-slate-200 overflow-hidden bg-white">
+                      <div className="p-3.5 flex items-center justify-between text-left">
+                        <span className="text-xs font-heading font-bold text-slate-900">
+                          ¿Cómo funciona el depósito en garantía?
+                        </span>
+                        <ChevronDown className="w-4 h-4 text-slate-400 rotate-180 shrink-0" />
+                      </div>
+                      <div className="px-3.5 pb-3 pt-2 text-xs font-sans text-slate-600 border-t border-slate-100">
+                        Es 100% reembolsable al entregar el vehículo sin daños ni adeudos.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3. Acordeón de Pasos Checkout (ReservationCheckoutView.tsx) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono text-cta font-semibold">3. Acordeón Paso · ReservationCheckoutView</span>
+                      <span className="text-[10px] font-mono text-slate-400">Pasos 1–5</span>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3.5 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                          1
+                        </span>
+                        <div className="min-w-0">
+                          <div className="text-xs sm:text-sm font-heading font-bold text-slate-900 truncate">
+                            Fechas y sucursal de entrega
+                          </div>
+                          <div className="text-[11px] font-sans text-slate-500 truncate">
+                            Plaza 450, Durango · 4 nov — 7 nov
+                          </div>
+                        </div>
+                      </div>
+                      <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 4. Acordeón Inferior Mobile Resumen (VehicleDetailView / Checkout) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono text-cta font-semibold">4. Sheet Resumen Mobile · VehicleDetail / Checkout</span>
+                      <span className="text-[10px] font-mono text-slate-400">lg:hidden</span>
+                    </div>
+                    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 flex items-center justify-between gap-3">
+                      <div>
+                        <div className="text-sm font-heading font-extrabold text-slate-900 tabular-nums">$5,786 MXN</div>
+                        <div className="text-[11px] font-sans text-slate-500">3 días · Plaza 450</div>
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-heading font-semibold text-slate-800">
+                        <ChevronUp className="w-3.5 h-3.5" />
+                        <span>Ver resumen</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Organismo 5: Cinta QA & Footer */}
             {showOrgQaRibbon && (
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
@@ -2809,7 +2929,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.14</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.15</span>
                     </div>
                   </div>
                 </div>
