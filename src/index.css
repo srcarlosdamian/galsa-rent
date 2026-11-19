@@ -143,3 +143,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .animate-infinite-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Carrusel continuo infinito solo en mobile (< 768px) */
+.animate-infinite-scroll-mobile {
+  display: flex;
+  width: max-content;
+  animation: infinite-scroll 22s linear infinite;
+}
+
+.animate-infinite-scroll-mobile:hover,
+.animate-infinite-scroll-mobile:active {
+  animation-play-state: paused;
+}
+
+@media (min-width: 768px) {
+  .animate-infinite-scroll-mobile {
+    display: grid;
+    width: 100%;
+    animation: none;
+    transform: none;
+  }
+}

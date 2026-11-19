@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Check, ShieldCheck, Clock, Award, Sliders, ArrowRight,
-  UserPlus, Car, CheckCircle2, CalendarCheck, Wallet
+  UserPlus, Car, CheckCircle2, CalendarCheck, Wallet, Percent
 } from 'lucide-react';
 import { StepFeatureCard } from './StepFeatureCard';
 import { MinimalMobileSlider } from './MinimalMobileSlider';
@@ -10,6 +10,24 @@ interface HostSectionProps {
   isFullPage?: boolean;
   onNavigate?: (path: string) => void;
 }
+
+const HERO_HIGHLIGHTS = [
+  {
+    icon: Percent,
+    title: '33% comisión al cliente',
+    description: 'Tú recibes el 100% de la tarifa que fijas, el cliente cubre la comisión de servicio.',
+  },
+  {
+    icon: Wallet,
+    title: '100% de la tarifa para ti',
+    description: 'Sin descuentos, sin retenciones. Recibes íntegro lo que estableces por día.',
+  },
+  {
+    icon: Clock,
+    title: '24-48h revisión de solicitud',
+    description: 'Respuesta rápida en la plataforma. Tú apruebas cada reserva con total control.',
+  },
+];
 
 export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onNavigate }) => {
   const handlePublish = (e: React.MouseEvent) => {
@@ -137,9 +155,9 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       <section className="py-12 sm:py-16 md:py-24">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start lg:items-center">
             
-            {/* LADO IZQUIERDO: Título con subrayado, Descripción, Checks destacados y Botón CTA */}
+            {/* LADO IZQUIERDO: Título con subrayado, Descripción y Botón CTA */}
             <div className="lg:col-span-6 space-y-6 text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-slate-900 tracking-tight leading-[1.08]">
                 Convierte tu auto<br />
@@ -154,53 +172,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 Publica tu vehículo en el marketplace de GALSA y genera ingresos con la seguridad de una operación profesional: verificación, seguro y pagos automatizados.
               </p>
 
-              {/* 3 Checks destacados con círculo azul claro */}
-              <div className="space-y-4 pt-2">
-                <div className="flex items-start gap-3.5">
-                  <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-cta" strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-heading font-bold text-slate-900">
-                      33% comisión al cliente
-                    </h3>
-                    <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                      Tú recibes el 100% de la tarifa que fijas, el cliente cubre la comisión de servicio.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-cta" strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-heading font-bold text-slate-900">
-                      100% de la tarifa para ti
-                    </h3>
-                    <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                      Sin descuentos, sin retenciones. Recibes íntegro lo que estableces por día.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3.5">
-                  <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-cta" strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-heading font-bold text-slate-900">
-                      24-48h revisión de solicitud
-                    </h3>
-                    <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                      Respuesta rápida en la plataforma. Tú apruebas cada reserva con total control.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
               {/* Botón CTA oficial */}
-              <div className="pt-4">
+              <div className="pt-2">
                 <a
                   href="/anfitriones/registro"
                   onClick={handlePublish}
@@ -340,6 +313,41 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
 
           </div>
 
+        </div>
+      </section>
+
+      {/* BANDA DESTACADA: 3 pilares de izquierda a derecha en desktop, scroll infinito en mobile */}
+      <section className="py-10 sm:py-12 bg-white border-y border-slate-100 overflow-hidden">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 text-left">
+          <div className="overflow-hidden -mx-4 md:mx-0 md:overflow-visible">
+            <div className="animate-infinite-scroll-mobile md:grid-cols-3 md:gap-8">
+              {[...HERO_HIGHLIGHTS, ...HERO_HIGHLIGHTS].map((item, idx) => {
+                const Icon = item.icon;
+                const isDuplicate = idx >= HERO_HIGHLIGHTS.length;
+                return (
+                  <div
+                    key={idx}
+                    aria-hidden={isDuplicate ? 'true' : undefined}
+                    className={`flex items-start gap-3.5 w-[280px] sm:w-[310px] shrink-0 pr-6 md:w-auto md:pr-0 ${
+                      isDuplicate ? 'md:hidden' : ''
+                    }`}
+                  >
+                    <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <Icon className="w-3.5 h-3.5 text-cta" strokeWidth={2.2} />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-heading font-bold text-slate-900">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
