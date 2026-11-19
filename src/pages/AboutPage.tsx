@@ -1,8 +1,5 @@
 import React from 'react';
 import {
-  ShieldCheck,
-  Car,
-  HeartHandshake,
   Check,
   MapPin,
   FileCheck,
@@ -118,8 +115,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="rounded-2xl border border-edge bg-surface p-6 sm:p-8 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-cta-100 text-cta-900 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5" strokeWidth={1.6} />
+              <div className="w-16 h-16 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none">
+                <img
+                  src="/galsa-rent/images/anfitriones/benefit-5-tarifa.png"
+                  alt="Transparencia total"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
               </div>
               <h3 className="text-lg font-heading font-bold text-ink-900">
                 Transparencia total
@@ -130,8 +131,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="rounded-2xl border border-edge bg-surface p-6 sm:p-8 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-cta-100 text-cta-900 flex items-center justify-center">
-                <Car className="w-5 h-5" strokeWidth={1.6} />
+              <div className="w-16 h-16 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none">
+                <img
+                  src="/galsa-rent/images/anfitriones/benefit-3-seguro.png"
+                  alt="Calidad y control riguroso"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
               </div>
               <h3 className="text-lg font-heading font-bold text-ink-900">
                 Calidad y control riguroso
@@ -142,8 +147,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="rounded-2xl border border-edge bg-surface p-6 sm:p-8 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-cta-100 text-cta-900 flex items-center justify-center">
-                <HeartHandshake className="w-5 h-5" strokeWidth={1.6} />
+              <div className="w-16 h-16 aspect-square rounded-2xl overflow-hidden bg-slate-100 shrink-0 shadow-none">
+                <img
+                  src="/galsa-rent/images/anfitriones/benefit-6-ocupacion.png"
+                  alt="Comunidad y economía local"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
               </div>
               <h3 className="text-lg font-heading font-bold text-ink-900">
                 Comunidad y economía local
