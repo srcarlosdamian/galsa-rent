@@ -324,7 +324,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.20</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.21</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -949,7 +949,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="w-full px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-transparent hover:bg-slate-50 active:bg-slate-100 active:scale-[0.98] text-slate-900 font-heading font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <span>Leer y firmar contrato</span>
                         </button>
@@ -959,7 +959,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-900 font-heading font-semibold text-sm transition-colors',
+                          'px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-transparent hover:bg-slate-50 active:bg-slate-100 text-slate-900 font-heading font-semibold text-sm transition-all',
                           'btn-3'
                         )
                       }
@@ -1075,7 +1075,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <button
                           type="button"
                           disabled
-                          className="w-full px-4 py-2 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 font-heading font-medium text-xs cursor-not-allowed flex items-center justify-center"
+                          className="w-full px-4 py-2 rounded-xl bg-slate-200 text-slate-400 font-heading font-semibold text-xs cursor-not-allowed flex items-center justify-center"
                         >
                           <span>Estado deshabilitado (disabled)</span>
                         </button>
@@ -1085,7 +1085,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          '<GalsaLogo className="h-6 w-auto text-cta" /> | Disabled: bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed',
+                          '<GalsaLogo className="h-6 w-auto text-cta" /> | Disabled CTA: bg-slate-200 text-slate-400 cursor-not-allowed | Disabled Lineal: border border-slate-200 bg-transparent text-slate-300 cursor-not-allowed',
                           'btn-7'
                         )
                       }
@@ -1095,15 +1095,15 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </button>
                   </div>
 
-                  {/* 8. Botón Inactivo Prototipo (Permite avanzar) */}
+                  {/* 8. Botón Inactivo Prototipo (Mismo token visual que Bloqueado) */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
                     <div>
                       <div className="text-xs font-heading font-bold text-slate-800">8. Botón Inactivo Prototipo</div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Visual neutro cuando faltan campos, pero clicable</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Token oficial Bloqueado (bg-slate-200 text-slate-400), clicable en prototipo</div>
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="w-full px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-600 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center cursor-pointer"
+                          className="w-full px-5 py-2.5 rounded-xl bg-slate-200 text-slate-400 font-heading font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center cursor-pointer"
                         >
                           <span>Continuar (Prototipo)</span>
                         </button>
@@ -1113,7 +1113,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-600 font-heading font-semibold text-sm transition-colors cursor-pointer',
+                          'px-5 py-2.5 rounded-xl bg-slate-200 text-slate-400 font-heading font-semibold text-sm transition-colors cursor-pointer',
                           'btn-8'
                         )
                       }
@@ -2929,7 +2929,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.20</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.21</span>
                     </div>
                   </div>
                 </div>
