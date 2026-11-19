@@ -39,7 +39,7 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
         <label className="text-xs sm:text-sm font-heading font-bold text-ink-900">
           {title}
         </label>
-        <span className="text-[11px] font-heading font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+        <span className="text-[11px] font-sans font-medium text-slate-500">
           {badge}
         </span>
       </div>
