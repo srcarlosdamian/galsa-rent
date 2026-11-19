@@ -973,7 +973,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       })}
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-2.5">
+                    <div className="rounded-2xl border border-slate-200/90 p-4 sm:p-5 space-y-2.5">
                       <h4 className="text-sm font-heading font-bold text-slate-900 mb-2">
                         Condiciones de uso
                       </h4>
