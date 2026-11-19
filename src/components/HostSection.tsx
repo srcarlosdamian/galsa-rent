@@ -86,14 +86,14 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       num: 3,
       title: 'Carga tu vehículo',
       description: 'Sube fotos, documentos y datos del auto.',
-      image: '/images/step-img-3.webp',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601314858-3-348387.webp',
       icon: Car,
     },
     {
       num: 4,
       title: 'Recibe aprobación',
       description: 'GALSA revisa tu vehículo en 24-48 horas.',
-      image: '/images/step-img-4.webp',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793601312824-0-348388.webp',
       icon: CheckCircle2,
     },
     {
