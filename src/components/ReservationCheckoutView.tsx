@@ -547,7 +547,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
             })()}
 
             {/* CONTENEDORES LINEALES DE LOS PASOS DE CHECKOUT */}
-            <div className="space-y-3.5">
+            <div className="space-y-5">
 
               {/* PASO 1: Fechas y sucursal de entrega */}
               <div
