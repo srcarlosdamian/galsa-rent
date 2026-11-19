@@ -323,18 +323,23 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           <div className="lg:col-span-7 space-y-8">
             
             {/* Host info */}
-            <div className="pb-6 border-b border-slate-100 flex items-center justify-between">
-              <div>
-                <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
-                  Unidad verificada por GALSA Rent
-                </h2>
-                <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                  Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
-                </p>
+            <div className="pb-6 border-b border-slate-100 space-y-4">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
+                    Unidad verificada por GALSA Rent
+                  </h2>
+                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                    Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
+                  </p>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
+              <p className="text-sm font-sans text-slate-600 leading-relaxed">
+                {vehicle.make} {vehicle.model} {vehicle.year} verificado para entrega inmediata sin filas en México. Kilometraje libre, contrato digital firmado desde tu celular y depósito reembolsable.
+              </p>
             </div>
 
             {/* Lo que ofrece este vehículo */}
@@ -342,53 +347,123 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <h3 className="text-xl font-heading font-bold text-slate-900">
                 Lo que ofrece este vehículo
               </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50">
                   <Users className="w-5 h-5 text-slate-700 shrink-0" />
                   <span className="text-sm font-heading font-medium text-slate-800">{vehicle.seats} asientos</span>
                 </div>
-                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50">
                   <Fuel className="w-5 h-5 text-slate-700 shrink-0" />
                   <span className="text-sm font-heading font-medium text-slate-800">Combustible {vehicle.fuel.toLowerCase()}</span>
                 </div>
-                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50">
+                  <Calendar className="w-5 h-5 text-slate-700 shrink-0" />
+                  <span className="text-sm font-heading font-medium text-slate-800">Año modelo {vehicle.year}</span>
+                </div>
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50">
                   <Gauge className="w-5 h-5 text-slate-700 shrink-0" />
                   <span className="text-sm font-heading font-medium text-slate-800">Transmisión {vehicle.transmission.toLowerCase()}</span>
                 </div>
-                <div className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-100 bg-slate-50/50">
-                  <Calendar className="w-5 h-5 text-slate-700 shrink-0" />
-                  <span className="text-sm font-heading font-medium text-slate-800">Año modelo {vehicle.year}</span>
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50">
+                  <Car className="w-5 h-5 text-slate-700 shrink-0" />
+                  <span className="text-sm font-heading font-medium text-slate-800">Carrocería {vehicle.category.split('/')[0].trim()}</span>
                 </div>
               </div>
             </div>
 
-            {/* Ubicación y entrega */}
-            <div className="pt-6 border-t border-slate-100 space-y-3">
+            {/* Características y condiciones de uso */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
               <h3 className="text-xl font-heading font-bold text-slate-900">
-                Ubicación y entrega
+                Características y condiciones de uso
               </h3>
-              <p className="text-sm font-sans text-slate-600">
-                Entrega y recepción en <strong>Sucursal Oficial GALSA Plaza 450</strong>, Blvd. Guadiana, Durango. Sin filas, con verificación de identidad y entrega de llaves en minutos.
-              </p>
+              <ul className="space-y-3 text-sm font-sans text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Kilometraje libre.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Combustible: se entrega y devuelve con el mismo nivel.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Edad mínima del conductor: 21 años con licencia vigente.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Depósito en garantía reembolsable al cierre sin incidencias.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Prohibido fumar dentro de la unidad.</span>
+                </li>
+              </ul>
             </div>
 
             {/* Reglas y condiciones */}
-            <div className="pt-6 border-t border-slate-100 space-y-3">
+            <div className="pt-6 border-t border-slate-100 space-y-4">
               <h3 className="text-xl font-heading font-bold text-slate-900">
-                Reglas y condiciones de la renta
+                Reglas y condiciones
               </h3>
-              <ul className="space-y-2 text-sm font-sans text-slate-600">
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600" />
-                  <span>Kilometraje libre en todo el estado y carreteras nacionales.</span>
+              <ul className="space-y-3 text-sm font-sans text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Documentación verificada antes de la entrega (licencia, identificación y comprobante).</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600" />
-                  <span>Entrega y devolución con el mismo nivel de combustible.</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Contrato digital firmado por ambas partes con validez legal.</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600" />
-                  <span>Depósito en garantía 100% reembolsable al cierre del contrato.</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Cancelaciones: Las cancelaciones realizadas con más de 48 horas de anticipación reciben reembolso completo. Cancelaciones posteriores están sujetas a cargos parciales según el tiempo restante para el inicio de la renta.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Multas y peajes durante la renta corren por cuenta del cliente.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Cualquier daño se documenta con evidencia fotográfica en la devolución.</span>
+                </li>
+              </ul>
+
+              <div className="bg-slate-50 rounded-xl px-4 py-3 text-xs sm:text-sm font-sans text-slate-600">
+                Consulta los{' '}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onNavigate) onNavigate('/terminos');
+                  }}
+                  className="font-heading font-bold text-slate-900 hover:text-cta underline-offset-2 hover:underline cursor-pointer"
+                >
+                  términos y condiciones
+                </button>{' '}
+                completos.
+              </div>
+            </div>
+
+            {/* Checklist controlado */}
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h3 className="text-xl font-heading font-bold text-slate-900">
+                Checklist controlado
+              </h3>
+              <ul className="space-y-3 text-sm font-sans text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Fotos de estado exterior e interior.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Registro de kilometraje de salida y entrada.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Nivel de combustible verificado.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Firma digital de entrega y devolución.</span>
                 </li>
               </ul>
             </div>
