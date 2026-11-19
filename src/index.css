@@ -5,17 +5,17 @@
 @layer base {
   :root {
     /* Escala Brand CTA (tailwind.config.js) */
-    --color-cta-50: #F3F6FC;
-    --color-cta-100: #E5ECF9;
-    --color-cta-200: #C6D7F1;
-    --color-cta-300: #93B6E6;
-    --color-cta-400: #5A90D6;
+    --color-cta-50: #E9F2FF;
+    --color-cta-100: #D8E8FF;
+    --color-cta-200: #B8D3FF;
+    --color-cta-300: #8EB5FF;
+    --color-cta-400: #618BFF;
     --color-cta-500: #3D63FF;
-    --color-cta-600: #2A4EEB;
-    --color-cta-700: #1F3DD4;
-    --color-cta-800: #172FB0;
-    --color-cta-900: #132488;
-    --color-cta-950: #0E1A5E;
+    --color-cta-600: #1B36FF;
+    --color-cta-700: #1F34F2;
+    --color-cta-800: #1125C2;
+    --color-cta-900: #182A97;
+    --color-cta-950: #0E1658;
 
     /* Superficies y Bordes */
     --color-surface: #FFFFFF;

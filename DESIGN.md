@@ -1,18 +1,18 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.3.4)
+description: Minimalist, clean, flat digital mobility platform (v2.3.5)
 colors:
-  cta-50: "#F3F6FC"
-  cta-100: "#E5ECF9"
-  cta-200: "#C6D7F1"
-  cta-300: "#93B6E6"
-  cta-400: "#5A90D6"
+  cta-50: "#E9F2FF"
+  cta-100: "#D8E8FF"
+  cta-200: "#B8D3FF"
+  cta-300: "#8EB5FF"
+  cta-400: "#618BFF"
   cta-500: "#3D63FF"
-  cta-600: "#2A4EEB"
-  cta-700: "#1F3DD4"
-  cta-800: "#172FB0"
-  cta-900: "#132488"
-  cta-950: "#0E1A5E"
+  cta-600: "#1B36FF"
+  cta-700: "#1F34F2"
+  cta-800: "#1125C2"
+  cta-900: "#182A97"
+  cta-950: "#0E1658"
   surface: "#FFFFFF"
   subtle: "#FAFAFA"
   edge: "#EBEBEB"
@@ -50,11 +50,11 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.3.4`)
+# GALSA Rent Design System & Guidelines (`v2.3.5`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
-- **Brand Azul Completo (`cta-50`..`cta-950`):** 11 tonos desde `bg-cta-50` (`#F3F6FC`) hasta `bg-cta` / `bg-cta-500` (`#3D63FF`), `bg-cta-600` (`#2A4EEB`) y `bg-cta-950` (`#0E1A5E`).
+- **Brand Azul Completo (`cta-50`..`cta-950`):** 11 tonos desde `bg-cta-50` (`#E9F2FF`) hasta `bg-cta` / `bg-cta-500` (`#3D63FF`), `bg-cta-600` (`#1B36FF`) y `bg-cta-950` (`#0E1658`).
 - **Superficies y textos (`surface`, `subtle`, `edge`, `edge-light`, `ink-900`..`ink-400`):** expuestos como clases Tailwind y variables CSS `--color-*`.
 - **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`.
 - **Popovers flotantes elevados:** `shadow-search`, `shadow-dropdown`, `shadow-float` y `shadow-2xl` se reservan exclusivamente para menús emergentes (`CustomDropdown`, `DateRangePicker`) dentro de padres `overflow-visible`.

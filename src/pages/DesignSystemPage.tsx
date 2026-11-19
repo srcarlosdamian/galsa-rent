@@ -192,7 +192,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     shouldShowSection('tokens') &&
     matchesSearch(
       'Escala Oficial Brand Azul cta-50 cta-100 cta-200 cta-300 cta-400 cta-500 cta-600 cta-700 cta-800 cta-900 cta-950 Superficies surface subtle edge ink-900 ink-400 Semánticos emerald amber rose',
-      'color hex tailwind css variables root f3f6fc 3d63ff 0e1a5e 111827 ebebeb'
+      'color hex tailwind css variables root e9f2ff d8e8ff b8d3ff 8eb5ff 618bff 3d63ff 1b36ff 1f34f2 1125c2 182a97 0e1658 111827 ebebeb'
     );
   const showTokensRadii =
     shouldShowSection('tokens') &&
@@ -326,7 +326,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.4</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.5</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -446,17 +446,17 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                     {[
-                      { token: 'cta-50', tw: 'bg-cta-50', cssVar: '--color-cta-50', hex: '#F3F6FC', usage: 'Banner Anfitriones & Badges suaves', light: true },
-                      { token: 'cta-100', tw: 'bg-cta-100', cssVar: '--color-cta-100', hex: '#E5ECF9', usage: 'Selección suave / Hover ligero', light: true },
-                      { token: 'cta-200', tw: 'bg-cta-200', cssVar: '--color-cta-200', hex: '#C6D7F1', usage: 'Bordes azules suaves', light: true },
-                      { token: 'cta-300', tw: 'bg-cta-300', cssVar: '--color-cta-300', hex: '#93B6E6', usage: 'Subrayados Hero & Badges', light: true },
-                      { token: 'cta-400', tw: 'bg-cta-400', cssVar: '--color-cta-400', hex: '#5A90D6', usage: 'Acentos e iconos intermedios', light: false },
+                      { token: 'cta-50', tw: 'bg-cta-50', cssVar: '--color-cta-50', hex: '#E9F2FF', usage: 'Banner Anfitriones & Badges suaves', light: true },
+                      { token: 'cta-100', tw: 'bg-cta-100', cssVar: '--color-cta-100', hex: '#D8E8FF', usage: 'Selección suave / HostBanner', light: true },
+                      { token: 'cta-200', tw: 'bg-cta-200', cssVar: '--color-cta-200', hex: '#B8D3FF', usage: 'Bordes azules / Subrayado', light: true },
+                      { token: 'cta-300', tw: 'bg-cta-300', cssVar: '--color-cta-300', hex: '#8EB5FF', usage: 'Subrayados Hero & Badges', light: true },
+                      { token: 'cta-400', tw: 'bg-cta-400', cssVar: '--color-cta-400', hex: '#618BFF', usage: 'Acentos e iconos intermedios', light: false },
                       { token: 'cta-500 (DEFAULT)', tw: 'bg-cta-500', cssVar: '--color-cta-500', hex: '#3D63FF', usage: 'CTA Principal (bg-cta / text-cta)', light: false },
-                      { token: 'cta-600', tw: 'bg-cta-600', cssVar: '--color-cta-600', hex: '#2A4EEB', usage: 'Hover botón primario (hover:bg-cta-600)', light: false },
-                      { token: 'cta-700', tw: 'bg-cta-700', cssVar: '--color-cta-700', hex: '#1F3DD4', usage: 'Estado activo / Texto en badge', light: false },
-                      { token: 'cta-800', tw: 'bg-cta-800', cssVar: '--color-cta-800', hex: '#172FB0', usage: 'Texto alto contraste azul', light: false },
-                      { token: 'cta-900', tw: 'bg-cta-900', cssVar: '--color-cta-900', hex: '#132488', usage: 'Azul profundo para iconos sobre cta-300', light: false },
-                      { token: 'cta-950', tw: 'bg-cta-950', cssVar: '--color-cta-950', hex: '#0E1A5E', usage: 'Azul noche máximo contraste', light: false },
+                      { token: 'cta-600', tw: 'bg-cta-600', cssVar: '--color-cta-600', hex: '#1B36FF', usage: 'Hover botón primario (hover:bg-cta-600)', light: false },
+                      { token: 'cta-700', tw: 'bg-cta-700', cssVar: '--color-cta-700', hex: '#1F34F2', usage: 'Estado activo / Texto en badge', light: false },
+                      { token: 'cta-800', tw: 'bg-cta-800', cssVar: '--color-cta-800', hex: '#1125C2', usage: 'Texto alto contraste azul', light: false },
+                      { token: 'cta-900', tw: 'bg-cta-900', cssVar: '--color-cta-900', hex: '#182A97', usage: 'Azul profundo para iconos sobre cta-300', light: false },
+                      { token: 'cta-950', tw: 'bg-cta-950', cssVar: '--color-cta-950', hex: '#0E1658', usage: 'Azul noche máximo contraste', light: false },
                     ].map((c) => (
                       <div
                         key={c.token}
@@ -2543,7 +2543,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.4</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.5</span>
                     </div>
                   </div>
                 </div>
