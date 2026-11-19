@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.6.8)
+description: Minimalist, clean, flat digital mobility platform (v2.6.9)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.6.8`)
+# GALSA Rent Design System & Guidelines (`v2.6.9`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -68,7 +68,7 @@ rounded:
 - **Layouts & Organismos:** `AuthCardLayout`, `SearchContainer`, `VehicleCard`, `VehicleDetailView`, `ReservationCheckoutView`, `HostRegistrationPage`, `AccountPage`, `SeoPage` y `DesignSystemPage`.
 
 ## 4. Chevrones (Indicadores de Dirección y Despliegue)
-1. **Chevron Circular para Cotizador Móvil (`ChevronUp` / `ChevronDown`, `w-8 h-8 rounded-full bg-slate-100`):** colocado a la **izquierda** del precio en la barra inferior flotante y como botón de cierre en el panel desplegable (`VehicleDetailView.tsx`).
+1. **Chevron Circular para Barras Flotantes Móviles (`ChevronUp` / `ChevronDown`, `w-8 h-8 rounded-full bg-slate-100`):** barra inferior fija (`lg:hidden fixed bottom-0 inset-x-0 z-40`) con chevron a la **izquierda** del total y panel desplegable (`rounded-t-[24px] max-h-[82vh]`) usada en el cotizador móvil (`VehicleDetailView.tsx`) y en el resumen móvil de compra (`ReservationCheckoutView.tsx`).
 2. **Chevron Circular de Acordeón (`ChevronDown` con `rotate-180`):** en los 5 pasos plegables del Checkout (`ReservationCheckoutView.tsx`).
 3. **Chevron de Select / Dropdown / Menú (`ChevronDown`):** en `CustomDropdown.tsx`, filtros y ordenamiento de `CatalogPage.tsx`, selectores de `SearchContainer.tsx` y submenú de `Header.tsx`.
 4. **Chevron de Enlace y Breadcrumb (`ChevronRight`):** en el enlace "Ver catálogo" (`VehicleDetailView.tsx`), migas de pan (`AboutPage.tsx`, `HowItWorksPage.tsx`) y enlaces de navegación (`App.tsx`).

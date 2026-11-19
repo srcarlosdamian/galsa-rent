@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  ShieldCheck, ChevronDown, Check, ArrowLeft, ArrowRight, Calendar, 
+  ShieldCheck, ChevronDown, ChevronUp, Check, ArrowLeft, ArrowRight, Calendar, 
   Clock, MapPin, FileSignature, X, User, CreditCard
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
@@ -32,6 +32,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const [contractModalOpen, setContractModalOpen] = useState(false);
   const [signatureName, setSignatureName] = useState('');
   const [openAccordion, setOpenAccordion] = useState<string | null>('dates');
+  const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
   const [isReservationCreated, setIsReservationCreated] = useState(false);
   const [isCardPaid, setIsCardPaid] = useState(false);
 
@@ -433,7 +434,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   }
 
   return (
-    <div className="w-full py-8 md:py-12 bg-white min-h-screen">
+    <div className="w-full py-8 md:py-12 pb-24 lg:pb-12 bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Barra superior de navegación para volver a la vista del automóvil */}
@@ -1141,9 +1142,9 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
           </div>
 
           {/* ========================================================
-              COLUMNA DERECHA: RESUMEN DE PAGO AMIGABLE (SIN BOTÓN CTA)
+              COLUMNA DERECHA (DESKTOP): RESUMEN DE PAGO AMIGABLE
              ======================================================== */}
-          <div className="lg:col-span-5 w-full">
+          <div className="hidden lg:block lg:col-span-5 w-full">
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-sm space-y-5 text-left">
               
               {/* Tarjeta de Vehículo en Resumen */}
@@ -1306,6 +1307,158 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
 
         </div>
 
+      </div>
+
+      {/* BACKDROP MÓVIL PARA RESUMEN FLOTANTE */}
+      {mobileSummaryOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-30"
+          onClick={() => setMobileSummaryOpen(false)}
+        />
+      )}
+
+      {/* BARRA MÓVIL INFERIOR FIJA CON CHEVRON A LA IZQUIERDA PARA VER RESUMEN */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40">
+        {mobileSummaryOpen && (
+          <div className="bg-white border-t border-slate-200 rounded-t-[24px] max-h-[82vh] overflow-y-auto px-4 sm:px-5 pt-4 pb-5 space-y-4 text-left">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-11 h-11 rounded-xl bg-slate-100 overflow-hidden shrink-0">
+                  <img
+                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793239505248-1-car.webp"
+                    alt={`${vehicle.make} ${vehicle.model}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-heading font-extrabold text-slate-900 truncate">
+                    {vehicle.make} {vehicle.model} {vehicle.year}
+                  </h3>
+                  <p className="text-[11px] font-sans text-slate-500">
+                    {vehicle.category} · Verificado GALSA
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileSummaryOpen(false)}
+                aria-label="Cerrar resumen"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-colors cursor-pointer"
+              >
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Detalles del viaje */}
+            <div className="rounded-2xl border border-slate-200/90 p-3.5 space-y-2 text-xs">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="font-heading font-bold uppercase tracking-wider text-slate-800">Detalles de tu viaje</span>
+                <span className="font-heading font-semibold text-cta">{rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-slate-500 font-sans">Sucursal</span>
+                <span className="font-heading font-semibold text-slate-900">Plaza 450, Durango</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-slate-500 font-sans">Recogida</span>
+                <span className="font-heading font-semibold text-slate-900">{formatDisplayDate(startDate)} · {pickupTime} hrs</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-slate-500 font-sans">Devolución</span>
+                <span className="font-heading font-semibold text-slate-900">{formatDisplayDate(endDate)} · {returnTime} hrs</span>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-slate-500 font-sans">Titular</span>
+                <span className="font-heading font-semibold text-slate-900 truncate max-w-[180px]">{clientFullName}</span>
+              </div>
+            </div>
+
+            {/* Resumen del pago */}
+            <div className="rounded-2xl border border-slate-200/90 p-3.5 space-y-2.5 text-xs">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="font-heading font-bold uppercase tracking-wider text-slate-800">Resumen del pago</span>
+                <span className="font-heading font-medium text-slate-500">{formatRangeSummary(startDate, endDate)}</span>
+              </div>
+              <div className="flex items-center justify-between text-slate-600">
+                <span>Renta (${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'})</span>
+                <span className="font-heading font-semibold text-slate-900 tabular-nums">${baseSubtotal.toLocaleString('es-MX')}</span>
+              </div>
+              <div className="flex items-center justify-between text-slate-600">
+                <span>Cobertura básica incluida</span>
+                <span className="font-heading font-semibold text-emerald-600">Incluida</span>
+              </div>
+              <div className="flex items-center justify-between text-slate-600">
+                <span>Tarifa de servicio GALSA (33%)</span>
+                <span className="font-heading font-semibold text-slate-900 tabular-nums">${serviceFee.toLocaleString('es-MX')}</span>
+              </div>
+              {selectedExtraItems.length > 0 && (
+                <div className="pt-2 border-t border-slate-100 space-y-1.5">
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-cta block">
+                    Extras agregados ({selectedExtraItems.length})
+                  </span>
+                  {selectedExtraItems.map((extra) => (
+                    <div key={extra.id} className="flex items-center justify-between gap-2 text-cta">
+                      <span className="truncate">{extra.title}</span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="font-heading font-semibold">+${extra.price.toLocaleString('es-MX')}</span>
+                        <button
+                          type="button"
+                          onClick={() => toggleExtra(extra.id)}
+                          aria-label="Quitar extra"
+                          className="w-5 h-5 rounded-full hover:bg-blue-100 text-cta flex items-center justify-center cursor-pointer"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-sm font-heading font-bold text-slate-900">
+                <span>Total de la renta</span>
+                <span className="tabular-nums">${total.toLocaleString('es-MX')} MXN</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center px-3.5 py-2.5 rounded-xl border border-slate-200/90 text-xs">
+              <div>
+                <span className="text-slate-700 font-heading font-semibold block">Depósito en garantía</span>
+                <span className="text-[11px] font-sans text-slate-400 block">100% reembolsable al devolver</span>
+              </div>
+              <span className="font-heading font-bold text-slate-900 shrink-0 tabular-nums">${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN</span>
+            </div>
+          </div>
+        )}
+
+        <div className="bg-white border-t border-slate-200 px-4 py-3 flex items-center justify-between gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileSummaryOpen((prev) => !prev)}
+            aria-expanded={mobileSummaryOpen}
+            aria-label={mobileSummaryOpen ? 'Cerrar resumen de reserva' : 'Abrir resumen de reserva'}
+            className="flex items-center gap-2.5 text-left min-w-0 cursor-pointer flex-1"
+          >
+            <span className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-colors">
+              {mobileSummaryOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            </span>
+            <div className="min-w-0">
+              <span className="text-base sm:text-lg font-heading font-extrabold text-slate-900 block leading-tight tabular-nums">
+                ${total.toLocaleString('es-MX')} MXN
+              </span>
+              <span className="text-xs font-sans text-slate-500 block truncate">
+                {rentalDays} {rentalDays === 1 ? 'día' : 'días'} · {selectedExtraItems.length > 0 ? `${selectedExtraItems.length} extras` : 'Plaza 450'}
+              </span>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMobileSummaryOpen((prev) => !prev)}
+            className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-800 font-heading font-semibold text-xs active:scale-95 cursor-pointer shrink-0 transition-colors"
+          >
+            {mobileSummaryOpen ? 'Ocultar' : 'Ver resumen'}
+          </button>
+        </div>
       </div>
 
       {/* MODAL DE CONTRATO Y FIRMA */}

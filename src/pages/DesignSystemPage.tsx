@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.6.8</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.6.9</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1219,12 +1219,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                             <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
                               <ChevronUp className="w-4 h-4" />
                             </span>
-                            <span className="text-xs font-heading font-bold text-slate-800">Cotizador Móvil</span>
+                            <span className="text-xs font-heading font-bold text-slate-800">Barras Flotantes Móviles</span>
                           </div>
                           <p className="text-[11px] text-slate-500 font-sans leading-relaxed">
-                            A la <strong>izquierda</strong> del precio en la barra flotante y arriba en el panel desplegable.
+                            A la <strong>izquierda</strong> del precio en la barra inferior fija (<code className="text-[10px]">fixed bottom-0</code>) de Detalle de Auto y Resumen en Checkout.
                           </p>
-                          <span className="text-[10px] font-mono text-slate-400 block">VehicleDetailView.tsx</span>
+                          <span className="text-[10px] font-mono text-slate-400 block">VehicleDetailView, ReservationCheckoutView</span>
                         </div>
 
                         <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1.5">
@@ -2562,7 +2562,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.6.8</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.6.9</span>
                     </div>
                   </div>
                 </div>
