@@ -279,7 +279,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
   if (isCheckout || isHostRegistration) {
     return (
       <header className="sticky top-0 z-40 bg-white border-b border-slate-200 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-[70px]">
             {/* Lado izquierdo: Logo de GALSA + Línea divisoria gris + Etiqueta protegida */}
             <div className="flex items-center gap-3 sm:gap-4">

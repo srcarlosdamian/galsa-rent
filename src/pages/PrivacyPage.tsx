@@ -3,7 +3,7 @@ import React from 'react';
 export const PrivacyPage: React.FC = () => {
   return (
     <div className="py-12 md:py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-neutral-800">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-8 text-neutral-800">
         <div>
           <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
             Protección de datos personales

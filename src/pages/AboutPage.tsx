@@ -19,7 +19,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
 
   return (
     <div className="py-10 md:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="text-xs text-ink-500 flex items-center gap-1.5 mb-8">

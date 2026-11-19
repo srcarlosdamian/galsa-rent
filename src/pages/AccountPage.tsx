@@ -363,8 +363,8 @@ export const AccountPage: React.FC<AccountPageProps> = ({
     : fullName.split(' ')[0] || 'Damián';
 
   return (
-    <div className="min-h-[85vh] bg-surface py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-[85vh] bg-surface py-8 sm:py-12">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6">
         {/* 1. Tarjeta Superior de Resumen de Cuenta GALSA */}
         <div className="bg-surface rounded-[24px] p-5 sm:p-7 border border-edge flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="flex items-center gap-4">

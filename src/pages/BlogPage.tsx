@@ -22,7 +22,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
   if (currentPost) {
     return (
       <div className="py-10 md:py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
           
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs font-heading font-medium text-slate-500 mb-6">
@@ -116,7 +116,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
   // VISTA LISTADO DE BLOG
   return (
     <div className="py-12 md:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Header */}
         <div className="text-left mb-12 max-w-2xl">

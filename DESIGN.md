@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.3.2)
+description: Minimalist, clean, flat digital mobility platform (v2.3.3)
 colors:
   cta-50: "#F3F6FC"
   cta-100: "#E5ECF9"
@@ -50,9 +50,10 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.3.2`)
+# GALSA Rent Design System & Guidelines (`v2.3.3`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
+- **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
 - **Brand Azul Completo (`cta-50`..`cta-950`):** 11 tonos desde `bg-cta-50` (`#F3F6FC`) hasta `bg-cta` / `bg-cta-500` (`#3D63FF`), `bg-cta-600` (`#2A4EEB`) y `bg-cta-950` (`#0E1A5E`).
 - **Superficies y textos (`surface`, `subtle`, `edge`, `edge-light`, `ink-900`..`ink-400`):** expuestos como clases Tailwind y variables CSS `--color-*`.
 - **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`.

@@ -5,7 +5,7 @@ import { ShieldCheck, FileCheck, CheckCircle2, Lock } from 'lucide-react';
 export const TrustPage: React.FC = () => {
   return (
     <div className="py-12 md:py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 mb-12 text-center">
         <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
           Seguridad jurídica y vehicular
         </span>
@@ -19,7 +19,7 @@ export const TrustPage: React.FC = () => {
 
       <TrustSafetySection />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-6 text-xs text-slate-700 leading-relaxed">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 mt-14 space-y-6 text-xs text-slate-700 leading-relaxed">
         <div className="p-6 rounded-3xl border border-slate-200 bg-slate-50/50 space-y-3">
           <h2 className="text-base font-heading font-bold text-slate-900">
             Validez legal del contrato mercantil digital

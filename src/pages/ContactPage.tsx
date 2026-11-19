@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Clock, ExternalLink } from 'lucide-react';
 export const ContactPage: React.FC = () => {
   return (
     <div className="py-12 md:py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">

@@ -165,7 +165,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
   return (
     <div className="w-full py-4 sm:py-6 md:py-8 bg-white text-slate-900 text-left">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* ========================================================
             BARRA DE BREADCRUMBS Y ACCIONES

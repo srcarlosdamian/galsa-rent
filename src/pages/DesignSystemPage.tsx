@@ -296,7 +296,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-28">
       {/* Top Header Sticky */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-3.5">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               {onNavigate && (
@@ -318,7 +318,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.2</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.3</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -377,7 +377,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+      <main className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8 space-y-12">
         {!hasAnyVisibleBlock && (
           <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center space-y-3">
             <AlertCircle className="w-8 h-8 text-slate-400 mx-auto" strokeWidth={1.6} />
@@ -2499,7 +2499,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.2</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.3</span>
                     </div>
                   </div>
                 </div>
