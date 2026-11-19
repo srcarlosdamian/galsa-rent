@@ -100,14 +100,14 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       num: 5,
       title: 'Recibe reservas',
       description: 'Tu auto aparece en el catálogo y empieza a recibir solicitudes.',
-      image: '/images/trust-safety.webp',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600345607-2-background-border-shadow-2.webp',
       icon: CalendarCheck,
     },
     {
       num: 6,
       title: 'Cobra',
       description: 'Recibes tu parte de cada renta en la cuenta que registraste.',
-      image: '/images/renta-galsa.webp',
+      image: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793600346030-3-background-border-shadow-1.webp',
       icon: Wallet,
     },
   ];
