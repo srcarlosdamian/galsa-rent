@@ -592,7 +592,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm font-sans flex items-center justify-between gap-1.5 text-left transition-colors cursor-pointer ${
                         activeDatePicker === 'pickup'
                           ? 'border-cta ring-1 ring-cta text-slate-900'
-                          : 'border-slate-200 hover:border-slate-300 text-slate-900'
+                          : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-900'
                       }`}
                     >
                       <span className="truncate">{formatDisplayDate(startDate)}</span>
@@ -633,7 +633,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       className={`w-full px-3.5 py-2.5 rounded-xl border bg-white text-sm font-sans flex items-center justify-between gap-1.5 text-left transition-colors cursor-pointer ${
                         activeDatePicker === 'return'
                           ? 'border-cta ring-1 ring-cta text-slate-900'
-                          : 'border-slate-200 hover:border-slate-300 text-slate-900'
+                          : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-900'
                       }`}
                     >
                       <span className="truncate">{formatDisplayDate(endDate)}</span>

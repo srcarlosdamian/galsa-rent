@@ -613,7 +613,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             handleLocationSelect(loc.value);
                           }
                         }}
-                        className="w-full text-left p-2 rounded-[12px] hover:bg-slate-50 transition-colors flex items-center gap-3 group"
+                        className="w-full text-left p-2 rounded-[12px] hover:bg-slate-100/80 transition-colors flex items-center gap-3 group"
                       >
                         <div className="w-8 h-8 rounded-[8px] bg-slate-100 flex items-center justify-center shrink-0 text-slate-800 group-hover:bg-slate-200 transition-colors">
                           <Icon className="w-4 h-4" strokeWidth={1.4} />

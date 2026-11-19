@@ -114,7 +114,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const [demoVehicleType, setDemoVehicleType] = useState('');
   const [demoTime, setDemoTime] = useState('10:00');
   const [demoSort, setDemoSort] = useState('recommended');
-  const [demoHostCity, setDemoHostCity] = useState('');
+  const [demoHostCity, setDemoHostCity] = useState('Durango, Dgo.');
   const [demoStartDate, setDemoStartDate] = useState('2026-11-04');
   const [demoEndDate, setDemoEndDate] = useState('2026-11-07');
   const [demoCalendarOpen, setDemoCalendarOpen] = useState(false);
@@ -331,7 +331,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.33</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.34</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1777,7 +1777,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                      v2.8.33
+                      v2.8.34
                     </span>
                     <div className="text-[11px] font-heading font-bold text-slate-800">7. Chip de Versión QA</div>
                     <span className="text-[10px] font-mono text-slate-400 block">Footer, DesignSystemPage</span>
@@ -2104,7 +2104,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-sans text-left transition-colors cursor-pointer ${
                         demoSingleCalOpen
                           ? 'border-cta ring-1 ring-cta text-slate-900'
-                          : 'border-slate-200 hover:border-slate-300 text-slate-900'
+                          : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-900'
                       }`}
                     >
                       <span className="truncate">{formatDsDate(demoSingleDate)}</span>
@@ -3032,7 +3032,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.33</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.34</span>
                     </div>
                   </div>
                 </div>

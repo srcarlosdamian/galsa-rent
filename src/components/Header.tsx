@@ -398,8 +398,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                           setSelectedLang('es');
                           setLangOpen(false);
                         }}
-                        className={`w-full text-left p-2.5 rounded-[10px] hover:bg-slate-50 transition-colors flex items-center justify-between group ${
-                          selectedLang === 'es' ? 'bg-slate-50/80' : ''
+                        className={`w-full text-left p-2.5 rounded-[10px] transition-colors flex items-center justify-between group ${
+                          selectedLang === 'es' ? 'bg-cta-50' : 'hover:bg-slate-100/80'
                         }`}
                       >
                         <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -420,8 +420,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                           setSelectedLang('en');
                           setLangOpen(false);
                         }}
-                        className={`w-full text-left p-2.5 rounded-[10px] hover:bg-slate-50 transition-colors flex items-center justify-between group ${
-                          selectedLang === 'en' ? 'bg-slate-50/80' : ''
+                        className={`w-full text-left p-2.5 rounded-[10px] transition-colors flex items-center justify-between group ${
+                          selectedLang === 'en' ? 'bg-cta-50' : 'hover:bg-slate-100/80'
                         }`}
                       >
                         <div className="flex items-center gap-3 min-w-0 flex-1">
