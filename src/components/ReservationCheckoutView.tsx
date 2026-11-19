@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ShieldCheck, ChevronDown, Check, ArrowLeft, Calendar, 
   Clock, MapPin, FileSignature, X, ExternalLink, AlertCircle
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { DocumentUploadCard, DocUploadState } from './DocumentUploadCard';
+import { DateRangePicker } from './DateRangePicker';
+import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from './CustomDropdown';
 
 interface ReservationCheckoutViewProps {
   vehicle: Vehicle;
   onNavigate?: (path: string) => void;
   onBackToVehicle?: () => void;
 }
-
-const TIME_OPTIONS = [
-  '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
-  '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
-  '19:00', '20:00', '21:00'
-];
 
 export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = ({
   vehicle,
@@ -27,6 +23,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const [endDate, setEndDate] = useState('2026-11-07');
   const [pickupTime, setPickupTime] = useState('08:00');
   const [returnTime, setReturnTime] = useState('18:00');
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const [rentalDays, setRentalDays] = useState(3);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -71,6 +69,21 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
     };
   }, [contractModalOpen]);
 
+  // Cerrar selector de fechas al hacer clic fuera
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
+        setCalendarOpen(false);
+      }
+    };
+    if (calendarOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [calendarOpen]);
+
   // Cálculo de fechas
   const calculateDays = (start: string, end: string) => {
     if (!start || !end) return 3;
@@ -80,18 +93,21 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
     return diff > 0 ? diff : 1;
   };
 
-  const handleStartDateChange = (val: string) => {
-    setStartDate(val);
-    if (val && endDate) {
-      setRentalDays(calculateDays(val, endDate));
+  const handleDateRangeChange = (start: string, end: string) => {
+    setStartDate(start);
+    setEndDate(end);
+    if (start && end) {
+      setRentalDays(calculateDays(start, end));
     }
   };
 
-  const handleEndDateChange = (val: string) => {
-    setEndDate(val);
-    if (startDate && val) {
-      setRentalDays(calculateDays(startDate, val));
-    }
+  const formatDisplayDate = (dateStr: string) => {
+    if (!dateStr) return 'Seleccionar fecha';
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+    const d = new Date(dateStr + 'T00:00:00');
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   };
 
   const formatRangeSummary = (s: string, e: string) => {
@@ -198,6 +214,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const serviceFee = Math.round(baseSubtotal * 0.33);
   const total = baseSubtotal + serviceFee + extrasTotal;
 
+  const uploadedDocsCount = [licenseDoc, ineDoc, proofDoc].filter((d) => d.status === 'completed').length;
+
   // Validación de condiciones y campos obligatorios
   const isFormComplete = Boolean(
     startDate && 
@@ -257,472 +275,607 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               </p>
             </div>
 
-            {/* ACORDEÓN 1: Fechas y sucursal */}
-            <div className="pt-6 border-t border-slate-200">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('dates')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
+            {/* CONTENEDORES LINEALES DE LOS 6 PASOS DE CHECKOUT */}
+            <div className="space-y-3.5">
+
+              {/* ACORDEÓN 1: Fechas y sucursal */}
+              <div
+                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  openAccordion === 'dates'
+                    ? 'border-slate-300 z-20'
+                    : 'border-slate-200 hover:border-slate-300 z-10'
+                }`}
               >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      1. Fechas y sucursal
-                    </h3>
-                    <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                      {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Durango · Sucursal Plaza 450
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'dates' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'dates' && (
-                <div className="pt-5 pb-2 space-y-4 animate-in fade-in duration-200">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                        Ciudad
-                      </label>
-                      <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm select-none">
-                        Durango, Dgo.
-                      </div>
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion('dates')}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      1
                     </div>
-                    <div>
-                      <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                        Sucursal oficial
-                      </label>
-                      <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-heading font-semibold text-sm select-none truncate">
-                        Plaza 450 (Blvd. Guadiana)
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                        Fecha de recogida
-                      </label>
-                      <input
-                        type="date"
-                        value={startDate}
-                        min={new Date().toISOString().split('T')[0]}
-                        onChange={(e) => handleStartDateChange(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                        Fecha de devolución
-                      </label>
-                      <input
-                        type="date"
-                        value={endDate}
-                        min={startDate || new Date().toISOString().split('T')[0]}
-                        onChange={(e) => handleEndDateChange(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ACORDEÓN 2: Horarios */}
-            <div className="pt-6 border-t border-slate-200">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('hours')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      2. Horarios
-                    </h3>
-                    <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                      Entrega: {pickupTime} · Devolución: {returnTime}
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Horario de atención en sucursal: 08:00 a 20:00 hrs
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'hours' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'hours' && (
-                <div className="pt-5 pb-2 grid grid-cols-2 gap-3 animate-in fade-in duration-200">
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de entrega
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t} hrs</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                      Hora de devolución
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-sm outline-none transition-colors appearance-none cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t} hrs</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ACORDEÓN 3: Extras */}
-            <div className="pt-6 border-t border-slate-200">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('extras')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      3. Extras
-                    </h3>
-                    {selectedExtras.length > 0 && (
-                      <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                        {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Conductor adicional, silla infantil, GPS o coberturas adicionales
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'extras' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'extras' && (
-                <div className="pt-5 pb-2 space-y-2.5 animate-in fade-in duration-200">
-                  {EXTRAS_OPTIONS.map((extra) => {
-                    const isChecked = selectedExtras.includes(extra.id);
-                    return (
-                      <div
-                        key={extra.id}
-                        onClick={() => toggleExtra(extra.id)}
-                        className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
-                          isChecked
-                            ? 'border-slate-400 bg-slate-50/50'
-                            : 'border-slate-200 hover:border-slate-300 bg-white'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3.5 min-w-0">
-                          <div
-                            className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                              isChecked
-                                ? 'bg-slate-900 border-slate-900 text-white'
-                                : 'bg-white border-slate-300 text-transparent'
-                            }`}
-                          >
-                            <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-                          </div>
-                          <div className="text-left min-w-0">
-                            <span className="font-heading font-bold text-slate-900 text-sm block">
-                              {extra.title}
-                            </span>
-                            <span className="text-xs font-sans text-slate-500 block truncate">
-                              {extra.description}
-                            </span>
-                          </div>
-                        </div>
-
-                        <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
-                          +${extra.price} por renta
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Fechas y sucursal
+                        </h3>
+                        <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                          {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
                         </span>
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* ACORDEÓN 4: Documentación y validación */}
-            <div className="pt-6 border-t border-slate-200">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('docs')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      4. Sube tus documentos
-                    </h3>
-                    <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                      3 requeridos
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Licencia de conducir, identificación oficial y comprobante de domicilio
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'docs' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'docs' && (
-                <div className="pt-5 pb-2 space-y-4 animate-in fade-in duration-200 text-left">
-                  {/* 1. Licencia de conducir */}
-                  <DocumentUploadCard
-                    title="Licencia de conducir"
-                    badge="Vigente, ambos lados"
-                    fileState={licenseDoc}
-                    onFileSelect={(file) => {
-                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                      simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                    }}
-                    onSimulate={() => simulateDocUpload('license')}
-                    onRemove={() => handleDocRemove('license')}
-                  />
-
-                  {/* 2. Identificación oficial */}
-                  <DocumentUploadCard
-                    title="Identificación oficial"
-                    badge="INE, frente y reverso"
-                    fileState={ineDoc}
-                    onFileSelect={(file) => {
-                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                      simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                    }}
-                    onSimulate={() => simulateDocUpload('ine')}
-                    onRemove={() => handleDocRemove('ine')}
-                  />
-
-                  {/* 3. Comprobante de domicilio */}
-                  <DocumentUploadCard
-                    title="Comprobante de domicilio"
-                    badge="No mayor a 3 meses"
-                    fileState={proofDoc}
-                    onFileSelect={(file) => {
-                      const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-                      simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
-                    }}
-                    onSimulate={() => simulateDocUpload('proof')}
-                    onRemove={() => handleDocRemove('proof')}
-                  />
-
-                  {/* Información adicional */}
-                  <div className="space-y-1.5 pt-1">
-                    <label className="block text-sm font-heading font-bold text-slate-900">
-                      Información adicional (opcional)
-                    </label>
-                    <textarea
-                      rows={2}
-                      value={additionalDocNotes}
-                      onChange={(e) => setAdditionalDocNotes(e.target.value)}
-                      placeholder="Notas para tu renta: horario de llegada de vuelo, requerimientos de entrega..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ACORDEÓN 5: Condiciones de uso */}
-            <div className="pt-6 border-t border-slate-200">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('terms')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      5. Condiciones de uso
-                    </h3>
-                    {acceptedTerms ? (
-                      <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
-                        Aceptadas ✓
-                      </span>
-                    ) : (
-                      <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                        Pendiente
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Kilometraje libre, combustible, depósitos y términos de renta
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'terms' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'terms' && (
-                <div className="pt-5 pb-2 space-y-4 animate-in fade-in duration-200 text-left">
-                  {/* Contenedor gris claro 50 */}
-                  <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-2.5">
-                    <h4 className="text-sm font-heading font-bold text-slate-900 mb-2">
-                      Condiciones de uso
-                    </h4>
-                    <ul className="space-y-1.5 text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
-                      <li className="flex items-start gap-2">
-                        <span className="text-slate-400">·</span>
-                        <span><strong>Kilometraje libre</strong> sin tope por día.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-slate-400">·</span>
-                        <span><strong>Combustible</strong>: se entrega y devuelve con el mismo nivel verificado.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-slate-400">·</span>
-                        <span><strong>Edad mínima del conductor</strong>: 21 años con licencia de conducir vigente.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-slate-400">·</span>
-                        <span><strong>Depósito en garantía</strong>: reembolsable al cierre del contrato sin incidencias.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-slate-400">·</span>
-                        <span><strong>Prohibido fumar</strong> dentro de la unidad por normativa de higiene y seguridad.</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Aceptación de términos y aviso de privacidad */}
-                  <div
-                    onClick={() => setAcceptedTerms(!acceptedTerms)}
-                    className="flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white transition-all cursor-pointer"
-                  >
-                    <div
-                      className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 mt-0.5 ${
-                        acceptedTerms
-                          ? 'bg-slate-900 border-slate-900 text-white'
-                          : 'bg-white border-slate-300 text-transparent'
-                      }`}
-                    >
-                      <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-                    </div>
-                    <label className="text-xs sm:text-sm font-sans text-slate-700 select-none cursor-pointer leading-relaxed">
-                      Acepto los{' '}
-                      <a
-                        href="/terminos"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="font-bold text-slate-900 hover:underline"
-                      >
-                        términos y condiciones
-                      </a>{' '}
-                      de renta de GALSA y el{' '}
-                      <a
-                        href="/privacidad"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="font-bold text-slate-900 hover:underline"
-                      >
-                        aviso de privacidad
-                      </a>.
-                    </label>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* ACORDEÓN 6: Firmar y contratar */}
-            <div className="pt-6 border-t border-slate-200">
-              <button
-                type="button"
-                onClick={() => toggleAccordion('contract')}
-                className="w-full flex items-center justify-between py-2 text-left group cursor-pointer select-none"
-              >
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      6. Firmar y contratar
-                    </h3>
-                    {isContractSigned ? (
-                      <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
-                        Firmado digitalmente ✓
-                      </span>
-                    ) : (
-                      <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                        Pendiente de firma
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                    Contrato digital mercantil con validez legal inmediata
-                  </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                  <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'contract' ? 'rotate-180' : ''}`} />
-                </div>
-              </button>
-
-              {openAccordion === 'contract' && (
-                <div className="pt-5 pb-2 space-y-4 animate-in fade-in duration-200 text-left">
-                  <div className="rounded-2xl border border-slate-200/90 bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <FileSignature className="w-5 h-5 text-slate-700" />
-                        <h4 className="text-sm sm:text-base font-heading font-bold text-slate-900">
-                          {isContractSigned ? 'Contrato digital firmado' : 'Contrato de adhesión para renta'}
-                        </h4>
-                      </div>
-                      <p className="text-xs sm:text-sm font-sans text-slate-500">
-                        {isContractSigned 
-                          ? `Firma registrada por ${signatureName || 'el titular'} con folio digital #GLS-${vehicle.id.slice(0, 6)}`
-                          : 'Revisa las cláusulas y confirma tu firma digital en un modal seguro.'}
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Durango · Sucursal Plaza 450
                       </p>
                     </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setContractModalOpen(true)}
-                      className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer shrink-0"
-                    >
-                      {isContractSigned ? 'Ver contrato firmado' : 'Ver contrato y confirmar'}
-                    </button>
                   </div>
-                </div>
-              )}
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'dates' ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {openAccordion === 'dates' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                          Ciudad
+                        </label>
+                        <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-heading font-semibold text-sm select-none">
+                          Durango, Dgo.
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                          Sucursal oficial
+                        </label>
+                        <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-heading font-semibold text-sm select-none truncate">
+                          Plaza 450 (Blvd. Guadiana)
+                        </div>
+                      </div>
+                    </div>
+
+                    <div ref={calendarRef} className="relative">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                            Fecha de recogida
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setCalendarOpen((prev) => !prev)}
+                            className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
+                              calendarOpen
+                                ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                                : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                            }`}
+                          >
+                            <span className="truncate">{formatDisplayDate(startDate)}</span>
+                            <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
+                          </button>
+                        </div>
+                        <div>
+                          <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                            Fecha de devolución
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setCalendarOpen((prev) => !prev)}
+                            className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
+                              calendarOpen
+                                ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                                : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                            }`}
+                          >
+                            <span className="truncate">{formatDisplayDate(endDate)}</span>
+                            <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {calendarOpen && (
+                        <div className="absolute top-full left-0 mt-2 z-[70]">
+                          <DateRangePicker
+                            startDate={startDate}
+                            endDate={endDate}
+                            onChange={handleDateRangeChange}
+                            onClose={() => setCalendarOpen(false)}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="pt-1 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCalendarOpen(false);
+                          setOpenAccordion('hours');
+                        }}
+                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                      >
+                        Continuar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* ACORDEÓN 2: Horarios */}
+              <div
+                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  openAccordion === 'hours'
+                    ? 'border-slate-300 z-20'
+                    : 'border-slate-200 hover:border-slate-300 z-10'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion('hours')}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      2
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Horarios
+                        </h3>
+                        <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                          Entrega: {pickupTime} · Devolución: {returnTime}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Horario de atención en sucursal: 08:00 a 20:00 hrs
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'hours' ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {openAccordion === 'hours' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                          Hora de entrega
+                        </label>
+                        <CustomDropdown
+                          options={TIME_DROPDOWN_OPTIONS}
+                          value={pickupTime}
+                          onChange={setPickupTime}
+                          triggerIcon={Clock}
+                          align="left"
+                          footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                          Hora de devolución
+                        </label>
+                        <CustomDropdown
+                          options={TIME_DROPDOWN_OPTIONS}
+                          value={returnTime}
+                          onChange={setReturnTime}
+                          triggerIcon={Clock}
+                          align="right"
+                          footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="pt-1 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => setOpenAccordion('extras')}
+                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                      >
+                        Continuar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* ACORDEÓN 3: Extras */}
+              <div
+                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  openAccordion === 'extras'
+                    ? 'border-slate-300 z-20'
+                    : 'border-slate-200 hover:border-slate-300 z-10'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion('extras')}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      3
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Extras
+                        </h3>
+                        {selectedExtras.length > 0 && (
+                          <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                            {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Conductor adicional, silla infantil, GPS o coberturas adicionales
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'extras' ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {openAccordion === 'extras' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-2.5 animate-in fade-in duration-200">
+                    {EXTRAS_OPTIONS.map((extra) => {
+                      const isChecked = selectedExtras.includes(extra.id);
+                      return (
+                        <div
+                          key={extra.id}
+                          onClick={() => toggleExtra(extra.id)}
+                          className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
+                            isChecked
+                              ? 'border-slate-400 bg-slate-50/50'
+                              : 'border-slate-200 hover:border-slate-300 bg-white'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3.5 min-w-0">
+                            <div
+                              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
+                                isChecked
+                                  ? 'bg-slate-900 border-slate-900 text-white'
+                                  : 'bg-white border-slate-300 text-transparent'
+                              }`}
+                            >
+                              <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                            </div>
+                            <div className="text-left min-w-0">
+                              <span className="font-heading font-bold text-slate-900 text-sm block">
+                                {extra.title}
+                              </span>
+                              <span className="text-xs font-sans text-slate-500 block truncate">
+                                {extra.description}
+                              </span>
+                            </div>
+                          </div>
+
+                          <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
+                            +${extra.price} por renta
+                          </span>
+                        </div>
+                      );
+                    })}
+
+                    <div className="pt-2 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => setOpenAccordion('docs')}
+                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                      >
+                        Continuar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* ACORDEÓN 4: Documentación y validación */}
+              <div
+                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  openAccordion === 'docs'
+                    ? 'border-slate-300 z-20'
+                    : 'border-slate-200 hover:border-slate-300 z-10'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion('docs')}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      4
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Sube tus documentos
+                        </h3>
+                        <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                          {uploadedDocsCount}/3 requeridos
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Licencia de conducir, identificación oficial y comprobante de domicilio
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'docs' ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {openAccordion === 'docs' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200 text-left">
+                    <DocumentUploadCard
+                      title="Licencia de conducir"
+                      badge="Vigente, ambos lados"
+                      fileState={licenseDoc}
+                      onFileSelect={(file) => {
+                        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                        simulateDocUpload('license', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                      }}
+                      onSimulate={() => simulateDocUpload('license')}
+                      onRemove={() => handleDocRemove('license')}
+                    />
+
+                    <DocumentUploadCard
+                      title="Identificación oficial"
+                      badge="INE, frente y reverso"
+                      fileState={ineDoc}
+                      onFileSelect={(file) => {
+                        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                        simulateDocUpload('ine', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                      }}
+                      onSimulate={() => simulateDocUpload('ine')}
+                      onRemove={() => handleDocRemove('ine')}
+                    />
+
+                    <DocumentUploadCard
+                      title="Comprobante de domicilio"
+                      badge="No mayor a 3 meses"
+                      fileState={proofDoc}
+                      onFileSelect={(file) => {
+                        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+                        simulateDocUpload('proof', file.name, `${sizeMb} MB / ${sizeMb} MB`);
+                      }}
+                      onSimulate={() => simulateDocUpload('proof')}
+                      onRemove={() => handleDocRemove('proof')}
+                    />
+
+                    <div className="space-y-1.5 pt-1">
+                      <label className="block text-sm font-heading font-bold text-slate-900">
+                        Información adicional (opcional)
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={additionalDocNotes}
+                        onChange={(e) => setAdditionalDocNotes(e.target.value)}
+                        placeholder="Notas para tu renta: horario de llegada de vuelo, requerimientos de entrega..."
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y"
+                      />
+                    </div>
+
+                    <div className="pt-1 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => setOpenAccordion('terms')}
+                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                      >
+                        Continuar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* ACORDEÓN 5: Condiciones de uso */}
+              <div
+                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  openAccordion === 'terms'
+                    ? 'border-slate-300 z-20'
+                    : 'border-slate-200 hover:border-slate-300 z-10'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion('terms')}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      5
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Condiciones de uso
+                        </h3>
+                        {acceptedTerms ? (
+                          <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
+                            Aceptadas ✓
+                          </span>
+                        ) : (
+                          <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                            Pendiente
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Kilometraje libre, combustible, depósitos y términos de renta
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'terms' ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {openAccordion === 'terms' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200 text-left">
+                    <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-2.5">
+                      <h4 className="text-sm font-heading font-bold text-slate-900 mb-2">
+                        Condiciones de uso
+                      </h4>
+                      <ul className="space-y-1.5 text-xs sm:text-sm font-sans text-slate-700 leading-relaxed">
+                        <li className="flex items-start gap-2">
+                          <span className="text-slate-400">·</span>
+                          <span><strong>Kilometraje libre</strong> sin tope por día.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-slate-400">·</span>
+                          <span><strong>Combustible</strong>: se entrega y devuelve con el mismo nivel verificado.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-slate-400">·</span>
+                          <span><strong>Edad mínima del conductor</strong>: 21 años con licencia de conducir vigente.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-slate-400">·</span>
+                          <span><strong>Depósito en garantía</strong>: reembolsable al cierre del contrato sin incidencias.</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-slate-400">·</span>
+                          <span><strong>Prohibido fumar</strong> dentro de la unidad por normativa de higiene y seguridad.</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div
+                      onClick={() => setAcceptedTerms(!acceptedTerms)}
+                      className="flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white transition-all cursor-pointer"
+                    >
+                      <div
+                        className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 mt-0.5 ${
+                          acceptedTerms
+                            ? 'bg-slate-900 border-slate-900 text-white'
+                            : 'bg-white border-slate-300 text-transparent'
+                        }`}
+                      >
+                        <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                      </div>
+                      <label className="text-xs sm:text-sm font-sans text-slate-700 select-none cursor-pointer leading-relaxed">
+                        Acepto los{' '}
+                        <a
+                          href="/terminos"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="font-bold text-slate-900 hover:underline"
+                        >
+                          términos y condiciones
+                        </a>{' '}
+                        de renta de GALSA y el{' '}
+                        <a
+                          href="/privacidad"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="font-bold text-slate-900 hover:underline"
+                        >
+                          aviso de privacidad
+                        </a>.
+                      </label>
+                    </div>
+
+                    <div className="pt-1 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => setOpenAccordion('contract')}
+                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                      >
+                        Continuar
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* ACORDEÓN 6: Firmar y contratar */}
+              <div
+                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  openAccordion === 'contract'
+                    ? 'border-slate-300 z-20'
+                    : 'border-slate-200 hover:border-slate-300 z-10'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleAccordion('contract')}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      6
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Firmar y contratar
+                        </h3>
+                        {isContractSigned ? (
+                          <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
+                            Firmado digitalmente ✓
+                          </span>
+                        ) : (
+                          <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                            Pendiente de firma
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Contrato digital mercantil con validez legal inmediata
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'contract' ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {openAccordion === 'contract' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200 text-left">
+                    <div className="rounded-2xl border border-slate-200/90 bg-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <FileSignature className="w-5 h-5 text-slate-700" />
+                          <h4 className="text-sm sm:text-base font-heading font-bold text-slate-900">
+                            {isContractSigned ? 'Contrato digital firmado' : 'Contrato de adhesión para renta'}
+                          </h4>
+                        </div>
+                        <p className="text-xs sm:text-sm font-sans text-slate-500">
+                          {isContractSigned 
+                            ? `Firma registrada por ${signatureName || 'el titular'} con folio digital #GLS-${vehicle.id.slice(0, 6)}`
+                            : 'Revisa las cláusulas y confirma tu firma digital en un modal seguro.'}
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setContractModalOpen(true)}
+                        className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer shrink-0"
+                      >
+                        {isContractSigned ? 'Ver contrato firmado' : 'Ver contrato y confirmar'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
             </div>
 
           </div>
 
           {/* ========================================================
-              COLUMNA DERECHA: RESUMEN DE PAGO UNIFICADO Y BOTÓN FINAL
+              COLUMNA DERECHA: RESUMEN DE PAGO ENRIQUECIDO Y BOTÓN FINAL
              ======================================================== */}
           <div className="lg:col-span-5 w-full">
-            <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-sm space-y-6 text-left">
+            <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-sm space-y-5 text-left">
               
               {/* Tarjeta de Vehículo en Resumen */}
               <div className="flex items-center gap-4 pb-4 border-b border-slate-100">
@@ -743,14 +896,84 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 </div>
               </div>
 
-              {/* Resumen del pago unificado con detalles de precio */}
-              <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-3">
+              {/* Detalles vivos de la reserva (Sucursal, Fechas, Horarios y Progreso) */}
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-4 space-y-2.5 text-xs sm:text-sm">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
+                    <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span>Sucursal</span>
+                  </span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    Plaza 450, Durango
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
+                    <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span>Entrega</span>
+                  </span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    {formatDisplayDate(startDate)} · {pickupTime} hrs
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
+                    <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span>Devolución</span>
+                  </span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    {formatDisplayDate(endDate)} · {returnTime} hrs
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-slate-500 font-sans">Duración</span>
+                  <span className="font-heading font-semibold text-slate-900">
+                    {rentalDays} {rentalDays === 1 ? 'día' : 'días'}
+                  </span>
+                </div>
+
+                <div className="pt-2.5 border-t border-slate-100 flex flex-wrap gap-1.5">
+                  <span
+                    className={`px-2 py-0.5 rounded-md text-[11px] font-heading font-medium ${
+                      uploadedDocsCount === 3
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
+                        : 'bg-slate-100 text-slate-600'
+                    }`}
+                  >
+                    Docs: {uploadedDocsCount}/3
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 rounded-md text-[11px] font-heading font-medium ${
+                      acceptedTerms
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
+                        : 'bg-slate-100 text-slate-600'
+                    }`}
+                  >
+                    Condiciones: {acceptedTerms ? 'Aceptadas' : 'Pendiente'}
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 rounded-md text-[11px] font-heading font-medium ${
+                      isContractSigned
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
+                        : 'bg-slate-100 text-slate-600'
+                    }`}
+                  >
+                    Contrato: {isContractSigned ? 'Firmado' : 'Pendiente'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Resumen del pago con contorno lineal sin fondo */}
+              <div className="rounded-2xl border border-slate-200/90 bg-transparent p-4 sm:p-5 space-y-3">
                 <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
                   <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
                     Resumen del pago
                   </span>
                   <span className="text-xs font-heading font-medium text-slate-500">
-                    Disponible del {formatRangeSummary(startDate, endDate)}
+                    {rentalDays} {rentalDays === 1 ? 'día' : 'días'}
                   </span>
                 </div>
 
@@ -765,17 +988,12 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <span className="font-heading font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
                   </div>
 
-                  {selectedExtras.length > 0 && (
-                    <div className="flex items-center justify-between text-blue-700">
-                      <span>Extras ({selectedExtras.length})</span>
-                      <span className="font-heading font-semibold">+${extrasTotal.toLocaleString('es-MX')}</span>
+                  {EXTRAS_OPTIONS.filter((extra) => selectedExtras.includes(extra.id)).map((extra) => (
+                    <div key={extra.id} className="flex items-center justify-between text-blue-700">
+                      <span>{extra.title}</span>
+                      <span className="font-heading font-semibold">+${extra.price.toLocaleString('es-MX')}</span>
                     </div>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <span>Depósito en garantía (reembolsable)</span>
-                    <span className="font-heading font-semibold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
-                  </div>
+                  ))}
                 </div>
 
                 <div className="pt-3 border-t border-slate-200/80">
@@ -784,6 +1002,12 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <span className="text-base sm:text-lg font-extrabold text-slate-900">${total.toLocaleString('es-MX')} MXN</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Depósito en garantía reembolsable separado con contorno lineal */}
+              <div className="flex justify-between items-center px-4 py-3 rounded-xl border border-slate-200/90 bg-transparent text-xs sm:text-sm">
+                <span className="text-slate-600 font-sans">Depósito en garantía (reembolsable)</span>
+                <span className="font-heading font-bold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
               </div>
 
               {/* Botón CTA de Confirmación Final */}

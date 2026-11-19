@@ -4,9 +4,10 @@ import { VehicleCard } from '../components/VehicleCard';
 import { CatalogMap } from '../components/CatalogMap';
 import { Vehicle, SearchState } from '../types/vehicle';
 import { DateRangePicker } from '../components/DateRangePicker';
+import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from '../components/CustomDropdown';
 import { 
   Check, ChevronDown, SlidersHorizontal, RotateCcw, 
-  ArrowLeft, ArrowRight, Copy,
+  ArrowLeft, ArrowRight, Copy, Clock,
   MapPin, Calendar, Navigation, Globe, Building2, Plane, Hotel, Train, X, Search
 } from 'lucide-react';
 
@@ -486,27 +487,33 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               </button>
 
               {openDropdown === 'sort' && (
-                <div className="absolute right-0 top-full mt-1.5 w-52 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
-                  {[
-                    { id: 'recommended', label: 'Recomendados' },
-                    { id: 'price-asc', label: 'Precio: menor a mayor' },
-                    { id: 'price-desc', label: 'Precio: mayor a menor' },
-                    { id: 'year-desc', label: 'Año más reciente' },
-                  ].map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => {
-                        setSortBy(opt.id as any);
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
-                        sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
+                <div className="absolute right-0 top-full mt-2 w-60 bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
+                  <div className="space-y-1">
+                    {[
+                      { id: 'recommended', label: 'Recomendados' },
+                      { id: 'price-asc', label: 'Precio: menor a mayor' },
+                      { id: 'price-desc', label: 'Precio: mayor a menor' },
+                      { id: 'year-desc', label: 'Año más reciente' },
+                    ].map((opt) => {
+                      const isSelected = sortBy === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => {
+                            setSortBy(opt.id as any);
+                            setOpenDropdown(null);
+                          }}
+                          className={`w-full text-left p-2.5 rounded-[12px] text-[13px] font-heading transition-colors flex items-center justify-between gap-2 cursor-pointer ${
+                            isSelected ? 'bg-blue-50/70 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                          }`}
+                        >
+                          <span>{opt.label}</span>
+                          {isSelected && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2.2} />}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -575,27 +582,33 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               <ChevronDown className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.4} />
             </button>
             {openDropdown === 'sort' && (
-              <div className="absolute right-0 top-full mt-1.5 w-48 bg-white rounded-[12px] border border-slate-200 shadow-xl p-1.5 z-50">
-                {[
-                  { id: 'recommended', label: 'Recomendados' },
-                  { id: 'price-asc', label: 'Precio: menor a mayor' },
-                  { id: 'price-desc', label: 'Precio: mayor a menor' },
-                  { id: 'year-desc', label: 'Año más reciente' },
-                ].map((opt) => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => {
-                      setSortBy(opt.id as any);
-                      setOpenDropdown(null);
-                    }}
-                    className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-heading font-medium transition-colors ${
-                      sortBy === opt.id ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
+              <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2 z-50 animate-in fade-in-50 zoom-in-95 duration-150">
+                <div className="space-y-1">
+                  {[
+                    { id: 'recommended', label: 'Recomendados' },
+                    { id: 'price-asc', label: 'Precio: menor a mayor' },
+                    { id: 'price-desc', label: 'Precio: mayor a menor' },
+                    { id: 'year-desc', label: 'Año más reciente' },
+                  ].map((opt) => {
+                    const isSelected = sortBy === opt.id;
+                    return (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => {
+                          setSortBy(opt.id as any);
+                          setOpenDropdown(null);
+                        }}
+                        className={`w-full text-left p-2.5 rounded-[12px] text-[13px] font-heading transition-colors flex items-center justify-between gap-2 cursor-pointer ${
+                          isSelected ? 'bg-blue-50/70 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                        }`}
+                      >
+                        <span>{opt.label}</span>
+                        {isSelected && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2.2} />}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
@@ -1337,18 +1350,17 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       <label className="block text-[11px] font-heading font-medium text-slate-600 mb-1">
                         Hora de entrega
                       </label>
-                      <div className="relative">
-                        <select
-                          value={pickupTime}
-                          onChange={(e) => setPickupTime(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors appearance-none cursor-pointer"
-                        >
-                          {TIME_OPTIONS.map((t) => (
-                            <option key={`pickup-${t}`} value={t}>{t}</option>
-                          ))}
-                        </select>
-                        <ChevronDown className="w-4 h-4 text-slate-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                      </div>
+                      <CustomDropdown
+                        options={TIME_DROPDOWN_OPTIONS}
+                        value={pickupTime}
+                        onChange={setPickupTime}
+                        displayValue={pickupTime}
+                        size="sm"
+                        align="right"
+                        triggerIcon={Clock}
+                        menuWidthClass="w-[240px]"
+                        footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                      />
                     </div>
                   </div>
 
@@ -1376,18 +1388,17 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       <label className="block text-[11px] font-heading font-medium text-slate-600 mb-1">
                         Hora de devolución
                       </label>
-                      <div className="relative">
-                        <select
-                          value={returnTime}
-                          onChange={(e) => setReturnTime(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors appearance-none cursor-pointer"
-                        >
-                          {TIME_OPTIONS.map((t) => (
-                            <option key={`return-${t}`} value={t}>{t}</option>
-                          ))}
-                        </select>
-                        <ChevronDown className="w-4 h-4 text-slate-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                      </div>
+                      <CustomDropdown
+                        options={TIME_DROPDOWN_OPTIONS}
+                        value={returnTime}
+                        onChange={setReturnTime}
+                        displayValue={returnTime}
+                        size="sm"
+                        align="right"
+                        triggerIcon={Clock}
+                        menuWidthClass="w-[240px]"
+                        footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                      />
                     </div>
                   </div>
                 </div>

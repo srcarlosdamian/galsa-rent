@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ShieldCheck, Share2, ChevronRight, ChevronLeft, ChevronDown, ChevronUp,
   MapPin, Calendar, CarFront, Sparkles,
@@ -11,18 +11,13 @@ import { Vehicle } from '../types/vehicle';
 import { VEHICLES } from '../data/vehicles';
 import { VehicleCard } from './VehicleCard';
 import { DateRangePicker } from './DateRangePicker';
+import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from './CustomDropdown';
 
 interface VehicleDetailViewProps {
   vehicle: Vehicle;
   onNavigate?: (path: string) => void;
   onStartCheckout?: () => void;
 }
-
-const TIME_OPTIONS = [
-  '07:00', '08:00', '09:00', '10:00', '11:00', '12:00',
-  '13:00', '14:00', '15:00', '16:00', '17:00', '18:00',
-  '19:00', '20:00', '21:00'
-];
 
 export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   vehicle,
@@ -34,6 +29,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [pickupTime, setPickupTime] = useState('08:00');
   const [returnTime, setReturnTime] = useState('18:00');
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const [rentalDays, setRentalDays] = useState(3);
   const [copied, setCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
@@ -70,6 +66,21 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const sidePhoto1 = images[1] || images[0];
   const sidePhoto2 = images[2] || images[0];
 
+  // Cerrar calendario al hacer clic fuera
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
+        setCalendarOpen(false);
+      }
+    };
+    if (calendarOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [calendarOpen]);
+
   // Cálculo de fechas
   const calculateDays = (start: string, end: string) => {
     if (!start || !end) return 3;
@@ -79,18 +90,21 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
     return diff > 0 ? diff : 1;
   };
 
-  const handleStartDateChange = (val: string) => {
-    setStartDate(val);
-    if (val && endDate) {
-      setRentalDays(calculateDays(val, endDate));
+  const handleDateRangeChange = (start: string, end: string) => {
+    setStartDate(start);
+    setEndDate(end);
+    if (start && end) {
+      setRentalDays(calculateDays(start, end));
     }
   };
 
-  const handleEndDateChange = (val: string) => {
-    setEndDate(val);
-    if (startDate && val) {
-      setRentalDays(calculateDays(startDate, val));
-    }
+  const formatDisplayDate = (dateStr: string) => {
+    if (!dateStr) return 'Seleccionar';
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+    const d = new Date(dateStr + 'T00:00:00');
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   };
 
   const formatRangeSummary = (s: string, e: string) => {
@@ -518,62 +532,81 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               {/* Selector de Fechas y Horarios */}
-              <div className="space-y-3">
+              <div ref={calendarRef} className="relative space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Fecha de recogida</label>
-                    <input
-                      type="date"
-                      value={startDate}
-                      min={new Date().toISOString().split('T')[0]}
-                      onChange={(e) => handleStartDateChange(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold bg-white"
-                    />
+                    <button
+                      type="button"
+                      onClick={() => setCalendarOpen((prev) => !prev)}
+                      className={`w-full px-3 py-2 rounded-xl border bg-white text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
+                        calendarOpen
+                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                      }`}
+                    >
+                      <span className="truncate">{formatDisplayDate(startDate)}</span>
+                      <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.5} />
+                    </button>
                   </div>
                   <div>
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Hora de entrega</label>
-                    <div className="relative">
-                      <select
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold appearance-none bg-white pr-7 cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
+                    <CustomDropdown
+                      options={TIME_DROPDOWN_OPTIONS}
+                      value={pickupTime}
+                      onChange={setPickupTime}
+                      displayValue={pickupTime}
+                      size="sm"
+                      align="right"
+                      triggerIcon={Clock}
+                      menuWidthClass="w-[240px]"
+                      footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                    />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Fecha de devolución</label>
-                    <input
-                      type="date"
-                      value={endDate}
-                      min={startDate || new Date().toISOString().split('T')[0]}
-                      onChange={(e) => handleEndDateChange(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold bg-white"
-                    />
+                    <button
+                      type="button"
+                      onClick={() => setCalendarOpen((prev) => !prev)}
+                      className={`w-full px-3 py-2 rounded-xl border bg-white text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
+                        calendarOpen
+                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                      }`}
+                    >
+                      <span className="truncate">{formatDisplayDate(endDate)}</span>
+                      <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={1.5} />
+                    </button>
                   </div>
                   <div>
                     <label className="block text-[11px] font-sans text-slate-500 mb-1">Hora de devolución</label>
-                    <div className="relative">
-                      <select
-                        value={returnTime}
-                        onChange={(e) => setReturnTime(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-heading font-semibold appearance-none bg-white pr-7 cursor-pointer"
-                      >
-                        {TIME_OPTIONS.map((t) => (
-                          <option key={t} value={t}>{t}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    </div>
+                    <CustomDropdown
+                      options={TIME_DROPDOWN_OPTIONS}
+                      value={returnTime}
+                      onChange={setReturnTime}
+                      displayValue={returnTime}
+                      size="sm"
+                      align="right"
+                      triggerIcon={Clock}
+                      menuWidthClass="w-[240px]"
+                      footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                    />
                   </div>
                 </div>
+
+                {calendarOpen && (
+                  <div className="absolute top-full right-0 mt-2 z-[70]">
+                    <DateRangePicker
+                      startDate={startDate}
+                      endDate={endDate}
+                      onChange={handleDateRangeChange}
+                      onClose={() => setCalendarOpen(false)}
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Desglose de precios exacto al diseño */}

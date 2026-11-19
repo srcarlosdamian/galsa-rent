@@ -1,18 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Palette, Layers, Box, Sparkles, Copy, Check, ArrowRight, ArrowLeft,
   Search, Calendar, Car, ChevronDown, Star, ShieldCheck, Loader2,
   ExternalLink, MessageCircle, Heart, Filter, Grid, MapPin, 
   CheckCircle2, AlertCircle, Info, Fuel, Users, Gauge, Clock, SlidersHorizontal,
-  FileText, UploadCloud, X
+  FileText, UploadCloud, X, Navigation, Globe, Building2, Plane, CarFront,
+  Compass, Briefcase, Zap, ArrowUpDown
 } from 'lucide-react';
 import { DocumentUploadCard } from '../components/DocumentUploadCard';
+import { CustomDropdown, TIME_DROPDOWN_OPTIONS, DropdownOption } from '../components/CustomDropdown';
+import { DateRangePicker } from '../components/DateRangePicker';
 
 interface DesignSystemPageProps {
   onNavigate?: (path: string) => void;
 }
 
 type TabType = 'all' | 'tokens' | 'atoms' | 'molecules' | 'organisms';
+
+const DS_LOCATION_OPTIONS: DropdownOption[] = [
+  { value: 'Mi ubicación actual', label: 'Ubicación actual', icon: Navigation },
+  { value: 'Cualquier lugar', label: 'Cualquier lugar', subtitle: 'Ver todos los autos', icon: Globe },
+  { value: 'Sucursal Plaza 450, Durango', label: 'Sucursal Plaza 450, Durango', subtitle: 'Punto oficial de entrega · Blvd. Guadiana', icon: Building2 },
+  { value: 'Aeropuerto Internacional de Durango (DGO)', label: 'DGO – Aeropuerto Internacional', subtitle: 'Entrega programada en terminal aérea', icon: Plane },
+];
+
+const DS_VEHICLE_OPTIONS: DropdownOption[] = [
+  { value: '', label: 'Todos los vehículos', subtitle: 'Ver toda la flota disponible', icon: Sparkles },
+  { value: 'SUV / Aventura', label: 'SUV / Aventura', subtitle: 'Camionetas y espacio para viajes', icon: Compass },
+  { value: 'Sedán / Negocios', label: 'Sedán / Negocios', subtitle: 'Confort ejecutivo y traslados urbanos', icon: Briefcase },
+  { value: 'Deportivo / Estilo', label: 'Deportivo / Estilo', subtitle: 'Diseño prémium y alta gama', icon: Zap },
+];
+
+const DS_SORT_OPTIONS: DropdownOption[] = [
+  { value: 'recommended', label: 'Recomendados', subtitle: 'Selección destacada GALSA', icon: Sparkles },
+  { value: 'price-asc', label: 'Precio: menor a mayor', subtitle: 'Desde la tarifa más accesible', icon: ArrowUpDown },
+  { value: 'price-desc', label: 'Precio: mayor a menor', subtitle: 'Gama alta y equipamiento completo', icon: ArrowUpDown },
+  { value: 'year-desc', label: 'Año más reciente', subtitle: 'Modelos 2025 y 2026 primero', icon: Calendar },
+];
 
 export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }) => {
   const [activeTab, setActiveTab] = useState<TabType>('all');
@@ -22,6 +46,41 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const [toggleState, setToggleState] = useState(true);
   const [likeState, setLikeState] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
+
+  // Estados interactivos para Chevron Circular, Acordeón Checkout y Catálogo Completo de Dropdowns
+  const [demoChevronOpen, setDemoChevronOpen] = useState(false);
+  const [demoCheckoutStepOpen, setDemoCheckoutStepOpen] = useState(true);
+  const [demoLocation, setDemoLocation] = useState('Sucursal Plaza 450, Durango');
+  const [demoVehicleType, setDemoVehicleType] = useState('');
+  const [demoTime, setDemoTime] = useState('10:00');
+  const [demoSort, setDemoSort] = useState('recommended');
+  const [demoStartDate, setDemoStartDate] = useState('2026-11-04');
+  const [demoEndDate, setDemoEndDate] = useState('2026-11-07');
+  const [demoCalendarOpen, setDemoCalendarOpen] = useState(false);
+  const demoCalendarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutside = (e: MouseEvent) => {
+      if (demoCalendarRef.current && !demoCalendarRef.current.contains(e.target as Node)) {
+        setDemoCalendarOpen(false);
+      }
+    };
+    if (demoCalendarOpen) {
+      document.addEventListener('mousedown', handleOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+    };
+  }, [demoCalendarOpen]);
+
+  const formatDsDate = (dateStr: string) => {
+    if (!dateStr) return 'Seleccionar fecha';
+    const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+    const d = new Date(dateStr + 'T00:00:00');
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  };
 
   const copySnippet = (code: string, id: string) => {
     navigator.clipboard.writeText(code);
@@ -264,7 +323,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 <h3 className="text-base font-heading font-bold text-slate-900">
                   Botones (Buttons & Actions)
                 </h3>
-                <span className="text-xs text-slate-400 font-mono">11 variantes implementadas</span>
+                <span className="text-xs text-slate-400 font-mono">12 variantes implementadas</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -547,6 +606,42 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </button>
                 </div>
 
+                {/* 12. Indicador Chevron con Fondo Circular (Accordion Toggle) */}
+                <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
+                  <div>
+                    <div className="text-xs font-heading font-bold text-slate-800">12. Indicador Chevron con Fondo Circular</div>
+                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">Toggle circular para acordeones (Checkout)</div>
+                    <div className="mt-4 flex items-center justify-center gap-5">
+                      <button
+                        type="button"
+                        onClick={() => setDemoChevronOpen((prev) => !prev)}
+                        className="group inline-flex items-center gap-2 cursor-pointer"
+                        title="Haz clic para probar rotación"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors">
+                          <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${demoChevronOpen ? 'rotate-180' : ''}`} />
+                        </div>
+                        <span className="text-[11px] font-heading font-medium text-slate-600">
+                          {demoChevronOpen ? 'Abierto' : 'Reposo'}
+                        </span>
+                      </button>
+
+                      <div className="inline-flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-slate-200/90 text-slate-700 flex items-center justify-center">
+                          <ChevronDown className="w-4 h-4 text-slate-700 rotate-180" />
+                        </div>
+                        <span className="text-[11px] font-heading font-medium text-slate-500">Activo</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => copySnippet('w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 transition-colors', 'btn-12')}
+                    className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start"
+                  >
+                    <Copy className="w-3 h-3" /> {copiedCode === 'btn-12' ? 'Copiado ✓' : 'Copiar clases'}
+                  </button>
+                </div>
+
               </div>
             </div>
 
@@ -642,7 +737,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 </span>
 
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                  v2.2.92
+                  v2.2.93
                 </span>
               </div>
             </div>
@@ -855,6 +950,202 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             </div>
 
+            {/* 5. Contenedor Lineal de Acordeón con Chevron Circular (Checkout Step Card) */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Contenedor Lineal de Acordeón con Chevron Circular (Checkout Step Card)
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Estructura oficial de pasos en Completa tu reserva: contorno lineal rounded-2xl, número circular azul y toggle chevron con fondo gris circular
+                  </p>
+                </div>
+                <button
+                  onClick={() => copySnippet('rounded-2xl border border-slate-200 bg-white overflow-visible | Chevron: w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200', 'mol-checkout-card')}
+                  className="text-xs font-mono text-blue-600 hover:text-blue-700 shrink-0"
+                >
+                  {copiedCode === 'mol-checkout-card' ? 'Copiado ✓' : 'Copiar'}
+                </button>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 hover:border-slate-300 bg-white overflow-visible transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setDemoCheckoutStepOpen((prev) => !prev)}
+                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      1
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h4 className="text-base font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          Fechas y sucursal
+                        </h4>
+                        <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                          4 nov — 7 nov (3 días)
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
+                        Durango · Sucursal Plaza 450
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${demoCheckoutStepOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                </button>
+
+                {demoCheckoutStepOpen && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 text-xs sm:text-sm font-sans text-slate-600">
+                    Contenido desplegable del paso dentro del contenedor lineal con separación superior sutil (<span className="font-mono text-slate-700">border-t border-slate-100</span>).
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 6. Catálogo Completo de Dropdowns & Selectores (Todos Juntos para Revisión) */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-5 overflow-visible">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                <div>
+                  <h3 className="text-base font-heading font-bold text-slate-900">
+                    Catálogo Completo de Dropdowns & Selectores (Estilo Unificado Home)
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Todos los selectores de GALSA en un solo lugar: panel flotante <span className="font-mono text-slate-700">rounded-[20px] shadow-2xl</span>, cápsula gris <span className="font-mono text-slate-700">w-9 h-9 rounded-[8px]</span> y selección activa <span className="font-mono text-slate-700">bg-blue-50/70</span>
+                  </p>
+                </div>
+                <button
+                  onClick={() => copySnippet('bg-white rounded-[20px] border border-slate-200/80 shadow-2xl p-2 | Item: p-2.5 rounded-[12px] hover:bg-slate-50 | Active: bg-blue-50/70 + Check | Icon: w-9 h-9 rounded-[8px] bg-slate-100', 'mol-dropdowns')}
+                  className="text-xs font-mono text-blue-600 hover:text-blue-700 self-start sm:self-center shrink-0"
+                >
+                  {copiedCode === 'mol-dropdowns' ? 'Copiado ✓' : 'Copiar tokens'}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible">
+                {/* 1. Ubicación / Sucursal */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-heading font-bold text-slate-800">
+                      1. Dropdown de Ubicación / Sucursal
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400">Home · Catálogo</span>
+                  </div>
+                  <CustomDropdown
+                    options={DS_LOCATION_OPTIONS}
+                    value={demoLocation}
+                    onChange={setDemoLocation}
+                    placeholder="Dirección, ciudad o aeropuerto"
+                    triggerIcon={MapPin}
+                    footer={<span>powered by <strong className="text-slate-600">Google</strong></span>}
+                  />
+                </div>
+
+                {/* 2. Tipo de Vehículo */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-heading font-bold text-slate-800">
+                      2. Dropdown de Tipo de Vehículo
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400">Home · Catálogo</span>
+                  </div>
+                  <CustomDropdown
+                    options={DS_VEHICLE_OPTIONS}
+                    value={demoVehicleType}
+                    onChange={setDemoVehicleType}
+                    placeholder="Todos los vehículos"
+                    triggerIcon={CarFront}
+                  />
+                </div>
+
+                {/* 3. Horarios */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-heading font-bold text-slate-800">
+                      3. Dropdown de Horarios (Entrega / Devolución)
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400">Producto · Checkout · Catálogo</span>
+                  </div>
+                  <CustomDropdown
+                    options={TIME_DROPDOWN_OPTIONS}
+                    value={demoTime}
+                    onChange={setDemoTime}
+                    triggerIcon={Clock}
+                    footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                  />
+                </div>
+
+                {/* 4. Ordenamiento */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-heading font-bold text-slate-800">
+                      4. Dropdown de Ordenamiento (Sort)
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400">Catálogo</span>
+                  </div>
+                  <CustomDropdown
+                    options={DS_SORT_OPTIONS}
+                    value={demoSort}
+                    onChange={setDemoSort}
+                    triggerIcon={ArrowUpDown}
+                  />
+                </div>
+
+                {/* 5. Selector Flotante de Rango de Fechas */}
+                <div ref={demoCalendarRef} className="md:col-span-2 relative space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-heading font-bold text-slate-800">
+                      5. Selector Flotante de Rango de Fechas (DateRangePicker)
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400">Home · Producto · Checkout</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setDemoCalendarOpen((prev) => !prev)}
+                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
+                        demoCalendarOpen
+                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                      }`}
+                    >
+                      <span className="truncate">Recogida: {formatDsDate(demoStartDate)}</span>
+                      <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDemoCalendarOpen((prev) => !prev)}
+                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
+                        demoCalendarOpen
+                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                      }`}
+                    >
+                      <span className="truncate">Devolución: {formatDsDate(demoEndDate)}</span>
+                      <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
+                    </button>
+                  </div>
+
+                  {demoCalendarOpen && (
+                    <div className="absolute top-full left-0 mt-2 z-[70]">
+                      <DateRangePicker
+                        startDate={demoStartDate}
+                        endDate={demoEndDate}
+                        onChange={(s, e) => {
+                          setDemoStartDate(s);
+                          setDemoEndDate(e);
+                        }}
+                        onClose={() => setDemoCalendarOpen(false)}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
           </section>
         )}
 
@@ -954,7 +1245,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA]</span>
                   <div className="flex items-center gap-3 text-white">
                     <span>Última actualización: <strong>06 Nov 2026</strong></span>
-                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.92</span>
+                    <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.93</span>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
                       <Palette className="w-3.5 h-3.5 text-pink-400" />
                       <span>Sistema de Diseño</span>
