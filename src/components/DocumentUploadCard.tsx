@@ -76,17 +76,17 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
               <div className="flex items-center gap-2.5 mt-1.5">
                 <div className="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-cta rounded-full transition-all duration-300"
+                    className="h-full bg-slate-600 rounded-full transition-all duration-300"
                     style={{ width: `${fileState.progress}%` }}
                   />
                 </div>
-                <span className="text-[11px] font-sans font-medium text-slate-400 shrink-0 select-none tabular-nums">
+                <span className="text-[11px] font-sans font-medium text-slate-500 shrink-0 select-none tabular-nums">
                   {fileState.progress}%
                 </span>
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 mt-1 text-[11px] font-heading font-semibold text-emerald-600">
-                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+              <div className="flex items-center gap-1.5 mt-1 text-[11px] font-heading font-semibold text-slate-600">
+                <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-slate-600" />
                 <span>Carga completada · 100%</span>
               </div>
             )}
@@ -104,7 +104,7 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
             <UploadCloud className="w-4 h-4 text-slate-500" strokeWidth={1.6} />
           </div>
           <div className="flex-1 min-w-0 pointer-events-none">
-            <span className="block text-sm font-heading font-semibold text-ink-900 group-hover:text-cta transition-colors">
+            <span className="block text-sm font-heading font-semibold text-ink-900 group-hover:text-slate-700 transition-colors">
               Haz clic para seleccionar archivo
             </span>
             <span className="block text-[11px] font-sans text-slate-500">
@@ -119,7 +119,7 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
                 e.preventDefault();
                 onSimulate();
               }}
-              className="text-[11px] font-heading font-semibold text-cta hover:text-cta-700 bg-cta-50 hover:bg-cta-100 px-2.5 py-1 rounded-md transition-colors cursor-pointer relative z-10 shrink-0"
+              className="text-[11px] font-heading font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-md transition-colors cursor-pointer relative z-10 shrink-0"
             >
               Simular carga
             </button>

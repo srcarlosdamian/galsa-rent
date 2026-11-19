@@ -324,7 +324,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.18</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.19</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -2162,7 +2162,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       Subida de Archivos &amp; Progreso (&lt;DocumentUploadCard /&gt; Real)
                     </h3>
                     <p className="text-xs text-slate-500 font-sans mt-0.5">
-                      Estilo neutral minimalista sin sombras con icono gris 100
+                      Estilo gris neutral oscuro (<code className="font-mono text-slate-700">bg-slate-600</code> / <code className="font-mono text-slate-700">text-slate-700</code>) sin azul ni sombras; al llegar al 100% oculta la barra de progreso.
                     </p>
                   </div>
                   <span className="text-[11px] font-mono text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
@@ -2929,7 +2929,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.18</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.19</span>
                     </div>
                   </div>
                 </div>
