@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.6</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.7</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1943,7 +1943,6 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       onChange={setDemoHostCity}
                       placeholder="Selecciona tu ciudad"
                       triggerIcon={MapPin}
-                      buttonClassName="border-slate-200 hover:border-slate-300 font-sans font-normal"
                     />
                   </div>
 
@@ -1958,16 +1957,16 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <button
                       type="button"
                       onClick={() => setDemoCalendarOpen((prev) => !prev)}
-                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
+                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-sans text-left transition-colors cursor-pointer ${
                         demoCalendarOpen
-                          ? 'border-cta ring-2 ring-cta/15 text-slate-900'
-                          : 'border-slate-300 hover:border-slate-400 text-slate-900'
+                          ? 'border-cta ring-1 ring-cta text-slate-900'
+                          : 'border-slate-200 hover:border-slate-300 text-slate-900'
                       }`}
                     >
                       <span className="truncate">
                         {formatDsDate(demoStartDate)} — {formatDsDate(demoEndDate)}
                       </span>
-                      <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
+                      <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
                     </button>
 
                     {demoCalendarOpen && (
@@ -2583,7 +2582,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.6</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.7</span>
                     </div>
                   </div>
                 </div>

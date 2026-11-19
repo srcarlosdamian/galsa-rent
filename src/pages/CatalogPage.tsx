@@ -708,8 +708,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setCurrentPage(1);
                       setOpenDropdown(null);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
-                      vehicleTypeFilter === type ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-sans transition-colors cursor-pointer ${
+                      vehicleTypeFilter === type ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
                     }`}
                   >
                     {type === 'Todos' ? 'Todos los tipos' : type}
@@ -745,8 +745,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setCurrentPage(1);
                       setOpenDropdown(null);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
-                      seatsFilter === seats ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-sans transition-colors cursor-pointer ${
+                      seatsFilter === seats ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
                     }`}
                   >
                     {seats === 'Todos' ? 'Cualquier capacidad' : `${seats}+ plazas`}
@@ -782,8 +782,8 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setCurrentPage(1);
                       setOpenDropdown(null);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-heading font-medium transition-colors ${
-                      transmissionFilter === trans ? 'bg-slate-100 text-black font-bold' : 'text-slate-700 hover:bg-slate-50'
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-sans transition-colors cursor-pointer ${
+                      transmissionFilter === trans ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
                     }`}
                   >
                     {trans === 'Todos' ? 'Cualquiera' : trans}

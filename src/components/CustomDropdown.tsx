@@ -83,23 +83,23 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
   const selectedOption = options.find((opt) => opt.value === value);
   const shownText = displayValue ?? selectedOption?.label ?? '';
 
-  const sizeClasses = size === 'sm' ? 'px-3 py-2 rounded-xl text-xs' : 'px-3.5 py-2.5 rounded-xl text-sm';
+  const sizeClasses = size === 'sm' ? 'px-3.5 py-2.5 rounded-xl text-sm' : 'px-3.5 py-2.5 rounded-xl text-sm';
 
   return (
     <div ref={wrapperRef} className="relative" onClick={(e) => e.stopPropagation()}>
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className={`w-full flex items-center justify-between gap-2 border bg-white font-heading font-semibold text-left transition-all cursor-pointer ${sizeClasses} ${
+        className={`w-full flex items-center justify-between gap-2 border bg-white font-sans text-left transition-colors cursor-pointer ${sizeClasses} ${
           open
-            ? 'border-cta ring-2 ring-cta/15'
-            : 'border-slate-300 hover:border-slate-400'
+            ? 'border-cta ring-1 ring-cta'
+            : 'border-slate-200 hover:border-slate-300'
         } ${buttonClassName}`}
         aria-expanded={open}
       >
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          {TriggerIcon && <TriggerIcon className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />}
-          <span className={`truncate ${shownText ? 'text-slate-900 font-semibold' : 'text-slate-500 font-medium'}`}>
+          {TriggerIcon && <TriggerIcon className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />}
+          <span className={`truncate ${shownText ? 'text-slate-900 font-sans' : 'text-slate-400 font-sans'}`}>
             {shownText || placeholder}
           </span>
         </div>
@@ -147,11 +147,11 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
                   )}
 
                   <div className="min-w-0 flex-1">
-                    <p className="text-[13px] font-heading font-semibold text-slate-900 truncate">
+                    <p className={`text-sm font-sans truncate ${isSelected ? 'font-semibold text-slate-900' : 'font-medium text-slate-800'}`}>
                       {opt.label}
                     </p>
                     {opt.subtitle && (
-                      <p className="text-[11px] font-sans text-slate-500 truncate mt-0.5">
+                      <p className="text-xs font-sans text-slate-500 truncate mt-0.5">
                         {opt.subtitle}
                       </p>
                     )}
