@@ -24,60 +24,60 @@ export const ContactPage: React.FC = () => {
           
           {/* NAP Details */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="p-6 rounded-3xl border border-neutral-200 bg-neutral-50/50 space-y-5 text-xs text-neutral-700">
+            <div className="p-6 rounded-3xl border border-edge bg-subtle/50 space-y-5 text-xs text-ink-700">
               
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">
                   Dirección oficial (Entrega y recepción)
                 </span>
                 <div className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
+                  <MapPin className="w-4 h-4 text-ink-900 mt-0.5 shrink-0" />
                   <div>
-                    <p className="font-bold text-neutral-900 text-sm">GALSA Rent — Sucursal Plaza 450</p>
-                    <p className="text-neutral-600 mt-0.5">Blvd. Guadiana, Plaza 450, Durango, Dgo., C.P. 34138, México</p>
+                    <p className="font-bold text-ink-900 text-sm">GALSA Rent — Sucursal Plaza 450</p>
+                    <p className="text-ink-600 mt-0.5">Blvd. Guadiana, Plaza 450, Durango, Dgo., C.P. 34138, México</p>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-neutral-200">
+              <div className="pt-3 border-t border-edge">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">
                   Horario de atención y entrega
                 </span>
                 <div className="flex items-start gap-2.5">
-                  <Clock className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
+                  <Clock className="w-4 h-4 text-ink-900 mt-0.5 shrink-0" />
                   <div>
                     {/* TODO: Confirmar horario de apertura y cierre oficial */}
-                    <p className="font-semibold text-neutral-900">Lunes a Domingo</p>
-                    <p className="text-neutral-600">08:00 a 20:00 hrs (Horario continuo)</p>
+                    <p className="font-semibold text-ink-900">Lunes a Domingo</p>
+                    <p className="text-ink-600">08:00 a 20:00 hrs (Horario continuo)</p>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-neutral-200">
+              <div className="pt-3 border-t border-edge">
                 <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-neutral-400 block mb-1">
                   Teléfono de atención
                 </span>
                 <div className="flex items-start gap-2.5">
-                  <Phone className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
+                  <Phone className="w-4 h-4 text-ink-900 mt-0.5 shrink-0" />
                   <div>
                     {/* TODO: Reemplazar con el número de teléfono oficial */}
-                    <p className="font-heading font-bold text-neutral-900">+52 618 000 0000</p>
-                    <p className="text-neutral-500">Atención directa y soporte continuo</p>
+                    <p className="font-heading font-bold text-ink-900">+52 618 000 0000</p>
+                    <p className="text-ink-500">Atención directa y soporte continuo</p>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-neutral-200">
+              <div className="pt-3 border-t border-edge">
                 <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-neutral-400 block mb-1">
                   Correo electrónico
                 </span>
                 <div className="flex items-start gap-2.5">
-                  <Mail className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
+                  <Mail className="w-4 h-4 text-ink-900 mt-0.5 shrink-0" />
                   <div>
                     {/* TODO: Reemplazar con la cuenta de correo oficial */}
                     <a
                       href="mailto:soporte@galsarent.com.mx"
-                      className="font-heading font-semibold text-neutral-900 hover:text-[#3D63FF] underline transition-colors"
+                      className="font-heading font-semibold text-ink-900 hover:text-cta underline transition-colors"
                     >
                       soporte@galsarent.com.mx
                     </a>
@@ -89,14 +89,14 @@ export const ContactPage: React.FC = () => {
               <div className="pt-3 flex flex-col gap-2.5">
                 <a
                   href="tel:+526180000000"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs transition-colors"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Llamar a sucursal</span>
                 </a>
                 <a
                   href="mailto:soporte@galsarent.com.mx"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-neutral-300 bg-white hover:border-neutral-400 hover:bg-neutral-50 text-neutral-900 font-heading font-semibold text-xs transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-neutral-300 bg-white hover:border-neutral-400 hover:bg-subtle text-ink-900 font-heading font-semibold text-xs transition-colors"
                 >
                   <Mail className="w-4 h-4" />
                   <span>Enviar correo a soporte</span>
@@ -110,7 +110,7 @@ export const ContactPage: React.FC = () => {
                   href="https://maps.google.com/?q=Plaza+450+Durango"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-neutral-500 hover:text-black underline"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-ink-500 hover:text-black underline"
                 >
                   <span>Ver en Google Maps (Google Business Profile)</span>
                   <ExternalLink className="w-3 h-3" />
@@ -122,7 +122,7 @@ export const ContactPage: React.FC = () => {
 
           {/* Embedded Map */}
           <div className="lg:col-span-7">
-            <div className="rounded-3xl border border-neutral-200 overflow-hidden shadow-sm aspect-[4/3] bg-neutral-100 relative">
+            <div className="rounded-3xl border border-edge overflow-hidden shadow-sm aspect-[4/3] bg-subtle relative">
               {/* Responsive Google Maps Embed centered on Plaza 450 Durango */}
               {/* TODO: Reemplazar con el iframe oficial del Google Business Profile verificado */}
               <iframe

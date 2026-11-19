@@ -232,7 +232,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <Globe className="w-3.5 h-3.5 text-blue-600" />
+                <Globe className="w-3.5 h-3.5 text-cta" />
                 Google
               </button>
               <button
@@ -272,7 +272,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                   placeholder="Buscar ruta, título o descripción..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cta/20 focus:border-cta transition-all"
                 />
               </div>
 
@@ -289,7 +289,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                     onClick={() => setIndexFilter(opt.id as 'all' | 'indexable' | 'noindex')}
                     className={`px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-colors cursor-pointer ${
                       indexFilter === opt.id
-                        ? 'bg-[#3D63FF] text-white'
+                        ? 'bg-cta text-white'
                         : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                     }`}
                   >
@@ -381,7 +381,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
             <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-400 block">
               Longitud óptima
             </span>
-            <p className="text-2xl sm:text-3xl font-heading font-extrabold text-[#3D63FF] mt-1">
+            <p className="text-2xl sm:text-3xl font-heading font-extrabold text-cta mt-1">
               {stats.optimalLength} / {stats.total}
             </p>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -489,7 +489,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                         <button
                           type="button"
                           onClick={() => onNavigate(item.path)}
-                          className="text-xs text-blue-600 hover:text-blue-700 p-1.5 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                          className="text-xs text-cta hover:text-cta-700 p-1.5 rounded-lg hover:bg-cta-50 transition-colors cursor-pointer"
                           title="Abrir página en la app"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -524,12 +524,12 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
 
                       <h2
                         onClick={() => onNavigate && onNavigate(item.path)}
-                        className="text-[19px] sm:text-[20px] font-sans text-[#1a0dab] hover:underline cursor-pointer leading-[1.3] mb-1.5 font-normal"
+                        className="text-[19px] sm:text-[20px] font-sans text-cta-800 hover:underline cursor-pointer leading-[1.3] mb-1.5 font-normal"
                       >
                         {item.title}
                       </h2>
 
-                      <p className="text-[13px] sm:text-[14px] font-sans text-[#4d5156] leading-[1.58]">
+                      <p className="text-[13px] sm:text-[14px] font-sans text-ink-600 leading-[1.58]">
                         {item.description}
                       </p>
                     </div>
@@ -562,7 +562,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
 
                   {/* TAB 3: Chat Link Preview */}
                   {activeTab === 'chat' && (
-                    <div className="max-w-md bg-[#eef3f6] p-4 rounded-2xl">
+                    <div className="max-w-md bg-cta-50 p-4 rounded-2xl">
                       <div className="bg-white rounded-xl border border-slate-200/80 overflow-hidden text-left">
                         <div className="relative h-44 bg-slate-100 overflow-hidden">
                           <img
@@ -572,7 +572,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                             loading="lazy"
                           />
                         </div>
-                        <div className="p-3 bg-[#f8fafc]">
+                        <div className="p-3 bg-subtle">
                           <h4 className="text-xs font-heading font-bold text-slate-900 line-clamp-1">
                             {item.title}
                           </h4>

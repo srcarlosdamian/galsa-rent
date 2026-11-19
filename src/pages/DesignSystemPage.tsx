@@ -183,8 +183,8 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const showTokensColors =
     shouldShowSection('tokens') &&
     matchesSearch(
-      'Escala Oficial Brand Azul cta-50 cta-500 cta-900 Superficies surface subtle edge ink-900 ink-400 Semánticos emerald amber rose',
-      'color hex tailwind css variables root f3f6fc 3d63ff 111827 ebebeb'
+      'Escala Oficial Brand Azul cta-50 cta-100 cta-200 cta-300 cta-400 cta-500 cta-600 cta-700 cta-800 cta-900 cta-950 Superficies surface subtle edge ink-900 ink-400 Semánticos emerald amber rose',
+      'color hex tailwind css variables root f3f6fc 3d63ff 0e1a5e 111827 ebebeb'
     );
   const showTokensRadii =
     shouldShowSection('tokens') &&
@@ -195,7 +195,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const showTokensExtras =
     shouldShowSection('tokens') &&
     matchesSearch(
-      'Variables Colores Extra Detectados Código Revisión d8e8ff 94bdc9 2563eb bfdbfe blue-300 slate neutral serp 8eb5ff',
+      'Variables Colores Extra Otros Azules Detectados Código Revisión d8e8ff 94bdc9 2563eb bfdbfe blue-300 slate neutral serp 8eb5ff',
       'huerfanos candidatos unificar migrado banner cta-50'
     );
   const showTokensSurfaces =
@@ -213,7 +213,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     matchesSearch('Inputs Controles Formulario Nombre Search Datepicker Checkbox Switch', 'campo texto placeholder accent-');
   const showAtomsBadges =
     shouldShowSection('atoms') &&
-    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.3.1', 'pills etiquetas estatus');
+    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.3.2', 'pills etiquetas estatus');
 
   const showMolSearch =
     shouldShowSection('molecules') &&
@@ -232,7 +232,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     matchesSearch('DocumentUploadCard Subida Archivos Progreso Idle', 'licencia ine comprobante');
   const showMolStepCards =
     shouldShowSection('molecules') &&
-    matchesSearch('StepFeatureCard Tarjetas de Paso Badge Flotante Azul', '4 pasos 6 pasos anfitriones bg-blue-300');
+    matchesSearch('StepFeatureCard Tarjetas de Paso Badge Flotante Azul', '4 pasos 6 pasos anfitriones bg-cta-300');
   const showMolSpecsFaq =
     shouldShowSection('molecules') &&
     matchesSearch('Especificaciones Técnicas Acordeón FAQ Collapsible', 'pasajeros transmision kilometraje requisitos');
@@ -318,7 +318,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.1</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.2</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -366,7 +366,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar token, componente, botón o duplicado..."
-                className="w-full pl-9 pr-4 py-1.5 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                className="w-full pl-9 pr-4 py-1.5 text-xs sm:text-sm rounded-lg bg-slate-50 border border-slate-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cta/20 focus:border-cta transition-all"
               />
             </div>
             <div className="text-xs text-slate-500 hidden sm:block">
@@ -422,32 +422,33 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
             {/* Variables Oficiales de Color */}
             {showTokensColors && (
               <div className="space-y-5">
-                {/* 1. Escala Oficial Brand Azul (cta-50 a cta-900) */}
+                {/* 1. Escala Oficial Brand Azul (cta-50 a cta-950) */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                     <div>
                       <h3 className="text-sm font-heading font-bold text-slate-900">
-                        1. Escala Brand Azul (<code className="font-mono text-cta">cta-50</code> a <code className="font-mono text-cta">cta-900</code>)
+                        1. Escala Completa Brand Azul de GALSA (<code className="font-mono text-cta">cta-50</code> a <code className="font-mono text-cta">cta-950</code>)
                       </h3>
                       <p className="text-xs text-slate-500 mt-0.5">
-                        Tokens oficiales en <code className="font-mono text-slate-700">tailwind.config.js</code> y variables CSS <code className="font-mono text-slate-700">--color-cta-*</code>. Haz clic en cualquier tarjeta para copiar su clase.
+                        Los 11 tonos oficiales de <code className="font-mono text-slate-700">cta</code> en <code className="font-mono text-slate-700">tailwind.config.js</code> y variables CSS <code className="font-mono text-slate-700">--color-cta-50..950</code>. Haz clic en cualquier tarjeta para copiar su clase y código hexadecimal.
                       </p>
                     </div>
-                    <span className="text-[11px] font-mono text-slate-400">10 tonos</span>
+                    <span className="text-[11px] font-mono text-cta bg-cta-50 border border-cta-200 px-2.5 py-0.5 rounded-full">11 tonos (50 – 950)</span>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
                     {[
-                      { token: 'cta-50', tw: 'bg-cta-50', cssVar: '--color-cta-50', hex: '#F3F6FC', usage: 'Banner Anfitriones (v2.3.1)', light: true },
-                      { token: 'cta-100', tw: 'bg-cta-100', cssVar: '--color-cta-100', hex: '#E5ECF9', usage: 'Badges / Selección suave', light: true },
-                      { token: 'cta-200', tw: 'bg-cta-200', cssVar: '--color-cta-200', hex: '#C6D7F1', usage: 'Acentos suaves / Bordes', light: true },
-                      { token: 'cta-300', tw: 'bg-cta-300', cssVar: '--color-cta-300', hex: '#93B6E6', usage: 'Subrayados / Iconos medios', light: true },
-                      { token: 'cta-400', tw: 'bg-cta-400', cssVar: '--color-cta-400', hex: '#5A90D6', usage: 'Acentos intermedios', light: false },
-                      { token: 'cta-500 (DEFAULT)', tw: 'bg-cta-500', cssVar: '--color-cta-500', hex: '#3D63FF', usage: 'CTA Principal (bg-cta)', light: false },
-                      { token: 'cta-600', tw: 'bg-cta-600', cssVar: '--color-cta-600', hex: '#2A4EEB', usage: 'Hover botón primario', light: false },
-                      { token: 'cta-700', tw: 'bg-cta-700', cssVar: '--color-cta-700', hex: '#1F3DD4', usage: 'Estado activo / Pressed', light: false },
+                      { token: 'cta-50', tw: 'bg-cta-50', cssVar: '--color-cta-50', hex: '#F3F6FC', usage: 'Banner Anfitriones & Badges suaves', light: true },
+                      { token: 'cta-100', tw: 'bg-cta-100', cssVar: '--color-cta-100', hex: '#E5ECF9', usage: 'Selección suave / Hover ligero', light: true },
+                      { token: 'cta-200', tw: 'bg-cta-200', cssVar: '--color-cta-200', hex: '#C6D7F1', usage: 'Bordes azules suaves', light: true },
+                      { token: 'cta-300', tw: 'bg-cta-300', cssVar: '--color-cta-300', hex: '#93B6E6', usage: 'Subrayados Hero & Badges', light: true },
+                      { token: 'cta-400', tw: 'bg-cta-400', cssVar: '--color-cta-400', hex: '#5A90D6', usage: 'Acentos e iconos intermedios', light: false },
+                      { token: 'cta-500 (DEFAULT)', tw: 'bg-cta-500', cssVar: '--color-cta-500', hex: '#3D63FF', usage: 'CTA Principal (bg-cta / text-cta)', light: false },
+                      { token: 'cta-600', tw: 'bg-cta-600', cssVar: '--color-cta-600', hex: '#2A4EEB', usage: 'Hover botón primario (hover:bg-cta-600)', light: false },
+                      { token: 'cta-700', tw: 'bg-cta-700', cssVar: '--color-cta-700', hex: '#1F3DD4', usage: 'Estado activo / Texto en badge', light: false },
                       { token: 'cta-800', tw: 'bg-cta-800', cssVar: '--color-cta-800', hex: '#172FB0', usage: 'Texto alto contraste azul', light: false },
-                      { token: 'cta-900', tw: 'bg-cta-900', cssVar: '--color-cta-900', hex: '#132488', usage: 'Azul profundo', light: false },
+                      { token: 'cta-900', tw: 'bg-cta-900', cssVar: '--color-cta-900', hex: '#132488', usage: 'Azul profundo para iconos sobre cta-300', light: false },
+                      { token: 'cta-950', tw: 'bg-cta-950', cssVar: '--color-cta-950', hex: '#0E1A5E', usage: 'Azul noche máximo contraste', light: false },
                     ].map((c) => (
                       <div
                         key={c.token}
@@ -647,78 +648,78 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
-            {/* Colores / Variables Extra Detectados en el Código */}
+            {/* Colores / Variables Extra y Otros Azules Detectados en el Código */}
             {showTokensExtras && (
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
-                      Variables y Colores Extra Detectados en el Código (Para Revisión)
+                      Variables y Colores Extra Reemplazados por la Escala Oficial (<code className="font-mono text-cta">cta-50..950</code> y <code className="font-mono">surface / ink-*</code>)
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
-                      Colores hexadecimales o escalas paralelas encontradas fuera de <code className="font-mono text-slate-700">cta-* / ink-*</code> para decidir si se unifican o promueven a variable.
+                      Todos los azules y grises paralelos detectados en la auditoría fueron unificados a la gama oficial de variables del Sistema de Diseño.
                     </p>
                   </div>
-                  <span className="text-[11px] font-mono text-amber-800 bg-amber-50 border border-amber-200/80 px-2.5 py-0.5 rounded-full self-start">
-                    Auditoría de tokens
+                  <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full self-start">
+                    100% Unificado a Variables v2.3.2 ✓
                   </span>
                 </div>
 
                 <div className="rounded-2xl border border-slate-200 divide-y divide-slate-100">
                   {[
                     {
-                      swatchClass: 'bg-[#D8E8FF]',
-                      hex: '#D8E8FF',
+                      swatchClass: 'bg-cta-100',
+                      hex: '#D8E8FF → bg-cta-100 / bg-cta-200',
                       name: 'Highlight Blue (Subrayado «ingresos» y HostBanner)',
                       where: 'src/components/HostSection.tsx · src/components/HostBanner.tsx',
-                      note: 'Candidato a promover a variable o unificar con cta-100 (#E5ECF9) / cta-200 (#C6D7F1).',
-                      status: 'En revisión',
-                      statusClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
+                      note: 'Reemplazado #D8E8FF por nuestras variables oficiales bg-cta-200 (subrayado) y bg-cta-100 (bloque izquierdo en HostBanner).',
+                      status: 'Migrado a cta-100 / cta-200 ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                     {
-                      swatchClass: 'bg-[#94BDC9]/25',
-                      hex: '#94BDC9/25',
+                      swatchClass: 'bg-cta-50',
+                      hex: '#94BDC9/25 → bg-cta-50',
                       name: 'Teal Suave en CTA de Blog',
                       where: 'src/pages/BlogPage.tsx (línea 82)',
-                      note: 'Tono huérfano único fuera de paleta; candidato claro a migrar a bg-cta-50.',
-                      status: 'Candidato a cta-50',
-                      statusClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
+                      note: 'Reemplazado el tono huérfano #94BDC9/25 por bg-cta-50 con botón oficial bg-cta.',
+                      status: 'Migrado a cta-50 ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                     {
-                      swatchClass: 'bg-[#2563EB]',
-                      hex: '#2563EB · #BFDBFE',
-                      name: 'Anillo SVG de progreso en carga de archivos',
-                      where: 'src/components/DocumentUploadCard.tsx (líneas 55–59)',
-                      note: 'Colores hex hardcoded en SVG stroke; pueden leer var(--color-cta-500) y var(--color-cta-200).',
-                      status: 'Candidato a CSS var',
-                      statusClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
+                      swatchClass: 'bg-subtle',
+                      hex: '#2563EB · #BFDBFE → Lucide FileText neutral + bg-cta',
+                      name: 'Elemento de Licencia / Carga de Archivos',
+                      where: 'src/components/DocumentUploadCard.tsx',
+                      note: 'Reemplazado el SVG con hex hardcoded por icono Lucide FileText neutral sobre bg-subtle y barra de progreso bg-cta.',
+                      status: 'Migrado a subtle + cta ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                     {
-                      swatchClass: 'bg-blue-300',
-                      hex: 'blue-50..700 (#EFF6FF..#1D4ED8)',
-                      name: 'Escala Tailwind blue-* paralela a cta-*',
-                      where: 'StepFeatureCard (bg-blue-300), App.tsx Hero, CatalogPage, Header',
-                      note: 'Coexiste con cta-50..900. Útil mantener blue-300 para badges o crear token específico.',
-                      status: 'En revisión',
-                      statusClass: 'bg-slate-100 text-slate-700 border-slate-200',
+                      swatchClass: 'bg-cta-300',
+                      hex: 'blue-50..900 → cta-50..950',
+                      name: 'Escala Tailwind blue-* paralela unificada a cta-*',
+                      where: 'StepFeatureCard (bg-cta-300 / text-cta-900), App.tsx Hero, CatalogPage, Header, AccountPage',
+                      note: 'Todas las clases blue-50..900 y #3D63FF inline se migraron a cta-50..cta-950.',
+                      status: 'Migrado a cta-50..950 ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                     {
-                      swatchClass: 'bg-slate-200',
-                      hex: 'slate-* y neutral-*',
-                      name: 'Escalas neutras paralelas a ink-* / surface',
-                      where: 'Toda la app (slate-50..900) + páginas legales/marketing (neutral-200..900)',
-                      note: 'Ambas escalas producen tonos fríos vs neutros. ink-900..400 y surface/edge están ya expuestos en :root.',
-                      status: 'En revisión',
-                      statusClass: 'bg-slate-100 text-slate-700 border-slate-200',
+                      swatchClass: 'bg-subtle',
+                      hex: 'neutral-* → surface / subtle / edge / ink-*',
+                      name: 'Grises de superficie y bordes unificados',
+                      where: 'HostBanner, UseCasesSection, FaqSection, TermsPage, PrivacyPage, AccountPage',
+                      note: 'Unificados los grises paralelos hacia bg-surface, bg-subtle, border-edge, border-edge-light e ink-900..400.',
+                      status: 'Migrado a surface / ink-* ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                     {
-                      swatchClass: 'bg-[#1a0dab]',
-                      hex: '#1A0DAB · #4D5156 · #EEF3F6',
-                      name: 'Colores de simulador Google SERP y Chat',
+                      swatchClass: 'bg-cta-800',
+                      hex: '#1A0DAB · #4D5156 · #EEF3F6 → text-cta-800 · text-ink-600 · bg-cta-50',
+                      name: 'Simulador Google SERP y Chat en Auditor SEO',
                       where: 'src/pages/SeoPage.tsx',
-                      note: 'Exclusivos para fidelidad visual de resultados de búsqueda y vista previa de enlaces.',
-                      status: 'Intencional',
-                      statusClass: 'bg-blue-50 text-cta border-blue-200/80',
+                      note: 'Reemplazados los hexadecimales sueltos por text-cta-800, text-ink-600, bg-cta-50 y bg-subtle.',
+                      status: 'Migrado a cta-800 / cta-50 ✓',
+                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                     {
                       swatchClass: 'bg-cta-50',
@@ -726,7 +727,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       name: 'Banner final «Empieza a ganar con tu auto hoy»',
                       where: 'src/components/HostSection.tsx (línea 448)',
                       note: 'Eliminado #8EB5FF con texto blanco; migrado a variables oficiales bg-cta-50 + text-ink-900 + bg-cta.',
-                      status: 'Migrado v2.3.1 ✓',
+                      status: 'Migrado a cta-50 ✓',
                       statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
                     },
                   ].map((extra) => (
@@ -757,7 +758,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
-                      Reglas de Superficies, Bordes y Elevación (v2.3.1)
+                      Reglas de Superficies, Bordes y Elevación (v2.3.2)
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Estandarización lineal: cero sombras en botones y enlaces CTA; elevación reservada exclusivamente para popovers y modales.
@@ -767,7 +768,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
                   <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-1.5 text-left">
-                    <span className="inline-flex px-2 py-0.5 rounded bg-blue-50 text-[#3D63FF] font-mono text-[10px] font-bold">
+                    <span className="inline-flex px-2 py-0.5 rounded bg-cta-50 text-cta font-mono text-[10px] font-bold">
                       Cero sombras CTA
                     </span>
                     <div className="text-xs font-heading font-bold text-slate-900">Botones y enlaces planos</div>
@@ -875,7 +876,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
         {(showAtomsButtons || showAtomsInputs || showAtomsBadges) && (
           <section id="atoms" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
-              <div className="flex items-center gap-2 text-blue-600 font-mono text-xs font-bold uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-cta font-mono text-xs font-bold uppercase tracking-wider">
                 <Box className="w-4 h-4" /> Nivel 1 · Átomos
               </div>
               <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
@@ -905,7 +906,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="w-full px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <span>Continuar</span>
                           <ArrowRight className="w-4 h-4" />
@@ -916,7 +917,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-7 py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-colors active:scale-[0.98]',
+                          'px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors active:scale-[0.98]',
                           'btn-1'
                         )
                       }
@@ -1079,7 +1080,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <button
                           type="button"
                           disabled
-                          className="w-full px-4 py-2 rounded-xl bg-blue-600/90 text-white font-heading font-semibold text-xs flex items-center justify-center gap-2 cursor-wait"
+                          className="w-full px-4 py-2 rounded-xl bg-cta/90 text-white font-heading font-semibold text-xs flex items-center justify-center gap-2 cursor-wait"
                         >
                           <Loader2 className="w-3.5 h-3.5 animate-spin" />
                           <span>Verificando...</span>
@@ -1097,7 +1098,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'bg-blue-600/90 text-white cursor-wait | Disabled: bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed',
+                          'bg-cta/90 text-white cursor-wait | Disabled: bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed',
                           'btn-7'
                         )
                       }
@@ -1159,7 +1160,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         </button>
                         <button
                           type="button"
-                          className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center transition-colors cursor-pointer"
+                          className="w-9 h-9 rounded-xl bg-cta-50 text-cta hover:bg-cta-100 flex items-center justify-center transition-colors cursor-pointer"
                           title="Abrir"
                         >
                           <ExternalLink className="w-4 h-4" />
@@ -1305,6 +1306,304 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </button>
                   </div>
                 </div>
+
+                {/* CATÁLOGO EXHAUSTIVO DE TODOS LOS BOTONES DE VOLVER / BACK EN LA PLATAFORMA */}
+                <div className="pt-4 border-t border-slate-100 space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <h4 className="text-sm sm:text-base font-heading font-bold text-slate-900">
+                        Catálogo Completo de Botones de Retorno («Back / Volver»)
+                      </h4>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Las 8 variantes de botones de regreso que existen en toda la aplicación, con vista previa real, ruta donde viven y botón para copiar sus clases.
+                      </p>
+                    </div>
+                    <span className="text-[11px] font-mono text-cta bg-cta-50 border border-cta-200 px-2.5 py-0.5 rounded-full self-start">
+                      8 variantes documentadas
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+                    {/* Back 1: Circular Solo Icono */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B1. Circular Solo Icono (Auth / Toolbars)
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          ForgotPasswordPage · SeoPage · DesignSystemPage
+                        </div>
+                        <div className="pt-2 flex items-center gap-3">
+                          <button
+                            type="button"
+                            className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+                            title="Volver (40x40 Auth)"
+                          >
+                            <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
+                          </button>
+                          <button
+                            type="button"
+                            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+                            title="Volver a la app (36x36 Sticky Header)"
+                          >
+                            <ArrowLeft className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'w-10 h-10 (o w-9 h-9) rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors',
+                            'back-1'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-1' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 2: Inline Superior de Flujo */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B2. Inline Superior de Flujo (Checkout &amp; Registro)
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          ReservationCheckoutView · HostRegistrationPage
+                        </div>
+                        <div className="pt-2 flex flex-col items-start gap-1.5 bg-white rounded-lg border border-slate-200 p-2.5">
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+                          >
+                            <ArrowLeft className="w-4 h-4" />
+                            <span>Volver al vehículo</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-2 text-xs font-heading font-semibold text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+                          >
+                            <ArrowLeft className="w-3.5 h-3.5" />
+                            <span>Editar mi reserva</span>
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'inline-flex items-center gap-2 text-sm font-heading font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer',
+                            'back-2'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-2' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 3: Breadcrumb de Producto */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B3. Breadcrumb Retorno a Catálogo
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          VehicleDetailView.tsx (línea 183)
+                        </div>
+                        <div className="pt-2 flex items-center gap-1.5 bg-white rounded-lg border border-slate-200 p-2.5 text-xs">
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors cursor-pointer"
+                          >
+                            <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+                            <span>Volver al catálogo</span>
+                          </button>
+                          <span className="text-slate-300">/</span>
+                          <span className="text-slate-500">SUV</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'inline-flex items-center gap-1.5 text-slate-700 hover:text-black font-semibold transition-colors',
+                            'back-3'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-3' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 4: Enlace Editorial Blog */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B4. Enlace Editorial («← Volver a artículos»)
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          BlogPage.tsx (línea 106)
+                        </div>
+                        <div className="pt-2 bg-white rounded-lg border border-slate-200 p-2.5">
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-semibold text-slate-900 hover:text-cta transition-colors cursor-pointer"
+                          >
+                            <span>← Volver a todos los artículos</span>
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'inline-flex items-center gap-1.5 text-sm font-heading font-semibold text-slate-900 hover:text-cta transition-colors',
+                            'back-4'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-4' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 5: Outline Retorno en Confirmación */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B5. Botón Outline «Volver al inicio»
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          ReservationCheckoutView · HostRegistrationPage
+                        </div>
+                        <div className="pt-2">
+                          <button
+                            type="button"
+                            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-900 font-heading font-semibold text-xs transition-colors cursor-pointer"
+                          >
+                            Volver al inicio
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 font-heading font-semibold text-sm transition-colors',
+                            'back-5'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-5' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 6: Primario Brand Retorno a Login / Anfitriones */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B6. CTA Brand «Volver a iniciar sesión / anfitriones»
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          PasswordSentPage · HostRegistrationPage
+                        </div>
+                        <div className="pt-2">
+                          <button
+                            type="button"
+                            className="w-full py-2.5 px-4 rounded-[10px] bg-cta hover:bg-cta-600 text-white text-xs font-heading font-semibold transition-colors cursor-pointer"
+                          >
+                            Volver a iniciar sesión
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'w-full py-3.5 px-6 rounded-[10px] bg-cta hover:bg-cta-600 text-white text-sm font-heading font-semibold transition-all',
+                            'back-6'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-6' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 7: Paginación Página Anterior */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B7. Paginación «Página anterior»
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          CatalogPage.tsx (línea 936)
+                        </div>
+                        <div className="pt-2 flex items-center gap-2">
+                          <button
+                            type="button"
+                            className="p-2 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
+                            aria-label="Página anterior"
+                          >
+                            <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
+                          </button>
+                          <span className="text-xs font-heading text-slate-500">Página 1 de 2</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'p-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-40 transition-colors',
+                            'back-7'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-7' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+
+                    {/* Back 8: Mes Anterior en DateRangePicker */}
+                    <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3">
+                      <div className="space-y-2">
+                        <div className="text-xs font-heading font-bold text-slate-900">
+                          B8. Calendario «Mes anterior»
+                        </div>
+                        <div className="text-[10px] font-mono text-slate-400">
+                          DateRangePicker.tsx (línea 101)
+                        </div>
+                        <div className="pt-2 flex items-center gap-2">
+                          <button
+                            type="button"
+                            className="p-1.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/70 transition-colors cursor-pointer"
+                            aria-label="Mes anterior"
+                          >
+                            <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
+                          </button>
+                          <span className="text-xs font-heading font-bold text-slate-800">Noviembre 2026</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copySnippet(
+                            'p-1.5 rounded-full hover:bg-slate-100 text-slate-700 transition-colors',
+                            'back-8'
+                          )
+                        }
+                        className="text-[11px] font-mono text-slate-500 hover:text-slate-800 flex items-center gap-1 self-start cursor-pointer"
+                      >
+                        <Copy className="w-3 h-3" /> {copiedCode === 'back-8' ? 'Copiado ✓' : 'Copiar clases'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -1327,7 +1626,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <input
                       type="text"
                       placeholder="Ej. Carlos"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                     />
                   </div>
 
@@ -1339,7 +1638,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <input
                         type="text"
                         placeholder="Marca o modelo..."
-                        className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400"
+                        className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cta/20 focus:border-cta transition-all placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -1347,9 +1646,9 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   {/* Datepicker Trigger Input */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
                     <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">Selector de Fecha</div>
-                    <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 cursor-pointer hover:border-blue-400 transition-colors">
+                    <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 cursor-pointer hover:border-cta-400 transition-colors">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-blue-600" />
+                        <Calendar className="w-4 h-4 text-cta" />
                         <span>18/11/2026</span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400">10:00 hrs</span>
@@ -1364,7 +1663,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         type="button"
                         onClick={() => setToggleState(!toggleState)}
                         className={`w-11 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
-                          toggleState ? 'bg-[#3D63FF]' : 'bg-slate-300'
+                          toggleState ? 'bg-cta' : 'bg-slate-300'
                         }`}
                       >
                         <div
@@ -1379,7 +1678,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         type="checkbox"
                         checked={termsChecked}
                         onChange={(e) => setTermsChecked(e.target.checked)}
-                        className="w-4 h-4 rounded border-slate-300 text-[#3D63FF] focus:ring-[#3D63FF] accent-[#3D63FF] cursor-pointer"
+                        className="w-4 h-4 rounded border-slate-300 text-cta focus:ring-cta accent-cta cursor-pointer"
                       />
                       <span>Acepto términos y privacidad</span>
                     </label>
@@ -1408,11 +1707,11 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     Pendiente de confirmación
                   </span>
 
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
                     Folio: ANF-842910
                   </span>
 
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-blue-50 text-[#3D63FF] text-[11px] font-heading font-semibold">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-cta-50 text-cta text-[11px] font-heading font-semibold">
                     Revisión 24-48 hrs
                   </span>
 
@@ -1467,7 +1766,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <button
                     type="button"
                     onClick={() => copySnippet('<SearchContainer searchState={state} onSearchChange={setState} onExecuteSearch={fn} totalResultsCount={VEHICLES.length} />', 'mol-search')}
-                    className="text-xs font-mono text-blue-600 hover:text-blue-700 cursor-pointer"
+                    className="text-xs font-mono text-cta hover:text-cta-700 cursor-pointer"
                   >
                     {copiedCode === 'mol-search' ? 'Copiado ✓' : 'Copiar'}
                   </button>
@@ -1505,7 +1804,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         'mol-dropdowns'
                       )
                     }
-                    className="text-xs font-mono text-blue-600 hover:text-blue-700 self-start sm:self-center shrink-0 cursor-pointer"
+                    className="text-xs font-mono text-cta hover:text-cta-700 self-start sm:self-center shrink-0 cursor-pointer"
                   >
                     {copiedCode === 'mol-dropdowns' ? 'Copiado ✓' : 'Copiar tokens'}
                   </button>
@@ -1611,7 +1910,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       onClick={() => setDemoCalendarOpen((prev) => !prev)}
                       className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-heading font-semibold text-left transition-all cursor-pointer ${
                         demoCalendarOpen
-                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          ? 'border-cta ring-2 ring-cta/15 text-slate-900'
                           : 'border-slate-300 hover:border-slate-400 text-slate-900'
                       }`}
                     >
@@ -1659,7 +1958,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         'mol-checkout-card'
                       )
                     }
-                    className="text-xs font-mono text-blue-600 hover:text-blue-700 shrink-0 cursor-pointer"
+                    className="text-xs font-mono text-cta hover:text-cta-700 shrink-0 cursor-pointer"
                   >
                     {copiedCode === 'mol-checkout-card' ? 'Copiado ✓' : 'Copiar'}
                   </button>
@@ -1672,12 +1971,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
-                      <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                      <div className="w-7 h-7 rounded-full bg-cta-50 text-cta font-heading font-bold text-xs flex items-center justify-center shrink-0">
                         1
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="text-base font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                          <h4 className="text-base font-heading font-bold text-slate-900 group-hover:text-cta transition-colors">
                             Fechas y sucursal
                           </h4>
                           <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
@@ -1868,7 +2167,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
                         <Users className="w-4 h-4" />
                       </div>
                       <div>
@@ -1877,7 +2176,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       </div>
                     </div>
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
                         <SlidersHorizontal className="w-4 h-4" />
                       </div>
                       <div>
@@ -1886,7 +2185,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       </div>
                     </div>
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
                         <Gauge className="w-4 h-4" />
                       </div>
                       <div>
@@ -1895,7 +2194,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       </div>
                     </div>
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-blue-600 shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-cta shrink-0">
                         <Fuel className="w-4 h-4" />
                       </div>
                       <div>
@@ -2083,7 +2382,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       ¡Solicitud / Reserva registrada!
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
                         Folio: ANF-842910
                       </span>
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
@@ -2112,7 +2411,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <div className="flex flex-wrap items-center gap-2.5">
                     <button
                       type="button"
-                      className="px-5 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
                     >
                       Acción principal
                     </button>
@@ -2147,7 +2446,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         'org-banner'
                       )
                     }
-                    className="text-xs font-mono text-blue-600 hover:text-blue-700 cursor-pointer"
+                    className="text-xs font-mono text-cta hover:text-cta-700 cursor-pointer"
                   >
                     {copiedCode === 'org-banner' ? 'Copiado ✓' : 'Copiar clases'}
                   </button>
@@ -2190,9 +2489,9 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <button
                         type="button"
                         onClick={() => onNavigate && onNavigate('/seo')}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-blue-300 text-[11px] font-medium border border-neutral-700/60 cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-cta-300 text-[11px] font-medium border border-neutral-700/60 cursor-pointer"
                       >
-                        <Globe className="w-3.5 h-3.5 text-blue-400" />
+                        <Globe className="w-3.5 h-3.5 text-cta-400" />
                         <span>Auditor SEO</span>
                       </button>
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 text-pink-300 text-[11px] font-medium border border-neutral-700/60">
@@ -2200,7 +2499,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.1</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.2</span>
                     </div>
                   </div>
                 </div>
@@ -2216,7 +2515,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
           <section id="audit" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-slate-800 font-mono text-xs font-bold uppercase tracking-wider">
-                <ClipboardCheck className="w-4 h-4 text-[#3D63FF]" /> Nivel 4 · Auditoría de Código &amp; UI
+                <ClipboardCheck className="w-4 h-4 text-cta" /> Nivel 4 · Auditoría de Código &amp; UI
               </div>
               <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
                 Auditoría de Componentes Repetidos e Inventario
@@ -2253,7 +2552,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-400 block">
                     Código muerto depurado
                   </span>
-                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-[#3D63FF] mt-1">
+                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-cta mt-1">
                     3 bloques
                   </p>
                   <p className="text-xs text-slate-500 mt-0.5">showForgot, TIME_OPTIONS, heroCarImg</p>
@@ -2312,7 +2611,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     {
                       title: '5. Código muerto y constantes sin uso',
                       status: 'Depurado',
-                      statusClass: 'bg-blue-50 text-[#3D63FF] border-blue-200/80',
+                      statusClass: 'bg-cta-50 text-cta border-cta-200',
                       detail: 'Eliminado flujo inline inalcanzable showForgot en LoginPage (duplicaba ForgotPasswordPage), TIME_OPTIONS en CatalogPage y baseUrl/heroCarImg en FourStepProcess.',
                     },
                   ].map((item) => (

@@ -152,7 +152,7 @@ export const UseCasesSection: React.FC<UseCasesSectionProps> = ({ onFilterCatego
                     onFilterCategory(item.filter);
                   }
                 }}
-                className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-neutral-200/80 bg-neutral-900"
+                className="group relative w-[280px] sm:w-[320px] md:w-[330px] h-[480px] sm:h-[500px] shrink-0 rounded-[28px] overflow-hidden cursor-pointer select-none border border-edge/80 bg-neutral-900"
               >
                 {/* Media de fondo: Video o Imagen en alta definición */}
                 {item.image ? (

@@ -25,19 +25,18 @@ export const TrustSafetySection: React.FC = () => {
 
             {/* Lado Derecho: Título, subtítulo y botón */}
             <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-6">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-neutral-900 tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-ink-900 tracking-tight leading-tight">
                 Cada renta, respaldada de principio a fin
               </h2>
 
-              <p className="text-sm sm:text-base font-sans text-neutral-600 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base font-sans text-ink-600 leading-relaxed max-w-xl">
                 En GALSA cuidamos la tranquilidad del cliente y del anfitrión mediante verificación digital, contratos formales y seguro durante todo el trayecto en México.
               </p>
 
               <div className="pt-2">
                 <a
                   href="/catalogo"
-                  style={{ backgroundColor: '#3D63FF' }}
-                  className="inline-flex items-center justify-center text-white hover:brightness-105 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all"
+                  className="bg-cta hover:bg-cta-600 inline-flex items-center justify-center text-white hover:brightness-105 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all"
                 >
                   <span>Renta tu primer auto</span>
                 </a>

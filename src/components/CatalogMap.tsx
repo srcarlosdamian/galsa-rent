@@ -100,7 +100,7 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
       const html = `
         <div class="px-2.5 py-1 rounded-full text-xs font-heading font-extrabold whitespace-nowrap shadow-md cursor-pointer transition-all duration-150 flex items-center gap-1 ${
           isActive
-            ? 'bg-slate-900 text-white scale-110 shadow-xl ring-2 ring-blue-500 z-50'
+            ? 'bg-slate-900 text-white scale-110 shadow-xl ring-2 ring-cta z-50'
             : 'bg-white text-slate-900 border border-slate-300 hover:bg-slate-900 hover:text-white hover:scale-105'
         }">
           <span>$${vehicle.pricePerDay.toLocaleString('es-MX')}</span>
@@ -155,12 +155,12 @@ export const CatalogMap: React.FC<CatalogMapProps> = ({
       {/* Contenedor Leaflet */}
       <div ref={mapContainerRef} className="w-full h-full z-0" />
 
-      {/* Botón flotante 'Buscar en esta área' estilo Google / Airbnb */}
+      {/* Botón flotante 'Buscar en esta área' */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
         <button
           type="button"
           onClick={handleResetArea}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-heading font-semibold transition-all active:scale-95"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cta hover:bg-cta-600 text-white text-xs font-heading font-semibold transition-all active:scale-95"
         >
           <Search className="w-3.5 h-3.5" strokeWidth={2} />
           <span>Buscar en esta área</span>

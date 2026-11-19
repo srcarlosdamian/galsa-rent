@@ -22,6 +22,7 @@ export default {
           700: '#1F3DD4',
           800: '#172FB0',
           900: '#132488',
+          950: '#0E1A5E',
           DEFAULT: '#3D63FF',
         },
         surface: '#FFFFFF',

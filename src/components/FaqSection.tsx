@@ -62,24 +62,24 @@ export const FaqSection: React.FC = () => {
             return (
               <div
                 key={faq.question}
-                className="rounded-2xl border border-neutral-200/90 bg-white overflow-hidden transition-all duration-200"
+                className="rounded-2xl border border-edge bg-white overflow-hidden transition-all duration-200"
               >
                 <button
                   type="button"
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-neutral-50/50 transition-colors"
+                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-subtle/50 transition-colors"
                   aria-expanded={isOpen}
                 >
                   <span className="text-base font-heading font-semibold text-slate-900 tracking-tight leading-snug">
                     {faq.question}
                   </span>
-                  <div className="w-8 h-8 rounded-full border border-neutral-200 flex items-center justify-center shrink-0 text-neutral-700">
+                  <div className="w-8 h-8 rounded-full border border-edge flex items-center justify-center shrink-0 text-ink-700">
                     {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm font-sans text-slate-600 leading-relaxed border-t border-neutral-100">
+                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm font-sans text-slate-600 leading-relaxed border-t border-edge-light">
                     <p>{faq.answer}</p>
                   </div>
                 )}

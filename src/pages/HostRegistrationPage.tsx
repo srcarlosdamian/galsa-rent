@@ -77,7 +77,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
               .
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
                 Folio: {folioCode}
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
@@ -119,7 +119,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                 </div>
                 <div className="flex items-center justify-between gap-4">
                   <span className="font-sans text-slate-500">Comisión GALSA</span>
-                  <span className="font-heading font-semibold text-[#3D63FF] text-right">
+                  <span className="font-heading font-semibold text-cta text-right">
                     33% pagada por el cliente
                   </span>
                 </div>
@@ -132,7 +132,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
               </h2>
               <ul className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-50 text-[#3D63FF] font-heading font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="w-6 h-6 rounded-full bg-cta-50 text-cta font-heading font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                     1
                   </span>
                   <span>
@@ -140,7 +140,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-50 text-[#3D63FF] font-heading font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="w-6 h-6 rounded-full bg-cta-50 text-cta font-heading font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                     2
                   </span>
                   <span>
@@ -148,7 +148,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-50 text-[#3D63FF] font-heading font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="w-6 h-6 rounded-full bg-cta-50 text-cta font-heading font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                     3
                   </span>
                   <span>
@@ -176,7 +176,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
             <button
               type="button"
               onClick={handleBack}
-              className="px-6 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-colors cursor-pointer"
+              className="px-6 py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors cursor-pointer"
             >
               Volver a anfitriones
             </button>
@@ -234,7 +234,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
               {/* CONTENEDOR LINEAL 1: Datos personales y ciudad */}
               <div className="relative z-20 rounded-2xl border border-slate-200 bg-white overflow-visible">
                 <div className="flex items-center gap-3.5 px-5 py-4 sm:px-6 sm:py-5 border-b border-slate-100">
-                  <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-cta-50 text-cta font-heading font-bold text-xs flex items-center justify-center shrink-0">
                     1
                   </div>
                   <div className="min-w-0">
@@ -258,7 +258,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder="Ej. Carlos"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                       />
                     </div>
                     <div>
@@ -270,7 +270,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         placeholder="Ej. Medina Robles"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -285,7 +285,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="tucorreo@ejemplo.com"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                       />
                     </div>
                     <div>
@@ -297,7 +297,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+52 55 0000 0000"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -324,7 +324,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
               {/* CONTENEDOR LINEAL 2: Validación, pagos, términos y envío */}
               <div className="relative z-10 rounded-2xl border border-slate-200 bg-white">
                 <div className="flex items-center gap-3.5 px-5 py-4 sm:px-6 sm:py-5 border-b border-slate-100">
-                  <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-cta-50 text-cta font-heading font-bold text-xs flex items-center justify-center shrink-0">
                     2
                   </div>
                   <div className="min-w-0">
@@ -364,7 +364,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                       type="checkbox"
                       checked={acceptedTerms}
                       onChange={(e) => setAcceptedTerms(e.target.checked)}
-                      className="w-4 h-4 mt-0.5 rounded border-slate-300 text-[#3D63FF] focus:ring-[#3D63FF] accent-[#3D63FF] cursor-pointer shrink-0"
+                      className="w-4 h-4 mt-0.5 rounded border-slate-300 text-cta focus:ring-cta accent-cta cursor-pointer shrink-0"
                     />
                     <span className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed">
                       Acepto los{' '}
@@ -375,7 +375,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                           e.stopPropagation();
                           onNavigate?.('/terminos');
                         }}
-                        className="underline font-semibold text-slate-900 hover:text-[#3D63FF] transition-colors"
+                        className="underline font-semibold text-slate-900 hover:text-cta transition-colors"
                       >
                         términos
                       </a>{' '}
@@ -387,7 +387,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                           e.stopPropagation();
                           onNavigate?.('/privacidad');
                         }}
-                        className="underline font-semibold text-slate-900 hover:text-[#3D63FF] transition-colors"
+                        className="underline font-semibold text-slate-900 hover:text-cta transition-colors"
                       >
                         aviso de privacidad
                       </a>
@@ -399,7 +399,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                   <div className="pt-1 space-y-2 flex flex-col items-start">
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-colors active:scale-[0.98] cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors active:scale-[0.98] cursor-pointer"
                     >
                       <span>Enviar solicitud</span>
                       <ArrowRight className="w-4 h-4" />
@@ -418,7 +418,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 space-y-5 text-left">
               {/* Cabecera del programa */}
               <div className="flex items-center gap-4 pb-4 border-b border-slate-100">
-                <div className="w-14 h-14 rounded-xl bg-blue-50 text-[#3D63FF] flex items-center justify-center shrink-0">
+                <div className="w-14 h-14 rounded-xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
                   <Car className="w-6 h-6" strokeWidth={1.8} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -429,7 +429,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                     <span className="text-xs font-sans text-slate-500">
                       Marketplace GALSA
                     </span>
-                    <span className="text-[11px] font-heading font-semibold text-[#3D63FF] bg-blue-50 px-2 py-0.5 rounded-md">
+                    <span className="text-[11px] font-heading font-semibold text-cta bg-cta-50 px-2 py-0.5 rounded-md">
                       Revisión 24-48 hrs
                     </span>
                   </div>
@@ -442,7 +442,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
                   <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
                     Resumen de tu solicitud
                   </span>
-                  <span className="text-xs font-heading font-semibold text-[#3D63FF]">
+                  <span className="text-xs font-heading font-semibold text-cta">
                     En vivo
                   </span>
                 </div>
@@ -502,7 +502,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
 
                 <div className="flex items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
-                    <Check className="w-3.5 h-3.5 text-[#3D63FF] shrink-0" strokeWidth={2.5} />
+                    <Check className="w-3.5 h-3.5 text-cta shrink-0" strokeWidth={2.5} />
                     <span>Tu ingreso por renta</span>
                   </span>
                   <span className="font-heading font-semibold text-slate-900 text-right">
@@ -512,7 +512,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
 
                 <div className="flex items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
-                    <Check className="w-3.5 h-3.5 text-[#3D63FF] shrink-0" strokeWidth={2.5} />
+                    <Check className="w-3.5 h-3.5 text-cta shrink-0" strokeWidth={2.5} />
                     <span>Tarifa de servicio GALSA</span>
                   </span>
                   <span className="font-heading font-semibold text-slate-900 text-right">
@@ -522,7 +522,7 @@ export const HostRegistrationPage: React.FC<HostRegistrationPageProps> = ({
 
                 <div className="flex items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
-                    <Check className="w-3.5 h-3.5 text-[#3D63FF] shrink-0" strokeWidth={2.5} />
+                    <Check className="w-3.5 h-3.5 text-cta shrink-0" strokeWidth={2.5} />
                     <span>Tiempo de validación</span>
                   </span>
                   <span className="font-heading font-semibold text-slate-900 text-right">

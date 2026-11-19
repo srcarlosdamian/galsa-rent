@@ -172,7 +172,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
                         <p className="text-[14px] font-heading font-medium text-slate-900 truncate flex items-center gap-2">
                           <span>{loc.title}</span>
                           {loc.id === 'current' && detectingLocation && (
-                            <span className="text-[11px] font-normal text-blue-600 animate-pulse">
+                            <span className="text-[11px] font-normal text-cta animate-pulse">
                               (Detectando...)
                             </span>
                           )}
@@ -231,7 +231,7 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
             <Calendar className="w-[18px] h-[18px] text-slate-700 shrink-0" strokeWidth={1.4} />
           </button>
 
-          {/* Modal flotante de Calendario (Doble mes, estilo Airbnb/Virtuo en español) */}
+          {/* Modal flotante de Calendario (Doble mes en español) */}
           {calendarOpen && (
             <div className="absolute top-full left-0 sm:left-auto sm:right-0 lg:left-0 mt-3 z-[60] max-w-[95vw] sm:max-w-none">
               <DateRangePicker
@@ -323,8 +323,8 @@ export const SearchContainer: React.FC<SearchContainerProps> = ({
           type="submit"
           className={`w-full lg:w-[48px] h-[48px] rounded-[8px] flex items-center justify-center gap-2 shrink-0 transition-all font-heading font-semibold text-[14px] cursor-pointer ${
             hasLocation
-              ? 'bg-blue-600 hover:bg-blue-700 text-white active:scale-95'
-              : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-300 active:scale-95'
+              ? 'bg-cta hover:bg-cta-600 text-white active:scale-95'
+              : 'bg-slate-100 hover:bg-slate-200 text-slate-600 active:scale-95'
           }`}
           aria-label="Buscar vehículos"
           title="Buscar vehículos disponibles"

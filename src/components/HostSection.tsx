@@ -133,7 +133,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
   return (
     <div className="bg-white min-h-screen">
       {/* SECCIÓN 1: HERO & CALCULADORA A LA DERECHA */}
-      <section className="py-12 sm:py-16 md:py-20 border-b border-neutral-200">
+      <section className="py-12 sm:py-16 md:py-20 border-b border-edge">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
@@ -145,7 +145,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 en{' '}
                 <span className="relative inline-block whitespace-nowrap">
                   <span className="relative z-10">ingresos</span>
-                  <span className="absolute left-0 bottom-0 sm:bottom-0.5 w-full h-2 sm:h-2.5 bg-[#D8E8FF] rounded-none -z-0" />
+                  <span className="absolute left-0 bottom-0 sm:bottom-0.5 w-full h-2 sm:h-2.5 bg-cta-200 rounded-none -z-0" />
                 </span>
               </h1>
 
@@ -156,8 +156,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
               {/* 3 Checks destacados con círculo azul claro */}
               <div className="space-y-4 pt-2">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-blue-600" strokeWidth={2.5} />
+                  <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-cta" strokeWidth={2.5} />
                   </div>
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
@@ -170,8 +170,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-blue-600" strokeWidth={2.5} />
+                  <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-cta" strokeWidth={2.5} />
                   </div>
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
@@ -184,8 +184,8 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3.5 h-3.5 text-blue-600" strokeWidth={2.5} />
+                  <div className="w-6 h-6 rounded-full bg-cta-100 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5 text-cta" strokeWidth={2.5} />
                   </div>
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
@@ -203,7 +203,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                 <a
                   href="/anfitriones/registro"
                   onClick={handlePublish}
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-95"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-bold text-sm transition-all active:scale-95"
                 >
                   Quiero publicar mi auto
                 </a>

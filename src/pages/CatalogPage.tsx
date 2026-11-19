@@ -169,7 +169,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   const [returnTime, setReturnTime] = useState<string>('18:00');
   const [mobileLocationSearch, setMobileLocationSearch] = useState<string>('');
 
-  // Histograma de distribución de precios para el filtro móvil estilo Airbnb
+  // Histograma de distribución de precios para el filtro móvil
   const histogramBuckets = useMemo(() => {
     const numBuckets = 22;
     const minPrice = 850;
@@ -464,11 +464,11 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             setOpenDropdown(null);
                           }}
                           className={`w-full text-left p-2.5 rounded-[12px] text-[13px] font-heading transition-colors flex items-center justify-between gap-2 cursor-pointer ${
-                            isSelected ? 'bg-blue-50/70 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                            isSelected ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
                           }`}
                         >
                           <span>{opt.label}</span>
-                          {isSelected && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2.2} />}
+                          {isSelected && <Check className="w-4 h-4 text-cta shrink-0" strokeWidth={2.2} />}
                         </button>
                       );
                     })}
@@ -493,7 +493,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <SlidersHorizontal className="w-3.5 h-3.5 text-slate-700" strokeWidth={1.8} />
             <span>Filtros</span>
             {activeFiltersCount > 0 && (
-              <span className="inline-flex items-center justify-center min-w-[18px] h-4 px-1 rounded-full bg-blue-600 text-white text-[10px] font-bold">
+              <span className="inline-flex items-center justify-center min-w-[18px] h-4 px-1 rounded-full bg-cta text-white text-[10px] font-bold">
                 {activeFiltersCount}
               </span>
             )}
@@ -559,11 +559,11 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           setOpenDropdown(null);
                         }}
                         className={`w-full text-left p-2.5 rounded-[12px] text-[13px] font-heading transition-colors flex items-center justify-between gap-2 cursor-pointer ${
-                          isSelected ? 'bg-blue-50/70 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
+                          isSelected ? 'bg-cta-50 text-slate-900 font-semibold' : 'text-slate-700 hover:bg-slate-50 font-medium'
                         }`}
                       >
                         <span>{opt.label}</span>
-                        {isSelected && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2.2} />}
+                        {isSelected && <Check className="w-4 h-4 text-cta shrink-0" strokeWidth={2.2} />}
                       </button>
                     );
                   })}
@@ -622,7 +622,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                           <p className="text-[13px] font-heading font-medium text-slate-900 truncate flex items-center gap-1.5">
                             <span>{loc.title}</span>
                             {loc.id === 'current' && detectingLocation && (
-                              <span className="text-[10px] font-normal text-blue-600 animate-pulse">
+                              <span className="text-[10px] font-normal text-cta animate-pulse">
                                 (Detectando...)
                               </span>
                             )}
@@ -813,7 +813,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 <p className="text-xs font-heading font-bold text-slate-800 mb-2">
                   Precio máximo por día:
                 </p>
-                <div className="text-lg font-heading font-extrabold text-blue-600 mb-3">
+                <div className="text-lg font-heading font-extrabold text-cta mb-3">
                   ${priceMaxFilter.toLocaleString('es-MX')} MXN
                 </div>
                 <input
@@ -826,7 +826,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                     setPriceMaxFilter(parseInt(e.target.value, 10));
                     setCurrentPage(1);
                   }}
-                  className="w-full accent-blue-600 cursor-pointer"
+                  className="w-full accent-cta cursor-pointer"
                 />
                 <div className="flex justify-between text-[11px] text-slate-400 font-heading mt-1">
                   <span>$850</span>
@@ -1192,7 +1192,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                   Filtros
                 </h2>
                 {activeFiltersCount > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold">
+                  <span className="px-2 py-0.5 rounded-full bg-cta-100 text-cta-700 text-xs font-bold">
                     {activeFiltersCount} activo{activeFiltersCount > 1 ? 's' : ''}
                   </span>
                 )}
@@ -1223,7 +1223,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                     value={mobileLocationSearch}
                     onChange={(e) => setMobileLocationSearch(e.target.value)}
                     placeholder="Dirección, ciudad o aeropuerto..."
-                    className="w-full pl-9 pr-8 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading text-xs sm:text-sm outline-none transition-colors"
+                    className="w-full pl-9 pr-8 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-heading text-xs sm:text-sm outline-none transition-colors"
                   />
                   {mobileLocationSearch && (
                     <button
@@ -1255,11 +1255,11 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                         }}
                         className={`w-full text-left p-2.5 rounded-[12px] border transition-colors flex items-center gap-3 ${
                           isSelected
-                            ? 'border-blue-600 bg-blue-50/60 text-blue-950 font-semibold'
+                            ? 'border-cta bg-cta-50 text-cta-950 font-semibold'
                             : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                         }`}
                       >
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'}`}>
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isSelected ? 'bg-cta text-white' : 'bg-slate-100 text-slate-700'}`}>
                           <Icon className="w-4 h-4" strokeWidth={1.5} />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -1272,7 +1272,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             </p>
                           )}
                         </div>
-                        {isSelected && <Check className="w-4 h-4 text-blue-600 shrink-0" strokeWidth={2} />}
+                        {isSelected && <Check className="w-4 h-4 text-cta shrink-0" strokeWidth={2} />}
                       </button>
                     );
                   })}
@@ -1307,7 +1307,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             onSearchChange({ ...searchState, startDate: val });
                           }
                         }}
-                        className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors"
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors"
                       />
                     </div>
                     <div>
@@ -1345,7 +1345,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             onSearchChange({ ...searchState, endDate: val });
                           }
                         }}
-                        className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors"
+                        className="w-full px-3 py-2 rounded-xl border border-slate-300 hover:border-slate-400 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-heading font-semibold text-xs outline-none transition-colors"
                       />
                     </div>
                     <div>
@@ -1486,7 +1486,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       <div
                         key={i}
                         className={`flex-1 rounded-t-sm transition-colors duration-150 ${
-                          isFilled ? 'bg-blue-600' : 'bg-slate-200'
+                          isFilled ? 'bg-cta' : 'bg-slate-200'
                         }`}
                         style={{ height: `${bucket.heightPct}%` }}
                       />
@@ -1506,7 +1506,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       setPriceMaxFilter(parseInt(e.target.value, 10));
                       setCurrentPage(1);
                     }}
-                    className="w-full accent-blue-600 cursor-pointer"
+                    className="w-full accent-cta cursor-pointer"
                   />
                   <div className="flex justify-between text-[11px] text-slate-400 font-heading mt-1">
                     <span>$850</span>
@@ -1530,7 +1530,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(false)}
-                className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-heading font-bold transition-colors text-center"
+                className="flex-1 py-3 px-4 rounded-xl bg-cta hover:bg-cta-600 text-white text-sm font-heading font-bold transition-colors text-center"
               >
                 Mostrar {filteredVehicles.length} {filteredVehicles.length === 1 ? 'auto' : 'autos'}
               </button>

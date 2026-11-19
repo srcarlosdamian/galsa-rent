@@ -303,7 +303,7 @@ export const App: React.FC = () => {
     currentPath === '/cuenta/completar';
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-black selection:text-white flex flex-col">
+    <div className="min-h-screen bg-white text-ink-900 font-sans selection:bg-black selection:text-white flex flex-col">
       {/* Header with concise menu */}
       <Header currentPath={currentPath} onNavigate={navigateTo} />
 
@@ -423,16 +423,16 @@ export const App: React.FC = () => {
                 
                 {/* Bloque de Título y Subtítulo centrado */}
                 <div className="w-full max-w-[940px] relative flex flex-col items-center gap-5 sm:gap-6 text-center">
-                  <h1 className="relative self-stretch text-neutral-900 text-[40px] sm:text-[54px] lg:text-[64px] font-bold font-heading leading-[1.12] sm:leading-[1.14] tracking-tight">
+                  <h1 className="relative self-stretch text-ink-900 text-[40px] sm:text-[54px] lg:text-[64px] font-bold font-heading leading-[1.12] sm:leading-[1.14] tracking-tight">
                     Renta de autos en México,<br className="hidden sm:inline" />{' '}
                     <span className="relative inline-block whitespace-nowrap">
                       <span className="relative z-10">100 % en línea</span>
-                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-blue-300 rounded-sm -z-0" />
+                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-cta-300 rounded-sm -z-0" />
                     </span>{' '}
                     y al instante
                   </h1>
 
-                  <p className="self-stretch text-neutral-600 text-base sm:text-lg font-normal font-heading leading-relaxed max-w-[760px] mx-auto">
+                  <p className="self-stretch text-ink-600 text-base sm:text-lg font-normal font-heading leading-relaxed max-w-[760px] mx-auto">
                     Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales.
                   </p>
                 </div>

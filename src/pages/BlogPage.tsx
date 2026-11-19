@@ -39,14 +39,14 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
 
           {/* Post Header */}
           <header className="mb-8 text-left space-y-4">
-            <span className="inline-block text-xs font-heading font-semibold text-[#3D63FF] bg-[#3D63FF]/10 px-3 py-1 rounded-full">
+            <span className="inline-block text-xs font-heading font-semibold text-cta bg-cta/10 px-3 py-1 rounded-full">
               {currentPost.category}
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-slate-900 leading-tight">
               {currentPost.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs font-sans text-slate-500 pt-2 border-b border-neutral-100 pb-6">
+            <div className="flex flex-wrap items-center gap-4 text-xs font-sans text-slate-500 pt-2 border-b border-edge-light pb-6">
               <div className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-slate-400" strokeWidth={1.4} />
                 <span>{currentPost.author}</span>
@@ -79,7 +79,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
           </article>
 
           {/* CTA Box */}
-          <div className="mt-12 p-8 rounded-[24px] bg-[#94BDC9]/25 flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
+          <div className="mt-12 p-8 rounded-[24px] bg-cta-50 flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
             <div>
               <h3 className="text-xl font-heading font-semibold text-slate-900 mb-1">
                 ¿Planeando tu próximo viaje en México?
@@ -91,8 +91,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
             <a
               href="/catalogo"
               onClick={(e) => handleLink(e, '/catalogo')}
-              style={{ backgroundColor: '#3D63FF' }}
-              className="inline-flex items-center justify-center text-white font-heading font-semibold text-sm px-6 py-3.5 rounded-xl hover:opacity-95 transition-all shrink-0 active:scale-95"
+              className="bg-cta hover:bg-cta-600 inline-flex items-center justify-center text-white font-heading font-semibold text-sm px-6 py-3.5 rounded-xl hover:opacity-95 transition-all shrink-0 active:scale-95"
             >
               <span>Ver catálogo</span>
             </a>
@@ -103,7 +102,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
             <a
               href="/blog"
               onClick={(e) => handleLink(e, '/blog')}
-              className="inline-flex items-center gap-1.5 text-sm font-heading font-semibold text-slate-900 hover:text-[#3D63FF] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm font-heading font-semibold text-slate-900 hover:text-cta transition-colors"
             >
               <span>← Volver a todos los artículos</span>
             </a>
@@ -121,7 +120,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
         
         {/* Header */}
         <div className="text-left mb-12 max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-xs font-heading font-semibold text-[#3D63FF] mb-2 uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 text-xs font-heading font-semibold text-cta mb-2 uppercase tracking-wider">
             <BookOpen className="w-4 h-4" strokeWidth={1.4} />
             <span>Blog GALSA Rent</span>
           </div>
@@ -138,7 +137,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
           {BLOG_POSTS.map((post) => (
             <article
               key={post.slug}
-              className="flex flex-col bg-white rounded-[24px] overflow-hidden border border-neutral-200/80 hover:border-neutral-300 transition-all duration-300 group"
+              className="flex flex-col bg-white rounded-[24px] overflow-hidden border border-edge/80 hover:border-neutral-300 transition-all duration-300 group"
             >
               <a
                 href={`/blog/${post.slug}`}
@@ -164,7 +163,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
                     <span>{post.readTime}</span>
                   </div>
 
-                  <h2 className="text-lg sm:text-xl font-heading font-semibold text-slate-900 group-hover:text-[#3D63FF] transition-colors leading-snug">
+                  <h2 className="text-lg sm:text-xl font-heading font-semibold text-slate-900 group-hover:text-cta transition-colors leading-snug">
                     <a
                       href={`/blog/${post.slug}`}
                       onClick={(e) => handleLink(e, `/blog/${post.slug}`)}
@@ -182,7 +181,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
                   <a
                     href={`/blog/${post.slug}`}
                     onClick={(e) => handleLink(e, `/blog/${post.slug}`)}
-                    className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-900 group-hover:text-[#3D63FF] transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-900 group-hover:text-cta transition-colors"
                   >
                     <span>Leer artículo completo</span>
                     <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.4} />

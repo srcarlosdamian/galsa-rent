@@ -31,8 +31,8 @@ export const StepFeatureCard: React.FC<StepFeatureCardProps> = ({
         </div>
 
         {/* Badge cuadrado flotante con fondo azul 300 e icono azul 900 */}
-        <div className="absolute -bottom-3 left-3 w-12 h-12 bg-blue-300 rounded-xl flex items-center justify-center z-10">
-          <Icon className="w-5 h-5 text-blue-900" strokeWidth={1.4} />
+        <div className="absolute -bottom-3 left-3 w-12 h-12 bg-cta-300 rounded-xl flex items-center justify-center z-10">
+          <Icon className="w-5 h-5 text-cta-900" strokeWidth={1.4} />
         </div>
       </div>
 

@@ -25,7 +25,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand Info */}
           <div className="space-y-4 lg:pr-4">
             <div className="flex items-center">
-              <GalsaLogo className="h-6 w-auto text-blue-500" />
+              <GalsaLogo className="h-6 w-auto text-cta" />
             </div>
             
             <p className="text-[13px] font-heading font-normal text-slate-500 leading-relaxed">
@@ -101,10 +101,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <a
               href="/seo"
               onClick={(e) => handleLink(e, '/seo')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-blue-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 group"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-cta-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 group"
               title="Abrir Auditor & Previsualizador SEO"
             >
-              <Globe className="w-3.5 h-3.5 text-blue-400" />
+              <Globe className="w-3.5 h-3.5 text-cta-400" />
               <span>Auditor SEO</span>
             </a>
             <a
@@ -116,8 +116,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Palette className="w-3.5 h-3.5 text-pink-400 group-hover:rotate-12 transition-transform" />
               <span>Sistema de Diseño</span>
             </a>
-            <span>Última actualización: <strong>18 Nov 2026, 19:00 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.1</span>
+            <span>Última actualización: <strong>18 Nov 2026, 19:38 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.2</span>
           </div>
         </div>
       </div>

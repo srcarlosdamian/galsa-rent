@@ -42,10 +42,9 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
         {/* Contenedor principal con 2 bloques lado a lado como el ejemplo */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          {/* Bloque Izquierdo: Cuadrado azul derivado directamente del CTA (#3D63FF en tono 200 / #D8E8FF) */}
+          {/* Bloque Izquierdo: Cuadrado azul de marca (bg-cta-100) */}
           <div 
-            style={{ backgroundColor: '#D8E8FF' }}
-            className="lg:col-span-7 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start min-h-[360px]"
+            className="lg:col-span-7 bg-cta-100 rounded-[28px] p-8 sm:p-12 flex flex-col justify-between items-start min-h-[360px]"
           >
             <div className="space-y-4 max-w-xl text-left">
               {/* Icono 3D de carro con monedas más grande */}
@@ -69,8 +68,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
               <a
                 href="/anfitriones"
                 onClick={handleClick}
-                style={{ backgroundColor: '#3D63FF' }}
-                className="inline-flex items-center justify-center hover:opacity-95 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all active:scale-95 border-0 outline-none shadow-none"
+                className="bg-cta hover:bg-cta-600 inline-flex items-center justify-center hover:opacity-95 text-white font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all active:scale-95 border-0 outline-none shadow-none"
               >
                 <span>Conocer programa de anfitriones</span>
               </a>
@@ -78,13 +76,13 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
           </div>
 
           {/* Bloque Derecho: Cuadrado blanco con bordes redondeados y Ventajas (sin sombra) */}
-          <div className="lg:col-span-5 bg-white rounded-[28px] p-6 sm:p-8 border border-neutral-200/90 flex flex-col justify-between shadow-none">
+          <div className="lg:col-span-5 bg-white rounded-[28px] p-6 sm:p-8 border border-edge flex flex-col justify-between shadow-none">
             <div>
               <h4 className="text-lg font-heading font-semibold text-slate-900 mb-6 text-left">
                 Ventajas
               </h4>
 
-              <div className="divide-y divide-neutral-100">
+              <div className="divide-y divide-edge-light">
                 {VENTAJAS.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -106,7 +104,7 @@ export const HostBanner: React.FC<HostBannerProps> = ({ onNavigate }) => {
               </div>
             </div>
 
-            <div className="pt-6 mt-4 border-t border-neutral-100 text-left">
+            <div className="pt-6 mt-4 border-t border-edge-light text-left">
               <a
                 href="/terminos"
                 onClick={(e) => {

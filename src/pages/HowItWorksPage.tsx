@@ -69,12 +69,12 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="text-xs text-neutral-500 flex items-center gap-1.5 mb-8">
+        <nav aria-label="Breadcrumb" className="text-xs text-ink-500 flex items-center gap-1.5 mb-8">
           <a href="/" onClick={(e) => handleLink(e, '/')} className="hover:text-black transition-colors">
             Inicio
           </a>
           <ChevronRight className="w-3 h-3 text-neutral-400" />
-          <span className="text-neutral-900 font-bold">Cómo funciona</span>
+          <span className="text-ink-900 font-bold">Cómo funciona</span>
         </nav>
 
         {/* Hero Header */}
@@ -82,10 +82,10 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
           <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
             Proceso 100% en línea
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-neutral-900 leading-[1.1]">
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-ink-900 leading-[1.1]">
             Cómo rentar un auto en GALSA Rent
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed">
+          <p className="mt-4 text-base sm:text-lg text-ink-600 leading-relaxed">
             Diseñamos un proceso rápido, transparente y seguro. Olvídate de los mostradores tradicionales y las filas: reserva, valida y firma tu contrato digital desde tu celular antes de recoger la unidad en Sucursal Plaza 450.
           </p>
         </div>
@@ -97,7 +97,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
             return (
               <div 
                 key={step.num}
-                className="bg-white rounded-3xl border border-neutral-200 p-8 hover:border-black transition-colors flex flex-col justify-between"
+                className="bg-white rounded-3xl border border-edge p-8 hover:border-black transition-colors flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
@@ -109,18 +109,18 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
                     </div>
                   </div>
 
-                  <h2 className="text-xl font-bold text-neutral-900 mb-2">
+                  <h2 className="text-xl font-bold text-ink-900 mb-2">
                     {step.title}
                   </h2>
-                  <p className="text-sm text-neutral-600 leading-relaxed mb-6">
+                  <p className="text-sm text-ink-600 leading-relaxed mb-6">
                     {step.desc}
                   </p>
                 </div>
 
-                <div className="pt-6 border-t border-neutral-100 space-y-2">
+                <div className="pt-6 border-t border-edge-light space-y-2">
                   {step.details.map((detail, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-neutral-700">
-                      <CheckCircle2 className="w-4 h-4 text-neutral-900 shrink-0" />
+                    <div key={idx} className="flex items-center gap-2 text-xs text-ink-700">
+                      <CheckCircle2 className="w-4 h-4 text-ink-900 shrink-0" />
                       <span>{detail}</span>
                     </div>
                   ))}
@@ -131,21 +131,21 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
         </div>
 
         {/* Delivery Point Box */}
-        <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 md:p-12 mb-20 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="rounded-3xl border border-edge bg-subtle p-8 md:p-12 mb-20 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-neutral-200 text-xs font-bold text-neutral-800">
-              <MapPin className="w-3.5 h-3.5 text-neutral-500" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-edge text-xs font-bold text-neutral-800">
+              <MapPin className="w-3.5 h-3.5 text-ink-500" />
               <span>Punto oficial de entrega y devolución</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900">
+            <h2 className="text-2xl sm:text-3xl font-bold text-ink-900">
               Sucursal Plaza 450 en Durango
             </h2>
-            <p className="text-sm text-neutral-600 leading-relaxed">
+            <p className="text-sm text-ink-600 leading-relaxed">
               Todas nuestras unidades se entregan físicamente en nuestro punto controlado en Blvd. Guadiana, Plaza 450, Durango. Nuestro equipo te entrega el auto lavado, con tanque lleno y con el checklist fotográfico verificado.
             </p>
-            <div className="flex flex-wrap gap-4 text-xs font-medium text-neutral-700 pt-2">
+            <div className="flex flex-wrap gap-4 text-xs font-medium text-ink-700 pt-2">
               <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-neutral-500" />
+                <Clock className="w-4 h-4 text-ink-500" />
                 Lunes a Domingo: 08:00 - 20:00 hrs
               </span>
               <span className="flex items-center gap-1.5">
@@ -159,15 +159,14 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
             <a
               href="/catalogo"
               onClick={(e) => handleLink(e, '/catalogo')}
-              style={{ backgroundColor: '#3D63FF' }}
-              className="py-3.5 px-6 rounded-2xl text-white font-bold text-xs uppercase tracking-wider text-center transition-all hover:brightness-105 active:scale-[0.98]"
+              className="bg-cta hover:bg-cta-600 py-3.5 px-6 rounded-2xl text-white font-bold text-xs uppercase tracking-wider text-center transition-all hover:brightness-105 active:scale-[0.98]"
             >
               Ver autos disponibles
             </a>
             <a
               href="/contacto"
               onClick={(e) => handleLink(e, '/contacto')}
-              className="py-3.5 px-6 rounded-2xl bg-white border border-neutral-300 text-neutral-900 font-bold text-xs uppercase tracking-wider text-center hover:border-black transition-all"
+              className="py-3.5 px-6 rounded-2xl bg-white border border-neutral-300 text-ink-900 font-bold text-xs uppercase tracking-wider text-center hover:border-black transition-all"
             >
               Ver ubicación
             </a>
@@ -175,19 +174,19 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
         </div>
 
         {/* FAQs Link Section */}
-        <div className="border-t border-neutral-200 pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="border-t border-edge pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-bold text-neutral-900">
+            <h3 className="text-lg font-bold text-ink-900">
               ¿Tienes dudas sobre los requisitos o el depósito?
             </h3>
-            <p className="text-xs text-neutral-600">
+            <p className="text-xs text-ink-600">
               Consulta nuestra sección de preguntas frecuentes con todos los detalles de tarifas, cancelaciones y seguro.
             </p>
           </div>
           <a
             href="/faq"
             onClick={(e) => handleLink(e, '/faq')}
-            className="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-neutral-900 border border-neutral-300 px-5 py-3 rounded-xl hover:border-black transition-all shrink-0"
+            className="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-ink-900 border border-neutral-300 px-5 py-3 rounded-xl hover:border-black transition-all shrink-0"
           >
             <HelpCircle className="w-4 h-4" />
             <span>Ir a Preguntas frecuentes</span>

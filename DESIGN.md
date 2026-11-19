@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform inspired by Virtuo and Airbnb (v2.3.1)
+description: Minimalist, clean, flat digital mobility platform (v2.3.2)
 colors:
   cta-50: "#F3F6FC"
   cta-100: "#E5ECF9"
@@ -12,6 +12,7 @@ colors:
   cta-700: "#1F3DD4"
   cta-800: "#172FB0"
   cta-900: "#132488"
+  cta-950: "#0E1A5E"
   surface: "#FFFFFF"
   subtle: "#FAFAFA"
   edge: "#EBEBEB"
@@ -49,18 +50,18 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.3.1`)
+# GALSA Rent Design System & Guidelines (`v2.3.2`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
-- **Brand Azul (`cta-50`..`cta-900`):** desde `bg-cta-50` (`#F3F6FC`, usado en el banner de Anfitriones con texto `text-ink-900`) hasta `bg-cta` / `bg-cta-500` (`#3D63FF`, CTA principal) y `bg-cta-600` (`#2A4EEB`, hover).
+- **Brand Azul Completo (`cta-50`..`cta-950`):** 11 tonos desde `bg-cta-50` (`#F3F6FC`) hasta `bg-cta` / `bg-cta-500` (`#3D63FF`), `bg-cta-600` (`#2A4EEB`) y `bg-cta-950` (`#0E1A5E`).
 - **Superficies y textos (`surface`, `subtle`, `edge`, `edge-light`, `ink-900`..`ink-400`):** expuestos como clases Tailwind y variables CSS `--color-*`.
 - **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`.
 - **Popovers flotantes elevados:** `shadow-search`, `shadow-dropdown`, `shadow-float` y `shadow-2xl` se reservan exclusivamente para menús emergentes (`CustomDropdown`, `DateRangePicker`) dentro de padres `overflow-visible`.
 
-## 2. Colores Extra Monitoreados (`/design-system`)
-- **`#D8E8FF`** (`HostSection` subrayado y `HostBanner`), **`#94BDC9/25`** (`BlogPage` caja CTA) y **`#2563EB` / `#BFDBFE`** (`DocumentUploadCard` SVG) quedan documentados en la sección de variables extra del Sistema de Diseño para decisión de unificación. `#8EB5FF` ya fue migrado en `v2.3.1` a `bg-cta-50` + `text-ink-900` + `bg-cta`.
+## 2. Unificación de Colores Extra (`v2.3.2`)
+- Todos los colores extra (`#D8E8FF`, `#94BDC9/25`, `#2563EB`, `#BFDBFE`, `#8EB5FF`, `blue-50..900` y grises paralelos `neutral-*`) fueron reemplazados por la gama oficial `cta-50..950` y los grises de superficie `surface`, `subtle`, `edge`, `edge-light` e `ink-900..400`.
 
 ## 3. Arquitectura Atómica y Componentes Consolidados
 - **Datos compartidos:** `src/data/dropdownOptions.ts`.
-- **Átomos & Moléculas clave:** `GalsaLogo`, `CustomDropdown`, `DateRangePicker`, `DocumentUploadCard`, `StepFeatureCard`.
-- **Layouts & Organismos:** `AuthCardLayout`, `SearchContainer`, `VehicleCard`, `VehicleDetailView`, `ReservationCheckoutView`, `HostRegistrationPage`, `SeoPage` y `DesignSystemPage`.
+- **Átomos & Moléculas clave:** `GalsaLogo`, `CustomDropdown`, `DateRangePicker`, `DocumentUploadCard` (compacto y minimalista con icono Lucide neutral), `StepFeatureCard`.
+- **Layouts & Organismos:** `AuthCardLayout`, `SearchContainer`, `VehicleCard`, `VehicleDetailView`, `ReservationCheckoutView`, `HostRegistrationPage`, `AccountPage`, `SeoPage` y `DesignSystemPage`.

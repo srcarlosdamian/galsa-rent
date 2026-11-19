@@ -329,7 +329,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
                 </p>
               </div>
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
                 <ShieldCheck className="w-6 h-6" />
               </div>
             </div>
@@ -430,7 +430,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   onClick={() => {
                     if (onNavigate) onNavigate('/catalogo');
                   }}
-                  className="text-xs font-heading font-bold text-slate-900 hover:text-blue-600 transition-colors flex items-center gap-1 cursor-pointer"
+                  className="text-xs font-heading font-bold text-slate-900 hover:text-cta transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <span>Ver catálogo</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -482,7 +482,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                   <div className="pt-2">
                     <a
                       href="mailto:contacto@galsarent.com?subject=Dudas%20sobre%20vehiculo"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-95"
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-95"
                     >
                       Escríbenos por correo
                     </a>
@@ -541,7 +541,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       onClick={() => setCalendarOpen((prev) => !prev)}
                       className={`w-full px-3 py-2 rounded-xl border bg-white text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
                         calendarOpen
-                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          ? 'border-cta ring-2 ring-cta/15 text-slate-900'
                           : 'border-slate-300 hover:border-slate-400 text-slate-900'
                       }`}
                     >
@@ -573,7 +573,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                       onClick={() => setCalendarOpen((prev) => !prev)}
                       className={`w-full px-3 py-2 rounded-xl border bg-white text-xs font-heading font-semibold flex items-center justify-between gap-1.5 text-left transition-all cursor-pointer ${
                         calendarOpen
-                          ? 'border-blue-500 ring-2 ring-blue-500/15 text-slate-900'
+                          ? 'border-cta ring-2 ring-cta/15 text-slate-900'
                           : 'border-slate-300 hover:border-slate-400 text-slate-900'
                       }`}
                     >
@@ -635,7 +635,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <button
                 type="button"
                 onClick={handleProceedToCheckout}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-[0.98] cursor-pointer text-center"
+                className="w-full py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-bold text-sm transition-all active:scale-[0.98] cursor-pointer text-center"
               >
                 Continuar
               </button>
@@ -664,7 +664,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         <button
           type="button"
           onClick={handleProceedToCheckout}
-          className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer"
+          className="px-6 py-2.5 rounded-xl bg-cta text-white font-heading font-semibold text-sm active:scale-95 cursor-pointer"
         >
           Continuar
         </button>
@@ -692,7 +692,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 type="button"
                 onClick={() => setGalleryModalOpen(false)}
                 aria-label="Cerrar galería"
-                className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer"
+                className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cta-400 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -741,7 +741,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <span className="text-xs text-slate-600 truncate mr-2">{shareUrl}</span>
               <button
                 onClick={handleCopyLink}
-                className="text-xs font-bold text-blue-600 shrink-0"
+                className="text-xs font-bold text-cta shrink-0"
               >
                 {linkCopied ? '¡Copiado!' : 'Copiar'}
               </button>

@@ -136,7 +136,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
                 <HelpCircle className="w-5 h-5" />
               </div>
               <div>
@@ -172,11 +172,11 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 className="p-3.5 rounded-2xl border border-slate-200/90 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-between gap-3 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-heading font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
+                    <div className="text-xs font-heading font-bold text-slate-900 group-hover:text-cta-700 transition-colors">
                       Llamada directa sucursal
                     </div>
                     <div className="text-xs font-sans text-slate-500">
@@ -265,7 +265,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
           <div className="p-4 border-t border-slate-200 bg-white">
             <a
               href="tel:+526180000000"
-              className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
             >
               <span>Llamar a un asesor</span>
             </a>
@@ -289,7 +289,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
                 aria-label="GALSA - Inicio"
               >
-                <GalsaLogo className="h-6 w-auto text-blue-500" />
+                <GalsaLogo className="h-6 w-auto text-cta" />
               </a>
 
               {/* Línea divisoria gris */}
@@ -335,7 +335,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
             className="flex items-center shrink-0 focus:outline-none transition-opacity hover:opacity-90"
             aria-label="GALSA - Inicio"
           >
-            <GalsaLogo className="h-6 w-auto text-blue-500" />
+            <GalsaLogo className="h-6 w-auto text-cta" />
           </a>
 
           {/* Right Group: Navigation links aligned next to Account buttons (visible only on desktop lg+) */}
@@ -397,7 +397,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                             <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">MXN · Pesos mexicanos ($)</p>
                           </div>
                         </div>
-                        {selectedLang === 'es' && <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" strokeWidth={1.4} />}
+                        {selectedLang === 'es' && <Check className="w-4 h-4 text-cta shrink-0 ml-2" strokeWidth={1.4} />}
                       </button>
 
                       <button
@@ -419,7 +419,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                             <p className="text-[12px] font-heading font-normal text-slate-500 truncate mt-0.5">USD · US Dollars ($)</p>
                           </div>
                         </div>
-                        {selectedLang === 'en' && <Check className="w-4 h-4 text-blue-600 shrink-0 ml-2" strokeWidth={1.4} />}
+                        {selectedLang === 'en' && <Check className="w-4 h-4 text-cta shrink-0 ml-2" strokeWidth={1.4} />}
                       </button>
                     </div>
                   </div>
@@ -494,7 +494,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 onClick={() => setSelectedLang('es')}
                 className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
                   selectedLang === 'es'
-                    ? 'border-blue-500 bg-blue-50/50 text-slate-900 font-medium'
+                    ? 'border-cta bg-cta-50 text-slate-900 font-medium'
                     : 'border-slate-200 bg-white text-slate-700'
                 }`}
               >
@@ -509,7 +509,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 onClick={() => setSelectedLang('en')}
                 className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
                   selectedLang === 'en'
-                    ? 'border-blue-500 bg-blue-50/50 text-slate-900 font-medium'
+                    ? 'border-cta bg-cta-50 text-slate-900 font-medium'
                     : 'border-slate-200 bg-white text-slate-700'
                 }`}
               >

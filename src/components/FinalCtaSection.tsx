@@ -47,8 +47,7 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onNavigate }) 
                   href="https://wa.me/526181234567?text=Hola%20GALSA%20Rent%2C%20tengo%20dudas%20sobre%20la%20renta%20de%20un%20auto"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ backgroundColor: '#3D63FF' }}
-                  className="inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-none"
+                  className="bg-cta hover:bg-cta-600 inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-none"
                 >
                   <span>Hablar por WhatsApp</span>
                 </a>
