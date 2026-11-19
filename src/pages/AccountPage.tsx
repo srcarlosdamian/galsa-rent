@@ -1044,11 +1044,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             {!modalSubmitted ? (
               <>
                 <div className="text-left mb-6">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-[11px] font-heading font-bold mb-3">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Completa tu información</span>
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-ink-900 tracking-tight leading-tight">
+                  <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-ink-900 tracking-tight leading-tight pr-8">
                     Activa tu cuenta al 100%
                   </h2>
                   <p className="mt-1.5 text-xs sm:text-sm font-sans text-ink-600 leading-relaxed">
