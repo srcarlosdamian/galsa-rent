@@ -289,28 +289,39 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       {/* 5. BANNER FINAL SÓLIDO bg-cta-50 (Mismo estilo limpio de Anfitriones) */}
       <section className="py-12 sm:py-16 md:py-20">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="bg-cta-50 rounded-[28px] sm:rounded-[36px] py-12 sm:py-16 px-6 sm:px-12 text-center space-y-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-ink-900 tracking-tight">
-              ¿Listo para tu próximo viaje en Durango?
-            </h2>
-            <p className="text-sm sm:text-base font-sans text-ink-700 max-w-xl mx-auto">
-              Explora nuestros autos disponibles o visítanos en Blvd. Guadiana, Sucursal Plaza 450.
-            </p>
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="/catalogo"
-                onClick={(e) => handleLink(e, '/catalogo')}
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors active:scale-95"
-              >
-                Explorar catálogo
-              </a>
-              <a
-                href="/anfitriones"
-                onClick={(e) => handleLink(e, '/anfitriones')}
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl border border-edge bg-surface hover:bg-subtle text-ink-900 font-heading font-semibold text-sm transition-colors"
-              >
-                Pon tu auto a trabajar
-              </a>
+          <div className="bg-cta-50 rounded-[28px] sm:rounded-[36px] pt-12 sm:pt-16 pb-0 px-6 sm:px-12 text-center overflow-hidden">
+            <div className="space-y-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-ink-900 tracking-tight">
+                ¿Listo para tu próximo viaje en Durango?
+              </h2>
+              <p className="text-sm sm:text-base font-sans text-ink-700 max-w-xl mx-auto">
+                Explora nuestros autos disponibles o visítanos en Blvd. Guadiana, Sucursal Plaza 450.
+              </p>
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href="/catalogo"
+                  onClick={(e) => handleLink(e, '/catalogo')}
+                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors active:scale-95"
+                >
+                  Explorar catálogo
+                </a>
+                <a
+                  href="/anfitriones"
+                  onClick={(e) => handleLink(e, '/anfitriones')}
+                  className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl border border-edge bg-surface hover:bg-subtle text-ink-900 font-heading font-semibold text-sm transition-colors"
+                >
+                  Pon tu auto a trabajar
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-8 sm:mt-10 flex justify-center">
+              <img
+                src="/galsa-rent/images/nosotros/cta-familia-viaje.png"
+                alt="Familia lista para viajar en Durango con GALSA Rent"
+                loading="lazy"
+                className="w-full max-w-[680px] h-auto object-contain object-bottom block"
+              />
             </div>
           </div>
         </div>
