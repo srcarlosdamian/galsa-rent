@@ -3,7 +3,6 @@ import {
   ShieldCheck,
   Car,
   HeartHandshake,
-  ChevronRight,
   Check,
   MapPin,
   FileCheck,
@@ -28,22 +27,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       {/* 1. HERO NOSOTROS (Estilo sólido plano + subrayado cta-200 + tarjeta cta-50) */}
       <section className="py-10 sm:py-16 md:py-20">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          {/* Breadcrumb */}
-          <nav
-            aria-label="Breadcrumb"
-            className="text-xs font-heading text-ink-500 flex items-center gap-1.5 mb-8"
-          >
-            <a
-              href="/"
-              onClick={(e) => handleLink(e, '/')}
-              className="hover:text-ink-900 transition-colors"
-            >
-              Inicio
-            </a>
-            <ChevronRight className="w-3 h-3 text-ink-400" />
-            <span className="text-ink-900 font-bold">Nosotros</span>
-          </nav>
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Izquierda: Copy principal y CTAs */}
             <div className="lg:col-span-7 space-y-6 text-left">
@@ -83,7 +66,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
               <div className="rounded-[28px] bg-cta-50 p-6 sm:p-8 space-y-6">
                 <div className="aspect-[16/10] w-full flex items-center justify-center overflow-hidden rounded-2xl">
                   <img
-                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794389847378-0-349394.webp"
+                    src="/galsa-rent/images/nosotros/hero-familia-auto.png"
                     alt="GALSA Rent movilidad digital en Durango"
                     className="w-full h-full object-contain"
                   />
