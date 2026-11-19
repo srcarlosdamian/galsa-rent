@@ -207,10 +207,23 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-heading font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-heading font-semibold transition-colors cursor-pointer"
             >
               <Share2 className="w-3.5 h-3.5" />
               <span>Compartir</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsFav(!isFav)}
+              aria-label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors cursor-pointer ${
+                isFav
+                  ? 'border-red-200 bg-red-50 text-red-500'
+                  : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700'
+              }`}
+            >
+              <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500 text-red-500' : ''}`} strokeWidth={1.8} />
             </button>
           </div>
         </div>
@@ -229,23 +242,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               alt={`${vehicle.make} ${vehicle.model} principal`}
               className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
             />
-
-            {/* Botón de favorito (corazón) en esquina superior derecha */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsFav(!isFav);
-              }}
-              aria-label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-              className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all backdrop-blur-xs cursor-pointer z-10 ${
-                isFav
-                  ? 'bg-white text-red-500'
-                  : 'bg-white/90 hover:bg-white text-slate-700'
-              }`}
-            >
-              <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500 text-red-500' : ''}`} strokeWidth={1.8} />
-            </button>
 
             {/* Pill móvil "Ver 3 fotos" */}
             <button
