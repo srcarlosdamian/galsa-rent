@@ -368,7 +368,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6">
         {/* 1. Banner Completa tu perfil (70% completado) de GALSA */}
         {!profileCompletedBannerDismissed && (
-          <div className="bg-cta-50/60 border border-cta-200/80 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-cta-50/60 border-0 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <img
                 src="/galsa-rent/images/cuenta/completa-perfil-lapiz.png"
