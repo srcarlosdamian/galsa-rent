@@ -42,6 +42,8 @@
     /* Fuentes y Radios */
     --font-heading: "Google Sans", "Google Sans Display", "Inter", system-ui, sans-serif;
     --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --text-hero-mobile: 3rem;
+    --text-hero-desktop: 3.375rem;
     --radius-button: 12px;
     --radius-card: 16px;
     --radius-popover: 20px;

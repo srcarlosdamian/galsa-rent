@@ -56,6 +56,10 @@ export default {
           'sans-serif',
         ],
       },
+      fontSize: {
+        'hero-mobile': ['var(--text-hero-mobile)', { lineHeight: '1.08' }],
+        'hero-desktop': ['var(--text-hero-desktop)', { lineHeight: '1.08' }],
+      },
       boxShadow: {
         'search': '0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.04)',
         'dropdown': '0 16px 36px -8px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05)',

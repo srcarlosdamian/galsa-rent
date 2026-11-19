@@ -159,7 +159,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             
             {/* LADO IZQUIERDO: Título con subrayado, Descripción y Botón CTA */}
             <div className="lg:col-span-6 space-y-6 text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-slate-900 tracking-tight leading-[1.08]">
+              <h1 className="text-hero-mobile lg:text-hero-desktop font-heading font-extrabold text-slate-900 tracking-tight leading-[1.08]">
                 Convierte tu auto<br />
                 en{' '}
                 <span className="relative inline-block whitespace-nowrap">
