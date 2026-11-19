@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  ShieldCheck, ChevronDown, ChevronUp, Check, ArrowLeft, ArrowRight, Calendar, 
+  ShieldCheck, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Check, ArrowLeft, ArrowRight, Calendar, 
   Clock, MapPin, FileSignature, X, User, CreditCard
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
@@ -13,6 +13,16 @@ interface ReservationCheckoutViewProps {
   onNavigate?: (path: string) => void;
   onBackToVehicle?: () => void;
 }
+
+const CHECKOUT_STEPS = [
+  { id: 'dates', label: 'Fechas y sucursal' },
+  { id: 'client', label: 'Datos del cliente' },
+  { id: 'docs', label: 'Documentos' },
+  { id: 'extras', label: 'Extras y seguro' },
+  { id: 'contract', label: 'Contrato y firma' },
+] as const;
+
+type CheckoutStepId = (typeof CHECKOUT_STEPS)[number]['id'];
 
 export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = ({
   vehicle,
@@ -32,6 +42,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const [contractModalOpen, setContractModalOpen] = useState(false);
   const [signatureName, setSignatureName] = useState('');
   const [openAccordion, setOpenAccordion] = useState<string | null>('dates');
+  const [mobileStep, setMobileStep] = useState<CheckoutStepId>('dates');
   const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
   const [isReservationCreated, setIsReservationCreated] = useState(false);
   const [isCardPaid, setIsCardPaid] = useState(false);
@@ -180,8 +191,26 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
     );
   };
 
+  const goToStep = (id: CheckoutStepId, scrollTop = false) => {
+    setCalendarOpen(false);
+    setOpenAccordion(id);
+    setMobileStep(id);
+    if (scrollTop && typeof window !== 'undefined' && window.innerWidth < 1024) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const toggleAccordion = (id: string) => {
-    setOpenAccordion(prev => (prev === id ? null : id));
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setOpenAccordion(id);
+      setMobileStep(id as CheckoutStepId);
+      return;
+    }
+    setOpenAccordion(prev => {
+      const next = prev === id ? null : id;
+      if (next) setMobileStep(next as CheckoutStepId);
+      return next;
+    });
   };
 
   const simulateDocUpload = (type: 'license' | 'ine' | 'proof', customName?: string, customSize?: string) => {
@@ -467,12 +496,64 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               </p>
             </div>
 
-            {/* CONTENEDORES LINEALES DE LOS 5 PASOS DE CHECKOUT */}
+            {/* Barra minimalista de progreso y navegación (solo mobile) */}
+            {(() => {
+              const currentIdx = CHECKOUT_STEPS.findIndex((s) => s.id === mobileStep);
+              const stepNumber = currentIdx + 1;
+              const progressPct = (stepNumber / 6) * 100;
+              return (
+                <div className="lg:hidden space-y-2.5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-xs font-heading font-bold text-slate-900 tabular-nums shrink-0">
+                        {stepNumber}/6
+                      </span>
+                      <span className="text-xs font-sans text-slate-500 truncate">
+                        {CHECKOUT_STEPS[currentIdx]?.label}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        type="button"
+                        disabled={currentIdx <= 0}
+                        onClick={() => currentIdx > 0 && goToStep(CHECKOUT_STEPS[currentIdx - 1].id, true)}
+                        aria-label="Paso anterior"
+                        className="w-8 h-8 rounded-full border border-slate-200 bg-white text-slate-700 flex items-center justify-center transition-colors hover:border-slate-300 disabled:opacity-35 disabled:cursor-not-allowed"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        disabled={currentIdx >= CHECKOUT_STEPS.length - 1}
+                        onClick={() =>
+                          currentIdx < CHECKOUT_STEPS.length - 1 &&
+                          goToStep(CHECKOUT_STEPS[currentIdx + 1].id, true)
+                        }
+                        aria-label="Paso siguiente"
+                        className="w-8 h-8 rounded-full border border-slate-200 bg-white text-slate-700 flex items-center justify-center transition-colors hover:border-slate-300 disabled:opacity-35 disabled:cursor-not-allowed"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-[#3D63FF] rounded-full transition-all duration-300"
+                      style={{ width: `${progressPct}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* CONTENEDORES LINEALES DE LOS PASOS DE CHECKOUT */}
             <div className="space-y-3.5">
 
               {/* PASO 1: Fechas y sucursal de entrega */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  mobileStep === 'dates' ? 'block' : 'hidden lg:block'
+                } ${
                   openAccordion === 'dates'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
@@ -611,10 +692,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <div className="pt-2 flex justify-start">
                       <button
                         type="button"
-                        onClick={() => {
-                          setCalendarOpen(false);
-                          setOpenAccordion('client');
-                        }}
+                        onClick={() => goToStep('client', true)}
                         className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
@@ -627,6 +705,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               {/* PASO 2: Datos del cliente */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  mobileStep === 'client' ? 'block' : 'hidden lg:block'
+                } ${
                   openAccordion === 'client'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
@@ -767,10 +847,17 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       </a>.
                     </p>
 
-                    <div className="pt-2 flex justify-start">
+                    <div className="pt-2 flex items-center justify-start gap-3">
                       <button
                         type="button"
-                        onClick={() => setOpenAccordion('docs')}
+                        onClick={() => goToStep('dates', true)}
+                        className="lg:hidden px-5 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-heading font-semibold text-sm transition-all cursor-pointer"
+                      >
+                        Atrás
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goToStep('docs', true)}
                         className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
@@ -783,6 +870,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               {/* PASO 3: Documentos requeridos */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  mobileStep === 'docs' ? 'block' : 'hidden lg:block'
+                } ${
                   openAccordion === 'docs'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
@@ -867,10 +956,17 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       />
                     </div>
 
-                    <div className="pt-2 flex justify-start">
+                    <div className="pt-2 flex items-center justify-start gap-3">
                       <button
                         type="button"
-                        onClick={() => setOpenAccordion('extras')}
+                        onClick={() => goToStep('client', true)}
+                        className="lg:hidden px-5 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-heading font-semibold text-sm transition-all cursor-pointer"
+                      >
+                        Atrás
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goToStep('extras', true)}
                         className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
@@ -883,6 +979,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               {/* PASO 4: Extras, seguro y condiciones */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  mobileStep === 'extras' ? 'block' : 'hidden lg:block'
+                } ${
                   openAccordion === 'extras'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
@@ -1026,10 +1124,17 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       </label>
                     </div>
 
-                    <div className="pt-2 flex justify-start">
+                    <div className="pt-2 flex items-center justify-start gap-3">
                       <button
                         type="button"
-                        onClick={() => setOpenAccordion('contract')}
+                        onClick={() => goToStep('docs', true)}
+                        className="lg:hidden px-5 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-heading font-semibold text-sm transition-all cursor-pointer"
+                      >
+                        Atrás
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goToStep('contract', true)}
                         className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
@@ -1042,6 +1147,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               {/* PASO 5: Contrato digital y firma */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
+                  mobileStep === 'contract' ? 'block' : 'hidden lg:block'
+                } ${
                   openAccordion === 'contract'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
@@ -1108,14 +1215,23 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     </div>
 
                     <div className="pt-2 space-y-2 flex flex-col items-start">
-                      <button
-                        type="button"
-                        onClick={handleCompleteBooking}
-                        className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
-                      >
-                        <span>Continuar al pago y confirmación</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => goToStep('extras', true)}
+                          className="lg:hidden px-5 py-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-heading font-semibold text-sm transition-all cursor-pointer"
+                        >
+                          Atrás
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleCompleteBooking}
+                          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
+                        >
+                          <span>Continuar al pago y confirmación</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
                       <p className="text-xs font-sans text-slate-500">
                         Al continuar pasarás a la siguiente parte para confirmar y cerrar tu reserva.
                       </p>
