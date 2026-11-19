@@ -35,7 +35,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   const [returnTime, setReturnTime] = useState('18:00');
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [rentalDays, setRentalDays] = useState(3);
-  const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
@@ -65,9 +64,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
   }, [galleryModalOpen, mobileSheetOpen, shareModalOpen]);
 
   const cardHomeImage = 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793239505248-1-car.webp';
-  const images = [cardHomeImage, cardHomeImage, cardHomeImage, cardHomeImage, cardHomeImage];
+  const images = [cardHomeImage, cardHomeImage, cardHomeImage];
 
-  const mainPhoto = images[activePhotoIdx] || images[0];
+  const mainPhoto = images[0];
   const sidePhoto1 = images[1] || images[0];
   const sidePhoto2 = images[2] || images[0];
 
@@ -187,15 +186,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               <Share2 className="w-3.5 h-3.5" />
               <span>Compartir</span>
             </button>
-            <button
-              type="button"
-              onClick={() => setIsFav(!isFav)}
-              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
-                isFav ? 'bg-red-50 border-red-200 text-red-500' : 'border-slate-200 hover:border-slate-300 text-slate-600'
-              }`}
-            >
-              <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500' : ''}`} />
-            </button>
           </div>
         </div>
 
@@ -224,54 +214,87 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
         </div>
 
         {/* ========================================================
-            GALERÍA DE FOTOS (Formato Airbnb)
+            GALERÍA DE FOTOS (1 principal izquierda + 2 apiladas derecha)
            ======================================================== */}
-        <div className="relative rounded-[20px] sm:rounded-[24px] overflow-hidden mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-2 h-[260px] sm:h-[340px] md:h-[420px]">
-            {/* Foto principal grande (izquierda, 2 columnas) */}
-            <div 
-              className="md:col-span-2 h-full cursor-pointer relative group overflow-hidden bg-slate-100"
-              onClick={() => { setActivePhotoIdx(0); setGalleryModalOpen(true); }}
-            >
-              <img
-                src={mainPhoto}
-                alt={`${vehicle.make} ${vehicle.model} principal`}
-                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-300"
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 mb-8 sm:mb-10">
+          {/* Foto principal grande (izquierda) */}
+          <div
+            className="md:col-span-8 relative rounded-[20px] overflow-hidden bg-slate-100 h-[260px] sm:h-[340px] md:h-[400px] lg:h-[420px] cursor-pointer group"
+            onClick={() => setGalleryModalOpen(true)}
+          >
+            <img
+              src={mainPhoto}
+              alt={`${vehicle.make} ${vehicle.model} principal`}
+              className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
+            />
 
+            {/* Botón de favorito (corazón) en esquina superior derecha */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFav(!isFav);
+              }}
+              aria-label={isFav ? 'Quitar de favoritos' : 'Guardar en favoritos'}
+              className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm backdrop-blur-xs cursor-pointer z-10 ${
+                isFav
+                  ? 'bg-white text-red-500'
+                  : 'bg-white/90 hover:bg-white text-slate-700'
+              }`}
+            >
+              <Heart className={`w-4 h-4 ${isFav ? 'fill-red-500 text-red-500' : ''}`} strokeWidth={1.8} />
+            </button>
+
+            {/* Pill móvil "Ver 3 fotos" */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setGalleryModalOpen(true);
+              }}
+              className="md:hidden absolute bottom-3.5 right-3.5 bg-white/95 hover:bg-white text-slate-900 rounded-full px-4 py-1.5 text-xs font-heading font-semibold shadow-sm transition-all cursor-pointer z-10"
+            >
+              Ver {images.length} fotos
+            </button>
+          </div>
+
+          {/* Columna derecha: 2 fotos apiladas verticalmente */}
+          <div className="hidden md:grid md:col-span-4 grid-rows-2 gap-3 md:h-[400px] lg:h-[420px]">
             {/* Foto secundaria superior */}
-            <div 
-              className="hidden md:block col-span-1 h-full cursor-pointer relative group overflow-hidden bg-slate-100"
-              onClick={() => { setActivePhotoIdx(1); setGalleryModalOpen(true); }}
+            <div
+              className="relative rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+              onClick={() => setGalleryModalOpen(true)}
             >
               <img
                 src={sidePhoto1}
                 alt={`${vehicle.make} ${vehicle.model} lateral`}
-                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-300"
+                className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
               />
             </div>
 
-            {/* Foto secundaria inferior */}
-            <div 
-              className="hidden md:block col-span-1 h-full cursor-pointer relative group overflow-hidden bg-slate-100"
-              onClick={() => { setActivePhotoIdx(2); setGalleryModalOpen(true); }}
+            {/* Foto secundaria inferior con pill "Ver 3 fotos" */}
+            <div
+              className="relative rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer group"
+              onClick={() => setGalleryModalOpen(true)}
             >
               <img
                 src={sidePhoto2}
                 alt={`${vehicle.make} ${vehicle.model} detalle`}
-                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-300"
+                className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-300"
               />
+
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGalleryModalOpen(true);
+                }}
+                className="absolute bottom-3.5 right-3.5 bg-white/95 hover:bg-white text-slate-900 rounded-full px-4 py-1.5 text-xs font-heading font-semibold shadow-sm transition-all cursor-pointer z-10"
+              >
+                Ver {images.length} fotos
+              </button>
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setGalleryModalOpen(true)}
-            className="absolute bottom-4 right-4 bg-white/95 hover:bg-white text-slate-900 border border-slate-200/80 rounded-xl px-4 py-2 text-xs font-heading font-semibold shadow-sm backdrop-blur-xs flex items-center gap-1.5 transition-all"
-          >
-            <span>Mostrar todas las fotos</span>
-          </button>
         </div>
 
         {/* ========================================================
@@ -616,39 +639,59 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
       {/* MODAL DE GALERÍA COMPLETA */}
       {galleryModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col justify-between p-4 sm:p-8">
-          <div className="flex justify-between items-center text-white">
-            <span className="font-heading font-semibold text-sm">
-              {activePhotoIdx + 1} de {images.length}
-            </span>
-            <button
-              type="button"
-              onClick={() => setGalleryModalOpen(false)}
-              className="p-2 rounded-full hover:bg-white/10 text-white"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-          <div className="flex items-center justify-center flex-1 max-h-[75vh]">
-            <img
-              src={images[activePhotoIdx]}
-              alt="Vehículo en detalle"
-              className="max-h-full max-w-full object-contain rounded-2xl"
-            />
-          </div>
-          <div className="flex justify-center gap-2 py-4">
-            {images.map((img, i) => (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-[2px] flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setGalleryModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Galería de ${vehicle.make} ${vehicle.model} ${vehicle.year}`}
+        >
+          <div
+            className="bg-white rounded-[24px] max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header centrado con botón X circular a la derecha */}
+            <div className="relative flex items-center justify-center px-6 py-4 sm:py-5 shrink-0">
+              <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 text-center pr-10 pl-10">
+                {vehicle.make} {vehicle.model} {vehicle.year}
+              </h3>
               <button
-                key={i}
                 type="button"
-                onClick={() => setActivePhotoIdx(i)}
-                className={`w-14 h-14 rounded-xl overflow-hidden border-2 ${
-                  activePhotoIdx === i ? 'border-white' : 'border-transparent opacity-50'
-                }`}
+                onClick={() => setGalleryModalOpen(false)}
+                aria-label="Cerrar galería"
+                className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-100/80 hover:bg-slate-200/80 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer"
               >
-                <img src={img} alt="Miniatura" className="w-full h-full object-cover" />
+                <X className="w-4 h-4" />
               </button>
-            ))}
+            </div>
+
+            {/* Grid de todas las fotos: primera a ancho completo + resto en 2 columnas */}
+            <div className="px-5 sm:px-6 pb-6 pt-1 overflow-y-auto space-y-3.5">
+              <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100">
+                <img
+                  src={images[0]}
+                  alt={`${vehicle.make} ${vehicle.model} ${vehicle.year} - Foto 1`}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+
+              {images.length > 1 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {images.slice(1).map((img, i) => (
+                    <div
+                      key={i}
+                      className="w-full aspect-[16/10] rounded-2xl overflow-hidden bg-slate-100"
+                    >
+                      <img
+                        src={img}
+                        alt={`${vehicle.make} ${vehicle.model} ${vehicle.year} - Foto ${i + 2}`}
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
