@@ -40,6 +40,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
   const [mobileDatePicker, setMobileDatePicker] = useState<'pickup' | 'return' | null>(null);
   const mobileCalendarRef = useRef<HTMLDivElement>(null);
+  const [reviewPage, setReviewPage] = useState(0);
 
   // Bloquear scroll y permitir cerrar modales con tecla Escape
   useEffect(() => {
@@ -161,19 +162,58 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
       id: 1,
       name: 'Sofía Valenzuela',
       date: 'Octubre 2026',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-      rating: 5,
       comment: 'El auto impecable, entrega rápida en Plaza 450 sin filas. El proceso 100% digital me ahorró más de una hora comparado con las agencias tradicionales.',
     },
     {
       id: 2,
       name: 'Carlos Mendoza',
       date: 'Septiembre 2026',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      rating: 5,
-      comment: 'Excelente camioneta para recorrer la sierra. El contrato digital y la verificación fue muy rápida desde el celular. Todo transparente.',
+      comment: 'Excelente unidad para viajar cómodo. El contrato digital y la verificación fue muy rápida desde el celular. Todo transparente.',
+    },
+    {
+      id: 3,
+      name: 'Mariana Torres',
+      date: 'Septiembre 2026',
+      comment: 'Muy buena atención por WhatsApp desde antes de recogerlo. El vehículo estaba limpio, con tanque lleno y tal cual las fotos.',
+    },
+    {
+      id: 4,
+      name: 'Alejandro Ruiz',
+      date: 'Agosto 2026',
+      comment: 'La devolución tomó menos de 5 minutos con el checklist digital. El depósito reembolsable regresó sin ningún problema.',
+    },
+    {
+      id: 5,
+      name: 'Fernanda Soto',
+      date: 'Agosto 2026',
+      comment: 'Viaje de trabajo por Durango sin contratiempos. Excelente rendimiento y muy fácil extender un día adicional.',
+    },
+    {
+      id: 6,
+      name: 'Diego Herrera',
+      date: 'Julio 2026',
+      comment: 'Sin letras chiquitas ni cargos sorpresa en mostrador. El precio que cotizas en la página es exactamente el que pagas.',
+    },
+    {
+      id: 7,
+      name: 'Valeria Castro',
+      date: 'Julio 2026',
+      comment: 'Súper práctico recoger en Plaza 450. El auto se maneja muy suave y el aire acondicionado enfría perfecto.',
+    },
+    {
+      id: 8,
+      name: 'Roberto Aguilar',
+      date: 'Junio 2026',
+      comment: 'Segunda vez que rento con GALSA y todo igual de puntual y confiable. Recomendado al 100%.',
     },
   ];
+
+  const reviewsPerPage = 2;
+  const totalReviewPages = Math.ceil(mockReviews.length / reviewsPerPage);
+  const visibleReviews = mockReviews.slice(
+    reviewPage * reviewsPerPage,
+    reviewPage * reviewsPerPage + reviewsPerPage
+  );
 
   return (
     <div className="w-full pt-4 sm:pt-6 md:pt-8 pb-24 lg:pb-8 bg-white text-slate-900 text-left">
@@ -466,7 +506,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </div>
 
               <div className="space-y-4">
-                {mockReviews.map((rev) => (
+                {visibleReviews.map((rev) => (
                   <div key={rev.id} className="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="font-heading font-bold text-slate-900 text-sm">{rev.name}</span>
@@ -477,6 +517,36 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                     </p>
                   </div>
                 ))}
+              </div>
+
+              {/* Paginación minimalista de evaluaciones */}
+              <div className="flex items-center justify-between pt-2">
+                <span className="text-xs font-sans text-slate-400">
+                  Mostrando {reviewPage * reviewsPerPage + 1}–{Math.min((reviewPage + 1) * reviewsPerPage, mockReviews.length)} de {reviewCount} evaluaciones
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={reviewPage === 0}
+                    onClick={() => setReviewPage((p) => Math.max(0, p - 1))}
+                    aria-label="Evaluaciones anteriores"
+                    className="w-8 h-8 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 flex items-center justify-center transition-colors disabled:opacity-35 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="text-xs font-heading font-semibold text-slate-600 tabular-nums min-w-[36px] text-center">
+                    {reviewPage + 1} / {totalReviewPages}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={reviewPage >= totalReviewPages - 1}
+                    onClick={() => setReviewPage((p) => Math.min(totalReviewPages - 1, p + 1))}
+                    aria-label="Siguientes evaluaciones"
+                    className="w-8 h-8 rounded-full border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 flex items-center justify-center transition-colors disabled:opacity-35 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
 
