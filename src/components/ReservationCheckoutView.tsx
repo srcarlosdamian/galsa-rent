@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  ShieldCheck, ChevronDown, Check, ArrowLeft, Calendar, 
-  Clock, MapPin, FileSignature, X, ExternalLink, AlertCircle
+  ShieldCheck, ChevronDown, Check, ArrowLeft, ArrowRight, Calendar, 
+  Clock, MapPin, FileSignature, X, User
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { DocumentUploadCard, DocUploadState } from './DocumentUploadCard';
@@ -32,6 +32,15 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const [contractModalOpen, setContractModalOpen] = useState(false);
   const [signatureName, setSignatureName] = useState('');
   const [openAccordion, setOpenAccordion] = useState<string | null>('dates');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  // Datos del cliente (Paso 2)
+  const [firstName, setFirstName] = useState('Damián');
+  const [lastName, setLastName] = useState('');
+  const [clientEmail, setClientEmail] = useState('contact@carlosdamian.com');
+  const [clientPhone, setClientPhone] = useState('2281381278');
+  const [clientAddress, setClientAddress] = useState('');
+  const [clientRfc, setClientRfc] = useState('');
 
   // Estados de carga de documentos
   const [licenseDoc, setLicenseDoc] = useState<DocUploadState>({
@@ -57,17 +66,25 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
 
   const [additionalDocNotes, setAdditionalDocNotes] = useState('');
 
-  // Bloquear scroll al abrir modal de contrato
+  // Bloquear scroll y cerrar modales con tecla Escape
   useEffect(() => {
-    if (contractModalOpen) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setContractModalOpen(false);
+        setIsSuccessModalOpen(false);
+      }
+    };
+    if (contractModalOpen || isSuccessModalOpen) {
       document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [contractModalOpen]);
+  }, [contractModalOpen, isSuccessModalOpen]);
 
   // Cerrar selector de fechas al hacer clic fuera
   useEffect(() => {
@@ -209,27 +226,17 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
     });
   };
 
-  // Cálculo de precios
+  // Cálculo de precios y resúmenes vivos
   const baseSubtotal = vehicle.pricePerDay * rentalDays;
   const serviceFee = Math.round(baseSubtotal * 0.33);
   const total = baseSubtotal + serviceFee + extrasTotal;
 
   const uploadedDocsCount = [licenseDoc, ineDoc, proofDoc].filter((d) => d.status === 'completed').length;
+  const clientFullName = [firstName.trim(), lastName.trim()].filter(Boolean).join(' ') || 'Titular de la reserva';
+  const selectedExtraItems = EXTRAS_OPTIONS.filter((extra) => selectedExtras.includes(extra.id));
 
-  // Validación de condiciones y campos obligatorios
-  const isFormComplete = Boolean(
-    startDate && 
-    endDate && 
-    pickupTime && 
-    returnTime && 
-    acceptedTerms &&
-    isContractSigned
-  );
-
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
+  // En este prototipo siempre se permite continuar hacia la siguiente etapa
   const handleCompleteBooking = () => {
-    if (!isFormComplete) return;
     setIsSuccessModalOpen(true);
   };
 
@@ -275,10 +282,10 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               </p>
             </div>
 
-            {/* CONTENEDORES LINEALES DE LOS 6 PASOS DE CHECKOUT */}
+            {/* CONTENEDORES LINEALES DE LOS 5 PASOS DE CHECKOUT */}
             <div className="space-y-3.5">
 
-              {/* ACORDEÓN 1: Fechas y sucursal */}
+              {/* PASO 1: Fechas y sucursal de entrega */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
                   openAccordion === 'dates'
@@ -298,14 +305,14 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Fechas y sucursal
+                          Fechas y sucursal de entrega
                         </h3>
                         <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
                           {formatRangeSummary(startDate, endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
                         </span>
                       </div>
                       <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Durango · Sucursal Plaza 450
+                        Plaza 450, Durango · {formatRangeSummary(startDate, endDate)} · {pickupTime} a {returnTime} hrs
                       </p>
                     </div>
                   </div>
@@ -316,9 +323,9 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
 
                 {openAccordion === 'dates' && (
                   <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                       <div>
-                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                        <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
                           Ciudad
                         </label>
                         <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-heading font-semibold text-sm select-none">
@@ -326,8 +333,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                          Sucursal oficial
+                        <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                          Sucursal
                         </label>
                         <div className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-heading font-semibold text-sm select-none truncate">
                           Plaza 450 (Blvd. Guadiana)
@@ -335,10 +342,10 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       </div>
                     </div>
 
-                    <div ref={calendarRef} className="relative">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div ref={calendarRef} className="relative space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                         <div>
-                          <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                          <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
                             Fecha de recogida
                           </label>
                           <button
@@ -354,8 +361,25 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                             <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
                           </button>
                         </div>
+
                         <div>
-                          <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
+                          <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                            Hora de recogida
+                          </label>
+                          <CustomDropdown
+                            options={TIME_DROPDOWN_OPTIONS}
+                            value={pickupTime}
+                            onChange={setPickupTime}
+                            triggerIcon={Clock}
+                            align="right"
+                            footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                          <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
                             Fecha de devolución
                           </label>
                           <button
@@ -371,6 +395,20 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                             <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.5} />
                           </button>
                         </div>
+
+                        <div>
+                          <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                            Hora de devolución
+                          </label>
+                          <CustomDropdown
+                            options={TIME_DROPDOWN_OPTIONS}
+                            value={returnTime}
+                            onChange={setReturnTime}
+                            triggerIcon={Clock}
+                            align="right"
+                            footer="Horario de sucursal: 08:00 a 20:00 hrs"
+                          />
+                        </div>
                       </div>
 
                       {calendarOpen && (
@@ -385,14 +423,21 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       )}
                     </div>
 
-                    <div className="pt-1 flex justify-end">
+                    <div className="flex items-center gap-1.5 text-xs font-sans text-slate-500 pt-0.5">
+                      <Check className="w-3.5 h-3.5 text-[#3D63FF] shrink-0" strokeWidth={2.5} />
+                      <span>
+                        Disponible del {formatDisplayDate(startDate)} — {formatDisplayDate(endDate)} ({rentalDays} {rentalDays === 1 ? 'día' : 'días'})
+                      </span>
+                    </div>
+
+                    <div className="pt-2 flex justify-start">
                       <button
                         type="button"
                         onClick={() => {
                           setCalendarOpen(false);
-                          setOpenAccordion('hours');
+                          setOpenAccordion('client');
                         }}
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                        className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
                       </button>
@@ -401,17 +446,17 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 )}
               </div>
 
-              {/* ACORDEÓN 2: Horarios */}
+              {/* PASO 2: Datos del cliente */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
-                  openAccordion === 'hours'
+                  openAccordion === 'client'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
                 }`}
               >
                 <button
                   type="button"
-                  onClick={() => toggleAccordion('hours')}
+                  onClick={() => toggleAccordion('client')}
                   className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
@@ -421,151 +466,134 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Horarios
+                          Datos del cliente
                         </h3>
-                        <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                          Entrega: {pickupTime} · Devolución: {returnTime}
-                        </span>
-                      </div>
-                      <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Horario de atención en sucursal: 08:00 a 20:00 hrs
-                      </p>
-                    </div>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'hours' ? 'rotate-180' : ''}`} />
-                  </div>
-                </button>
-
-                {openAccordion === 'hours' && (
-                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                          Hora de entrega
-                        </label>
-                        <CustomDropdown
-                          options={TIME_DROPDOWN_OPTIONS}
-                          value={pickupTime}
-                          onChange={setPickupTime}
-                          triggerIcon={Clock}
-                          align="left"
-                          footer="Horario de sucursal: 08:00 a 20:00 hrs"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-heading font-medium text-slate-600 mb-1">
-                          Hora de devolución
-                        </label>
-                        <CustomDropdown
-                          options={TIME_DROPDOWN_OPTIONS}
-                          value={returnTime}
-                          onChange={setReturnTime}
-                          triggerIcon={Clock}
-                          align="right"
-                          footer="Horario de sucursal: 08:00 a 20:00 hrs"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="pt-1 flex justify-end">
-                      <button
-                        type="button"
-                        onClick={() => setOpenAccordion('extras')}
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
-                      >
-                        Continuar
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* ACORDEÓN 3: Extras */}
-              <div
-                className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
-                  openAccordion === 'extras'
-                    ? 'border-slate-300 z-20'
-                    : 'border-slate-200 hover:border-slate-300 z-10'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleAccordion('extras')}
-                  className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
-                >
-                  <div className="flex items-center gap-3.5 min-w-0">
-                    <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
-                      3
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Extras
-                        </h3>
-                        {selectedExtras.length > 0 && (
-                          <span className="text-xs font-heading font-semibold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                            {selectedExtras.length} seleccionado{selectedExtras.length > 1 ? 's' : ''} (+${extrasTotal.toLocaleString('es-MX')})
+                        {(firstName.trim() || lastName.trim()) && (
+                          <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
+                            {clientFullName}
                           </span>
                         )}
                       </div>
                       <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Conductor adicional, silla infantil, GPS o coberturas adicionales
+                        Información del titular de la reserva
                       </p>
                     </div>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'extras' ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'client' ? 'rotate-180' : ''}`} />
                   </div>
                 </button>
 
-                {openAccordion === 'extras' && (
-                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-2.5 animate-in fade-in duration-200">
-                    {EXTRAS_OPTIONS.map((extra) => {
-                      const isChecked = selectedExtras.includes(extra.id);
-                      return (
-                        <div
-                          key={extra.id}
-                          onClick={() => toggleExtra(extra.id)}
-                          className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
-                            isChecked
-                              ? 'border-slate-400 bg-slate-50/50'
-                              : 'border-slate-200 hover:border-slate-300 bg-white'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3.5 min-w-0">
-                            <div
-                              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                                isChecked
-                                  ? 'bg-slate-900 border-slate-900 text-white'
-                                  : 'bg-white border-slate-300 text-transparent'
-                              }`}
-                            >
-                              <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-                            </div>
-                            <div className="text-left min-w-0">
-                              <span className="font-heading font-bold text-slate-900 text-sm block">
-                                {extra.title}
-                              </span>
-                              <span className="text-xs font-sans text-slate-500 block truncate">
-                                {extra.description}
-                              </span>
-                            </div>
-                          </div>
+                {openAccordion === 'client' && (
+                  <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                          Nombre(s)
+                        </label>
+                        <input
+                          type="text"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          placeholder="Nombre(s)"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                          Apellidos
+                        </label>
+                        <input
+                          type="text"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          placeholder="Apellidos"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        />
+                      </div>
+                    </div>
 
-                          <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
-                            +${extra.price} por renta
-                          </span>
-                        </div>
-                      );
-                    })}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                      <div>
+                        <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                          Correo electrónico
+                        </label>
+                        <input
+                          type="email"
+                          value={clientEmail}
+                          onChange={(e) => setClientEmail(e.target.value)}
+                          placeholder="correo@ejemplo.com"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                          Teléfono
+                        </label>
+                        <input
+                          type="tel"
+                          value={clientPhone}
+                          onChange={(e) => setClientPhone(e.target.value)}
+                          placeholder="10 dígitos"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                        />
+                      </div>
+                    </div>
 
-                    <div className="pt-2 flex justify-end">
+                    <p className="text-xs font-sans text-slate-500">
+                      Es el correo de tu cuenta de GALSA: ahí te llega la confirmación. ¿No eres tú?{' '}
+                      <button
+                        type="button"
+                        onClick={() => onNavigate && onNavigate('/login')}
+                        className="font-semibold text-[#3D63FF] hover:underline cursor-pointer"
+                      >
+                        Cambiar de cuenta
+                      </button>
+                    </p>
+
+                    <div>
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                        Dirección
+                      </label>
+                      <input
+                        type="text"
+                        value={clientAddress}
+                        onChange={(e) => setClientAddress(e.target.value)}
+                        placeholder="Dirección"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                        RFC (Opcional)
+                      </label>
+                      <input
+                        type="text"
+                        value={clientRfc}
+                        onChange={(e) => setClientRfc(e.target.value)}
+                        placeholder="RFC (opcional)"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
+                      />
+                    </div>
+
+                    <p className="text-xs font-sans text-slate-500">
+                      Usamos tus datos sólo para gestionar tu reserva y verificar tu identidad. Consulta nuestro{' '}
+                      <a
+                        href="/privacidad"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[#3D63FF] hover:underline"
+                      >
+                        aviso de privacidad
+                      </a>.
+                    </p>
+
+                    <div className="pt-2 flex justify-start">
                       <button
                         type="button"
                         onClick={() => setOpenAccordion('docs')}
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                        className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
                       </button>
@@ -574,7 +602,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 )}
               </div>
 
-              {/* ACORDEÓN 4: Documentación y validación */}
+              {/* PASO 3: Documentos requeridos */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
                   openAccordion === 'docs'
@@ -589,19 +617,19 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
-                      4
+                      3
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Sube tus documentos
+                          Documentos requeridos
                         </h3>
                         <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                          {uploadedDocsCount}/3 requeridos
+                          {uploadedDocsCount}/3 cargados
                         </span>
                       </div>
                       <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Licencia de conducir, identificación oficial y comprobante de domicilio
+                        Sube tus documentos para verificación
                       </p>
                     </div>
                   </div>
@@ -661,11 +689,11 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       />
                     </div>
 
-                    <div className="pt-1 flex justify-end">
+                    <div className="pt-2 flex justify-start">
                       <button
                         type="button"
-                        onClick={() => setOpenAccordion('terms')}
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                        onClick={() => setOpenAccordion('extras')}
+                        className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
                       </button>
@@ -674,50 +702,92 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 )}
               </div>
 
-              {/* ACORDEÓN 5: Condiciones de uso */}
+              {/* PASO 4: Extras, seguro y condiciones */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
-                  openAccordion === 'terms'
+                  openAccordion === 'extras'
                     ? 'border-slate-300 z-20'
                     : 'border-slate-200 hover:border-slate-300 z-10'
                 }`}
               >
                 <button
                   type="button"
-                  onClick={() => toggleAccordion('terms')}
+                  onClick={() => toggleAccordion('extras')}
                   className="w-full flex items-center justify-between px-5 py-4 sm:px-6 sm:py-5 text-left group cursor-pointer select-none"
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
-                      5
+                      4
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Condiciones de uso
+                          Extras, seguro y condiciones
                         </h3>
-                        {acceptedTerms ? (
-                          <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
-                            Aceptadas ✓
+                        {selectedExtras.length > 0 && (
+                          <span className="text-xs font-heading font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200/70">
+                            {selectedExtras.length} extra{selectedExtras.length > 1 ? 's' : ''} · +${extrasTotal.toLocaleString('es-MX')}
                           </span>
-                        ) : (
-                          <span className="text-xs font-heading font-medium text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-lg">
-                            Pendiente
+                        )}
+                        {acceptedTerms && (
+                          <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
+                            Condiciones aceptadas ✓
                           </span>
                         )}
                       </div>
                       <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Kilometraje libre, combustible, depósitos y términos de renta
+                        Personaliza tu cobertura y complementos
                       </p>
                     </div>
                   </div>
                   <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 ml-3 transition-colors">
-                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'terms' ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-slate-700 transition-transform duration-300 ${openAccordion === 'extras' ? 'rotate-180' : ''}`} />
                   </div>
                 </button>
 
-                {openAccordion === 'terms' && (
+                {openAccordion === 'extras' && (
                   <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-200 text-left">
+                    <div className="space-y-2.5">
+                      {EXTRAS_OPTIONS.map((extra) => {
+                        const isChecked = selectedExtras.includes(extra.id);
+                        return (
+                          <div
+                            key={extra.id}
+                            onClick={() => toggleExtra(extra.id)}
+                            className={`flex items-center justify-between p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer ${
+                              isChecked
+                                ? 'border-blue-400 bg-blue-50/40'
+                                : 'border-slate-200 hover:border-slate-300 bg-white'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3.5 min-w-0">
+                              <div
+                                className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
+                                  isChecked
+                                    ? 'bg-[#3D63FF] border-[#3D63FF] text-white'
+                                    : 'bg-white border-slate-300 text-transparent'
+                                }`}
+                              >
+                                <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                              </div>
+                              <div className="text-left min-w-0">
+                                <span className="font-heading font-bold text-slate-900 text-sm block">
+                                  {extra.title}
+                                </span>
+                                <span className="text-xs font-sans text-slate-500 block truncate">
+                                  {extra.description}
+                                </span>
+                              </div>
+                            </div>
+
+                            <span className="text-xs sm:text-sm font-heading font-bold text-slate-900 shrink-0 ml-3">
+                              +${extra.price.toLocaleString('es-MX')} por renta
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
                     <div className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 sm:p-5 space-y-2.5">
                       <h4 className="text-sm font-heading font-bold text-slate-900 mb-2">
                         Condiciones de uso
@@ -753,7 +823,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       <div
                         className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors shrink-0 mt-0.5 ${
                           acceptedTerms
-                            ? 'bg-slate-900 border-slate-900 text-white'
+                            ? 'bg-[#3D63FF] border-[#3D63FF] text-white'
                             : 'bg-white border-slate-300 text-transparent'
                         }`}
                       >
@@ -783,11 +853,11 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                       </label>
                     </div>
 
-                    <div className="pt-1 flex justify-end">
+                    <div className="pt-2 flex justify-start">
                       <button
                         type="button"
                         onClick={() => setOpenAccordion('contract')}
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                        className="px-7 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                       >
                         Continuar
                       </button>
@@ -796,7 +866,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 )}
               </div>
 
-              {/* ACORDEÓN 6: Firmar y contratar */}
+              {/* PASO 5: Contrato digital y firma */}
               <div
                 className={`relative rounded-2xl border bg-white overflow-visible transition-colors ${
                   openAccordion === 'contract'
@@ -811,12 +881,12 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 font-heading font-bold text-xs flex items-center justify-center shrink-0">
-                      6
+                      5
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                          Firmar y contratar
+                          Contrato digital y firma
                         </h3>
                         {isContractSigned ? (
                           <span className="text-xs font-heading font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-200">
@@ -829,7 +899,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                         )}
                       </div>
                       <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                        Contrato digital mercantil con validez legal inmediata
+                        Lee y firma el contrato digital
                       </p>
                     </div>
                   </div>
@@ -850,8 +920,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                         </div>
                         <p className="text-xs sm:text-sm font-sans text-slate-500">
                           {isContractSigned 
-                            ? `Firma registrada por ${signatureName || 'el titular'} con folio digital #GLS-${vehicle.id.slice(0, 6)}`
-                            : 'Revisa las cláusulas y confirma tu firma digital en un modal seguro.'}
+                            ? `Firma registrada por ${signatureName || clientFullName} con folio digital #GLS-${vehicle.id.slice(0, 6).toUpperCase()}`
+                            : 'Abre el contrato en una ventana modal para leer las cláusulas y registrar tu firma digital.'}
                         </p>
                       </div>
 
@@ -860,8 +930,22 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                         onClick={() => setContractModalOpen(true)}
                         className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer shrink-0"
                       >
-                        {isContractSigned ? 'Ver contrato firmado' : 'Ver contrato y confirmar'}
+                        {isContractSigned ? 'Ver contrato firmado' : 'Leer y firmar contrato'}
                       </button>
+                    </div>
+
+                    <div className="pt-2 space-y-2 flex flex-col items-start">
+                      <button
+                        type="button"
+                        onClick={handleCompleteBooking}
+                        className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
+                      >
+                        <span>Continuar al pago y confirmación</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                      <p className="text-xs font-sans text-slate-500">
+                        Al continuar pasarás a la siguiente parte para confirmar y cerrar tu reserva.
+                      </p>
                     </div>
                   </div>
                 )}
@@ -872,7 +956,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
           </div>
 
           {/* ========================================================
-              COLUMNA DERECHA: RESUMEN DE PAGO ENRIQUECIDO Y BOTÓN FINAL
+              COLUMNA DERECHA: RESUMEN DE PAGO AMIGABLE (SIN BOTÓN CTA)
              ======================================================== */}
           <div className="lg:col-span-5 w-full">
             <div className="sticky top-24 bg-white rounded-[24px] border border-slate-200/90 p-6 sm:p-7 shadow-sm space-y-5 text-left">
@@ -890,14 +974,28 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                   <h3 className="font-heading font-bold text-slate-900 text-base leading-snug truncate">
                     {vehicle.make} {vehicle.model} {vehicle.year}
                   </h3>
-                  <span className="text-xs font-sans text-slate-500 block">
-                    {vehicle.category} · Durango (Plaza 450)
-                  </span>
+                  <div className="flex items-center gap-2 flex-wrap mt-0.5">
+                    <span className="text-xs font-sans text-slate-500">
+                      {vehicle.category}
+                    </span>
+                    <span className="text-[11px] font-heading font-semibold text-[#3D63FF] bg-blue-50 px-2 py-0.5 rounded-md">
+                      Verificado GALSA
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Detalles vivos de la reserva (Sucursal, Fechas, Horarios y Progreso) */}
+              {/* Detalles amigables de tu viaje en vivo */}
               <div className="rounded-2xl border border-slate-200/90 bg-white p-4 space-y-2.5 text-xs sm:text-sm">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
+                    Detalles de tu viaje
+                  </span>
+                  <span className="text-xs font-heading font-semibold text-blue-600">
+                    {rentalDays} {rentalDays === 1 ? 'día' : 'días'}
+                  </span>
+                </div>
+
                 <div className="flex items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
                     <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
@@ -911,7 +1009,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 <div className="flex items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
                     <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                    <span>Entrega</span>
+                    <span>Recogida</span>
                   </span>
                   <span className="font-heading font-semibold text-slate-900 text-right">
                     {formatDisplayDate(startDate)} · {pickupTime} hrs
@@ -929,58 +1027,36 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-slate-500 font-sans">Duración</span>
-                  <span className="font-heading font-semibold text-slate-900">
-                    {rentalDays} {rentalDays === 1 ? 'día' : 'días'}
+                  <span className="inline-flex items-center gap-1.5 text-slate-500 font-sans">
+                    <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span>Titular</span>
                   </span>
-                </div>
-
-                <div className="pt-2.5 border-t border-slate-100 flex flex-wrap gap-1.5">
-                  <span
-                    className={`px-2 py-0.5 rounded-md text-[11px] font-heading font-medium ${
-                      uploadedDocsCount === 3
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
-                        : 'bg-slate-100 text-slate-600'
-                    }`}
-                  >
-                    Docs: {uploadedDocsCount}/3
-                  </span>
-                  <span
-                    className={`px-2 py-0.5 rounded-md text-[11px] font-heading font-medium ${
-                      acceptedTerms
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
-                        : 'bg-slate-100 text-slate-600'
-                    }`}
-                  >
-                    Condiciones: {acceptedTerms ? 'Aceptadas' : 'Pendiente'}
-                  </span>
-                  <span
-                    className={`px-2 py-0.5 rounded-md text-[11px] font-heading font-medium ${
-                      isContractSigned
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
-                        : 'bg-slate-100 text-slate-600'
-                    }`}
-                  >
-                    Contrato: {isContractSigned ? 'Firmado' : 'Pendiente'}
+                  <span className="font-heading font-semibold text-slate-900 text-right truncate max-w-[180px]">
+                    {clientFullName}
                   </span>
                 </div>
               </div>
 
-              {/* Resumen del pago con contorno lineal sin fondo */}
+              {/* Resumen del pago amigable con extras en vivo */}
               <div className="rounded-2xl border border-slate-200/90 bg-transparent p-4 sm:p-5 space-y-3">
                 <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
                   <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-800">
                     Resumen del pago
                   </span>
                   <span className="text-xs font-heading font-medium text-slate-500">
-                    {rentalDays} {rentalDays === 1 ? 'día' : 'días'}
+                    {formatRangeSummary(startDate, endDate)}
                   </span>
                 </div>
 
                 <div className="space-y-2.5 text-xs sm:text-sm font-sans text-slate-600">
                   <div className="flex items-center justify-between">
-                    <span>${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'}</span>
+                    <span>Renta (${vehicle.pricePerDay.toLocaleString('es-MX')} × {rentalDays} {rentalDays === 1 ? 'día' : 'días'})</span>
                     <span className="font-heading font-semibold text-slate-900">${baseSubtotal.toLocaleString('es-MX')}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span>Cobertura básica incluida</span>
+                    <span className="font-heading font-semibold text-emerald-600">Incluida</span>
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -988,12 +1064,34 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                     <span className="font-heading font-semibold text-slate-900">${serviceFee.toLocaleString('es-MX')}</span>
                   </div>
 
-                  {EXTRAS_OPTIONS.filter((extra) => selectedExtras.includes(extra.id)).map((extra) => (
-                    <div key={extra.id} className="flex items-center justify-between text-blue-700">
-                      <span>{extra.title}</span>
-                      <span className="font-heading font-semibold">+${extra.price.toLocaleString('es-MX')}</span>
+                  {selectedExtraItems.length > 0 ? (
+                    <div className="pt-2 border-t border-slate-100 space-y-2">
+                      <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-blue-700 block">
+                        Extras agregados ({selectedExtraItems.length})
+                      </span>
+                      {selectedExtraItems.map((extra) => (
+                        <div key={extra.id} className="flex items-center justify-between gap-2 text-blue-700">
+                          <span className="truncate">{extra.title}</span>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="font-heading font-semibold">+${extra.price.toLocaleString('es-MX')}</span>
+                            <button
+                              type="button"
+                              onClick={() => toggleExtra(extra.id)}
+                              aria-label="Quitar extra"
+                              className="w-5 h-5 rounded-full hover:bg-blue-100 text-blue-500 hover:text-blue-700 flex items-center justify-center transition-colors cursor-pointer"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  ) : (
+                    <div className="flex items-center justify-between text-slate-400">
+                      <span>Extras adicionales</span>
+                      <span className="font-heading font-medium">$0</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-3 border-t border-slate-200/80">
@@ -1005,26 +1103,16 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               </div>
 
               {/* Depósito en garantía reembolsable separado con contorno lineal */}
-              <div className="flex justify-between items-center px-4 py-3 rounded-xl border border-slate-200/90 bg-transparent text-xs sm:text-sm">
-                <span className="text-slate-600 font-sans">Depósito en garantía (reembolsable)</span>
-                <span className="font-heading font-bold text-slate-900">${(vehicle.deposit || 15000).toLocaleString('es-MX')}</span>
+              <div className="flex justify-between items-center px-4 py-3 rounded-xl border border-slate-200/90 bg-transparent gap-2 text-xs sm:text-sm">
+                <div>
+                  <span className="text-slate-700 font-heading font-semibold block">Depósito en garantía</span>
+                  <span className="text-[11px] font-sans text-slate-400 block">100% reembolsable al devolver la unidad</span>
+                </div>
+                <span className="font-heading font-bold text-slate-900 shrink-0">${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN</span>
               </div>
 
-              {/* Botón CTA de Confirmación Final */}
-              <button
-                type="button"
-                onClick={handleCompleteBooking}
-                className={`w-full py-4 rounded-xl font-heading font-semibold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer ${
-                  isFormComplete
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-slate-200 hover:bg-slate-300 text-slate-500'
-                }`}
-              >
-                <span>{isFormComplete ? 'Confirmar y reservar' : 'Completa los campos obligatorios'}</span>
-              </button>
-
-              <div className="flex items-center justify-center gap-2 text-xs font-heading font-medium text-slate-500">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center justify-center gap-2 text-xs font-heading font-medium text-slate-500 pt-1">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>Reserva protegida por GALSA · Sin cargos ocultos</span>
               </div>
 
@@ -1037,8 +1125,17 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
 
       {/* MODAL DE CONTRATO Y FIRMA */}
       {contractModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-[24px] max-w-2xl w-full p-6 sm:p-8 space-y-6 text-left shadow-2xl max-h-[90vh] flex flex-col">
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+          onClick={() => setContractModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Contrato de Renta Digital GALSA"
+        >
+          <div
+            className="bg-white rounded-[24px] max-w-2xl w-full p-6 sm:p-8 space-y-6 text-left shadow-2xl max-h-[90vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2">
                 <FileSignature className="w-5 h-5 text-blue-600" />
@@ -1049,6 +1146,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               <button
                 type="button"
                 onClick={() => setContractModalOpen(false)}
+                aria-label="Cerrar contrato"
                 className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
@@ -1059,12 +1157,16 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               <p>
                 <strong>CONTRATO DE ARRENDAMIENTO VEHICULAR MERCANTIL</strong> celebrado entre <strong>GALSA RENT S.A. DE C.V.</strong> y el <strong>ARRENDATARIO</strong> titular.
               </p>
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1 text-xs">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5 text-xs">
+                <div><strong>Titular:</strong> {clientFullName}</div>
                 <div><strong>Unidad:</strong> {vehicle.make} {vehicle.model} ({vehicle.year})</div>
-                <div><strong>Placas / Registro:</strong> En regla Durango, Dgo.</div>
-                <div><strong>Periodo:</strong> Del {startDate} ({pickupTime} hrs) al {endDate} ({returnTime} hrs)</div>
+                <div><strong>Sucursal:</strong> Plaza 450, Durango, Dgo.</div>
+                <div><strong>Periodo:</strong> Del {formatDisplayDate(startDate)} ({pickupTime} hrs) al {formatDisplayDate(endDate)} ({returnTime} hrs)</div>
+                {selectedExtraItems.length > 0 && (
+                  <div><strong>Extras incluidos:</strong> {selectedExtraItems.map((e) => e.title).join(', ')}</div>
+                )}
                 <div><strong>Monto Total:</strong> ${total.toLocaleString('es-MX')} MXN</div>
-                <div><strong>Depósito en Garantía:</strong> ${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN</div>
+                <div><strong>Depósito en Garantía:</strong> ${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN (reembolsable)</div>
               </div>
               <h5 className="font-heading font-bold text-slate-900 text-sm">Cláusulas esenciales:</h5>
               <p>
@@ -1101,10 +1203,13 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 <button
                   type="button"
                   onClick={() => {
+                    if (!signatureName.trim()) {
+                      setSignatureName(clientFullName);
+                    }
                     setIsContractSigned(true);
                     setContractModalOpen(false);
                   }}
-                  className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer"
                 >
                   Confirmar firma digital
                 </button>
@@ -1114,10 +1219,19 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
         </div>
       )}
 
-      {/* MODAL DE CONFIRMACIÓN EXITOSA (SIN WHATSAPP) */}
+      {/* MODAL DE SIGUIENTE ETAPA / CONFIRMACIÓN (SIN WHATSAPP) */}
       {isSuccessModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 text-center shadow-2xl">
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+          onClick={() => setIsSuccessModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Reserva confirmada"
+        >
+          <div
+            className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 text-center shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
               <Check className="w-8 h-8" strokeWidth={2.5} />
             </div>
@@ -1127,26 +1241,38 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 ¡Reserva confirmada con éxito!
               </h3>
               <p className="text-xs sm:text-sm font-sans text-slate-500 max-w-md mx-auto">
-                Tu contrato mercantil digital ha sido formalizado y tu unidad <strong>{vehicle.make} {vehicle.model} {vehicle.year}</strong> está reservada para entrega en <strong>Sucursal Plaza 450, Durango</strong>.
+                Tu unidad <strong>{vehicle.make} {vehicle.model} {vehicle.year}</strong> quedó registrada para entrega en <strong>Sucursal Plaza 450, Durango</strong>. Enviamos los detalles a <strong>{clientEmail || 'tu correo'}</strong>.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 text-left text-xs sm:text-sm space-y-2 font-sans text-slate-700">
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <span className="text-slate-500">Folio digital:</span>
                 <span className="font-heading font-bold text-slate-900 font-mono">#GLS-{vehicle.id.slice(0, 8).toUpperCase()}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Titular del contrato:</span>
-                <span className="font-heading font-semibold text-slate-900">{signatureName || 'Titular verificado'}</span>
+              <div className="flex justify-between gap-2">
+                <span className="text-slate-500">Titular:</span>
+                <span className="font-heading font-semibold text-slate-900">{signatureName || clientFullName}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Periodo de entrega:</span>
-                <span className="font-heading font-semibold text-slate-900">{startDate} ({pickupTime} hrs) — {endDate} ({returnTime} hrs)</span>
+              <div className="flex justify-between gap-2">
+                <span className="text-slate-500">Recogida:</span>
+                <span className="font-heading font-semibold text-slate-900">{formatDisplayDate(startDate)} · {pickupTime} hrs</span>
               </div>
+              <div className="flex justify-between gap-2">
+                <span className="text-slate-500">Devolución:</span>
+                <span className="font-heading font-semibold text-slate-900">{formatDisplayDate(endDate)} · {returnTime} hrs</span>
+              </div>
+              {selectedExtraItems.length > 0 && (
+                <div className="flex justify-between gap-2">
+                  <span className="text-slate-500">Extras:</span>
+                  <span className="font-heading font-semibold text-blue-700 text-right">
+                    {selectedExtraItems.map((e) => e.title).join(', ')}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between pt-2 border-t border-slate-200/80">
-                <span className="font-heading font-bold text-slate-900">Total liquidado:</span>
-                <span className="font-heading font-extrabold text-blue-600 text-base">${total.toLocaleString('es-MX')} MXN</span>
+                <span className="font-heading font-bold text-slate-900">Total de la renta:</span>
+                <span className="font-heading font-extrabold text-[#3D63FF] text-base">${total.toLocaleString('es-MX')} MXN</span>
               </div>
             </div>
 
@@ -1167,7 +1293,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                   setIsSuccessModalOpen(false);
                   if (onNavigate) onNavigate('/');
                 }}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer"
               >
                 Volver al inicio
               </button>
