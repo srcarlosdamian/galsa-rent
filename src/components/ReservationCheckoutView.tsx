@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   ShieldCheck, ChevronDown, Check, ArrowLeft, ArrowRight, Calendar, 
-  Clock, MapPin, FileSignature, X, User
+  Clock, MapPin, FileSignature, X, User, CreditCard
 } from 'lucide-react';
 import { Vehicle } from '../types/vehicle';
 import { DocumentUploadCard, DocUploadState } from './DocumentUploadCard';
@@ -32,7 +32,8 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const [contractModalOpen, setContractModalOpen] = useState(false);
   const [signatureName, setSignatureName] = useState('');
   const [openAccordion, setOpenAccordion] = useState<string | null>('dates');
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isReservationCreated, setIsReservationCreated] = useState(false);
+  const [isCardPaid, setIsCardPaid] = useState(false);
 
   // Datos del cliente (Paso 2)
   const [firstName, setFirstName] = useState('Damián');
@@ -66,15 +67,14 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
 
   const [additionalDocNotes, setAdditionalDocNotes] = useState('');
 
-  // Bloquear scroll y cerrar modales con tecla Escape
+  // Bloquear scroll y cerrar modal de contrato con tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setContractModalOpen(false);
-        setIsSuccessModalOpen(false);
       }
     };
-    if (contractModalOpen || isSuccessModalOpen) {
+    if (contractModalOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
@@ -84,7 +84,7 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [contractModalOpen, isSuccessModalOpen]);
+  }, [contractModalOpen]);
 
   // Cerrar selector de fechas al hacer clic fuera
   useEffect(() => {
@@ -234,11 +234,203 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
   const uploadedDocsCount = [licenseDoc, ineDoc, proofDoc].filter((d) => d.status === 'completed').length;
   const clientFullName = [firstName.trim(), lastName.trim()].filter(Boolean).join(' ') || 'Titular de la reserva';
   const selectedExtraItems = EXTRAS_OPTIONS.filter((extra) => selectedExtras.includes(extra.id));
+  const depositAmount = vehicle.deposit || 15000;
+  const totalDueNow = total + depositAmount;
+  const reservationCode = `GAL-${vehicle.id.replace(/[^0-9]/g, '').slice(0, 6).padEnd(6, '7')}`;
 
-  // En este prototipo siempre se permite continuar hacia la siguiente etapa
+  // En este prototipo siempre se permite pasar a la vista de reserva creada
   const handleCompleteBooking = () => {
-    setIsSuccessModalOpen(true);
+    setIsReservationCreated(true);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
+
+  if (isReservationCreated) {
+    return (
+      <div className="w-full py-8 md:py-12 bg-white min-h-screen">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-left space-y-6">
+          <button
+            type="button"
+            onClick={() => setIsReservationCreated(false)}
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-heading font-semibold text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Editar mi reserva</span>
+          </button>
+
+          {/* Encabezado minimalista de confirmación */}
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
+              ¡Reserva creada!
+            </h1>
+            <p className="text-sm sm:text-base font-sans text-slate-600 leading-relaxed">
+              Registramos tu solicitud y apartamos el auto por 48 horas. Te enviaremos la confirmación a{' '}
+              <span className="font-semibold text-slate-900">{clientEmail || 'tu correo'}</span>.
+            </p>
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-[#3D63FF] text-xs font-heading font-semibold">
+                Código: {reservationCode}
+              </span>
+              {isCardPaid ? (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-heading font-semibold">
+                  <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  Pago de prueba registrado
+                </span>
+              ) : (
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/80 text-xs font-heading font-semibold">
+                  Pendiente de confirmación
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Contenedor único minimalista con detalles, pago y nota de contrato */}
+          <div className="rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
+            {/* Bloque 1: Detalles esenciales de la reserva */}
+            <div className="p-5 sm:p-6 space-y-3">
+              <h2 className="text-xs font-heading font-bold uppercase tracking-wider text-slate-500">
+                Detalles de tu reserva
+              </h2>
+              <div className="space-y-2.5 text-sm">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-500">Vehículo</span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    {vehicle.make} {vehicle.model} {vehicle.year}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-500">Fechas</span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    {formatRangeSummary(startDate, endDate)} · {rentalDays} {rentalDays === 1 ? 'día' : 'días'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-500">Horario</span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    {pickupTime} → {returnTime} hrs
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-500">Sucursal</span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    Durango · Plaza 450
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-500">Titular</span>
+                  <span className="font-heading font-semibold text-slate-900 text-right">
+                    {signatureName || clientFullName}
+                  </span>
+                </div>
+                {selectedExtraItems.length > 0 && (
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="font-sans text-slate-500 shrink-0">Extras</span>
+                    <span className="font-heading font-semibold text-[#3D63FF] text-right">
+                      {selectedExtraItems.map((e) => e.title).join(', ')}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Bloque 2: Pago con tarjeta y resumen único (sin duplicar totales) */}
+            <div className="p-5 sm:p-6 space-y-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <CreditCard className="w-4 h-4 text-[#3D63FF] shrink-0" />
+                  <h2 className="text-base font-heading font-bold text-slate-900">
+                    Paga ahora con tarjeta
+                  </h2>
+                </div>
+                <p className="text-xs sm:text-sm font-sans text-slate-500 mt-1">
+                  Pago seguro con Stripe (modo de prueba, sin cargo real). También puedes pagar en sucursal al recoger.
+                </p>
+              </div>
+
+              <div className="rounded-xl bg-slate-50/80 p-4 space-y-2 text-sm">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-600">
+                    Renta ({rentalDays} {rentalDays === 1 ? 'día' : 'días'}{selectedExtraItems.length > 0 ? ' + extras' : ''})
+                  </span>
+                  <span className="font-heading font-semibold text-slate-900">
+                    ${total.toLocaleString('es-MX')} MXN
+                  </span>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-sans text-slate-600">
+                    Depósito en garantía (reembolsable)
+                  </span>
+                  <span className="font-heading font-semibold text-slate-900">
+                    ${depositAmount.toLocaleString('es-MX')} MXN
+                  </span>
+                </div>
+                <div className="pt-2.5 border-t border-slate-200/80 flex items-center justify-between gap-4">
+                  <span className="font-heading font-bold text-slate-900">Total a cubrir ahora</span>
+                  <span className="font-heading font-extrabold text-[#3D63FF] text-base">
+                    ${totalDueNow.toLocaleString('es-MX')} MXN
+                  </span>
+                </div>
+              </div>
+
+              {!isCardPaid ? (
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setIsCardPaid(true)}
+                    className="px-6 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
+                  >
+                    Pagar con tarjeta
+                  </button>
+                  <span className="text-xs font-sans text-slate-500">
+                    O paga en sucursal al recoger tu vehículo.
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-heading font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/70 rounded-xl px-4 py-3">
+                  <Check className="w-4 h-4 shrink-0" />
+                  <span>Pago de prueba completado. Presenta tu código {reservationCode} en Plaza 450.</span>
+                </div>
+              )}
+            </div>
+
+            {/* Bloque 3: Nota minimalista sobre contrato PROFECO */}
+            <div className="px-5 py-4 sm:px-6 bg-slate-50/50 rounded-b-2xl flex items-start gap-3">
+              <FileSignature className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-heading font-bold text-slate-800">
+                  {isContractSigned ? 'Contrato digital registrado' : 'Tu contrato se firma al confirmar'}
+                </p>
+                <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                  {isContractSigned
+                    ? 'Tu contrato registrado ante PROFECO ya quedó vinculado a esta reserva. Kilometraje, gasolina e inventario se registran al entregar la unidad (Anexo A).'
+                    : 'Al confirmar tu reserva te enviamos el contrato registrado ante PROFECO por correo para firmarlo desde tu cuenta o en sucursal (Anexo A en la entrega).'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Botones finales de navegación */}
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <button
+              type="button"
+              onClick={() => onNavigate && onNavigate('/catalogo')}
+              className="px-6 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all cursor-pointer"
+            >
+              Explorar más autos
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate && onNavigate('/')}
+              className="px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 font-heading font-semibold text-sm transition-colors cursor-pointer"
+            >
+              Volver al inicio
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full py-8 md:py-12 bg-white min-h-screen">
@@ -1214,89 +1406,6 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                   Confirmar firma digital
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL DE SIGUIENTE ETAPA / CONFIRMACIÓN (SIN WHATSAPP) */}
-      {isSuccessModalOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
-          onClick={() => setIsSuccessModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Reserva confirmada"
-        >
-          <div
-            className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 text-center shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
-              <Check className="w-8 h-8" strokeWidth={2.5} />
-            </div>
-
-            <div className="space-y-2">
-              <h3 className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
-                ¡Reserva confirmada con éxito!
-              </h3>
-              <p className="text-xs sm:text-sm font-sans text-slate-500 max-w-md mx-auto">
-                Tu unidad <strong>{vehicle.make} {vehicle.model} {vehicle.year}</strong> quedó registrada para entrega en <strong>Sucursal Plaza 450, Durango</strong>. Enviamos los detalles a <strong>{clientEmail || 'tu correo'}</strong>.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 text-left text-xs sm:text-sm space-y-2 font-sans text-slate-700">
-              <div className="flex justify-between gap-2">
-                <span className="text-slate-500">Folio digital:</span>
-                <span className="font-heading font-bold text-slate-900 font-mono">#GLS-{vehicle.id.slice(0, 8).toUpperCase()}</span>
-              </div>
-              <div className="flex justify-between gap-2">
-                <span className="text-slate-500">Titular:</span>
-                <span className="font-heading font-semibold text-slate-900">{signatureName || clientFullName}</span>
-              </div>
-              <div className="flex justify-between gap-2">
-                <span className="text-slate-500">Recogida:</span>
-                <span className="font-heading font-semibold text-slate-900">{formatDisplayDate(startDate)} · {pickupTime} hrs</span>
-              </div>
-              <div className="flex justify-between gap-2">
-                <span className="text-slate-500">Devolución:</span>
-                <span className="font-heading font-semibold text-slate-900">{formatDisplayDate(endDate)} · {returnTime} hrs</span>
-              </div>
-              {selectedExtraItems.length > 0 && (
-                <div className="flex justify-between gap-2">
-                  <span className="text-slate-500">Extras:</span>
-                  <span className="font-heading font-semibold text-blue-700 text-right">
-                    {selectedExtraItems.map((e) => e.title).join(', ')}
-                  </span>
-                </div>
-              )}
-              <div className="flex justify-between pt-2 border-t border-slate-200/80">
-                <span className="font-heading font-bold text-slate-900">Total de la renta:</span>
-                <span className="font-heading font-extrabold text-[#3D63FF] text-base">${total.toLocaleString('es-MX')} MXN</span>
-              </div>
-            </div>
-
-            <div className="pt-2 flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsSuccessModalOpen(false);
-                  if (onNavigate) onNavigate('/catalogo');
-                }}
-                className="w-full py-3.5 rounded-xl border border-slate-200 text-slate-700 font-heading font-semibold text-xs sm:text-sm hover:bg-slate-50 transition-all cursor-pointer"
-              >
-                Explorar más vehículos
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsSuccessModalOpen(false);
-                  if (onNavigate) onNavigate('/');
-                }}
-                className="w-full py-3.5 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all cursor-pointer"
-              >
-                Volver al inicio
-              </button>
             </div>
           </div>
         </div>
