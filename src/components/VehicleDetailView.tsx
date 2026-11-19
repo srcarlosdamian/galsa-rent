@@ -325,21 +325,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
               </p>
             </div>
 
-            {/* Host info */}
-            <div className="pb-6 border-b border-slate-100 flex items-center justify-between gap-4">
-              <div>
-                <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-900">
-                  Unidad verificada por GALSA Rent
-                </h2>
-                <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-                  Inspección mecánica, seguro de cobertura amplia y sanitizado antes de cada entrega.
-                </p>
-              </div>
-              <div className="w-12 h-12 rounded-2xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-            </div>
-
             {/* Lo que ofrece este vehículo */}
             <div className="space-y-4">
               <h3 className="text-xl font-heading font-bold text-slate-900">
