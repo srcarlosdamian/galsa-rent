@@ -527,24 +527,39 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
         </div>
       </section>
 
-      {/* SECCIÓN 5: BANNER FINAL (Usa variables oficiales cta-50 + ink-900 + cta) */}
-      <section className="py-12 sm:py-16 md:py-20 bg-surface">
+      {/* SECCIÓN 5: BANNER FINAL (Formato card gris claro bg-gray-50 con ilustración a la derecha) */}
+      <section className="py-10 md:py-14 bg-white overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="bg-cta-50 rounded-[28px] sm:rounded-[36px] py-14 sm:py-16 px-6 sm:px-12 text-center space-y-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-ink-900 tracking-tight">
-              Empieza a ganar con tu auto hoy
-            </h2>
-            <p className="text-sm sm:text-base font-sans text-ink-700 max-w-xl mx-auto">
-              Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
-            </p>
-            <div className="pt-3">
-              <a
-                href="/anfitriones/registro"
-                onClick={handlePublish}
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-bold text-sm transition-colors active:scale-95"
-              >
-                Quiero publicar mi auto
-              </a>
+          <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 lg:p-14 border-0 shadow-none">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+              <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-4 sm:space-y-5">
+                <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
+                  Empieza a ganar con tu auto hoy
+                </h2>
+                <p className="text-sm sm:text-[15px] font-sans text-slate-600 leading-relaxed max-w-lg">
+                  Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
+                </p>
+                <div className="pt-2">
+                  <a
+                    href="/anfitriones/registro"
+                    onClick={handlePublish}
+                    className="bg-cta hover:bg-cta-600 inline-flex items-center justify-center text-white hover:brightness-110 active:scale-95 font-heading font-semibold text-sm px-7 py-3.5 rounded-xl transition-all shadow-none"
+                  >
+                    <span>Quiero publicar mi auto</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+                <div className="relative w-full max-w-[500px] aspect-[16/10] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-transparent border-0 shadow-none flex items-center justify-center">
+                  <img
+                    src="/galsa-rent/images/anfitriones/cta-familia-anfitrion.png"
+                    alt="Empieza a ganar con tu auto hoy en GALSA Rent"
+                    loading="lazy"
+                    className="w-full h-full object-contain object-center"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
