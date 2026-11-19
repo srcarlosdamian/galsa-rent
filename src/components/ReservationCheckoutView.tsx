@@ -375,58 +375,50 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
               </div>
 
               {!isCardPaid ? (
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-1">
+                <div className="flex flex-wrap items-center gap-3 pt-1">
                   <button
                     type="button"
                     onClick={() => setIsCardPaid(true)}
-                    className="px-6 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
+                    className="px-6 py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
                   >
                     Pagar con tarjeta
                   </button>
-                  <span className="text-xs font-sans text-slate-500">
-                    O paga en sucursal al recoger tu vehículo.
-                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate && onNavigate('/')}
+                    className="px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-heading font-semibold text-sm transition-colors cursor-pointer"
+                  >
+                    Pagar en sucursal e ir al inicio
+                  </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-heading font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/70 rounded-xl px-4 py-3">
-                  <Check className="w-4 h-4 shrink-0" />
-                  <span>Pago de prueba completado. Presenta tu código {reservationCode} en Plaza 450.</span>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-heading font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/70 rounded-xl px-4 py-3">
+                    <Check className="w-4 h-4 shrink-0" />
+                    <span>Pago de prueba completado. Presenta tu código {reservationCode} en Plaza 450.</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate && onNavigate('/')}
+                    className="px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-heading font-semibold text-sm transition-colors cursor-pointer"
+                  >
+                    Ir al inicio
+                  </button>
                 </div>
               )}
             </div>
 
-            {/* Bloque 3: Nota minimalista sobre contrato PROFECO */}
-            <div className="px-5 py-4 sm:px-6 bg-slate-50/50 rounded-b-2xl flex items-start gap-3">
-              <FileSignature className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs font-heading font-bold text-slate-800">
-                  {isContractSigned ? 'Contrato digital registrado' : 'Tu contrato se firma al confirmar'}
-                </p>
-                <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
-                  {isContractSigned
-                    ? 'Tu contrato registrado ante PROFECO ya quedó vinculado a esta reserva. Kilometraje, gasolina e inventario se registran al entregar la unidad (Anexo A).'
-                    : 'Al confirmar tu reserva te enviamos el contrato registrado ante PROFECO por correo para firmarlo desde tu cuenta o en sucursal (Anexo A en la entrega).'}
-                </p>
-              </div>
+            {/* Bloque 3: Nota minimalista sobre contrato PROFECO (sin fondo ni icono) */}
+            <div className="px-5 py-4 sm:px-6">
+              <p className="text-xs font-heading font-bold text-slate-800">
+                {isContractSigned ? 'Contrato digital registrado' : 'Tu contrato se firma al confirmar'}
+              </p>
+              <p className="text-xs font-sans text-slate-500 mt-0.5 leading-relaxed">
+                {isContractSigned
+                  ? 'Tu contrato registrado ante PROFECO ya quedó vinculado a esta reserva. Kilometraje, gasolina e inventario se registran al entregar la unidad (Anexo A).'
+                  : 'Al confirmar tu reserva te enviamos el contrato registrado ante PROFECO por correo para firmarlo desde tu cuenta o en sucursal (Anexo A en la entrega).'}
+              </p>
             </div>
-          </div>
-
-          {/* Botones finales de navegación */}
-          <div className="flex flex-wrap items-center gap-3 pt-1">
-            <button
-              type="button"
-              onClick={() => onNavigate && onNavigate('/catalogo')}
-              className="px-6 py-3 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-sm transition-all cursor-pointer"
-            >
-              Explorar más autos
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigate && onNavigate('/')}
-              className="px-6 py-3 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 font-heading font-semibold text-sm transition-colors cursor-pointer"
-            >
-              Volver al inicio
-            </button>
           </div>
         </div>
       </div>
