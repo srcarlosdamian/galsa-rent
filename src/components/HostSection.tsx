@@ -376,6 +376,94 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
               </div>
             ))}
           </div>
+
+          {/* Sub-sección: Banner de transparencia + 2 tarjetas (Tarifa del marketplace y Quién puede rentar tu auto) */}
+          <div className="mt-14 space-y-6">
+            <div className="relative rounded-[24px] bg-gradient-to-r from-cta-50 via-cta-100 to-cta-200 overflow-hidden border border-cta-200/50">
+              <div className="grid grid-cols-1 md:grid-cols-12 items-center">
+                <div className="md:col-span-7 p-6 sm:p-10 space-y-2.5 text-left">
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-ink-500 block">
+                    CÓMO FUNCIONA
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-ink-900 tracking-tight leading-tight">
+                    Cómo ganar dinero con tu auto en<br className="hidden sm:inline" /> GALSA
+                  </h3>
+                  <p className="text-xs sm:text-sm font-sans text-ink-600 leading-relaxed">
+                    Lo que cuesta publicar tu auto y quién puede rentarlo.
+                  </p>
+                </div>
+                <div className="md:col-span-5 h-44 sm:h-52 md:h-56 flex items-end justify-end overflow-hidden">
+                  <img
+                    src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794389847378-0-349394.webp"
+                    alt="Cómo ganar dinero con tu auto en GALSA"
+                    className="w-full h-full object-cover object-left-bottom md:object-contain md:object-right-bottom"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+              {/* Tarjeta 1: Tarifa de servicio del marketplace */}
+              <div className="rounded-2xl border border-edge bg-surface p-6 sm:p-8 flex flex-col justify-between text-left">
+                <div>
+                  <h4 className="text-base sm:text-lg font-heading font-bold text-ink-900">
+                    Tarifa de servicio del marketplace
+                  </h4>
+                  <p className="text-xs sm:text-sm font-sans text-ink-500 mt-1">
+                    Se suma al precio de cada renta y la paga el cliente. Sin cargos ocultos.
+                  </p>
+                </div>
+
+                <div className="mt-6 divide-y divide-edge-light border-t border-edge-light">
+                  <div className="py-4 flex items-center justify-between gap-4">
+                    <span className="text-xs sm:text-sm font-sans text-ink-700">
+                      Tarifa GALSA (la paga el cliente)
+                    </span>
+                    <span className="text-lg sm:text-xl font-heading font-extrabold text-ink-900 tabular-nums">
+                      33%
+                    </span>
+                  </div>
+                  <div className="pt-4 flex items-center justify-between gap-4">
+                    <span className="text-xs sm:text-sm font-sans text-ink-700">
+                      De tu tarifa, para ti
+                    </span>
+                    <span className="text-lg sm:text-xl font-heading font-extrabold text-ink-900 tabular-nums">
+                      100%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tarjeta 2: Quién puede rentar tu auto */}
+              <div className="rounded-2xl border border-edge bg-surface p-6 sm:p-8 text-left space-y-5">
+                <div>
+                  <h4 className="text-base sm:text-lg font-heading font-bold text-ink-900">
+                    Quién puede rentar tu auto
+                  </h4>
+                  <p className="text-xs sm:text-sm font-sans text-ink-500 mt-1">
+                    Solo rentan clientes verificados que cumplen:
+                  </p>
+                </div>
+
+                <ul className="space-y-3 text-xs sm:text-sm font-sans text-ink-700">
+                  {[
+                    'Edad mínima de 21 años',
+                    'Licencia de conducir vigente',
+                    'Identidad verificada con INE',
+                    'Método de pago a nombre del cliente',
+                    'Comprobante de domicilio no mayor a 3 meses.',
+                  ].map((req) => (
+                    <li key={req} className="flex items-center gap-3">
+                      <span className="w-5 h-5 rounded-full bg-cta-50 text-cta flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3" strokeWidth={2.5} />
+                      </span>
+                      <span>{req}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
