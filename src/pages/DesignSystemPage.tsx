@@ -200,12 +200,6 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
       'Tokens de Radios Espaciado Sombras shadow-search shadow-dropdown shadow-float rounded-xl rounded-2xl',
       'border radius tailwind config spacing'
     );
-  const showTokensExtras =
-    shouldShowSection('tokens') &&
-    matchesSearch(
-      'Variables Colores Extra Otros Azules Detectados Código Revisión d8e8ff 94bdc9 2563eb bfdbfe blue-300 slate neutral serp 8eb5ff',
-      'huerfanos candidatos unificar migrado banner cta-50'
-    );
   const showTokensSurfaces =
     shouldShowSection('tokens') &&
     matchesSearch('Reglas de Superficies Bordes Elevación Cero Sombras', 'botones cta rounded-2xl border bg-transparent popover shadow-2xl');
@@ -277,7 +271,6 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const hasAnyVisibleBlock =
     showTokensColors ||
     showTokensRadii ||
-    showTokensExtras ||
     showTokensSurfaces ||
     showTokensTypo ||
     showAtomsButtons ||
@@ -326,7 +319,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.5</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.6</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -413,17 +406,17 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
         {/* ============================================================ */}
         {/* 1. TOKENS & FUNDAMENTOS */}
         {/* ============================================================ */}
-        {(showTokensColors || showTokensRadii || showTokensExtras || showTokensSurfaces || showTokensTypo) && (
+        {(showTokensColors || showTokensRadii || showTokensSurfaces || showTokensTypo) && (
           <section id="tokens" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-pink-600 font-mono text-xs font-bold uppercase tracking-wider">
                 <Sparkles className="w-4 h-4" /> Nivel 0 · Fundamentos &amp; Variables
               </div>
               <h2 className="text-2xl font-heading font-extrabold text-slate-900 mt-1">
-                Variables Oficiales, Radios y Colores Extra
+                Variables Oficiales, Radios y Tipografía
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Sincronización 1:1 entre <code className="font-mono text-slate-700">tailwind.config.js</code> y <code className="font-mono text-slate-700">:root</code> en <code className="font-mono text-slate-700">src/index.css</code>, más auditoría de tonos extra en el código.
+                Sincronización 1:1 entre <code className="font-mono text-slate-700">tailwind.config.js</code> y <code className="font-mono text-slate-700">:root</code> en <code className="font-mono text-slate-700">src/index.css</code>.
               </p>
             </div>
 
@@ -650,110 +643,6 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <div key={sh.name} className={`p-4 rounded-2xl border border-slate-200 bg-white ${sh.cls} space-y-1`}>
                       <div className="text-xs font-mono font-bold text-slate-900">{sh.name}</div>
                       <p className="text-[11px] text-slate-500 leading-relaxed">{sh.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Colores / Variables Extra y Otros Azules Detectados en el Código */}
-            {showTokensExtras && (
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 text-left">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                  <div>
-                    <h3 className="text-sm font-heading font-bold text-slate-900">
-                      Variables y Colores Extra Reemplazados por la Escala Oficial (<code className="font-mono text-cta">cta-50..950</code> y <code className="font-mono">surface / ink-*</code>)
-                    </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Todos los azules y grises paralelos detectados en la auditoría fueron unificados a la gama oficial de variables del Sistema de Diseño.
-                    </p>
-                  </div>
-                  <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full self-start">
-                    100% Unificado a Variables v2.3.2 ✓
-                  </span>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200 divide-y divide-slate-100">
-                  {[
-                    {
-                      swatchClass: 'bg-cta-100',
-                      hex: '#D8E8FF → bg-cta-100 / bg-cta-200',
-                      name: 'Highlight Blue (Subrayado «ingresos» y HostBanner)',
-                      where: 'src/components/HostSection.tsx · src/components/HostBanner.tsx',
-                      note: 'Reemplazado #D8E8FF por nuestras variables oficiales bg-cta-200 (subrayado) y bg-cta-100 (bloque izquierdo en HostBanner).',
-                      status: 'Migrado a cta-100 / cta-200 ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                    {
-                      swatchClass: 'bg-cta-50',
-                      hex: '#94BDC9/25 → bg-cta-50',
-                      name: 'Teal Suave en CTA de Blog',
-                      where: 'src/pages/BlogPage.tsx (línea 82)',
-                      note: 'Reemplazado el tono huérfano #94BDC9/25 por bg-cta-50 con botón oficial bg-cta.',
-                      status: 'Migrado a cta-50 ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                    {
-                      swatchClass: 'bg-subtle',
-                      hex: '#2563EB · #BFDBFE → Lucide FileText neutral + bg-cta',
-                      name: 'Elemento de Licencia / Carga de Archivos',
-                      where: 'src/components/DocumentUploadCard.tsx',
-                      note: 'Reemplazado el SVG con hex hardcoded por icono Lucide FileText neutral sobre bg-subtle y barra de progreso bg-cta.',
-                      status: 'Migrado a subtle + cta ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                    {
-                      swatchClass: 'bg-cta-300',
-                      hex: 'blue-50..900 → cta-50..950',
-                      name: 'Escala Tailwind blue-* paralela unificada a cta-*',
-                      where: 'StepFeatureCard (bg-cta-300 / text-cta-900), App.tsx Hero, CatalogPage, Header, AccountPage',
-                      note: 'Todas las clases blue-50..900 y #3D63FF inline se migraron a cta-50..cta-950.',
-                      status: 'Migrado a cta-50..950 ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                    {
-                      swatchClass: 'bg-subtle',
-                      hex: 'neutral-* → surface / subtle / edge / ink-*',
-                      name: 'Grises de superficie y bordes unificados',
-                      where: 'HostBanner, UseCasesSection, FaqSection, TermsPage, PrivacyPage, AccountPage',
-                      note: 'Unificados los grises paralelos hacia bg-surface, bg-subtle, border-edge, border-edge-light e ink-900..400.',
-                      status: 'Migrado a surface / ink-* ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                    {
-                      swatchClass: 'bg-cta-800',
-                      hex: '#1A0DAB · #4D5156 · #EEF3F6 → text-cta-800 · text-ink-600 · bg-cta-50',
-                      name: 'Simulador Google SERP y Chat en Auditor SEO',
-                      where: 'src/pages/SeoPage.tsx',
-                      note: 'Reemplazados los hexadecimales sueltos por text-cta-800, text-ink-600, bg-cta-50 y bg-subtle.',
-                      status: 'Migrado a cta-800 / cta-50 ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                    {
-                      swatchClass: 'bg-cta-50',
-                      hex: '#8EB5FF → bg-cta-50',
-                      name: 'Banner final «Empieza a ganar con tu auto hoy»',
-                      where: 'src/components/HostSection.tsx (línea 448)',
-                      note: 'Eliminado #8EB5FF con texto blanco; migrado a variables oficiales bg-cta-50 + text-ink-900 + bg-cta.',
-                      status: 'Migrado a cta-50 ✓',
-                      statusClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-                    },
-                  ].map((extra) => (
-                    <div key={extra.name} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <div className="flex items-start gap-3.5 min-w-0">
-                        <div className={`w-10 h-10 rounded-xl border border-slate-200 shrink-0 ${extra.swatchClass}`} />
-                        <div className="min-w-0 space-y-0.5">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xs sm:text-sm font-heading font-bold text-slate-900">{extra.name}</span>
-                            <span className="font-mono text-[11px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{extra.hex}</span>
-                          </div>
-                          <div className="text-[11px] font-mono text-slate-400 truncate">{extra.where}</div>
-                          <p className="text-xs text-slate-600 leading-relaxed">{extra.note}</p>
-                        </div>
-                      </div>
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full border text-[11px] font-heading font-semibold shrink-0 self-start sm:self-center ${extra.statusClass}`}>
-                        {extra.status}
-                      </span>
                     </div>
                   ))}
                 </div>
@@ -2543,7 +2432,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.5</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.6</span>
                     </div>
                   </div>
                 </div>
