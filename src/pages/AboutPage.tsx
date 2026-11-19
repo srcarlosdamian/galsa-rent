@@ -207,16 +207,16 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                   return (
                     <div
                       key={item.title}
-                      className="rounded-2xl bg-surface p-4 sm:p-5 flex items-start gap-4"
+                      className="rounded-2xl border border-white/25 bg-transparent p-4 sm:p-5 flex items-start gap-4"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-cta-50 text-cta flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-10 h-10 rounded-xl bg-white/15 text-white flex items-center justify-center shrink-0 mt-0.5">
                         <Icon className="w-5 h-5" strokeWidth={1.6} />
                       </div>
                       <div>
-                        <h3 className="text-sm sm:text-base font-heading font-bold text-ink-900">
+                        <h3 className="text-sm sm:text-base font-heading font-bold text-white">
                           {item.title}
                         </h3>
-                        <p className="text-xs sm:text-sm font-sans text-ink-600 mt-0.5 leading-relaxed">
+                        <p className="text-xs sm:text-sm font-sans text-cta-100 mt-0.5 leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
