@@ -42,6 +42,7 @@ import { GalsaLogo } from '../components/GalsaLogo';
 import { DocumentUploadCard } from '../components/DocumentUploadCard';
 import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from '../components/CustomDropdown';
 import { DateRangePicker } from '../components/DateRangePicker';
+import { SingleDatePicker } from '../components/SingleDatePicker';
 import { SearchContainer } from '../components/SearchContainer';
 import { VehicleCard } from '../components/VehicleCard';
 import { StepFeatureCard } from '../components/StepFeatureCard';
@@ -117,6 +118,8 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const [demoEndDate, setDemoEndDate] = useState('2026-11-07');
   const [demoCalendarOpen, setDemoCalendarOpen] = useState(false);
   const demoCalendarRef = useRef<HTMLDivElement>(null);
+  const [demoSingleDate, setDemoSingleDate] = useState('2026-11-04');
+  const [demoSingleCalOpen, setDemoSingleCalOpen] = useState(false);
 
   const [demoSearchState, setDemoSearchState] = useState<SearchState>({
     location: 'Sucursal Plaza 450, Durango',
@@ -321,7 +324,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.7</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.8</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1195,7 +1198,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-3 py-1.5 rounded-lg text-xs font-heading font-medium (Active: bg-slate-900 text-white | Default: bg-white text-slate-600 border border-slate-200)',
+                          'px-3 py-1.5 rounded-lg text-xs font-heading font-medium (Active: bg-cta text-white | Default: bg-white text-slate-600 border border-slate-200)',
                           'btn-10'
                         )
                       }
@@ -1840,7 +1843,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
                   <div>
                     <h3 className="text-base font-heading font-bold text-slate-900">
-                      Catálogo Completo de Dropdowns &amp; Selectores (6 variantes unificadas)
+                      Catálogo Completo de Dropdowns &amp; Selectores (7 variantes unificadas)
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Incluye ubicación, vehículo, horario, ordenamiento, ciudad de anfitrión (<code className="font-mono text-slate-700">HOST_CITY_OPTIONS</code>) y rango de fechas. Cero <code className="font-mono text-slate-700">&lt;select&gt;</code> nativos.
@@ -1979,6 +1982,38 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                             setDemoEndDate(e);
                           }}
                           onClose={() => setDemoCalendarOpen(false)}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 7. Fecha Individual (SingleDatePicker) */}
+                  <div className="relative space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-heading font-bold text-slate-800">
+                        7. Fecha Individual (SingleDatePicker)
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400">Detalle Auto</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setDemoSingleCalOpen((prev) => !prev)}
+                      className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-sans text-left transition-colors cursor-pointer ${
+                        demoSingleCalOpen
+                          ? 'border-cta ring-1 ring-cta text-slate-900'
+                          : 'border-slate-200 hover:border-slate-300 text-slate-900'
+                      }`}
+                    >
+                      <span className="truncate">{formatDsDate(demoSingleDate)}</span>
+                      <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
+                    </button>
+
+                    {demoSingleCalOpen && (
+                      <div className="absolute top-full left-0 mt-2 z-[70]">
+                        <SingleDatePicker
+                          value={demoSingleDate}
+                          onChange={setDemoSingleDate}
+                          onClose={() => setDemoSingleCalOpen(false)}
                         />
                       </div>
                     )}
@@ -2518,14 +2553,14 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       Banner CTA Final con Variables Oficiales (<code className="font-mono">bg-cta-50</code> + <code className="font-mono">text-ink-900</code>)
                     </h3>
                     <p className="text-xs text-slate-500">
-                      Implementado en <code className="font-mono text-slate-700">HostSection.tsx</code> usando variables del sistema (<code className="font-mono text-slate-700">cta-50</code>, <code className="font-mono text-slate-700">ink-900</code>, <code className="font-mono text-slate-700">ink-700</code>, <code className="font-mono text-slate-700">bg-cta</code>)
+                      Implementado en <code className="font-mono text-slate-700">HostSection.tsx</code> y <code className="font-mono text-slate-700">VehicleDetailView.tsx</code> usando card <code className="font-mono text-slate-700">bg-gray-50</code> en 2 columnas sin borde
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() =>
                       copySnippet(
-                        'bg-cta-50 rounded-[28px] sm:rounded-[36px] | Título: text-ink-900 | Subtítulo: text-ink-700 | CTA: bg-cta hover:bg-cta-600 text-white rounded-xl',
+                        'w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 md:p-12 lg:p-14 border-0 shadow-none',
                         'org-banner'
                       )
                     }
@@ -2535,21 +2570,34 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </button>
                 </div>
 
-                <div className="bg-cta-50 rounded-[28px] py-10 px-6 sm:px-10 text-center space-y-3">
-                  <h4 className="text-xl sm:text-2xl font-heading font-bold text-ink-900 tracking-tight">
-                    Empieza a ganar con tu auto hoy
-                  </h4>
-                  <p className="text-xs sm:text-sm font-sans text-ink-700 max-w-lg mx-auto">
-                    Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
-                  </p>
-                  <div className="pt-2">
-                    <button
-                      type="button"
-                      onClick={() => onNavigate && onNavigate('/anfitriones/registro')}
-                      className="inline-flex items-center justify-center px-7 py-3 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-bold text-xs sm:text-sm transition-colors cursor-pointer"
-                    >
-                      Quiero publicar mi auto
-                    </button>
+                <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 border-0 shadow-none">
+                  <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                    <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-3 sm:space-y-4">
+                      <h4 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 leading-tight tracking-tight">
+                        Empieza a ganar con tu auto hoy
+                      </h4>
+                      <p className="text-xs sm:text-sm font-sans text-slate-600 leading-relaxed max-w-lg">
+                        Registrarte toma menos de 10 minutos y revisamos tu solicitud en 24-48 horas.
+                      </p>
+                      <div className="pt-1">
+                        <button
+                          type="button"
+                          onClick={() => onNavigate && onNavigate('/anfitriones/registro')}
+                          className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
+                        >
+                          Quiero publicar mi auto
+                        </button>
+                      </div>
+                    </div>
+                    <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+                      <div className="w-full max-w-[360px] aspect-[16/10] rounded-[20px] overflow-hidden flex items-center justify-center">
+                        <img
+                          src="/galsa-rent/images/anfitriones/cta-familia-anfitrion.png"
+                          alt="Empieza a ganar con tu auto hoy"
+                          className="w-full h-full object-contain object-center"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2582,7 +2630,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.7</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.8</span>
                     </div>
                   </div>
                 </div>
