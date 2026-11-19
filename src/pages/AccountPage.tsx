@@ -55,6 +55,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
   // Control del modal flotante "Completar información" y banner de perfil (70% completado)
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [modalSubmitted, setModalSubmitted] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [profileCompletedBannerDismissed, setProfileCompletedBannerDismissed] = useState(false);
 
   // Sección activa en el menú lateral de Configuración de la cuenta
@@ -365,65 +366,20 @@ export const AccountPage: React.FC<AccountPageProps> = ({
   return (
     <div className="min-h-[85vh] bg-surface py-8 sm:py-12">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-6">
-        {/* 1. Tarjeta Superior de Resumen de Cuenta GALSA */}
-        <div className="bg-surface rounded-[24px] p-5 sm:p-7 border border-edge flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-cta text-white flex items-center justify-center font-heading font-extrabold text-xl sm:text-2xl shrink-0">
-              D
-            </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-heading font-extrabold text-ink-900">
-                  ¡Hola, {firstNameDisplay}!
-                </h1>
-                {emailConfirmed && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-cta-50 text-cta text-xs font-heading font-bold border border-cta-200">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    Correo confirmado
-                  </span>
-                )}
-              </div>
-              <p className="text-sm font-sans text-ink-600 mt-0.5">{email}</p>
-              <p className="text-xs font-sans text-ink-400 mt-0.5">
-                {phone} · {city.replace(', Dgo.', '')}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => setShowCompleteModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cta hover:bg-cta-600 active:scale-95 text-white text-xs sm:text-sm font-heading font-semibold transition-all cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>Completar información</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-edge hover:bg-subtle text-ink-600 hover:text-ink-900 text-xs sm:text-sm font-heading font-medium transition-colors cursor-pointer"
-              title="Cerrar sesión"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Cerrar sesión</span>
-            </button>
-          </div>
-        </div>
-
-        {/* 2. Banner Completa tu perfil (70% completado) de GALSA */}
+        {/* 1. Banner Completa tu perfil (70% completado) de GALSA */}
         {!profileCompletedBannerDismissed && (
-          <div className="bg-amber-50/80 border border-amber-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
-                <AlertCircle className="w-5 h-5" />
-              </div>
+          <div className="bg-cta-50/60 border border-cta-200/80 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <img
+                src="/galsa-rent/images/cuenta/completa-perfil-lapiz.png"
+                alt="Completa tu perfil"
+                className="w-11 h-11 sm:w-12 sm:h-12 object-contain shrink-0"
+              />
               <div>
-                <h2 className="text-sm font-heading font-bold text-amber-900">
+                <h2 className="text-sm font-heading font-bold text-ink-900">
                   Completa tu perfil (70% completado)
                 </h2>
-                <p className="text-xs font-sans text-amber-700 mt-0.5">
+                <p className="text-xs font-sans text-ink-600 mt-0.5 leading-relaxed">
                   Falta tu nombre, teléfono y licencia de conducir para activar tus contratos digitales y entregas express sin esperas.
                 </p>
               </div>
@@ -431,66 +387,20 @@ export const AccountPage: React.FC<AccountPageProps> = ({
             <button
               type="button"
               onClick={() => setShowCompleteModal(true)}
-              className="self-start sm:self-auto px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-heading font-bold transition-all whitespace-nowrap cursor-pointer"
+              className="self-start sm:self-auto px-4 py-2 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-ink-900 text-xs font-heading font-semibold transition-colors whitespace-nowrap cursor-pointer"
             >
               Completar ahora
             </button>
           </div>
         )}
 
-        {/* 3. Layout de 2 Columnas: Barra lateral izquierda + Panel de contenido derecho */}
-        <div className="pt-2 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* COLUMNA IZQUIERDA: Configuración de la cuenta + Confirma tu correo electrónico + Menú */}
-          <aside className="lg:col-span-4 xl:col-span-4 space-y-5 lg:border-r lg:border-edge lg:pr-8">
+        {/* 2. Layout de 2 Columnas: Barra lateral izquierda + Panel de contenido derecho */}
+        <div className="pt-2 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+          {/* COLUMNA IZQUIERDA: Configuración de la cuenta + Menú */}
+          <aside className="lg:col-span-4 xl:col-span-4 space-y-5 pb-6 border-b border-edge lg:pb-0 lg:border-b-0 lg:border-r lg:border-edge lg:pr-8">
             <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-ink-900 tracking-tight">
               Configuración de la cuenta
             </h2>
-
-            {/* Tarjeta: Confirma tu correo electrónico */}
-            {showEmailConfirmCard && (
-              <div className="rounded-2xl bg-subtle border border-edge p-4 space-y-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-2.5">
-                    <Mail className="w-4 h-4 text-ink-900 shrink-0 mt-0.5" strokeWidth={1.8} />
-                    <div>
-                      <h3 className="text-xs sm:text-sm font-heading font-bold text-ink-900 leading-snug">
-                        Confirma tu correo electrónico
-                      </h3>
-                      <p className="text-xs font-sans text-ink-600 mt-0.5 leading-relaxed">
-                        {emailConfirmed
-                          ? `Código verificado para ${email}.`
-                          : emailCodeSent
-                          ? `Enviamos un código de confirmación a ${email}.`
-                          : 'Te enviaremos un código a tu bandeja de mensajes.'}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowEmailConfirmCard(false)}
-                    className="text-ink-600 hover:text-ink-900 p-0.5 rounded-lg transition-colors cursor-pointer"
-                    aria-label="Cerrar aviso de correo"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={handleConfirmEmail}
-                  disabled={emailConfirmed}
-                  className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-heading font-semibold transition-colors cursor-pointer ${
-                    emailConfirmed
-                      ? 'bg-cta-50 text-cta border border-cta-200'
-                      : 'bg-surface hover:bg-cta-50 text-ink-900 border border-edge'
-                  }`}
-                >
-                  {emailConfirmed
-                    ? 'Correo electrónico confirmado'
-                    : 'Confirma tu correo electrónico'}
-                </button>
-              </div>
-            )}
 
             {/* Navegación Vertical */}
             <nav className="space-y-1" aria-label="Secciones de cuenta">
@@ -528,6 +438,17 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   </button>
                 );
               })}
+
+              <div className="pt-2 mt-2 border-t border-edge">
+                <button
+                  type="button"
+                  onClick={() => setShowLogoutModal(true)}
+                  className="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-left text-xs sm:text-sm font-heading font-medium text-ink-600 hover:bg-subtle/60 hover:text-ink-900 transition-colors cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4 shrink-0 text-ink-600" />
+                  <span>Cerrar sesión</span>
+                </button>
+              </div>
             </nav>
           </aside>
 
@@ -580,7 +501,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                             <button
                               type="button"
                               onClick={() => startInlineEdit(row.key, rawValue)}
-                              className="text-xs sm:text-sm font-heading font-semibold text-ink-900 hover:text-cta underline underline-offset-4 shrink-0 cursor-pointer transition-colors"
+                              className="text-xs sm:text-sm font-heading font-semibold text-ink-900 hover:text-cta shrink-0 cursor-pointer transition-colors"
                             >
                               {row.actionLabel}
                             </button>
@@ -588,7 +509,7 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                             <button
                               type="button"
                               onClick={() => setEditingField(null)}
-                              className="text-xs sm:text-sm font-heading font-semibold text-ink-600 hover:text-ink-900 underline underline-offset-4 shrink-0 cursor-pointer"
+                              className="text-xs sm:text-sm font-heading font-semibold text-ink-600 hover:text-ink-900 shrink-0 cursor-pointer"
                             >
                               Cancelar
                             </button>
@@ -754,77 +675,6 @@ export const AccountPage: React.FC<AccountPageProps> = ({
                   <p className="text-xs sm:text-sm text-ink-600 font-sans mt-1">
                     Documentos necesarios para entrega express sin filas en sucursal
                   </p>
-                </div>
-
-                {/* Dos tarjetas superiores de estado (como en la captura de Documentos & Licencia) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="rounded-2xl border border-edge bg-surface p-4 sm:p-5 flex flex-col justify-between gap-3">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <CreditCard className="w-4 h-4 text-cta shrink-0" />
-                          <h3 className="text-xs sm:text-sm font-heading font-bold text-ink-900">
-                            Licencia de conducir vigente
-                          </h3>
-                        </div>
-                        <span
-                          className={`px-2.5 py-0.5 rounded-full text-[11px] font-heading font-semibold ${
-                            licenseDoc.status === 'completed'
-                              ? 'bg-cta-50 text-cta'
-                              : 'bg-subtle text-ink-600'
-                          }`}
-                        >
-                          {licenseDoc.status === 'completed' ? 'Registrada' : 'Pendiente'}
-                        </span>
-                      </div>
-                      <p className="text-xs font-sans text-ink-600 leading-relaxed">
-                        Indispensable para el seguro de cobertura amplia y entrega de llaves.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        simulateUpload('license', 'Scann_158.pdf', '74 MB / 74 MB')
-                      }
-                      className="self-start text-xs font-heading font-bold text-cta hover:text-cta-600 hover:underline cursor-pointer"
-                    >
-                      Registrar licencia ahora
-                    </button>
-                  </div>
-
-                  <div className="rounded-2xl border border-edge bg-surface p-4 sm:p-5 flex flex-col justify-between gap-3">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-cta shrink-0" />
-                          <h3 className="text-xs sm:text-sm font-heading font-bold text-ink-900">
-                            Identificación oficial (INE / Pasaporte)
-                          </h3>
-                        </div>
-                        <span
-                          className={`px-2.5 py-0.5 rounded-full text-[11px] font-heading font-semibold ${
-                            ineDoc.status === 'completed'
-                              ? 'bg-cta-50 text-cta'
-                              : 'bg-subtle text-ink-600'
-                          }`}
-                        >
-                          {ineDoc.status === 'completed' ? 'Registrada' : 'Pendiente'}
-                        </span>
-                      </div>
-                      <p className="text-xs font-sans text-ink-600 leading-relaxed">
-                        Requerida para la firma electrónica del contrato de renta digital.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        simulateUpload('ine', 'INE_frente_y_reverso.pdf', '2.4 MB / 2.4 MB')
-                      }
-                      className="self-start text-xs font-heading font-bold text-cta hover:text-cta-600 hover:underline cursor-pointer"
-                    >
-                      Registrar identificación
-                    </button>
-                  </div>
                 </div>
 
                 {docsSavedSuccess && (
@@ -1081,6 +931,65 @@ export const AccountPage: React.FC<AccountPageProps> = ({
           </main>
         </div>
       </div>
+
+      {/* =========================================================================
+          MODAL DE CONFIRMACIÓN PARA CERRAR SESIÓN
+         ========================================================================= */}
+      {showLogoutModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setShowLogoutModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="logout-modal-title"
+        >
+          <div
+            className="w-full max-w-[420px] bg-surface rounded-[24px] p-6 sm:p-7 border border-edge relative text-left space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setShowLogoutModal(false)}
+              className="absolute right-4 top-4 w-8 h-8 rounded-full bg-subtle hover:bg-slate-200 flex items-center justify-center text-ink-600 hover:text-ink-900 transition-colors cursor-pointer"
+              aria-label="Cerrar modal"
+            >
+              <X className="w-4 h-4" strokeWidth={2} />
+            </button>
+
+            <div className="space-y-1.5 pr-6">
+              <h2
+                id="logout-modal-title"
+                className="text-lg sm:text-xl font-heading font-extrabold text-ink-900 tracking-tight"
+              >
+                ¿Cerrar sesión?
+              </h2>
+              <p className="text-xs sm:text-sm font-sans text-ink-600 leading-relaxed">
+                Tendrás que volver a iniciar sesión para ver tus reservaciones, documentos y contratos digitales.
+              </p>
+            </div>
+
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5 pt-1">
+              <button
+                type="button"
+                onClick={() => setShowLogoutModal(false)}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-ink-900 text-xs sm:text-sm font-heading font-semibold transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  handleLogout();
+                }}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 active:scale-[0.98] text-white text-xs sm:text-sm font-heading font-semibold transition-all cursor-pointer"
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* =========================================================================
           MODAL DE COMPLETAR INFORMACIÓN (Primer inicio o botón Completar información)

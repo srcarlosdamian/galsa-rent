@@ -324,7 +324,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.12</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.13</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -2665,6 +2665,123 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               </div>
             )}
 
+            {/* Organismo: Modales & Drawers del Sistema (6 Variantes) */}
+            {showOrgBanner && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5 text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Modales, Drawers &amp; Sheets del Sistema (6 Variantes)
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Contenedores flotantes estandarizados con backdrop <code className="font-mono text-slate-700">bg-black/50 backdrop-blur-xs</code>, radios <code className="font-mono text-slate-700">rounded-[24px]</code> y botón circular de cierre <code className="font-mono text-slate-700">w-8 h-8 rounded-full bg-subtle</code>.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copySnippet(
+                        'fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6',
+                        'org-modals'
+                      )
+                    }
+                    className="text-xs font-mono text-cta hover:text-cta-700 cursor-pointer shrink-0"
+                  >
+                    {copiedCode === 'org-modals' ? 'Copiado ✓' : 'Copiar clases'}
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* 1. Modal Confirmación (Cerrar sesión) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 flex flex-col justify-between gap-3">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-cta font-semibold">1. Confirmación · AccountPage.tsx</span>
+                      <div className="rounded-2xl bg-white border border-edge p-4 space-y-3 mt-1.5">
+                        <div className="flex items-start justify-between gap-2">
+                          <h4 className="text-sm font-heading font-extrabold text-ink-900">¿Cerrar sesión?</h4>
+                          <span className="w-6 h-6 rounded-full bg-subtle text-ink-600 flex items-center justify-center text-xs">×</span>
+                        </div>
+                        <p className="text-[11px] font-sans text-ink-600 leading-relaxed">
+                          Tendrás que volver a iniciar sesión para ver tus reservaciones y contratos digitales.
+                        </p>
+                        <div className="flex justify-end gap-2 pt-1">
+                          <span className="px-3 py-1.5 rounded-lg border border-slate-200 text-[11px] font-heading font-semibold text-ink-900">Cancelar</span>
+                          <span className="px-3 py-1.5 rounded-lg bg-cta text-white text-[11px] font-heading font-semibold">Cerrar sesión</span>
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">max-w-[420px] · rounded-[24px]</span>
+                  </div>
+
+                  {/* 2. Modal Formulario (Completar perfil) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 flex flex-col justify-between gap-3">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-cta font-semibold">2. Formulario · AccountPage.tsx</span>
+                      <div className="rounded-2xl bg-white border border-edge p-4 space-y-2.5 mt-1.5">
+                        <h4 className="text-sm font-heading font-extrabold text-ink-900">Activa tu cuenta al 100%</h4>
+                        <div className="h-7 rounded-lg border border-edge bg-white px-2.5 flex items-center text-[11px] text-slate-400">Nombre completo</div>
+                        <div className="h-7 rounded-lg border border-edge bg-white px-2.5 flex items-center text-[11px] text-slate-400">Teléfono · Licencia</div>
+                        <span className="inline-block w-full text-center py-1.5 rounded-lg bg-cta text-white text-[11px] font-heading font-semibold">Guardar información</span>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">max-w-[500px] · rounded-[24px]</span>
+                  </div>
+
+                  {/* 3. Modal Contrato Digital */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 flex flex-col justify-between gap-3">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-cta font-semibold">3. Contrato · ReservationCheckoutView</span>
+                      <div className="rounded-2xl bg-white border border-edge p-4 space-y-2.5 mt-1.5">
+                        <h4 className="text-sm font-heading font-extrabold text-ink-900">Contrato Digital PROFECO</h4>
+                        <div className="h-14 rounded-lg bg-slate-50 border border-slate-200 p-2 text-[10px] text-slate-500 overflow-hidden">
+                          Cláusulas de arrendamiento, cobertura amplia y entrega en sucursal...
+                        </div>
+                        <span className="inline-block px-3 py-1.5 rounded-lg bg-cta text-white text-[11px] font-heading font-semibold">Firmar contrato</span>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">max-w-2xl · max-h-[90vh]</span>
+                  </div>
+
+                  {/* 4. Modal Galería & Compartir */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 flex flex-col justify-between gap-3">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-cta font-semibold">4. Galería / Compartir · VehicleDetail</span>
+                      <div className="rounded-2xl bg-white border border-edge p-4 space-y-2 mt-1.5">
+                        <h4 className="text-sm font-heading font-extrabold text-ink-900">Compartir vehículo</h4>
+                        <p className="text-[11px] font-sans text-ink-600">Enlace directo, WhatsApp y galería fotográfica en pantalla completa.</p>
+                        <div className="h-7 rounded-lg bg-slate-100 px-2.5 flex items-center text-[10px] font-mono text-slate-500">galsarent.com.mx/vehiculos/...</div>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">max-w-md · max-w-5xl (Galería)</span>
+                  </div>
+
+                  {/* 5. Drawer Lateral (Centro de Ayuda) */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 flex flex-col justify-between gap-3">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-cta font-semibold">5. Drawer Derecho · Header.tsx</span>
+                      <div className="rounded-2xl bg-white border border-edge p-4 space-y-2 mt-1.5">
+                        <h4 className="text-sm font-heading font-extrabold text-ink-900">Centro de Ayuda GALSA</h4>
+                        <p className="text-[11px] font-sans text-ink-600">Llamada directa y correo en azul CTA, sucursal sin fondo y FAQs desplegables.</p>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">inset-y-0 right-0 max-w-md</span>
+                  </div>
+
+                  {/* 6. Bottom Sheet Filtros Mobile */}
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 flex flex-col justify-between gap-3">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-cta font-semibold">6. Bottom Sheet · CatalogPage.tsx</span>
+                      <div className="rounded-2xl bg-white border border-edge p-4 space-y-2 mt-1.5">
+                        <h4 className="text-sm font-heading font-extrabold text-ink-900">Filtros de catálogo (Mobile)</h4>
+                        <p className="text-[11px] font-sans text-ink-600">Anclado inferior en móvil (<code className="font-mono">justify-end md:hidden</code>) con footer fijo de acciones.</p>
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">rounded-t-[24px] · justify-end</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Organismo 5: Cinta QA & Footer */}
             {showOrgQaRibbon && (
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
@@ -2692,7 +2809,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.12</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.13</span>
                     </div>
                   </div>
                 </div>

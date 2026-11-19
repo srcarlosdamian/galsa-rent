@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, UploadCloud, X } from 'lucide-react';
+import { FileText, UploadCloud, X, CheckCircle2 } from 'lucide-react';
 
 export interface DocUploadState {
   name: string;
@@ -72,17 +72,24 @@ export const DocumentUploadCard: React.FC<DocumentUploadCardProps> = ({
               </button>
             </div>
 
-            <div className="flex items-center gap-2.5 mt-1.5">
-              <div className="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-cta rounded-full transition-all duration-300"
-                  style={{ width: `${fileState.progress}%` }}
-                />
+            {fileState.status === 'uploading' ? (
+              <div className="flex items-center gap-2.5 mt-1.5">
+                <div className="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-cta rounded-full transition-all duration-300"
+                    style={{ width: `${fileState.progress}%` }}
+                  />
+                </div>
+                <span className="text-[11px] font-sans font-medium text-slate-400 shrink-0 select-none tabular-nums">
+                  {fileState.progress}%
+                </span>
               </div>
-              <span className="text-[11px] font-sans font-medium text-slate-400 shrink-0 select-none tabular-nums">
-                {fileState.progress}%
-              </span>
-            </div>
+            ) : (
+              <div className="flex items-center gap-1.5 mt-1 text-[11px] font-heading font-semibold text-emerald-600">
+                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                <span>Carga completada · 100%</span>
+              </div>
+            )}
           </div>
         </div>
       ) : (
