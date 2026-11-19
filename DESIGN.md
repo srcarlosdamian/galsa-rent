@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.8.22)
+description: Minimalist, clean, flat digital mobility platform (v2.8.23)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.8.22`)
+# GALSA Rent Design System & Guidelines (`v2.8.23`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -108,3 +108,4 @@ rounded:
   2. **FAQ Compacto** (`Header.tsx`, Drawer de Ayuda): `rounded-xl border border-slate-200`, `ChevronDown` con `rotate-180`.
   3. **Acordeón de Pasos** (`ReservationCheckoutView.tsx`, Pasos 1–5): badge numérico `w-7 h-7 rounded-full bg-blue-50 text-blue-600`, botón circular `w-8 h-8 bg-slate-100` con `ChevronDown`.
   4. **Sheet Resumen Mobile** (`VehicleDetailView.tsx` / `ReservationCheckoutView.tsx`): barra inferior fija `lg:hidden` desplegable con `ChevronUp`/`ChevronDown`.
+- **Iconografía del Sistema (`src/data/designSystemIcons.ts`):** Catálogo completo documentado en `DesignSystemPage.tsx` con los **81 iconos `lucide-react`** nombrados por categoría (Navegación, Acciones, Vehículo, Documentos y Pagos, Seguridad y Confianza, Ubicación y Tiempo, UI y Sistema) y las **17 ilustraciones 3D** (`benefit-1..6`, `step-1..6`, `completa-perfil-lapiz`, `icon-step-1..4`).

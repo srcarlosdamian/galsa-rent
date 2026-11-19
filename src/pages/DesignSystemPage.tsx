@@ -55,6 +55,7 @@ import {
   CATALOG_SORT_OPTIONS,
 } from '../data/dropdownOptions';
 import { SearchState } from '../types/vehicle';
+import { DOCUMENTED_LUCIDE_ICONS, DOCUMENTED_3D_ICONS } from '../data/designSystemIcons';
 
 interface DesignSystemPageProps {
   onNavigate?: (path: string) => void;
@@ -221,6 +222,12 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
   const showAtomsBadges =
     shouldShowSection('atoms') &&
     matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.3.2', 'pills etiquetas estatus');
+  const showAtomsIcons =
+    shouldShowSection('atoms') &&
+    matchesSearch(
+      'Iconos Iconografía Lucide 3D Ilustraciones SVG ArrowLeft Car ShieldCheck MapPin Calendar',
+      DOCUMENTED_LUCIDE_ICONS.map((i) => i.name).join(' ')
+    );
 
   const showMolSearch =
     shouldShowSection('molecules') &&
@@ -324,7 +331,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.22</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.23</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -775,7 +782,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
         {/* ============================================================ */}
         {/* 2. ÁTOMOS (ATOMS) */}
         {/* ============================================================ */}
-        {(showAtomsButtons || showAtomsInputs || showAtomsBadges) && (
+        {(showAtomsButtons || showAtomsInputs || showAtomsBadges || showAtomsIcons) && (
           <section id="atoms" className="space-y-6">
             <div className="border-b border-slate-200 pb-3">
               <div className="flex items-center gap-2 text-cta font-mono text-xs font-bold uppercase tracking-wider">
@@ -1774,6 +1781,98 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </span>
                     <div className="text-[11px] font-heading font-bold text-slate-800">8. Chip de Versión QA</div>
                     <span className="text-[10px] font-mono text-slate-400 block">Footer, DesignSystemPage</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* CATÁLOGO COMPLETO DE ICONOS (81 LUCIDE + 17 ILUSTRACIONES 3D) */}
+            {showAtomsIcons && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                  <div>
+                    <h3 className="text-base font-heading font-bold text-slate-900">
+                      Catálogo Completo de Iconografía (81 Lucide + 17 Ilustraciones 3D)
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      Todos los iconos oficiales importados desde <code className="font-mono text-slate-700">lucide-react</code> e ilustraciones 3D en <code className="font-mono text-slate-700">public/images/</code>, nombrados y listos para copiar.
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-mono text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md self-start sm:self-center shrink-0">
+                    {DOCUMENTED_LUCIDE_ICONS.length + DOCUMENTED_3D_ICONS.length} iconos
+                  </span>
+                </div>
+
+                {/* Parte A: 81 Iconos Lucide nombrados */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-heading font-bold text-slate-800">
+                      A. Iconos Lineales (<code className="font-mono text-slate-700">lucide-react</code> · {DOCUMENTED_LUCIDE_ICONS.length} iconos)
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">Haz clic para copiar JSX</span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
+                    {DOCUMENTED_LUCIDE_ICONS.map((item) => {
+                      const Icon = item.icon;
+                      const snippet = `<${item.name} className="w-4 h-4" />`;
+                      const isCopied = copiedCode === `icon-${item.name}`;
+                      return (
+                        <button
+                          key={item.name}
+                          type="button"
+                          onClick={() => copySnippet(snippet, `icon-${item.name}`)}
+                          title={`${item.name} (${item.category})`}
+                          className="p-2.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-slate-100/80 hover:border-slate-300 flex items-center gap-2.5 text-left transition-colors cursor-pointer group min-w-0"
+                        >
+                          <span className="w-7 h-7 rounded-lg bg-white border border-slate-200/70 text-slate-700 flex items-center justify-center shrink-0">
+                            <Icon className="w-4 h-4" strokeWidth={1.7} />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <div className="text-[11px] font-mono font-semibold text-slate-800 truncate">
+                              {isCopied ? 'Copiado ✓' : item.name}
+                            </div>
+                            <div className="text-[9px] font-sans text-slate-400 truncate">
+                              {item.category}
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Parte B: 17 Iconos / Ilustraciones 3D nombrados */}
+                <div className="space-y-3 pt-2 border-t border-slate-100">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-heading font-bold text-slate-800">
+                      B. Iconos &amp; Ilustraciones 3D ({DOCUMENTED_3D_ICONS.length} assets)
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">Sin borde · bg-slate-50 / bg-slate-100</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {DOCUMENTED_3D_ICONS.map((asset) => (
+                      <div
+                        key={asset.name}
+                        className="p-3 rounded-xl border border-slate-200/80 bg-white flex items-center gap-3 min-w-0"
+                      >
+                        <div className="w-12 h-12 rounded-xl bg-slate-50 overflow-hidden shrink-0 flex items-center justify-center">
+                          <img
+                            src={asset.src}
+                            alt={asset.name}
+                            loading="lazy"
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-[11px] font-mono font-semibold text-slate-800 truncate">
+                            {asset.name}
+                          </div>
+                          <div className="text-[10px] font-sans text-slate-500 truncate mt-0.5">
+                            {asset.usage}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -2929,7 +3028,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.22</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.23</span>
                     </div>
                   </div>
                 </div>

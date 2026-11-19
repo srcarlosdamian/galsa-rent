@@ -116,8 +116,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Palette className="w-3.5 h-3.5 text-pink-400 group-hover:rotate-12 transition-transform" />
               <span>Sistema de Diseño</span>
             </a>
-            <span>Última actualización: <strong>19 Nov 2026, 01:06 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.22</span>
+            <span>Última actualización: <strong>19 Nov 2026, 01:09 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.23</span>
           </div>
         </div>
       </div>
