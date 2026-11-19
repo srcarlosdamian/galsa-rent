@@ -474,10 +474,6 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
             <ArrowLeft className="w-4 h-4" />
             <span>Volver al vehículo</span>
           </button>
-
-          <span className="text-xs font-heading font-medium text-slate-400">
-            Paso 2 de 2 · Check-in y Contratación
-          </span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
