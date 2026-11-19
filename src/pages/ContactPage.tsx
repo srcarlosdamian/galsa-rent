@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, MessageSquare, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ExternalLink } from 'lucide-react';
 
 export const ContactPage: React.FC = () => {
   return (
@@ -8,14 +8,14 @@ export const ContactPage: React.FC = () => {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
-            Atención local en Durango
+          <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
+            Atención local y en línea
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-slate-900">
             Contacto y Sucursal Plaza 450
           </h1>
-          <p className="mt-3 text-base text-neutral-600">
-            Estamos ubicados en Blvd. Guadiana en Durango. Escríbenos o visítanos para resolver dudas sobre tu renta o registro de anfitrión.
+          <p className="mt-3 text-base font-sans text-slate-600">
+            Estamos ubicados en Blvd. Guadiana, Durango. Llámanos, escríbenos por correo o visítanos para resolver dudas sobre tu renta o registro de anfitrión.
           </p>
         </div>
 
@@ -54,43 +54,52 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div className="pt-3 border-t border-neutral-200">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">
-                  WhatsApp y Teléfono
+                <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-neutral-400 block mb-1">
+                  Teléfono de atención
                 </span>
                 <div className="flex items-start gap-2.5">
                   <Phone className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
                   <div>
                     {/* TODO: Reemplazar con el número de teléfono oficial */}
-                    <p className="font-bold text-neutral-900">+52 618 000 0000</p>
-                    <p className="text-neutral-500">Atención digital directa</p>
+                    <p className="font-heading font-bold text-neutral-900">+52 618 000 0000</p>
+                    <p className="text-neutral-500">Atención directa y soporte continuo</p>
                   </div>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-neutral-200">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block mb-1">
+                <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-neutral-400 block mb-1">
                   Correo electrónico
                 </span>
                 <div className="flex items-start gap-2.5">
                   <Mail className="w-4 h-4 text-neutral-900 mt-0.5 shrink-0" />
                   <div>
                     {/* TODO: Reemplazar con la cuenta de correo oficial */}
-                    <p className="font-semibold text-neutral-900">soporte@galsarent.com.mx</p>
+                    <a
+                      href="mailto:soporte@galsarent.com.mx"
+                      className="font-heading font-semibold text-neutral-900 hover:text-[#3D63FF] underline transition-colors"
+                    >
+                      soporte@galsarent.com.mx
+                    </a>
                   </div>
                 </div>
               </div>
 
-              {/* Action WhatsApp */}
-              <div className="pt-3">
-                {/* TODO: Reemplazar con enlace real a WhatsApp de GALSA Rent */}
+              {/* Botón de llamada directo plano */}
+              <div className="pt-3 flex flex-col gap-2.5">
                 <a
-                  href="https://wa.me/526180000000?text=Hola%20GALSA%20Rent,%20tengo%20una%20consulta"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-neutral-900 hover:bg-black text-white font-bold text-xs transition-colors"
+                  href="tel:+526180000000"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#3D63FF] hover:bg-blue-700 text-white font-heading font-semibold text-xs transition-colors"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Contactar por WhatsApp</span>
+                  <Phone className="w-4 h-4" />
+                  <span>Llamar a sucursal</span>
+                </a>
+                <a
+                  href="mailto:soporte@galsarent.com.mx"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-neutral-300 bg-white hover:border-neutral-400 hover:bg-neutral-50 text-neutral-900 font-heading font-semibold text-xs transition-colors"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Enviar correo a soporte</span>
                 </a>
               </div>
 

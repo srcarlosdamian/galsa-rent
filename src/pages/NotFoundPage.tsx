@@ -43,7 +43,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate }) => {
 
         {/* Descripción */}
         <p className="mt-3 text-sm sm:text-base font-sans font-normal text-slate-600 leading-relaxed max-w-md mx-auto">
-          No encontramos la página que buscas, pero nuestros autos siguen listos para tu próximo viaje en Durango o para generar ingresos.
+          No encontramos la página que buscas, pero nuestros autos siguen listos para tu próximo viaje en México o para generar ingresos.
         </p>
 
         {/* Botones de acción sin icono: Renta un auto | Pon tu auto a trabajar */}

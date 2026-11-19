@@ -123,29 +123,28 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
         {/* Location & Contact CTA */}
         <div className="border-t border-neutral-200 pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-bold text-neutral-900">
-              ¿Quieres visitarnos o resolver una duda directamente?
+            <h3 className="text-lg font-heading font-bold text-neutral-900">
+              ¿Quieres visitarnos o explorar autos disponibles?
             </h3>
             <p className="text-xs text-neutral-600">
-              Estamos ubicados en Blvd. Guadiana, Plaza 450, Durango, Dgo. O escríbenos a nuestro WhatsApp oficial.
+              Estamos ubicados en Blvd. Guadiana, Plaza 450, Durango, Dgo., con atención telefónica y por correo electrónico.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <a
               href="/contacto"
               onClick={(e) => handleLink(e, '/contacto')}
-              className="py-3 px-5 rounded-xl border border-neutral-300 hover:border-black font-bold text-xs uppercase tracking-wider text-neutral-900 transition-all"
+              className="py-3 px-5 rounded-xl border border-neutral-300 hover:border-black font-heading font-semibold text-xs uppercase tracking-wider text-neutral-900 transition-colors"
             >
               Ver sucursal
             </a>
             <a
-              href="https://wa.me/526180000000"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/catalogo"
+              onClick={(e) => handleLink(e, '/catalogo')}
               style={{ backgroundColor: '#3D63FF' }}
-              className="py-3 px-5 rounded-xl text-white font-bold text-xs uppercase tracking-wider transition-all hover:brightness-105"
+              className="py-3 px-5 rounded-xl text-white font-heading font-semibold text-xs uppercase tracking-wider transition-colors hover:brightness-105"
             >
-              WhatsApp oficial
+              Explorar catálogo
             </a>
           </div>
         </div>

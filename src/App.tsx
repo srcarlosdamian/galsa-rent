@@ -166,12 +166,18 @@ export const App: React.FC = () => {
     const meta = getRouteMetadata(currentPath);
     if (meta) {
       document.title = meta.title;
-      
+
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.setAttribute('content', meta.description);
 
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) canonical.setAttribute('href', meta.canonical);
+
+      const altEs = document.querySelector('link[rel="alternate"][hreflang="es-MX"]');
+      if (altEs) altEs.setAttribute('href', meta.canonical);
+
+      const altDefault = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+      if (altDefault) altDefault.setAttribute('href', meta.canonical);
 
       const ogTitle = document.querySelector('meta[property="og:title"]');
       if (ogTitle) ogTitle.setAttribute('content', meta.ogTitle);
@@ -185,12 +191,29 @@ export const App: React.FC = () => {
       const ogImg = document.querySelector('meta[property="og:image"]');
       if (ogImg) ogImg.setAttribute('content', meta.ogImage.url);
 
+      const ogImgAlt = document.querySelector('meta[property="og:image:alt"]');
+      if (ogImgAlt) ogImgAlt.setAttribute('content', meta.ogImage.alt || meta.title);
+
+      const twUrl = document.querySelector('meta[name="twitter:url"]');
+      if (twUrl) twUrl.setAttribute('content', meta.canonical);
+
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.setAttribute('content', meta.ogTitle);
+
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute('content', meta.ogDescription);
+
       const twImg = document.querySelector('meta[name="twitter:image"]');
       if (twImg) twImg.setAttribute('content', meta.ogImage.url);
 
       const robots = document.querySelector('meta[name="robots"]');
       if (robots) {
-        robots.setAttribute('content', meta.noIndex ? 'noindex,nofollow' : 'index,follow');
+        robots.setAttribute(
+          'content',
+          meta.noIndex
+            ? 'noindex,nofollow'
+            : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
+        );
       }
     }
   }, [currentPath]);

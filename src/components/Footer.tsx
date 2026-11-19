@@ -1,6 +1,6 @@
 import React from 'react';
 import { GalsaLogo } from './GalsaLogo';
-import { Palette } from 'lucide-react';
+import { Palette, Globe } from 'lucide-react';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
@@ -29,7 +29,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
             
             <p className="text-[13px] font-heading font-normal text-slate-500 leading-relaxed">
-              Renta de autos 100% en línea con contrato digital y kilometraje libre en Durango, México.
+              Renta de autos 100% en línea con contrato digital y kilometraje libre en México.
             </p>
 
             <p className="text-[12px] font-heading text-slate-400">
@@ -97,7 +97,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="bg-black text-white text-[11px] font-mono py-2 px-4 border-t border-neutral-800 text-center tracking-wide">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
-          <div className="flex items-center gap-3 text-white">
+          <div className="flex flex-wrap items-center gap-3 text-white">
+            <a
+              href="/seo"
+              onClick={(e) => handleLink(e, '/seo')}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-blue-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 group"
+              title="Abrir Auditor & Previsualizador SEO"
+            >
+              <Globe className="w-3.5 h-3.5 text-blue-400" />
+              <span>Auditor SEO</span>
+            </a>
             <a
               href="/design-system"
               onClick={(e) => handleLink(e, '/design-system')}
@@ -107,8 +116,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Palette className="w-3.5 h-3.5 text-pink-400 group-hover:rotate-12 transition-transform" />
               <span>Sistema de Diseño</span>
             </a>
-            <span>Última actualización: <strong>18 Nov 2026, 18:30 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.97</span>
+            <span>Última actualización: <strong>18 Nov 2026, 18:40 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.98</span>
           </div>
         </div>
       </div>

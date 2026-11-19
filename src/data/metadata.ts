@@ -1,5 +1,6 @@
 import { RouteMetadata, Vehicle } from '../types/vehicle';
 import { VEHICLES } from './vehicles';
+import { BLOG_POSTS, BlogPost } from './blog';
 
 export const SITE_URL = 'https://galsarent.com.mx';
 
@@ -44,11 +45,11 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
   '/catalogo': {
     title: 'Catálogo de autos en renta | GALSA Rent',
     description:
-      'Explora autos verificados: sedanes económicos, SUVs familiares y camionetas 4x4 de flota propia y anfitriones. Contrato digital, seguro incluido y reserva 100% en línea.',
+      'Explora autos verificados: sedanes, SUVs y 4x4 de flota propia y anfitriones. Contrato digital, seguro incluido y reserva 100% en línea.',
     canonical: `${SITE_URL}/catalogo`,
     ogTitle: 'Catálogo de autos en renta | GALSA Rent',
     ogDescription:
-      'Explora autos verificados: sedanes económicos, SUVs familiares y camionetas 4x4 de flota propia y anfitriones. Contrato digital, seguro incluido y reserva 100% en línea.',
+      'Explora autos verificados: sedanes, SUVs y 4x4 de flota propia y anfitriones. Contrato digital, seguro incluido y reserva 100% en línea.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/blog': {
@@ -84,11 +85,11 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
   '/contacto': {
     title: 'Contacto y Atención a Clientes | GALSA Rent',
     description:
-      'Contáctanos directamente por WhatsApp o visítanos en sucursal. Horarios de atención, soporte y asesoría directa para renta de autos y anfitriones en México.',
+      'Visítanos en Sucursal Plaza 450 o contáctanos directamente. Horarios de atención, soporte y asesoría para renta de autos y anfitriones en México.',
     canonical: `${SITE_URL}/contacto`,
     ogTitle: 'Contacto y Atención a Clientes | GALSA Rent',
     ogDescription:
-      'Contáctanos directamente por WhatsApp o visítanos en sucursal. Horarios de atención, soporte y asesoría directa para renta de autos y anfitriones en México.',
+      'Visítanos en Sucursal Plaza 450 o contáctanos directamente. Horarios de atención, soporte y asesoría para renta de autos y anfitriones en México.',
     ogImage: DEFAULT_OG_IMAGE,
   },
   '/terminos': {
@@ -138,6 +139,24 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     canonical: `${SITE_URL}/cuenta`,
     ogTitle: 'Mi Cuenta | GALSA Rent',
     ogDescription: 'Gestión de reservas y contratos digitales de clientes GALSA Rent en México.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
+  '/cuenta/completar': {
+    title: 'Completar Perfil | GALSA Rent',
+    description: 'Completa tus datos de conductor y documentación para activar tu cuenta de GALSA Rent.',
+    canonical: `${SITE_URL}/cuenta/completar`,
+    ogTitle: 'Completar Perfil | GALSA Rent',
+    ogDescription: 'Completa tus datos de conductor y documentación para activar tu cuenta de GALSA Rent.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
+  '/completar-perfil': {
+    title: 'Completar Perfil | GALSA Rent',
+    description: 'Completa tus datos de conductor y documentación para activar tu cuenta de GALSA Rent.',
+    canonical: `${SITE_URL}/completar-perfil`,
+    ogTitle: 'Completar Perfil | GALSA Rent',
+    ogDescription: 'Completa tus datos de conductor y documentación para activar tu cuenta de GALSA Rent.',
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
@@ -202,6 +221,15 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
+  '/404': {
+    title: 'Página no encontrada | GALSA Rent',
+    description: 'La página que buscas no existe. Explora nuestro catálogo de autos disponibles en renta en México.',
+    canonical: `${SITE_URL}/404`,
+    ogTitle: 'Página no encontrada | GALSA Rent',
+    ogDescription: 'Explora nuestro catálogo de autos disponibles en renta en México.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
 };
 
 export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {
@@ -235,12 +263,104 @@ export function getVehicleMetadata(vehicle: Vehicle): RouteMetadata {
   };
 }
 
-export function getRouteMetadata(path: string): RouteMetadata {
-  // Normalize path
-  const cleanPath = path.replace(/\/+$/, '') || '/';
+export function getBlogPostMetadata(post: BlogPost): RouteMetadata {
+  const suffix = ' | Blog GALSA';
+  const maxBaseLen = 60 - suffix.length;
+  let baseTitle = post.title.trim();
+  if (baseTitle.length > maxBaseLen) {
+    const truncated = baseTitle.slice(0, maxBaseLen - 1);
+    const lastSpace = truncated.lastIndexOf(' ');
+    baseTitle = (lastSpace > 20 ? truncated.slice(0, lastSpace) : truncated).trimEnd() + '…';
+  }
+  const title = `${baseTitle}${suffix}`;
 
-  // Check noindex prefixes
-  if (cleanPath.startsWith('/admin') || cleanPath.startsWith('/reservar') || cleanPath.startsWith('/cuenta') || cleanPath === '/completar-perfil') {
+  let desc = post.excerpt.trim();
+  if (desc.length > 155) {
+    desc = desc.slice(0, 152).trimEnd() + '...';
+  }
+
+  return {
+    title,
+    description: desc,
+    canonical: `${SITE_URL}/blog/${post.slug}`,
+    ogTitle: title,
+    ogDescription: desc,
+    ogImage: {
+      url: post.image || DEFAULT_OG_IMAGE.url,
+      alt: post.title,
+      width: 1200,
+      height: 630,
+    },
+  };
+}
+
+export function getCheckoutMetadata(vehicle: Vehicle): RouteMetadata {
+  const title = `Completa tu reserva — ${vehicle.make} ${vehicle.model} ${vehicle.year} | GALSA`;
+  let desc = `Reserva ${vehicle.make} ${vehicle.model} ${vehicle.year} desde $${vehicle.pricePerDay.toLocaleString('es-MX')}/día en GALSA Rent. Check-in en línea y contrato digital.`;
+  if (desc.length > 155) {
+    desc = desc.slice(0, 152).trimEnd() + '...';
+  }
+
+  const firstRealPhoto = vehicle.images[0] || DEFAULT_OG_IMAGE;
+
+  return {
+    title,
+    description: desc,
+    canonical: `${SITE_URL}/reservar/${vehicle.slug}`,
+    ogTitle: title,
+    ogDescription: desc,
+    ogImage: {
+      url: firstRealPhoto.url,
+      alt: firstRealPhoto.alt,
+      width: firstRealPhoto.width || 1200,
+      height: firstRealPhoto.height || 750,
+    },
+    noIndex: true,
+  };
+}
+
+export function getRouteMetadata(path: string): RouteMetadata {
+  // Normalize path removing query strings, hashes and trailing slashes
+  const cleanPath = path.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+
+  // 1. Checkout routes: /reservar/{slug} or /reservar/{uuid}
+  if (cleanPath.startsWith('/reservar/')) {
+    const slugOrUuid = cleanPath.replace('/reservar/', '');
+    const vehicle = VEHICLES.find(
+      (v) => v.slug === slugOrUuid || v.uuid === slugOrUuid
+    );
+    if (vehicle) {
+      return getCheckoutMetadata(vehicle);
+    }
+  }
+
+  // 2. Blog article routes: /blog/{slug}
+  if (cleanPath.startsWith('/blog/')) {
+    const slug = cleanPath.replace('/blog/', '');
+    const post = BLOG_POSTS.find((p) => p.slug === slug);
+    if (post) {
+      return getBlogPostMetadata(post);
+    }
+  }
+
+  // 3. Vehicle detail routes: /vehiculos/{slug} or /vehiculos/{uuid}
+  if (cleanPath.startsWith('/vehiculos/')) {
+    const slugOrUuid = cleanPath.replace('/vehiculos/', '');
+    const vehicle = VEHICLES.find(
+      (v) => v.slug === slugOrUuid || v.uuid === slugOrUuid
+    );
+    if (vehicle) {
+      return getVehicleMetadata(vehicle);
+    }
+  }
+
+  // 4. Static routes
+  if (STATIC_ROUTES_METADATA[cleanPath]) {
+    return STATIC_ROUTES_METADATA[cleanPath];
+  }
+
+  // 5. Private prefixes fallback with noindex
+  if (cleanPath.startsWith('/admin') || cleanPath.startsWith('/cuenta') || cleanPath.startsWith('/reservar')) {
     return {
       title: 'Área Privada | GALSA Rent',
       description: 'Acceso privado para gestión de reservas y contratos digitales en México.',
@@ -252,30 +372,6 @@ export function getRouteMetadata(path: string): RouteMetadata {
     };
   }
 
-  // Check static routes
-  if (STATIC_ROUTES_METADATA[cleanPath]) {
-    return STATIC_ROUTES_METADATA[cleanPath];
-  }
-
-  // Check vehicle routes: /vehiculos/{slug} or /vehiculos/{uuid}
-  if (cleanPath.startsWith('/vehiculos/')) {
-    const slugOrUuid = cleanPath.replace('/vehiculos/', '');
-    const vehicle = VEHICLES.find(
-      (v) => v.slug === slugOrUuid || v.uuid === slugOrUuid
-    );
-    if (vehicle) {
-      return getVehicleMetadata(vehicle);
-    }
-  }
-
-  // Default fallback 404
-  return {
-    title: 'Página no encontrada | GALSA Rent',
-    description: 'La página que buscas no existe. Explora nuestro catálogo de autos disponibles en renta en México.',
-    canonical: `${SITE_URL}/404`,
-    ogTitle: 'Página no encontrada | GALSA Rent',
-    ogDescription: 'Explora nuestro catálogo de autos disponibles en renta en México.',
-    ogImage: DEFAULT_OG_IMAGE,
-    noIndex: true,
-  };
+  // 6. Default fallback 404
+  return STATIC_ROUTES_METADATA['/404'];
 }

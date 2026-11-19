@@ -1,6 +1,7 @@
 import { Vehicle } from '../types/vehicle';
 import { FAQ_ITEMS } from '../components/FaqSection';
-import { SITE_URL } from './metadata';
+import { SITE_URL, DEFAULT_OG_IMAGE } from './metadata';
+import { BlogPost } from './blog';
 
 export function getHomeSchemaJson() {
   return {
@@ -12,8 +13,8 @@ export function getHomeSchemaJson() {
         name: 'GALSA Rent',
         legalName: 'GALSA Rent',
         url: `${SITE_URL}/`,
-        logo: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
-        image: 'https://res.cloudinary.com/dl43kwe5u/image/upload/c_fill,g_auto,ar_16:10,w_1200,f_auto,q_auto/v1791553254/galsa/vehiculos/rrn6ozhmnazoamesafxy.jpg',
+        logo: DEFAULT_OG_IMAGE.url,
+        image: DEFAULT_OG_IMAGE.url,
         description: 'Renta de autos 100% en línea en México con entrega rápida sin filas, seguro incluido y marketplace de anfitriones.',
         priceRange: '$$',
         currenciesAccepted: 'MXN',
@@ -184,6 +185,63 @@ export function getCatalogSchemaJson(vehicles: Vehicle[]) {
           url: `${SITE_URL}/vehiculos/${v.slug}`,
           image: v.images[0]?.url,
         })),
+      },
+    ],
+  };
+}
+
+export function getBlogPostSchemaJson(post: BlogPost) {
+  const postUrl = `${SITE_URL}/blog/${post.slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${postUrl}#article`,
+        headline: post.title,
+        description: post.excerpt,
+        image: post.image || DEFAULT_OG_IMAGE.url,
+        inLanguage: 'es-MX',
+        author: {
+          '@type': 'Organization',
+          name: post.author || 'Equipo GALSA Rent',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'GALSA Rent',
+          url: `${SITE_URL}/`,
+          logo: {
+            '@type': 'ImageObject',
+            url: DEFAULT_OG_IMAGE.url,
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': postUrl,
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Inicio',
+            item: `${SITE_URL}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Blog',
+            item: `${SITE_URL}/blog`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: post.title,
+            item: postUrl,
+          },
+        ],
       },
     ],
   };

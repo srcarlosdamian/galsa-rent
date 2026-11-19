@@ -1150,6 +1150,11 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 href: '/anfitriones',
               },
               {
+                title: 'Registro de anfitriones',
+                desc: 'Envía tu solicitud en menos de 2 minutos y recibe validación en 24-48 horas.',
+                href: '/anfitriones/registro',
+              },
+              {
                 title: 'Garantía y seguridad digital',
                 desc: 'Inspección con fotos en entrega, depósito seguro y seguro certificado.',
                 href: '/confianza',
@@ -1161,7 +1166,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               },
               {
                 title: 'Sucursales y contacto',
-                desc: 'Ubicación oficial, teléfonos y canal de WhatsApp de atención continua.',
+                desc: 'Ubicación oficial, horarios, teléfono y correo de atención continua.',
                 href: '/contacto',
               },
               {

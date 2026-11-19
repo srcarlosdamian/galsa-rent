@@ -10,8 +10,21 @@ const distDir = path.resolve(rootDir, 'dist');
 // Read source data directly from TS
 import { VEHICLES } from '../src/data/vehicles';
 import { BLOG_POSTS } from '../src/data/blog';
-import { STATIC_ROUTES_METADATA, getVehicleMetadata, SITE_URL } from '../src/data/metadata';
-import { getHomeSchemaJson, getVehicleSchemaJson, getFaqSchemaJson, getHostSchemaJson, getCatalogSchemaJson } from '../src/data/schema';
+import {
+  STATIC_ROUTES_METADATA,
+  getVehicleMetadata,
+  getBlogPostMetadata,
+  getCheckoutMetadata,
+  SITE_URL,
+} from '../src/data/metadata';
+import {
+  getHomeSchemaJson,
+  getVehicleSchemaJson,
+  getFaqSchemaJson,
+  getHostSchemaJson,
+  getCatalogSchemaJson,
+  getBlogPostSchemaJson,
+} from '../src/data/schema';
 
 console.log('⚡ Starting Prerendering / SSG for GALSA Rent...');
 
@@ -125,6 +138,10 @@ function renderPage({ routePath, metadata, schemaJson, initialContentHtml }: any
 
   // Twitter cards
   html = html.replace(
+    /<meta name="twitter:url" content=".*?" \/>/i,
+    `<meta name="twitter:url" content="${metadata.canonical}" />`
+  );
+  html = html.replace(
     /<meta name="twitter:title" content=".*?" \/>/i,
     `<meta name="twitter:title" content="${metadata.ogTitle}" />`
   );
@@ -195,11 +212,6 @@ const homeInitialHtml = `
       ${VEHICLES.map(v => `<li><a href="/vehiculos/${v.slug}"><strong>${v.make} ${v.model} ${v.year}</strong> - $${v.pricePerDay} MXN/día (Depósito $${v.deposit} MXN)</a></li>`).join('\n      ')}
     </ul>
   </section>
-  <footer>
-    <div style="background:#000;color:#fff;padding:8px;font-size:11px;font-family:monospace;text-align:center;">
-      [ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final] Última actualización: 28 Oct 2026, 20:45 hrs | v1.2.8
-    </div>
-  </footer>
 </main>
 `;
 
@@ -308,11 +320,11 @@ function getCatalogInitialHtml() {
 
 staticPages.forEach(({ route, schema, initialHtml }: any) => {
   const meta = STATIC_ROUTES_METADATA[route] || {
-    title: 'GALSA Rent Durango',
-    description: 'Renta de autos 100% en línea en Durango.',
+    title: 'GALSA Rent México',
+    description: 'Renta de autos 100% en línea en México.',
     canonical: `${SITE_URL}${route}`,
-    ogTitle: 'GALSA Rent Durango',
-    ogDescription: 'Renta de autos 100% en línea en Durango.',
+    ogTitle: 'GALSA Rent México',
+    ogDescription: 'Renta de autos 100% en línea en México.',
     ogImage: STATIC_ROUTES_METADATA['/'].ogImage,
   };
 
@@ -324,7 +336,7 @@ staticPages.forEach(({ route, schema, initialHtml }: any) => {
       <main>
         <h1>${meta.title}</h1>
         <p>${meta.description}</p>
-        <p>GALSA Rent en Durango · Renta de autos con entrega rápida sin filas.</p>
+        <p>GALSA Rent México · Renta de autos 100% en línea con entrega rápida sin filas.</p>
       </main>
     `,
   });
@@ -344,7 +356,7 @@ VEHICLES.forEach((v) => {
         <nav aria-label="Breadcrumb">
           <a href="/">Inicio</a> &gt; <a href="/catalogo">Catálogo</a> &gt; <span>${v.make} ${v.model} ${v.year}</span>
         </nav>
-        <h1>Renta ${v.make} ${v.model} ${v.version} ${v.year} en Durango | GALSA</h1>
+        <h1>Renta ${v.make} ${v.model} ${v.version} ${v.year} | GALSA</h1>
         <p><strong>Revisado y verificado antes de cada renta</strong></p>
         <p>${v.description}</p>
         <p>Precio por día: $${v.pricePerDay} MXN + 33% de tarifa de servicio. Depósito reembolsable: $${v.deposit} MXN.</p>
@@ -364,13 +376,10 @@ VEHICLES.forEach((v) => {
   writeRouteFile(`/vehiculos/${v.slug}`, vehicleHtml);
 
   // Also prerender checkout page for this vehicle (/reservar/:slug)
+  const checkoutMeta = getCheckoutMetadata(v);
   const checkoutHtml = renderPage({
     routePath: `/reservar/${v.slug}`,
-    metadata: {
-      ...meta,
-      title: `Completa tu reserva - ${v.make} ${v.model} | GALSA Rent`,
-      noIndex: true,
-    },
+    metadata: checkoutMeta,
     schemaJson: null,
     initialContentHtml: `
       <main>
@@ -400,24 +409,13 @@ VEHICLES.forEach((v) => {
 
 // 4. Render Blog Articles
 BLOG_POSTS.forEach((post) => {
-  const meta = {
-    title: `${post.title} | Blog GALSA Rent`,
-    description: post.excerpt,
-    canonical: `${SITE_URL}/blog/${post.slug}`,
-    ogTitle: `${post.title} | Blog GALSA Rent`,
-    ogDescription: post.excerpt,
-    ogImage: {
-      url: post.image,
-      alt: post.title,
-      width: 1200,
-      height: 630,
-    },
-  };
+  const meta = getBlogPostMetadata(post);
+  const schema = getBlogPostSchemaJson(post);
 
   const articleHtml = renderPage({
     routePath: `/blog/${post.slug}`,
     metadata: meta,
-    schemaJson: null,
+    schemaJson: schema,
     initialContentHtml: `
       <article>
         <h1>${post.title}</h1>

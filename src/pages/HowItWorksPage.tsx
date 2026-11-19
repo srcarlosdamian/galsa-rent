@@ -59,7 +59,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
       details: [
         'Checklist controlado: fotos de carrocería e interiores',
         'Mismo nivel de gasolina a la entrega y devolución',
-        'Asistencia y soporte directo vía WhatsApp en todo momento'
+        'Asistencia y soporte directo 24/7 en todo momento'
       ]
     }
   ];
@@ -97,7 +97,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
             return (
               <div 
                 key={step.num}
-                className="bg-white rounded-3xl border border-neutral-200 p-8 shadow-sm hover:border-black transition-all flex flex-col justify-between"
+                className="bg-white rounded-3xl border border-neutral-200 p-8 hover:border-black transition-colors flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">

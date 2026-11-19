@@ -3,5 +3,11 @@ Allow: /
 Disallow: /admin/
 Disallow: /cuenta
 Disallow: /reservar/
+Disallow: /seo
+Disallow: /design-system
+Disallow: /recuperar-password
+Disallow: /restablecer-password
+Disallow: /completar-perfil
+Disallow: /404
 
 Sitemap: https://galsarent.com.mx/sitemap.xml

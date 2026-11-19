@@ -6,22 +6,22 @@ export const TrustPage: React.FC = () => {
   return (
     <div className="py-12 md:py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-        <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
+        <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
           Seguridad jurídica y vehicular
         </span>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900">
-          Seguridad y Confianza en Renta de Autos en Durango
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-slate-900">
+          Seguridad y Confianza en Renta de Autos en México
         </h1>
-        <p className="mt-4 text-base text-neutral-600 max-w-2xl mx-auto">
+        <p className="mt-4 text-base font-sans text-slate-600 max-w-2xl mx-auto">
           Contrato digital con validez legal, seguro con cobertura amplia e inspección de cada vehículo antes de entregarse en Sucursal Plaza 450, Durango.
         </p>
       </div>
 
       <TrustSafetySection />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-6 text-xs text-neutral-700 leading-relaxed">
-        <div className="p-6 rounded-3xl border border-neutral-200 bg-neutral-50/50 space-y-3">
-          <h2 className="text-base font-bold text-neutral-900">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-6 text-xs text-slate-700 leading-relaxed">
+        <div className="p-6 rounded-3xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <h2 className="text-base font-heading font-bold text-slate-900">
             Validez legal del contrato mercantil digital
           </h2>
           <p>

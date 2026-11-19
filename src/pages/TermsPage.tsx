@@ -5,27 +5,27 @@ export const TermsPage: React.FC = () => {
     <div className="py-12 md:py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-neutral-800">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-2">
+          <span className="text-xs font-heading font-bold uppercase tracking-wider text-slate-400 block mb-2">
             Marco normativo
           </span>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-neutral-900">
+          <h1 className="text-3xl sm:text-4xl font-heading font-extrabold tracking-tight text-slate-900">
             Términos y Condiciones del Contrato Digital
           </h1>
-          <p className="mt-2 text-xs text-neutral-500">Última actualización: Octubre 2026 · Durango, Dgo., México</p>
+          <p className="mt-2 text-xs text-slate-500">Última actualización: Noviembre 2026 · México</p>
         </div>
 
-        <div className="space-y-6 text-xs sm:text-sm leading-relaxed border-t border-neutral-200 pt-6">
+        <div className="space-y-6 text-xs sm:text-sm leading-relaxed border-t border-slate-200 pt-6">
           <section className="space-y-2">
-            <h2 className="text-base font-bold text-neutral-900">1. Objeto y Operación</h2>
+            <h2 className="text-base font-heading font-bold text-slate-900">1. Objeto y Operación</h2>
             <p>
-              GALSA Rent opera una plataforma tecnológica que facilita la renta de autos propios y el marketplace de vehículos de anfitriones particulares exclusivamente en el municipio de Durango, Dgo., con entrega y recepción física en Sucursal Plaza 450.
+              GALSA Rent opera una plataforma tecnológica en México que facilita la renta de vehículos propios y el marketplace de autos de anfitriones verificados, contando con nuestra Sucursal Plaza 450 en Durango, Dgo., como punto físico oficial de entrega y recepción.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-bold text-neutral-900">2. Tarifas y Estructura de Cobro</h2>
+            <h2 className="text-base font-heading font-bold text-slate-900">2. Tarifas, Anfitriones y Estructura de Cobro</h2>
             <p>
-              El cliente paga el importe correspondiente a los días de renta según la tarifa diaria fijada para el vehículo + una tarifa de servicio de 33% (IVA incluido) que ampara la validación tecnológica, cobertura y operación. El anfitrión recibe el 100% de la tarifa por día que fija, sin comisiones deducidas.
+              El cliente cubre el importe de los días de renta según la tarifa diaria del vehículo más una tarifa de servicio del 33% (IVA incluido) destinada a validación tecnológica, cobertura y operación. En el programa de anfitriones, GALSA revisa cada solicitud en un plazo de 24 a 48 horas; el anfitrión recibe el 100% de la tarifa diaria que establece, depositada en la cuenta bancaria registrada en la app, mientras la tarifa de servicio del 33% la paga el cliente.
             </p>
           </section>
 
