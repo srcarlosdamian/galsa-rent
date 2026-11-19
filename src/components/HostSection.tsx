@@ -32,37 +32,37 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
     {
       title: 'Control total',
       description: 'Tú defines precios, disponibilidad y qué reservas aceptas.',
-      image: '/images/step-img-1.webp',
+      image: '/galsa-rent/images/anfitriones/benefit-1-control-total.png',
       icon: Sliders,
     },
     {
       title: 'Pagos a tu cuenta',
       description: 'Cobramos al cliente y te depositamos tu parte en la cuenta que registres.',
-      image: '/images/step-img-3.webp',
+      image: '/galsa-rent/images/anfitriones/benefit-2-pagos.png',
       icon: Award,
     },
     {
       title: 'Seguro y verificación',
       description: 'Cobertura durante la renta y clientes con identidad verificada.',
-      image: '/images/step-img-2.webp',
+      image: '/galsa-rent/images/anfitriones/benefit-3-seguro.png',
       icon: ShieldCheck,
     },
     {
       title: 'Soporte 24/7',
       description: 'Equipo dedicado para anfitriones y asistencia en carretera.',
-      image: '/images/step-img-4.webp',
+      image: '/galsa-rent/images/anfitriones/benefit-4-soporte.png',
       icon: Clock,
     },
     {
       title: 'Tarifa transparente',
       description: 'El 33% de servicio lo paga el cliente. Sin cargos ocultos.',
-      image: '/images/trust-safety.webp',
+      image: '/galsa-rent/images/anfitriones/benefit-5-tarifa.png',
       icon: Check,
     },
     {
       title: 'Más ocupación',
       description: 'Recomendaciones de precio dinámico según la demanda de tu ciudad.',
-      image: '/images/renta-galsa.webp',
+      image: '/galsa-rent/images/anfitriones/benefit-6-ocupacion.png',
       icon: ArrowRight,
     },
   ];
