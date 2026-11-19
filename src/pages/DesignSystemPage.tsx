@@ -198,7 +198,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     matchesSearch('Inputs Controles Formulario Nombre Search Datepicker Checkbox Switch', 'campo texto placeholder accent-');
   const showAtomsBadges =
     shouldShowSection('atoms') &&
-    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.2.99', 'pills etiquetas estatus');
+    matchesSearch('Badges Tags Indicadores Estado index follow pendiente folio v2.3.0', 'pills etiquetas estatus');
 
   const showMolSearch =
     shouldShowSection('molecules') &&
@@ -233,7 +233,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
     matchesSearch('Confirmación Minimalista 1 Columna Reserva creada Solicitud enviada', 'folio anf gal estado');
   const showOrgQaRibbon =
     shouldShowSection('organisms') &&
-    matchesSearch('Listón Control QA Footer Auditor SEO Sistema de Diseño', 'v2.2.99 barra inferior');
+    matchesSearch('Listón Control QA Footer Auditor SEO Sistema de Diseño', 'v2.3.0 barra inferior');
 
   const showAuditKpis =
     shouldShowSection('audit') &&
@@ -297,7 +297,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.2.99</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.3.0</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -448,7 +448,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <div>
                     <h3 className="text-sm font-heading font-bold text-slate-900">
-                      Reglas de Superficies, Bordes y Elevación (v2.2.99)
+                      Reglas de Superficies, Bordes y Elevación (v2.3.0)
                     </h3>
                     <p className="text-xs text-slate-500 mt-0.5">
                       Estandarización lineal: cero sombras en botones y enlaces CTA; elevación reservada exclusivamente para popovers y modales.
@@ -1112,7 +1112,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   </span>
 
                   <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                    v2.2.99
+                    v2.3.0
                   </span>
                 </div>
               </div>
@@ -1845,7 +1845,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.2.99</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.3.0</span>
                     </div>
                   </div>
                 </div>

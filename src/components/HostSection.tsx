@@ -210,125 +210,129 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
               </div>
             </div>
 
-            {/* LADO DERECHO: SIMULADOR DE INGRESOS A LA DERECHA (3 sliders limpios + tarjeta neutral gris 50) */}
-            <div className="lg:col-span-6 w-full text-left space-y-6">
-              <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900">
-                Calcula tus ingresos estimados
-              </h2>
+            {/* LADO DERECHO: SIMULADOR DE INGRESOS UNIFICADO EN UN CONTENEDOR GRIS CLARO EN 2 BLOQUES SEPARADOS POR LÍNEA */}
+            <div className="lg:col-span-6 w-full text-left">
+              <div className="rounded-2xl bg-slate-50 divide-y divide-slate-200/80">
+                {/* Bloque superior: Título compacto y 3 sliders */}
+                <div className="p-6 sm:p-7 space-y-5">
+                  <h2 className="text-base sm:text-lg font-heading font-bold text-slate-900">
+                    Calcula tus ingresos estimados
+                  </h2>
 
-              {/* Controles de sliders horizontales exactos a la captura */}
-              <div className="space-y-4 pt-1">
-                <div className="flex items-center gap-4">
-                  <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
-                    Valor del auto
-                  </span>
-                  <input
-                    type="range"
-                    min={150000}
-                    max={1200000}
-                    step={25000}
-                    value={carValue}
-                    onChange={(e) => setCarValue(Number(e.target.value))}
-                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
-                  />
-                  <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0">
-                    ${carValue.toLocaleString('es-MX')}
-                  </span>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
+                        Valor del auto
+                      </span>
+                      <input
+                        type="range"
+                        min={150000}
+                        max={1200000}
+                        step={25000}
+                        value={carValue}
+                        onChange={(e) => setCarValue(Number(e.target.value))}
+                        className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+                      />
+                      <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0 tabular-nums">
+                        ${carValue.toLocaleString('es-MX')}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
+                        Días rentados
+                      </span>
+                      <input
+                        type="range"
+                        min={3}
+                        max={30}
+                        step={1}
+                        value={daysRented}
+                        onChange={(e) => setDaysRented(Number(e.target.value))}
+                        className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+                      />
+                      <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0 tabular-nums">
+                        {daysRented} d
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
+                        Precio/día
+                      </span>
+                      <input
+                        type="range"
+                        min={600}
+                        max={3000}
+                        step={50}
+                        value={pricePerDay}
+                        onChange={(e) => setPricePerDay(Number(e.target.value))}
+                        className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+                      />
+                      <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0 tabular-nums">
+                        ${pricePerDay.toLocaleString('es-MX')}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
-                    Días rentados
+                {/* Bloque inferior: Ingreso neto mensual estimado y proyección anual */}
+                <div className="p-6 sm:p-7 space-y-4">
+                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block">
+                    TU INGRESO NETO MENSUAL ESTIMADO
                   </span>
-                  <input
-                    type="range"
-                    min={3}
-                    max={30}
-                    step={1}
-                    value={daysRented}
-                    onChange={(e) => setDaysRented(Number(e.target.value))}
-                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
-                  />
-                  <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0">
-                    {daysRented} d
-                  </span>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <span className="w-28 text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
-                    Precio/día
-                  </span>
-                  <input
-                    type="range"
-                    min={600}
-                    max={3000}
-                    step={50}
-                    value={pricePerDay}
-                    onChange={(e) => setPricePerDay(Number(e.target.value))}
-                    className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
-                  />
-                  <span className="w-24 text-right text-xs sm:text-sm font-bold text-slate-900 shrink-0">
-                    ${pricePerDay.toLocaleString('es-MX')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Tarjeta de estimación con fondo gris 50 y diseño neutral sin borde exterior */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-slate-50 space-y-4">
-                <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block">
-                  TU INGRESO NETO MENSUAL ESTIMADO
-                </span>
-
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight">
-                    ${hostEarnings.toLocaleString('es-MX')}
-                  </span>
-                  <span className="text-xs font-heading font-bold text-slate-500 uppercase">
-                    MXN
-                  </span>
-                </div>
-
-                <div className="border-t border-slate-200/80 pt-3 space-y-2 text-xs sm:text-sm font-sans text-slate-600">
-                  <div className="flex justify-between items-center">
-                    <span>Tus rentas del mes</span>
-                    <span className="font-heading font-bold text-slate-900">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-900 tracking-tight tabular-nums">
                       ${hostEarnings.toLocaleString('es-MX')}
                     </span>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <span>Tarifa GALSA (33%)</span>
-                    <span className="font-heading font-bold text-slate-900">
-                      ${galsaFee.toLocaleString('es-MX')}
+                    <span className="text-xs font-heading font-bold text-slate-500 uppercase">
+                      MXN
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center">
-                    <span>Lo que pagan clientes</span>
-                    <span className="font-heading font-bold text-slate-900">
-                      ${clientTotal.toLocaleString('es-MX')}
-                    </span>
-                  </div>
-                </div>
+                  <div className="border-t border-slate-200/80 pt-3 space-y-2 text-xs sm:text-sm font-sans text-slate-600">
+                    <div className="flex justify-between items-center">
+                      <span>Tus rentas del mes</span>
+                      <span className="font-heading font-bold text-slate-900 tabular-nums">
+                        ${hostEarnings.toLocaleString('es-MX')}
+                      </span>
+                    </div>
 
-                <div className="border-t border-slate-200/80 pt-3">
-                  <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
-                    PROYECCIÓN ANUAL
-                  </span>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight">
-                      ${annualProjection.toLocaleString('es-MX')}
-                    </span>
-                    <span className="text-xs font-heading font-bold text-slate-500">
-                      MXN / año
-                    </span>
-                  </div>
-                </div>
+                    <div className="flex justify-between items-center">
+                      <span>Tarifa GALSA (33%)</span>
+                      <span className="font-heading font-bold text-slate-900 tabular-nums">
+                        ${galsaFee.toLocaleString('es-MX')}
+                      </span>
+                    </div>
 
-                <div className="pt-2">
-                  <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
-                    Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
-                  </p>
+                    <div className="flex justify-between items-center">
+                      <span>Lo que pagan clientes</span>
+                      <span className="font-heading font-bold text-slate-900 tabular-nums">
+                        ${clientTotal.toLocaleString('es-MX')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-200/80 pt-3">
+                    <span className="text-[11px] font-heading font-bold tracking-wider text-slate-500 uppercase block mb-1">
+                      PROYECCIÓN ANUAL
+                    </span>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-heading font-extrabold text-slate-900 tracking-tight tabular-nums">
+                        ${annualProjection.toLocaleString('es-MX')}
+                      </span>
+                      <span className="text-xs font-heading font-bold text-slate-500">
+                        MXN / año
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <p className="text-[11px] font-sans text-slate-400 text-center leading-relaxed">
+                      Estimación ilustrativa. Los ingresos reales dependen de la demanda, la temporada y la ocupación.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

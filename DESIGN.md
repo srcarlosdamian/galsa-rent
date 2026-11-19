@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform inspired by Virtuo and Airbnb (v2.2.99)
+description: Minimalist, clean, flat digital mobility platform inspired by Virtuo and Airbnb (v2.3.0)
 colors:
   primary: "#3D63FF"
   primary-hover: "#1D4ED8"
@@ -38,7 +38,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.2.99`)
+# GALSA Rent Design System & Guidelines (`v2.3.0`)
 
 ## 1. Principios de Diseño
 - **Elevación plana (Cero sombras en botones/CTAs):** ningún `<button>` ni `<a>` de llamado a la acción utiliza clases `shadow-*`. La retroalimentación visual se logra con cambio de tono, borde o escala táctil (`active:scale-[0.98]`).
