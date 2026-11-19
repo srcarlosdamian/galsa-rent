@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.6.6</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.6.7</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1571,54 +1571,125 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <h3 className="text-base font-heading font-bold text-slate-900">
-                    Inputs &amp; Controles de Formulario
+                    Inputs, Textareas, Selectores &amp; Controles (Comparativa Completa)
                   </h3>
-                  <span className="text-xs text-slate-400 font-mono">Campos limpios con etiqueta uppercase</span>
+                  <span className="text-xs text-slate-400 font-mono">Todos los campos reales usados en la app</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  {/* Campo Oficial Formulario */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
-                    <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
-                      Nombre(s)
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ej. Carlos"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
-                    />
-                  </div>
-
-                  {/* Search Input */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
-                    <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">Búsqueda</div>
-                    <div className="relative">
-                      <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  {/* 1. Campo Oficial Formulario (Text / Email / Tel) */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                        1. Input Estándar (Text / Email)
+                      </label>
                       <input
                         type="text"
-                        placeholder="Marca o modelo..."
-                        className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cta/20 focus:border-cta transition-all placeholder:text-slate-400"
+                        placeholder="Ej. Carlos"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-sans text-sm outline-none transition-colors placeholder:text-slate-400"
                       />
                     </div>
+                    <span className="text-[10px] font-mono text-slate-400">Checkout, Registro Anfitrión, Cuenta</span>
                   </div>
 
-                  {/* Datepicker Trigger Input */}
-                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2 text-left">
-                    <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">Selector de Fecha</div>
-                    <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 cursor-pointer hover:border-cta-400 transition-colors">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-cta" />
-                        <span>18/11/2026</span>
-                      </div>
-                      <span className="text-[11px] font-mono text-slate-400">10:00 hrs</span>
+                  {/* 2. Textarea (Información adicional) */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left md:col-span-2">
+                    <div className="space-y-1.5">
+                      <label className="block text-sm font-heading font-bold text-slate-900">
+                        2. Textarea — Información adicional (opcional)
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="Notas para tu renta: horario de llegada de vuelo, requerimientos de entrega..."
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 text-xs sm:text-sm font-sans outline-none transition-colors resize-y placeholder:text-slate-400"
+                      />
                     </div>
+                    <span className="text-[10px] font-mono text-slate-400">ReservationCheckoutView (Docs), AccountPage (Notas)</span>
                   </div>
 
-                  {/* Range Slider Oficial & Checkbox Real */}
+                  {/* 3. Search Input */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
+                    <div className="space-y-2">
+                      <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">3. Input Búsqueda</div>
+                      <div className="relative">
+                        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <input
+                          type="text"
+                          placeholder="Marca o modelo..."
+                          className="w-full pl-9 pr-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cta/20 focus:border-cta transition-all placeholder:text-slate-400"
+                        />
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">CatalogPage, DesignSystemPage</span>
+                  </div>
+
+                  {/* 4. Input Auth / Password */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                        4. Input Auth / Contraseña
+                      </label>
+                      <input
+                        type="password"
+                        defaultValue="••••••••"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-2 focus:ring-cta/15 bg-white text-slate-900 font-sans text-sm outline-none transition-all"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">LoginPage, RegisterPage, ResetPassword</span>
+                  </div>
+
+                  {/* 5. Input Numérico / Tarifa */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                        5. Input Numérico / Tarifa
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-heading font-bold text-slate-400">$</span>
+                        <input
+                          type="number"
+                          defaultValue={1500}
+                          className="w-full pl-7 pr-12 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta bg-white text-slate-900 font-heading font-bold text-sm outline-none tabular-nums"
+                        />
+                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] font-sans text-slate-400">MXN</span>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">HostSection, HostRegistrationPage</span>
+                  </div>
+
+                  {/* 6. Input Solo Lectura (Fijo) */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">
+                        6. Input Solo Lectura (Fijo)
+                      </label>
+                      <input
+                        type="text"
+                        readOnly
+                        value="Durango, Dgo."
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-heading font-semibold text-sm outline-none cursor-default"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">ReservationCheckoutView (Ciudad/Sucursal)</span>
+                  </div>
+
+                  {/* 7. Datepicker Trigger Input */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-3 text-left">
+                    <div className="space-y-2">
+                      <div className="text-[11px] font-heading font-bold uppercase tracking-wider text-slate-600">7. Selector de Fecha (Trigger)</div>
+                      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-xs sm:text-sm font-heading font-semibold text-slate-900 cursor-pointer hover:border-slate-400 transition-colors">
+                        <span>4 nov 2026</span>
+                        <Calendar className="w-4 h-4 text-slate-500" />
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">VehicleDetailView (SingleDatePicker)</span>
+                  </div>
+
+                  {/* 8. Range Slider Oficial & Checkbox Real */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3 text-left">
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-slate-800">Range Slider (Catálogo / Ingresos)</span>
+                        <span className="font-semibold text-slate-800">8. Range Slider &amp; Checkbox</span>
                         <span className="font-bold text-slate-900 tabular-nums">${demoPriceVal.toLocaleString('es-MX')}</span>
                       </div>
                       <input
@@ -2491,7 +2562,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.6.6</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.6.7</span>
                     </div>
                   </div>
                 </div>

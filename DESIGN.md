@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.6.6)
+description: Minimalist, clean, flat digital mobility platform (v2.6.7)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.6.6`)
+# GALSA Rent Design System & Guidelines (`v2.6.7`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -72,3 +72,13 @@ rounded:
 2. **Chevron Circular de Acordeón (`ChevronDown` con `rotate-180`):** en los 5 pasos plegables del Checkout (`ReservationCheckoutView.tsx`).
 3. **Chevron de Select / Dropdown / Menú (`ChevronDown`):** en `CustomDropdown.tsx`, filtros y ordenamiento de `CatalogPage.tsx`, selectores de `SearchContainer.tsx` y submenú de `Header.tsx`.
 4. **Chevron de Enlace y Breadcrumb (`ChevronRight`):** en el enlace "Ver catálogo" (`VehicleDetailView.tsx`), migas de pan (`AboutPage.tsx`, `HowItWorksPage.tsx`) y enlaces de navegación (`App.tsx`).
+
+## 5. Catálogo de Inputs y Controles (`DesignSystemPage.tsx`)
+1. **Input Estándar (`text` / `email` / `tel`):** `rounded-xl border border-slate-200 focus:border-cta focus:ring-1 focus:ring-cta` (`ReservationCheckoutView.tsx`, `HostRegistrationPage.tsx`, `AccountPage.tsx`).
+2. **Textarea (`Información adicional` / Notas):** `rounded-xl px-4 py-3 border border-slate-200 resize-y` (`ReservationCheckoutView.tsx`, `AccountPage.tsx`).
+3. **Input Búsqueda (`Search`):** con icono izquierdo `pl-9` (`CatalogPage.tsx`, `DesignSystemPage.tsx`).
+4. **Input Auth (`password`):** en `LoginPage.tsx`, `RegisterPage.tsx`, `ForgotPasswordPage.tsx`, `ResetPasswordPage.tsx`.
+5. **Input Numérico / Tarifa (`number`):** con prefijo `$` y sufijo `MXN` (`HostSection.tsx`, `HostRegistrationPage.tsx`).
+6. **Input Solo Lectura (`readOnly`):** fondo `bg-slate-50` (`ReservationCheckoutView.tsx`).
+7. **Selector de Fecha (`SingleDatePicker` trigger):** botón con borde e icono `Calendar` (`VehicleDetailView.tsx`).
+8. **Range Slider y Checkbox:** en `CatalogPage.tsx`, `HostSection.tsx` y `ReservationCheckoutView.tsx`.
