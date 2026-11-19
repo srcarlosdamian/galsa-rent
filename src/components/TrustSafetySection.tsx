@@ -8,12 +8,12 @@ export const TrustSafetySection: React.FC = () => {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         
         {/* Contenedor gris 50 con max-width y bordes redondeados sin bordes */}
-        <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-8 sm:p-12 lg:p-16 border-0 shadow-none">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+        <div className="w-full bg-gray-50 rounded-[28px] sm:rounded-[32px] p-6 sm:p-10 lg:p-12 border-0 shadow-none">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-10">
             
-            {/* Lado Izquierdo: Imagen cuadrada con bordes redondeados sin borde */}
-            <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[440px] aspect-square rounded-[24px] sm:rounded-[28px] overflow-hidden bg-transparent border-0 shadow-none">
+            {/* Lado Izquierdo: Imagen ancha con bordes redondeados sin borde */}
+            <div className="w-full lg:w-[54%] flex justify-center lg:justify-start">
+              <div className="relative w-full aspect-[4/3] sm:aspect-[5/4] rounded-[24px] sm:rounded-[28px] overflow-hidden bg-transparent border-0 shadow-none">
                 <img
                   src={trustImg}
                   alt="Cada renta respaldada de principio a fin con GALSA"
@@ -24,7 +24,7 @@ export const TrustSafetySection: React.FC = () => {
             </div>
 
             {/* Lado Derecho: Título, subtítulo y botón */}
-            <div className="w-full lg:w-1/2 flex flex-col items-start text-left space-y-6">
+            <div className="w-full lg:w-[46%] flex flex-col items-start text-left space-y-5 sm:space-y-6">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-semibold text-ink-900 tracking-tight leading-tight">
                 Cada renta, respaldada de principio a fin
               </h2>
