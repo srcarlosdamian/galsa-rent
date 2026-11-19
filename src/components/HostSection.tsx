@@ -13,7 +13,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
   const handlePublish = (e: React.MouseEvent) => {
     if (onNavigate) {
       e.preventDefault();
-      onNavigate('/registro');
+      onNavigate('/anfitriones/registro');
     }
   };
 
@@ -200,7 +200,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
               {/* Botón CTA oficial */}
               <div className="pt-4">
                 <a
-                  href="/registro"
+                  href="/anfitriones/registro"
                   onClick={handlePublish}
                   className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-95"
                 >
@@ -476,7 +476,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
             </p>
             <div className="pt-3">
               <a
-                href="/registro"
+                href="/anfitriones/registro"
                   onClick={handlePublish}
                 className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-heading font-bold text-sm transition-all active:scale-95"
               >

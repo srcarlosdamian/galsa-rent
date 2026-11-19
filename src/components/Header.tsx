@@ -55,8 +55,9 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate }) => {
-  // Determinar si estamos en la vista de Checkout / Carrito ("Completa tu reserva")
+  // Determinar si estamos en la vista de Checkout / Carrito ("Completa tu reserva") o Registro de anfitriones
   const isCheckout = currentPath.startsWith('/reservar/') || currentPath.endsWith('/checkout');
+  const isHostRegistration = currentPath === '/anfitriones/registro';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState<'es' | 'en'>('es');
@@ -274,13 +275,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
     );
   };
 
-  // HEADER ESPECIAL PARA "COMPLETA TU RESERVA"
-  if (isCheckout) {
+  // HEADER ESPECIAL PARA "COMPLETA TU RESERVA" Y "REGISTRO DE ANFITRIONES"
+  if (isCheckout || isHostRegistration) {
     return (
       <header className="sticky top-0 z-40 bg-white border-b border-slate-200 transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[70px]">
-            {/* Lado izquierdo: Logo de GALSA + Línea divisoria gris + Reserva protegida (con icono shield en gris 500) */}
+            {/* Lado izquierdo: Logo de GALSA + Línea divisoria gris + Etiqueta protegida */}
             <div className="flex items-center gap-3 sm:gap-4">
               <a 
                 href="/" 
@@ -294,10 +295,10 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
               {/* Línea divisoria gris */}
               <div className="h-5 w-px bg-slate-200" aria-hidden="true" />
 
-              {/* Reserva protegida en gris 500 con icono shield */}
+              {/* Etiqueta en gris 500 con icono shield */}
               <div className="flex items-center gap-1.5 text-slate-500 text-xs sm:text-sm font-heading font-medium">
                 <ShieldCheck className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.8} />
-                <span>Reserva protegida</span>
+                <span>{isHostRegistration ? 'Registro de anfitriones' : 'Reserva protegida'}</span>
               </div>
             </div>
 

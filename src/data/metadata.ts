@@ -31,6 +31,16 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
       'Publica tu auto en GALSA y recibe el 100% de tu tarifa diaria. Tú apruebas cada reserva; clientes verificados, seguro durante la renta y pagos a tu cuenta.',
     ogImage: DEFAULT_OG_IMAGE,
   },
+  '/anfitriones/registro': {
+    title: 'Registro de Anfitriones | GALSA Rent',
+    description:
+      'Déjanos tus datos y validamos tu solicitud de anfitrión en 24-48 horas. Publica tu auto en GALSA y recibe el 100% de tu tarifa diaria.',
+    canonical: `${SITE_URL}/anfitriones/registro`,
+    ogTitle: 'Registro de Anfitriones | GALSA Rent',
+    ogDescription:
+      'Déjanos tus datos y validamos tu solicitud de anfitrión en 24-48 horas. Publica tu auto en GALSA y recibe el 100% de tu tarifa diaria.',
+    ogImage: DEFAULT_OG_IMAGE,
+  },
   '/catalogo': {
     title: 'Catálogo de autos en renta | GALSA Rent',
     description:

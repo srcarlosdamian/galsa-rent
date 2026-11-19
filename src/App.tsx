@@ -33,6 +33,7 @@ import { PasswordSentPage } from './pages/PasswordSentPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SeoPage } from './pages/SeoPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
+import { HostRegistrationPage } from './pages/HostRegistrationPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
 import { Vehicle, SearchState } from './types/vehicle';
@@ -257,6 +258,7 @@ export const App: React.FC = () => {
     currentPath.startsWith('/reservar/') ||
     currentPath === '/catalogo' ||
     currentPath === '/anfitriones' ||
+    currentPath === '/anfitriones/registro' ||
     currentPath === '/confianza' ||
     currentPath === '/faq' ||
     currentPath === '/como-funciona' ||
@@ -325,6 +327,14 @@ export const App: React.FC = () => {
         {/* ROUTE 3: ANFITRIONES PAGE */}
         {currentPath === '/anfitriones' && (
           <HostSection isFullPage={true} onNavigate={navigateTo} />
+        )}
+
+        {/* ROUTE 3.1: REGISTRO DE ANFITRIONES PAGE */}
+        {currentPath === '/anfitriones/registro' && (
+          <HostRegistrationPage
+            onNavigate={navigateTo}
+            onBack={() => navigateTo('/anfitriones')}
+          />
         )}
 
         {/* ROUTE 4: CONFIANZA PAGE */}
