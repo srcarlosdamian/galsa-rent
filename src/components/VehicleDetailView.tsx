@@ -887,6 +887,9 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             aria-label={mobileSheetOpen ? 'Cerrar detalles de cotización' : 'Abrir detalles de cotización'}
             className="flex items-center gap-2.5 text-left min-w-0 cursor-pointer"
           >
+            <span className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-ink-700 flex items-center justify-center shrink-0 transition-colors">
+              {mobileSheetOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            </span>
             <div className="min-w-0">
               <span className="text-lg font-heading font-extrabold text-ink-900 block leading-tight tabular-nums">
                 ${total.toLocaleString('es-MX')} MXN
@@ -895,9 +898,6 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
                 {rentalDays} {rentalDays === 1 ? 'día' : 'días'} · Plaza 450
               </span>
             </div>
-            <span className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-ink-700 flex items-center justify-center shrink-0 transition-colors">
-              {mobileSheetOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-            </span>
           </button>
 
           <button

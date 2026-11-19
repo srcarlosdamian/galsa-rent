@@ -11,6 +11,8 @@ import {
   Search,
   Calendar,
   ChevronDown,
+  ChevronUp,
+  ChevronRight,
   ShieldCheck,
   Loader2,
   ExternalLink,
@@ -319,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.5.9</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.6.0</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1204,6 +1206,63 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     >
                       <Copy className="w-3 h-3" /> {copiedCode === 'btn-12' ? 'Copiado ✓' : 'Copiar clases'}
                     </button>
+                  </div>
+
+                  {/* 13. Catálogo Completo de Chevrones */}
+                  <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4 md:col-span-2 lg:col-span-3">
+                    <div>
+                      <div className="text-xs font-heading font-bold text-slate-800">13. Catálogo de Chevrones en la App</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Todos los usos oficiales de ChevronUp, ChevronDown y ChevronRight</div>
+                      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                              <ChevronUp className="w-4 h-4" />
+                            </span>
+                            <span className="text-xs font-heading font-bold text-slate-800">Cotizador Móvil</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 font-sans leading-relaxed">
+                            A la <strong>izquierda</strong> del precio en la barra flotante y arriba en el panel desplegable.
+                          </p>
+                          <span className="text-[10px] font-mono text-slate-400 block">VehicleDetailView.tsx</span>
+                        </div>
+
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                              <ChevronDown className="w-4 h-4" />
+                            </span>
+                            <span className="text-xs font-heading font-bold text-slate-800">Acordeones Checkout</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 font-sans leading-relaxed">
+                            5 pasos plegables (fechas, datos, docs, extras, contrato) con <code className="text-[10px]">rotate-180</code>.
+                          </p>
+                          <span className="text-[10px] font-mono text-slate-400 block">ReservationCheckoutView.tsx</span>
+                        </div>
+
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
+                            <span className="text-xs font-heading font-bold text-slate-800">Selects y Menús</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 font-sans leading-relaxed">
+                            Dropdowns de horarios, filtros de catálogo, barra de búsqueda y menús del Header.
+                          </p>
+                          <span className="text-[10px] font-mono text-slate-400 block">CustomDropdown, CatalogPage, Header, SearchContainer</span>
+                        </div>
+
+                        <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                            <span className="text-xs font-heading font-bold text-slate-800">Links y Breadcrumbs</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 font-sans leading-relaxed">
+                            Enlace &quot;Ver catálogo&quot; y migas de pan en páginas informativas.
+                          </p>
+                          <span className="text-[10px] font-mono text-slate-400 block">VehicleDetailView, AboutPage, HowItWorksPage</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -2432,7 +2491,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.5.9</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.6.0</span>
                     </div>
                   </div>
                 </div>
