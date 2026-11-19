@@ -1396,11 +1396,6 @@ export const ReservationCheckoutView: React.FC<ReservationCheckoutViewProps> = (
                 <span className="font-heading font-bold text-slate-900 shrink-0">${(vehicle.deposit || 15000).toLocaleString('es-MX')} MXN</span>
               </div>
 
-              <div className="flex items-center justify-center gap-2 text-xs font-heading font-medium text-slate-500 pt-1">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Reserva protegida por GALSA · Sin cargos ocultos</span>
-              </div>
-
             </div>
           </div>
 
