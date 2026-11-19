@@ -135,18 +135,13 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
         <div className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl border-l border-slate-200 flex flex-col animate-in slide-in-from-right duration-200">
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
-                <HelpCircle className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-heading font-bold text-slate-900 leading-tight">
-                  Centro de Ayuda GALSA
-                </h3>
-                <p className="text-xs text-slate-500 font-sans mt-0.5">
-                  Atención y soporte para tu reservación
-                </p>
-              </div>
+            <div>
+              <h3 className="text-base font-heading font-bold text-slate-900 leading-tight">
+                Centro de Ayuda GALSA
+              </h3>
+              <p className="text-xs text-slate-500 font-sans mt-0.5">
+                Atención y soporte para tu reservación
+              </p>
             </div>
             <button
               type="button"
@@ -193,11 +188,11 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 className="p-3.5 rounded-2xl border border-slate-200/90 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-between gap-3 transition-all group cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-cta-50 text-cta flex items-center justify-center shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-heading font-bold text-slate-900 group-hover:text-purple-700 transition-colors">
+                    <div className="text-xs font-heading font-bold text-slate-900 group-hover:text-cta-700 transition-colors">
                       Correo de soporte
                     </div>
                     <div className="text-xs font-sans text-slate-500">
@@ -209,7 +204,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
               </a>
 
               {/* Sucursal y Horarios */}
-              <div className="p-3.5 rounded-2xl border border-slate-200/90 bg-slate-50/70 space-y-2">
+              <div className="p-3.5 rounded-2xl border border-slate-200/90 bg-transparent space-y-2">
                 <div className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-slate-500 mt-0.5 shrink-0" />
                   <div>
