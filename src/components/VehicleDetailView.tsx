@@ -527,12 +527,12 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
               {/* Ubicación y Sucursal */}
               <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
-                <div className="p-3 rounded-xl border border-slate-200 bg-slate-50/50">
+                <div className="p-3 rounded-xl border border-slate-200">
                   <span className="text-[10px] font-sans text-slate-400 block">Ciudad</span>
                   <span className="text-xs font-heading font-bold text-slate-900 block mt-0.5">Durango</span>
                   <span className="text-[10px] font-sans text-slate-400 block mt-0.5">Ubicación del vehículo</span>
                 </div>
-                <div className="p-3 rounded-xl border border-slate-200 bg-slate-50/50">
+                <div className="p-3 rounded-xl border border-slate-200">
                   <span className="text-[10px] font-sans text-slate-400 block">Sucursal</span>
                   <span className="text-xs font-heading font-bold text-slate-900 block mt-0.5">Plaza 450</span>
                   <span className="text-[10px] font-sans text-slate-400 block mt-0.5">Recogida y devolución</span>
@@ -699,12 +699,12 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
 
             {/* Ciudad y Sucursal */}
             <div className="grid grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-xl border border-edge bg-subtle">
+              <div className="p-3 rounded-xl border border-edge">
                 <span className="text-[10px] font-sans text-ink-400 block">Ciudad</span>
                 <span className="text-xs font-heading font-bold text-ink-900 block mt-0.5">Durango</span>
                 <span className="text-[10px] font-sans text-ink-400 block mt-0.5">Ubicación del vehículo</span>
               </div>
-              <div className="p-3 rounded-xl border border-edge bg-subtle">
+              <div className="p-3 rounded-xl border border-edge">
                 <span className="text-[10px] font-sans text-ink-400 block">Sucursal</span>
                 <span className="text-xs font-heading font-bold text-ink-900 block mt-0.5">Plaza 450</span>
                 <span className="text-[10px] font-sans text-ink-400 block mt-0.5">Recogida y devolución</span>
