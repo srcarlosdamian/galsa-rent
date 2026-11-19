@@ -1,6 +1,6 @@
 ---
 name: GALSA Rent Design System
-description: Minimalist, clean, flat digital mobility platform (v2.7.3)
+description: Minimalist, clean, flat digital mobility platform (v2.7.4)
 colors:
   cta-50: "#E9F2FF"
   cta-100: "#D8E8FF"
@@ -50,7 +50,7 @@ rounded:
   pill: "9999px (rounded-full)"
 ---
 
-# GALSA Rent Design System & Guidelines (`v2.7.3`)
+# GALSA Rent Design System & Guidelines (`v2.7.4`)
 
 ## 1. Variables Oficiales (`tailwind.config.js` + `src/index.css :root`)
 - **Contenedor Global Estandarizado (`max-w-[1200px] mx-auto px-4 sm:px-6`):** Todas las páginas y cabeceras respetan el mismo ancho máximo y márgenes laterales del Home (`1200px`).
@@ -91,8 +91,10 @@ rounded:
 5. **Chips de Estado (`emerald-50` positivo / `amber-50` pendiente):** en `SeoPage.tsx` y `AccountPage.tsx`.
 6. **Chips Técnicos (`bg-slate-100 font-mono` rutas y `bg-neutral-800 text-emerald-400` versión QA):** en `Footer.tsx`, `SeoPage.tsx` y `DesignSystemPage.tsx`.
 
-## 7. Catálogo de Botones (`DesignSystemPage.tsx`)
-1. **CTA Primario Azul (`bg-cta hover:bg-cta-600 text-white rounded-xl`):** `Continuar`, `Continuar al pago y confirmación`, `Hablar por WhatsApp`, `Quiero publicar mi auto`.
-2. **Secundario Lineal Neutral (`border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 rounded-xl`):** `Leer y firmar contrato` (`ReservationCheckoutView.tsx`), `Ver resumen` (barra móvil Checkout).
-3. **Sólido Oscuro (`bg-slate-900 text-white rounded-xl`):** `Aplicar` en `DateRangePicker.tsx`.
-4. **Ghost / Volver / Iconos Circulares (`w-8 h-8 rounded-full bg-slate-100`):** botones de retorno, limpiar filtros y chevrons desplegables.
+## 7. Catálogo Oficial de Botones y Chips (Cero Botones/Chips Negros)
+- **Regla Global:** los botones y chips negros (`bg-black` / `bg-slate-900`) quedan prohibidos en acciones interactivas y filtros activos; se reemplazan por **Azul CTA (`bg-cta`)**.
+- **4 Variantes Oficiales con Estados (`Reposo`, `Hover`, `Presionado`, `Bloqueado`):**
+  1. **CTA Azul (`bg-cta text-white`):** `hover:bg-cta-600`, `active:bg-cta-700 active:scale-[0.98]`, `disabled:bg-slate-200 disabled:text-slate-400`.
+  2. **Soft Azul (`bg-cta-50 text-cta`):** `hover:bg-cta-100`, `active:bg-cta-200 active:scale-[0.98]`, `disabled:bg-slate-100 disabled:text-slate-400`.
+  3. **Lineal Gris (`border border-slate-200 bg-transparent text-slate-900`):** `hover:border-slate-300 hover:bg-slate-50`, `active:bg-slate-100 active:scale-[0.98]`, `disabled:border-slate-200 disabled:text-slate-300`.
+  4. **Bloqueado (`disabled`):** `cursor-not-allowed` con contraste neutro atenuado.

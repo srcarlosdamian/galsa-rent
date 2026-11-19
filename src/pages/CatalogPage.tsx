@@ -914,7 +914,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
             <button
               type="button"
               onClick={resetFilters}
-              className="mt-4 px-4 py-2 rounded-lg bg-black text-white text-xs font-heading font-semibold hover:bg-slate-800 transition-colors"
+              className="mt-4 px-4 py-2 rounded-lg bg-cta hover:bg-cta-600 text-white text-xs font-heading font-semibold transition-colors cursor-pointer"
             >
               Restablecer todos los filtros
             </button>
@@ -946,7 +946,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                   onClick={() => handlePageChange(page)}
                   className={`w-9 h-9 rounded-lg text-xs font-heading font-bold transition-colors ${
                     currentPage === page
-                      ? 'bg-black text-white'
+                      ? 'bg-cta text-white'
                       : 'border border-slate-200 text-slate-700 hover:bg-slate-50'
                   }`}
                 >

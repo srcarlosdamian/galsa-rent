@@ -153,7 +153,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             if (isPast) {
               buttonClass += 'text-slate-300 cursor-not-allowed';
             } else if (isStart || isEnd) {
-              buttonClass += 'bg-black text-white font-bold';
+              buttonClass += 'bg-cta text-white font-bold';
             } else if (inRange) {
               buttonClass += 'text-slate-900 font-medium hover:bg-slate-100';
               containerClass += 'bg-slate-100';
@@ -220,7 +220,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2 rounded-lg bg-black text-white font-heading font-semibold hover:bg-slate-800 transition-colors text-xs"
+              className="px-5 py-2 rounded-lg bg-cta hover:bg-cta-600 text-white font-heading font-semibold transition-colors text-xs cursor-pointer"
             >
               Aplicar
             </button>

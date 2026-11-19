@@ -316,7 +316,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                   onClick={() => setCategoryFilter(tab.id)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-medium whitespace-nowrap transition-colors cursor-pointer ${
                     categoryFilter === tab.id
-                      ? 'bg-slate-900 text-white'
+                      ? 'bg-cta text-white'
                       : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                   }`}
                 >
@@ -408,7 +408,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                   setCategoryFilter('all');
                   setIndexFilter('all');
                 }}
-                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs transition-colors cursor-pointer"
               >
                 Restablecer filtros
               </button>

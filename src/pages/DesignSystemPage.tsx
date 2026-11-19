@@ -321,7 +321,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.3</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.7.4</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -348,7 +348,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     onClick={() => setActiveTab(tab.id as TabType)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-heading font-semibold transition-colors whitespace-nowrap cursor-pointer ${
                       activeTab === tab.id
-                        ? 'bg-slate-900 text-white'
+                        ? 'bg-cta text-white'
                         : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
                     }`}
                   >
@@ -397,7 +397,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                   setSearchQuery('');
                   setActiveTab('all');
                 }}
-                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-semibold text-xs transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs transition-colors cursor-pointer"
               >
                 Restablecer búsqueda
               </button>
@@ -791,9 +791,92 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <h3 className="text-base font-heading font-bold text-slate-900">
-                    Botones (Buttons &amp; Actions · Sin sombras)
+                    Botones (Sistema Oficial sin Botones Negros · Reposo / Hover / Presionado / Bloqueado)
                   </h3>
-                  <span className="text-xs text-slate-400 font-mono">12 variantes limpias (btn-1 a btn-12)</span>
+                  <span className="text-xs text-slate-400 font-mono">Los botones negros fueron reemplazados por Azul CTA</span>
+                </div>
+
+                {/* Matriz Oficial de Estados de Botones */}
+                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 sm:p-5 space-y-4 text-left">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs font-heading font-bold text-slate-900">
+                      Matriz Oficial de Botones y Estados
+                    </span>
+                    <span className="text-[11px] font-mono text-slate-500">
+                      CTA Azul · Fondo Claro Texto Azul 500 · Lineal Gris · Bloqueado
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    {/* Columna 1: CTA Azul (Fondo azul, texto blanco) */}
+                    <div className="p-4 rounded-xl bg-white border border-slate-200/80 space-y-3">
+                      <div className="text-xs font-heading font-bold text-slate-900">CTA Azul (Fondo `bg-cta`, Texto Blanco)</div>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Reposo</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl bg-cta text-white font-heading font-semibold text-xs cursor-pointer">Continuar</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Hover (`cta-600`)</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl bg-cta-600 text-white font-heading font-semibold text-xs cursor-pointer">Continuar</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Presionado (`active`)</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl bg-cta-700 scale-[0.98] text-white font-heading font-semibold text-xs cursor-pointer">Continuar</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Bloqueado</span>
+                          <button type="button" disabled className="w-full px-3.5 py-2 rounded-xl bg-slate-200 text-slate-400 font-heading font-semibold text-xs cursor-not-allowed">Continuar</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Columna 2: Soft Azul (Fondo claro, texto azul 500) */}
+                    <div className="p-4 rounded-xl bg-white border border-slate-200/80 space-y-3">
+                      <div className="text-xs font-heading font-bold text-slate-900">Soft Azul (Fondo `bg-cta-50`, Texto `cta-500`)</div>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Reposo</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl bg-cta-50 text-cta font-heading font-semibold text-xs cursor-pointer">Ver detalles</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Hover (`cta-100`)</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl bg-cta-100 text-cta font-heading font-semibold text-xs cursor-pointer">Ver detalles</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Presionado (`active`)</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl bg-cta-200 scale-[0.98] text-cta-600 font-heading font-semibold text-xs cursor-pointer">Ver detalles</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Bloqueado</span>
+                          <button type="button" disabled className="w-full px-3.5 py-2 rounded-xl bg-slate-100 text-slate-400 font-heading font-semibold text-xs cursor-not-allowed">Ver detalles</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Columna 3: Lineal Gris (Sin fondo, texto negro) */}
+                    <div className="p-4 rounded-xl bg-white border border-slate-200/80 space-y-3">
+                      <div className="text-xs font-heading font-bold text-slate-900">Lineal Gris (Sin fondo, Texto Negro)</div>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Reposo</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-transparent text-slate-900 font-heading font-semibold text-xs cursor-pointer">Cancelar</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Hover (`slate-50`)</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-900 font-heading font-semibold text-xs cursor-pointer">Cancelar</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Presionado (`active`)</span>
+                          <button type="button" className="w-full px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-100 scale-[0.98] text-slate-900 font-heading font-semibold text-xs cursor-pointer">Cancelar</button>
+                        </div>
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-mono text-slate-400 block">Bloqueado</span>
+                          <button type="button" disabled className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-transparent text-slate-300 font-heading font-semibold text-xs cursor-not-allowed">Cancelar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -805,7 +888,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="w-full px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-xs sm:text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full px-5 py-2.5 rounded-xl bg-cta hover:bg-cta-600 active:bg-cta-700 text-white font-heading font-semibold text-xs sm:text-sm transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <span>Continuar</span>
                           <ArrowRight className="w-4 h-4" />
@@ -816,7 +899,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors active:scale-[0.98]',
+                          'px-7 py-3.5 rounded-xl bg-cta hover:bg-cta-600 active:bg-cta-700 text-white font-heading font-semibold text-sm transition-all active:scale-[0.98]',
                           'btn-1'
                         )
                       }
@@ -826,18 +909,18 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     </button>
                   </div>
 
-                  {/* 2. Primario Dark */}
+                  {/* 2. Soft Azul (Fondo claro, texto azul 500) */}
                   <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 flex flex-col justify-between gap-4">
                     <div>
-                      <div className="text-xs font-heading font-bold text-slate-800">2. Botón Negro (Catálogo &amp; Contrato)</div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción decisiva / Firma digital</div>
+                      <div className="text-xs font-heading font-bold text-slate-800">2. Botón Soft Azul (Fondo claro + Texto Azul 500)</div>
+                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">Acción secundaria destacada sin saturar</div>
                       <div className="mt-4">
                         <button
                           type="button"
-                          className="w-full px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-xs sm:text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                          className="w-full px-5 py-2.5 rounded-xl bg-cta-50 hover:bg-cta-100 active:bg-cta-200 text-cta font-heading font-semibold text-xs sm:text-sm transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <span>Reservar vehículo</span>
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                          <CheckCircle2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
@@ -845,7 +928,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       type="button"
                       onClick={() =>
                         copySnippet(
-                          'px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-black text-white font-heading font-bold text-sm transition-colors',
+                          'px-5 py-2.5 rounded-xl bg-cta-50 hover:bg-cta-100 active:bg-cta-200 text-cta font-heading font-semibold text-sm transition-all active:scale-[0.98]',
                           'btn-2'
                         )
                       }
@@ -1090,7 +1173,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                       <div className="mt-4 flex flex-wrap gap-2">
                         <button
                           type="button"
-                          className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-heading font-medium cursor-pointer"
+                          className="px-3 py-1.5 rounded-lg bg-cta text-white text-xs font-heading font-medium cursor-pointer"
                         >
                           Todos (Activo)
                         </button>
@@ -1746,9 +1829,45 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
               <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                   <h3 className="text-base font-heading font-bold text-slate-900">
-                    Badges, Chips &amp; Indicadores de Estado (Catálogo Completo)
+                    Badges, Chips &amp; Indicadores de Estado (Misma Regla sin Chips Negros)
                   </h3>
-                  <span className="text-xs text-slate-400 font-mono">Todos los chips existentes en la app</span>
+                  <span className="text-xs text-slate-400 font-mono">Reposo · Hover · Presionado · Bloqueado</span>
+                </div>
+
+                {/* Matriz Oficial de Estados de Chips */}
+                <div className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 space-y-3 text-left">
+                  <div className="text-xs font-heading font-bold text-slate-900">
+                    Matriz Oficial de Chips (CTA Azul · Soft Azul · Lineal Gris · Bloqueado)
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-2">
+                      <span className="text-[11px] font-heading font-bold text-slate-800 block">Chip CTA Azul (`bg-cta text-white`)</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="px-2.5 py-1 rounded-full bg-cta text-white text-xs font-heading font-semibold">Reposo</span>
+                        <span className="px-2.5 py-1 rounded-full bg-cta-600 text-white text-xs font-heading font-semibold">Hover</span>
+                        <span className="px-2.5 py-1 rounded-full bg-cta-700 scale-95 text-white text-xs font-heading font-semibold">Presionado</span>
+                        <span className="px-2.5 py-1 rounded-full bg-slate-200 text-slate-400 text-xs font-heading font-semibold cursor-not-allowed">Bloqueado</span>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-2">
+                      <span className="text-[11px] font-heading font-bold text-slate-800 block">Chip Soft Azul (`bg-cta-50 text-cta`)</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="px-2.5 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">Reposo</span>
+                        <span className="px-2.5 py-1 rounded-full bg-cta-100 text-cta text-xs font-heading font-semibold">Hover</span>
+                        <span className="px-2.5 py-1 rounded-full bg-cta-200 scale-95 text-cta-600 text-xs font-heading font-semibold">Presionado</span>
+                        <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-400 text-xs font-heading font-semibold cursor-not-allowed">Bloqueado</span>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-xl bg-white border border-slate-200/80 space-y-2">
+                      <span className="text-[11px] font-heading font-bold text-slate-800 block">Chip Lineal Gris (Sin fondo, Texto Negro)</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="px-2.5 py-1 rounded-full border border-slate-200 bg-transparent text-slate-900 text-xs font-heading font-medium">Reposo</span>
+                        <span className="px-2.5 py-1 rounded-full border border-slate-300 bg-slate-50 text-slate-900 text-xs font-heading font-medium">Hover</span>
+                        <span className="px-2.5 py-1 rounded-full border border-slate-300 bg-slate-100 scale-95 text-slate-900 text-xs font-heading font-medium">Presionado</span>
+                        <span className="px-2.5 py-1 rounded-full border border-slate-200 bg-transparent text-slate-300 text-xs font-heading font-medium cursor-not-allowed">Bloqueado</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-left">
@@ -2632,7 +2751,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.3</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.7.4</span>
                     </div>
                   </div>
                 </div>
