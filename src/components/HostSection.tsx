@@ -394,7 +394,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
                     Recibe el 100% de tu tarifa diaria con conductores validados.
                   </p>
                 </div>
-                <div className="md:col-span-5 h-44 sm:h-52 md:h-56 flex items-end justify-end overflow-hidden">
+                <div className="hidden md:col-span-5 md:h-56 md:flex items-end justify-end overflow-hidden">
                   <img
                     src="https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794389847378-0-349394.webp"
                     alt="Cómo ganar dinero con tu auto en GALSA"
