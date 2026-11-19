@@ -215,7 +215,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
           </h1>
           <div className="flex items-center gap-2 mt-1.5 text-xs sm:text-sm font-sans text-slate-600 flex-wrap">
             <div className="flex items-center gap-1 text-slate-900 font-semibold">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <Star className="w-4 h-4 fill-cta-300 text-cta-300" />
               <span>{ratingScore}</span>
             </div>
             <span>·</span>
@@ -396,7 +396,7 @@ export const VehicleDetailView: React.FC<VehicleDetailViewProps> = ({
             {/* Calificaciones y opiniones */}
             <div className="pt-6 border-t border-slate-100 space-y-4">
               <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+                <Star className="w-5 h-5 fill-cta-300 text-cta-300" />
                 <h3 className="text-xl font-heading font-bold text-slate-900">
                   {ratingScore} · {reviewCount} evaluaciones
                 </h3>
