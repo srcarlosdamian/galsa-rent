@@ -124,7 +124,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ isFullPage = true, onN
       description: 'Clientes verificados solicitan tu auto y tú decides a quién le dices que sí.',
     },
     {
-      img: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388656934-2-gemini_generated_image_s8fcyrs8fcyrs8fc.webp',
+      img: 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1794388655725-0-gemini_generated_image_6uloc56uloc56ulo.webp',
       title: 'Cobra tu tarifa',
       description: 'GALSA cobra al cliente la renta más su tarifa de servicio y te deposita tu parte en la cuenta que registres.',
     },
