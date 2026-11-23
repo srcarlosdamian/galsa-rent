@@ -1,13 +1,89 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { GalsaLogo } from './GalsaLogo';
-import { Palette, Globe } from 'lucide-react';
+import { Palette, Globe, ChevronUp } from 'lucide-react';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
 }
 
+const QA_ALL_ROUTES: { group: string; items: { label: string; path: string }[] }[] = [
+  {
+    group: 'Principales',
+    items: [
+      { label: 'Inicio', path: '/' },
+      { label: 'Catálogo de autos', path: '/catalogo' },
+      { label: 'Detalle de vehículo (ejemplo)', path: '/vehiculos/jeep-wrangler-rubicon-2018-durango' },
+      { label: 'Reservar / Checkout (ejemplo)', path: '/reservar/jeep-wrangler-rubicon-2018-durango' },
+      { label: 'Cómo funciona', path: '/como-funciona' },
+      { label: 'Sobre nosotros', path: '/nosotros' },
+      { label: 'Confianza y seguridad', path: '/confianza' },
+      { label: 'Preguntas frecuentes', path: '/faq' },
+      { label: 'Contacto', path: '/contacto' },
+    ],
+  },
+  {
+    group: 'Anfitriones',
+    items: [
+      { label: 'Programa de anfitriones', path: '/anfitriones' },
+      { label: 'Registro de anfitrión', path: '/anfitriones/registro' },
+    ],
+  },
+  {
+    group: 'Blog & Legal',
+    items: [
+      { label: 'Blog de viajes', path: '/blog' },
+      { label: 'Artículo: Requisitos de renta', path: '/blog/guia-renta-autos-mexico-requisitos' },
+      { label: 'Artículo: Gana con tu auto', path: '/blog/como-ganar-dinero-rentando-tu-auto-anfitrion' },
+      { label: 'Términos y condiciones', path: '/terminos' },
+      { label: 'Aviso de privacidad', path: '/privacidad' },
+    ],
+  },
+  {
+    group: 'Cuenta & Acceso',
+    items: [
+      { label: 'Iniciar sesión', path: '/login' },
+      { label: 'Crear cuenta', path: '/registro' },
+      { label: 'Recuperar contraseña', path: '/recuperar-password' },
+      { label: 'Correo enviado', path: '/recuperar-password/enviado' },
+      { label: 'Restablecer contraseña', path: '/restablecer-password' },
+      { label: 'Mi cuenta', path: '/cuenta' },
+      { label: 'Completar perfil (modal)', path: '/cuenta/completar' },
+      { label: 'Completar perfil (directo)', path: '/completar-perfil' },
+    ],
+  },
+  {
+    group: 'Sistema',
+    items: [
+      { label: 'Página 404', path: '/404' },
+    ],
+  },
+];
+
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const [qaMenuOpen, setQaMenuOpen] = useState(false);
+  const qaMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutside = (e: MouseEvent) => {
+      if (qaMenuRef.current && !qaMenuRef.current.contains(e.target as Node)) {
+        setQaMenuOpen(false);
+      }
+    };
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setQaMenuOpen(false);
+    };
+    if (qaMenuOpen) {
+      document.addEventListener('mousedown', handleOutside);
+      window.addEventListener('keydown', handleEsc);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [qaMenuOpen]);
+
   const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    setQaMenuOpen(false);
     if (onNavigate) {
       e.preventDefault();
       onNavigate(path);
@@ -97,27 +173,77 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="bg-black text-white text-[11px] font-mono py-2 px-4 border-t border-neutral-800 text-center tracking-wide">
         <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-neutral-400">
           <span className="text-amber-400 font-semibold">[ENTORNO DE PRUEBAS / QA — Este listón no va en el diseño final]</span>
-          <div className="flex flex-wrap items-center gap-3 text-white">
-            <a
-              href="/seo"
-              onClick={(e) => handleLink(e, '/seo')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-cta-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 group"
-              title="Abrir Auditor & Previsualizador SEO"
-            >
-              <Globe className="w-3.5 h-3.5 text-cta-400" />
-              <span>Auditor SEO</span>
-            </a>
-            <a
-              href="/design-system"
-              onClick={(e) => handleLink(e, '/design-system')}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-neutral-800 hover:bg-neutral-700 text-pink-300 hover:text-white transition-all text-[11px] font-medium border border-neutral-700/70 group"
-              title="Abrir Sistema de Diseño (Atomic Design)"
-            >
-              <Palette className="w-3.5 h-3.5 text-pink-400 group-hover:rotate-12 transition-transform" />
-              <span>Sistema de Diseño</span>
-            </a>
-            <span>Última actualización: <strong>23 Nov 2026, 01:50 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.36</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-white">
+            {/* Dropdown QA: Auditoría SEO, Sistema de Diseño y Mapa Completo de Rutas */}
+            <div ref={qaMenuRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setQaMenuOpen((prev) => !prev)}
+                aria-expanded={qaMenuOpen}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-neutral-800 hover:bg-neutral-700 text-white transition-all text-[11px] font-medium border border-neutral-700/80 cursor-pointer"
+              >
+                <Globe className="w-3.5 h-3.5 text-cta-400" />
+                <span>Auditoría SEO y Sistema de Diseño</span>
+                <ChevronUp className={`w-3.5 h-3.5 text-neutral-400 transition-transform duration-150 ${qaMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {qaMenuOpen && (
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 mb-2 w-[310px] sm:w-[360px] bg-neutral-900 border border-neutral-700/80 rounded-xl shadow-2xl p-2 text-left z-[80]">
+                  {/* Herramientas principales arriba */}
+                  <div className="space-y-1">
+                    <a
+                      href="/seo"
+                      onClick={(e) => handleLink(e, '/seo')}
+                      className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg hover:bg-neutral-800 text-cta-300 hover:text-white transition-colors"
+                    >
+                      <span className="inline-flex items-center gap-2 font-semibold text-xs">
+                        <Globe className="w-3.5 h-3.5 text-cta-400 shrink-0" />
+                        Auditoría SEO
+                      </span>
+                      <span className="text-[10px] text-neutral-400 font-mono">/seo</span>
+                    </a>
+                    <a
+                      href="/design-system"
+                      onClick={(e) => handleLink(e, '/design-system')}
+                      className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg hover:bg-neutral-800 text-pink-300 hover:text-white transition-colors"
+                    >
+                      <span className="inline-flex items-center gap-2 font-semibold text-xs">
+                        <Palette className="w-3.5 h-3.5 text-pink-400 shrink-0" />
+                        Sistema de Diseño
+                      </span>
+                      <span className="text-[10px] text-neutral-400 font-mono">/design-system</span>
+                    </a>
+                  </div>
+
+                  <div className="border-t border-neutral-800 my-2" />
+
+                  {/* Todos los enlaces existentes */}
+                  <div className="max-h-[320px] overflow-y-auto space-y-2.5 pr-1">
+                    {QA_ALL_ROUTES.map((section) => (
+                      <div key={section.group} className="space-y-0.5">
+                        <div className="px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">
+                          {section.group}
+                        </div>
+                        {section.items.map((item) => (
+                          <a
+                            key={item.path}
+                            href={item.path}
+                            onClick={(e) => handleLink(e, item.path)}
+                            className="flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-lg hover:bg-neutral-800 text-neutral-200 hover:text-white transition-colors text-[11px]"
+                          >
+                            <span className="truncate">{item.label}</span>
+                            <span className="text-[10px] text-neutral-500 font-mono shrink-0">{item.path}</span>
+                          </a>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <span>Última actualización: <strong>23 Nov 2026, 01:54 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.37</span>
           </div>
         </div>
       </div>
