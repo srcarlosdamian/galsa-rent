@@ -418,21 +418,21 @@ export const App: React.FC = () => {
         {currentPath === '/' && (
           <>
             {/* HERO SECTION REDISEÑADO CON LÍNEA AZUL Y BARRA DE BÚSQUEDA CENTRADA */}
-            <section className="relative z-30 pt-12 pb-28 sm:pt-16 sm:pb-36 lg:pt-20 lg:pb-44 bg-white overflow-visible">
-              <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center gap-10">
+            <section className="relative z-30 pt-6 pb-16 sm:pt-16 sm:pb-36 lg:pt-20 lg:pb-44 bg-white overflow-visible">
+              <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center gap-6 sm:gap-10">
                 
                 {/* Bloque de Título y Subtítulo centrado */}
-                <div className="w-full max-w-[940px] relative flex flex-col items-center gap-5 sm:gap-6 text-center">
-                  <h1 className="relative self-stretch text-ink-900 text-[40px] sm:text-[54px] lg:text-[64px] font-bold font-heading leading-[1.12] sm:leading-[1.14] tracking-tight">
+                <div className="w-full max-w-[940px] relative flex flex-col items-center gap-3 sm:gap-6 text-center">
+                  <h1 className="relative self-stretch text-ink-900 text-[30px] sm:text-[54px] lg:text-[64px] font-bold font-heading leading-[1.15] sm:leading-[1.14] tracking-tight">
                     Renta de autos en México,<br className="hidden sm:inline" />{' '}
                     <span className="relative inline-block whitespace-nowrap">
                       <span className="relative z-10">100% en línea</span>
-                      <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-cta-300 rounded-sm -z-0" />
+                      <span className="absolute left-0 bottom-0.5 sm:bottom-2 w-full h-2 sm:h-3.5 bg-cta-300 rounded-sm -z-0" />
                     </span>{' '}
                     y al instante
                   </h1>
 
-                  <p className="self-stretch text-ink-600 text-base sm:text-lg font-normal font-heading leading-relaxed max-w-[760px] mx-auto">
+                  <p className="self-stretch text-ink-600 text-sm sm:text-lg font-normal font-heading leading-snug sm:leading-relaxed max-w-[760px] mx-auto">
                     Renta tu auto en línea, elige tu modelo y firma tu contrato digital. Unidades inspeccionadas y listas para entrega en nuestras sucursales.
                   </p>
                 </div>
