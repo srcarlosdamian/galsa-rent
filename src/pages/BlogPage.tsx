@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, ArrowRight, User } from 'lucide-react';
+import { Calendar, Clock, User } from 'lucide-react';
 import { BLOG_POSTS } from '../data/blog';
 
 interface BlogPageProps {
@@ -168,61 +168,54 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
           })}
         </div>
 
-        {/* Grid de Artículos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 text-left">
+        {/* Grid de Artículos (sin borde ni padding lateral, imagen cuadrada redondeada, línea azul en hover) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 text-left">
           {filteredPosts.map((post) => (
             <article
               key={post.slug}
-              className="flex flex-col bg-white rounded-[24px] overflow-hidden border border-slate-200/90 hover:border-slate-300 transition-colors duration-200 group"
+              onClick={() => {
+                if (onNavigate) {
+                  onNavigate(`/blog/${post.slug}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="flex flex-col cursor-pointer group"
             >
               <a
                 href={`/blog/${post.slug}`}
                 onClick={(e) => handleLink(e, `/blog/${post.slug}`)}
-                className="block relative aspect-[16/10] overflow-hidden bg-slate-50 p-4"
+                className="block relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 p-6"
               >
                 <img
                   src={post.image}
                   alt={post.title}
                   loading="lazy"
-                  className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-contain object-center transition-transform duration-500 md:group-hover:scale-105"
                 />
-                <span className="absolute top-4 left-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-heading font-semibold text-cta bg-cta-50/95 backdrop-blur-xs">
-                  {post.category}
-                </span>
               </a>
 
-              <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2.5 text-xs text-slate-400">
-                    <span>{post.date}</span>
-                    <span>·</span>
-                    <span>{post.readTime}</span>
-                  </div>
+              <div className="pt-4 flex-1 flex flex-col justify-between">
+                <div className="space-y-1.5">
+                  <span className="block text-xs font-heading font-medium text-slate-400">
+                    {post.category}
+                  </span>
 
-                  <h2 className="text-lg sm:text-xl font-heading font-semibold text-slate-900 group-hover:text-cta transition-colors leading-snug">
+                  <h2 className="text-lg sm:text-xl font-heading font-semibold text-slate-900 leading-snug">
                     <a
                       href={`/blog/${post.slug}`}
                       onClick={(e) => handleLink(e, `/blog/${post.slug}`)}
+                      className="text-slate-900"
                     >
                       {post.title}
                     </a>
                   </h2>
 
-                  <p className="text-sm font-sans text-slate-600 leading-relaxed line-clamp-3">
+                  <p className="text-sm font-sans text-slate-600 leading-relaxed line-clamp-3 pt-0.5">
                     {post.excerpt}
                   </p>
                 </div>
 
-                <div className="pt-2">
-                  <a
-                    href={`/blog/${post.slug}`}
-                    onClick={(e) => handleLink(e, `/blog/${post.slug}`)}
-                    className="inline-flex items-center gap-1.5 text-xs font-heading font-semibold text-slate-900 group-hover:text-cta transition-colors"
-                  >
-                    <span>Leer artículo completo</span>
-                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.5} />
-                  </a>
-                </div>
+                <span className="hidden md:block h-1 w-0 bg-cta-300 rounded-full transition-all duration-200 md:group-hover:w-full mt-3.5" />
               </div>
             </article>
           ))}
