@@ -503,7 +503,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                   <a
                     href="/login"
                     onClick={(e) => handleLinkClick(e, '/login')}
-                    className="inline-flex items-center justify-center px-4 py-2 rounded-[8px] border border-slate-200 bg-white text-slate-900 text-[14px] font-medium hover:bg-slate-50 transition-colors"
+                    className="inline-flex items-center justify-center h-10 px-4 rounded-[8px] border border-slate-200 bg-white text-slate-900 text-[14px] leading-none font-heading font-semibold hover:bg-slate-50 transition-colors whitespace-nowrap"
                   >
                     Inicia sesión
                   </a>
@@ -511,7 +511,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                   <a
                     href="/registro"
                     onClick={(e) => handleLinkClick(e, '/registro')}
-                    className="inline-flex items-center justify-center px-4 py-2 rounded-[8px] bg-cta hover:bg-cta-600 text-white text-[14px] font-medium transition-colors"
+                    className="inline-flex items-center justify-center h-10 px-4 rounded-[8px] border border-transparent bg-cta hover:bg-cta-600 text-white text-[14px] leading-none font-heading font-semibold transition-colors whitespace-nowrap"
                   >
                     Crear cuenta
                   </a>
