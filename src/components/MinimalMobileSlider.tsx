@@ -7,6 +7,10 @@ interface MinimalMobileSliderProps {
   desktopGridClassName: string;
   /** Clases de ancho/snap para cada slide en mobile */
   mobileItemClassName?: string;
+  /** Clases opcionales para el track horizontal en mobile */
+  trackClassName?: string;
+  /** Variante de color para los dots ('dark' sobre fondo claro, 'light' sobre fondo azul) */
+  dotsVariant?: 'dark' | 'light';
   ariaLabel?: string;
 }
 
@@ -19,6 +23,8 @@ export const MinimalMobileSlider: React.FC<MinimalMobileSliderProps> = ({
   itemCount,
   desktopGridClassName,
   mobileItemClassName = 'w-[84%] sm:w-[66%] shrink-0 snap-start md:w-auto',
+  trackClassName = '-mx-4 px-4 scroll-pl-4 gap-4',
+  dotsVariant = 'dark',
   ariaLabel = 'Carrusel',
 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -55,13 +61,13 @@ export const MinimalMobileSlider: React.FC<MinimalMobileSliderProps> = ({
   const items = React.Children.toArray(children);
 
   return (
-    <div>
+    <div className="w-full">
       <div
         ref={trackRef}
         onScroll={handleScroll}
         role="region"
         aria-label={ariaLabel}
-        className={`flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 scroll-pl-4 gap-4 md:mx-0 md:px-0 md:scroll-pl-0 md:overflow-visible ${desktopGridClassName}`}
+        className={`flex overflow-x-auto snap-x snap-mandatory no-scrollbar ${trackClassName} md:mx-0 md:px-0 md:scroll-pl-0 md:overflow-visible ${desktopGridClassName}`}
       >
         {items.map((child, idx) => (
           <div key={idx} className={mobileItemClassName}>
@@ -86,8 +92,12 @@ export const MinimalMobileSlider: React.FC<MinimalMobileSliderProps> = ({
                 aria-current={isActive ? 'true' : undefined}
                 className={`h-1.5 rounded-full transition-all duration-200 ${
                   isActive
-                    ? 'w-4 bg-slate-900'
-                    : 'w-1.5 bg-slate-200 hover:bg-slate-300'
+                    ? dotsVariant === 'light'
+                      ? 'w-4 bg-white'
+                      : 'w-4 bg-slate-900'
+                    : dotsVariant === 'light'
+                      ? 'w-1.5 bg-white/35 hover:bg-white/60'
+                      : 'w-1.5 bg-slate-200 hover:bg-slate-300'
                 }`}
               />
             );
