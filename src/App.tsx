@@ -8,7 +8,6 @@ import { VirtuoExperienceSection } from './components/VirtuoExperienceSection';
 import { FourStepProcess } from './components/FourStepProcess';
 import { UseCasesSection } from './components/UseCasesSection';
 import { TrustSafetySection } from './components/TrustSafetySection';
-import { PlatformPreviewSection } from './components/PlatformPreviewSection';
 import { HostBanner } from './components/HostBanner';
 import { HostSection } from './components/HostSection';
 import { FaqSection } from './components/FaqSection';
@@ -575,9 +574,6 @@ export const App: React.FC = () => {
 
             {/* H2 ORDER 5: Cada renta, respaldada de principio a fin */}
             <TrustSafetySection />
-
-            {/* Espacios para capturas / vistas previas de la plataforma antes del bloque de registro de anfitriones */}
-            <PlatformPreviewSection />
 
             {/* Banner Anuncio Programa de Anfitriones (Sin cotizador en Home) */}
             <HostBanner onNavigate={navigateTo} />
