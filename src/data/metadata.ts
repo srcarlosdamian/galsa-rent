@@ -44,6 +44,7 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogDescription:
       'Regístrate como anfitrión y validamos tu auto en 24-48 horas. Genera ingresos extra con conductores verificados y recibe el 100% de tu tarifa diaria.',
     ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
   },
   '/catalogo': {
     title: 'Catálogo de Autos en Renta en Durango y México | GALSA',
@@ -110,6 +111,7 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogDescription:
       'Condiciones legales del servicio de renta de autos y marketplace de anfitriones de GALSA Rent en México. Transparencia y certeza jurídica.',
     ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
   },
   '/privacidad': {
     title: 'Aviso de Privacidad Integral | GALSA Rent',
@@ -121,6 +123,7 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogDescription:
       'Conoce cómo GALSA protege tus datos personales, identificaciones y licencias de conducir para la renta de autos y validación de anfitriones en México.',
     ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
   },
   '/como-funciona': {
     title: 'Cómo Funciona la Renta de Autos en Línea | GALSA Rent',
@@ -183,6 +186,7 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogTitle: 'Iniciar Sesión | GALSA Rent México',
     ogDescription: 'Accede a tu cuenta de GALSA Rent para gestionar tus rentas, documentos y firmar contratos digitales.',
     ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
   },
   '/registro': {
     title: 'Crear Cuenta para Rentar Auto | GALSA Rent México',
@@ -192,6 +196,7 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogTitle: 'Crear Cuenta para Rentar Auto | GALSA Rent México',
     ogDescription: 'Crea tu cuenta en GALSA Rent en menos de un minuto y reserva autos verificados 100% en línea.',
     ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
   },
   '/recuperar-password': {
     title: 'Recuperar Contraseña | GALSA Rent',

@@ -30,21 +30,15 @@ console.log('⚡ Starting Prerendering / SSG for GALSA Rent...');
 
 const templateHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
 
-// Build sitemap entries
+// Build sitemap entries (solo rutas indexables reales)
 const sitemapUrls = [
   { loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'daily' },
   { loc: `${SITE_URL}/catalogo`, priority: '0.9', changefreq: 'daily' },
   { loc: `${SITE_URL}/como-funciona`, priority: '0.9', changefreq: 'monthly' },
   { loc: `${SITE_URL}/nosotros`, priority: '0.8', changefreq: 'monthly' },
   { loc: `${SITE_URL}/anfitriones`, priority: '0.9', changefreq: 'weekly' },
-  { loc: `${SITE_URL}/anfitriones/registro`, priority: '0.8', changefreq: 'monthly' },
   { loc: `${SITE_URL}/confianza`, priority: '0.8', changefreq: 'monthly' },
-  { loc: `${SITE_URL}/faq`, priority: '0.8', changefreq: 'weekly' },
   { loc: `${SITE_URL}/contacto`, priority: '0.8', changefreq: 'monthly' },
-  { loc: `${SITE_URL}/login`, priority: '0.7', changefreq: 'monthly' },
-  { loc: `${SITE_URL}/registro`, priority: '0.7', changefreq: 'monthly' },
-  { loc: `${SITE_URL}/terminos`, priority: '0.5', changefreq: 'monthly' },
-  { loc: `${SITE_URL}/privacidad`, priority: '0.5', changefreq: 'monthly' },
   { loc: `${SITE_URL}/blog`, priority: '0.8', changefreq: 'weekly' },
 ];
 
