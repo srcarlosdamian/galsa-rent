@@ -33,6 +33,7 @@ interface SeoItem {
   image: string;
   imageAlt?: string;
   noIndex: boolean;
+  templateNote?: string;
 }
 
 interface SeoPageProps {
@@ -62,10 +63,15 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
   const allPages: SeoItem[] = useMemo(() => {
     const list: SeoItem[] = [];
 
-    // 1. Rutas estáticas definidas en STATIC_ROUTES_METADATA
+    // 1. Rutas estáticas definidas en STATIC_ROUTES_METADATA (excluyendo rutas retiradas o alias)
+    const excludedRoutes = new Set(['/faq', '/completar-perfil']);
     Object.entries(STATIC_ROUTES_METADATA).forEach(([path, meta]) => {
+      if (excludedRoutes.has(path)) return;
+
       let category: SeoCategory = 'core';
-      if (['/confianza', '/terminos', '/privacidad'].includes(path)) {
+      if (path === '/blog') {
+        category = 'blog';
+      } else if (['/confianza', '/terminos', '/privacidad'].includes(path)) {
         category = 'legal';
       } else if (
         [
@@ -76,7 +82,6 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
           '/restablecer-password',
           '/cuenta',
           '/cuenta/completar',
-          '/completar-perfil',
         ].includes(path)
       ) {
         category = 'auth';
@@ -115,21 +120,24 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
       });
     });
 
-    // 3. Artículos del blog (/blog/:slug)
-    BLOG_POSTS.forEach((post) => {
-      const meta = getBlogPostMetadata(post);
-      list.push({
-        id: `/blog/${post.slug}`,
-        path: `/blog/${post.slug}`,
-        category: 'blog',
-        title: meta.title,
-        description: meta.description,
-        focusKeyword: meta.focusKeyword,
-        canonical: meta.canonical,
-        image: meta.ogImage.url,
-        imageAlt: meta.ogImage.alt,
-        noIndex: Boolean(meta.noIndex),
-      });
+    // 3. Plantilla automatizada del blog (/blog/[nombre-publicacion]) + ejemplo resuelto
+    const samplePost = BLOG_POSTS[0];
+    const samplePostMeta = samplePost ? getBlogPostMetadata(samplePost) : null;
+    list.push({
+      id: '/blog/[nombre-publicacion]',
+      path: '/blog/[nombre-publicacion]',
+      category: 'blog',
+      title: '[Título de la publicación] | Blog GALSA',
+      description:
+        '[Extracto automático de la publicación (máx. 155 caracteres) con enfoque en renta de autos, guías o destinos en México.]',
+      focusKeyword: '[palabra clave de la publicación]',
+      canonical: 'https://galsarent.com.mx/blog/[nombre-publicacion]',
+      image: samplePostMeta?.ogImage.url || 'https://uurhxdxqtlistawucaqs.supabase.co/storage/v1/object/public/services/nocode-1793821950338-0-2232323.webp',
+      imageAlt: '[Título de la publicación]',
+      noIndex: false,
+      templateNote: samplePostMeta
+        ? `Automatizado (${BLOG_POSTS.length} artículos activos) · Ejemplo real: "${samplePostMeta.title}" — ${samplePostMeta.description}`
+        : undefined,
     });
 
     // 4. Vistas de checkout por vehículo (/reservar/:slug)
@@ -499,7 +507,13 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                       {onNavigate && (
                         <button
                           type="button"
-                          onClick={() => onNavigate(item.path)}
+                          onClick={() =>
+                            onNavigate(
+                              item.path === '/blog/[nombre-publicacion]' && BLOG_POSTS[0]
+                                ? `/blog/${BLOG_POSTS[0].slug}`
+                                : item.path
+                            )
+                          }
                           className="text-xs text-cta hover:text-cta-700 p-1.5 rounded-lg hover:bg-cta-50 transition-colors cursor-pointer"
                           title="Abrir página en la app"
                         >
@@ -508,6 +522,12 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
                       )}
                     </div>
                   </div>
+
+                  {item.templateNote && (
+                    <div className="mb-4 px-3.5 py-2.5 rounded-xl bg-slate-50 text-xs font-sans text-slate-600 leading-relaxed">
+                      {item.templateNote}
+                    </div>
+                  )}
 
                   {/* TAB 1: Google SERP Preview */}
                   {activeTab === 'serp' && (
