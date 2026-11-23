@@ -5,6 +5,7 @@ import { CatalogMap } from '../components/CatalogMap';
 import { Vehicle, SearchState } from '../types/vehicle';
 import { DateRangePicker } from '../components/DateRangePicker';
 import { CustomDropdown, TIME_DROPDOWN_OPTIONS } from '../components/CustomDropdown';
+import { Pagination } from '../components/Pagination';
 import { SEARCH_LOCATION_OPTIONS } from '../data/dropdownOptions';
 import {
   Check,
@@ -921,51 +922,19 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           </div>
         )}
 
-        {/* Paginador (Estilo GALSA limpio y en español) */}
-        {totalPages > 1 && (
-          <div className="mt-12 pt-6 border-t border-slate-100 flex items-center justify-between">
-            <p className="text-xs text-slate-500 font-heading">
-              Mostrando página <strong className="text-slate-900">{currentPage}</strong> de <strong className="text-slate-900">{totalPages}</strong> ({filteredVehicles.length} autos en total)
-            </p>
-
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                disabled={currentPage === 1}
-                onClick={() => handlePageChange(currentPage - 1)}
-                className="p-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                aria-label="Página anterior"
-              >
-                <ArrowLeft className="w-4 h-4" strokeWidth={1.4} />
-              </button>
-
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  type="button"
-                  onClick={() => handlePageChange(page)}
-                  className={`w-9 h-9 rounded-lg text-xs font-heading font-bold transition-colors ${
-                    currentPage === page
-                      ? 'bg-cta text-white'
-                      : 'border border-slate-200 text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-
-              <button
-                type="button"
-                disabled={currentPage === totalPages}
-                onClick={() => handlePageChange(currentPage + 1)}
-                className="p-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                aria-label="Página siguiente"
-              >
-                <ArrowRight className="w-4 h-4" strokeWidth={1.4} />
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Paginador (Estilo GALSA limpio y adaptable a mobile) */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          className="mt-12"
+          summary={
+            <>
+              Mostrando página <strong className="text-slate-900">{currentPage}</strong> de{' '}
+              <strong className="text-slate-900">{totalPages}</strong> ({filteredVehicles.length} autos en total)
+            </>
+          }
+        />
 
         {/* Contenedor Social / Compartir Catálogo (sin línea gris, solo bg-slate-50) */}
         <div className="mt-10 bg-slate-50 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4">

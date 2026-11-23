@@ -13,6 +13,7 @@ import { HostSection } from './components/HostSection';
 import { FaqSection } from './components/FaqSection';
 import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
+import { Pagination } from './components/Pagination';
 
 // Pages
 import { CatalogPage } from './pages/CatalogPage';
@@ -541,35 +542,17 @@ export const App: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Paginador Home (Limpio y sutil) */}
-                {homeTotalPages > 1 && (
-                  <div className="mt-8 flex items-center justify-between text-xs text-slate-500 font-heading pt-4 border-t border-slate-100">
-                    <span>
+                {/* Paginador Home (Limpio y adaptable a mobile) */}
+                <Pagination
+                  currentPage={homePage}
+                  totalPages={homeTotalPages}
+                  onPageChange={setHomePage}
+                  summary={
+                    <>
                       Mostrando {paginatedHomeVehicles.length} de {filteredVehicles.length} autos disponibles
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        disabled={homePage === 1}
-                        onClick={() => setHomePage(homePage - 1)}
-                        className="px-3 py-1.5 rounded-[8px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        Anterior
-                      </button>
-                      <span className="font-semibold text-slate-900">
-                        {homePage} / {homeTotalPages}
-                      </span>
-                      <button
-                        type="button"
-                        disabled={homePage === homeTotalPages}
-                        onClick={() => setHomePage(homePage + 1)}
-                        className="px-3 py-1.5 rounded-[8px] border border-slate-200 text-slate-700 hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        Siguiente
-                      </button>
-                    </div>
-                  </div>
-                )}
+                    </>
+                  }
+                />
 
               </div>
             </section>
