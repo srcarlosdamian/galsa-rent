@@ -248,6 +248,16 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
+  '/emails': {
+    title: 'Sistema de Emails Transaccionales | GALSA Rent',
+    description: 'Previsualización y plantillas responsivas (590px) de los correos transaccionales de GALSA Rent.',
+    focusKeyword: 'emails transaccionales galsa rent',
+    canonical: `${SITE_URL}/emails`,
+    ogTitle: 'Sistema de Emails Transaccionales | GALSA Rent',
+    ogDescription: 'Previsualización y plantillas responsivas (590px) de los correos transaccionales de GALSA Rent.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
   '/404': {
     title: 'Página no encontrada | GALSA Rent',
     description: 'La página que buscas no existe. Explora nuestro catálogo de autos disponibles en renta en México.',

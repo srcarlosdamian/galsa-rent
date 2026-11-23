@@ -34,6 +34,7 @@ import { PasswordSentPage } from './pages/PasswordSentPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SeoPage } from './pages/SeoPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
+import { EmailsPage } from './pages/EmailsPage';
 import { HostRegistrationPage } from './pages/HostRegistrationPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
@@ -299,6 +300,7 @@ export const App: React.FC = () => {
     currentPath === '/restablecer-password' ||
     currentPath === '/seo' ||
     currentPath === '/design-system' ||
+    currentPath === '/emails' ||
     currentPath.startsWith('/cuenta') ||
     currentPath === '/completar-perfil' ||
     currentPath === '/cuenta/completar';
@@ -402,6 +404,9 @@ export const App: React.FC = () => {
 
         {/* ROUTE 7.8: SISTEMA DE DISEÑO (ATOMIC DESIGN) */}
         {currentPath === '/design-system' && <DesignSystemPage onNavigate={navigateTo} />}
+
+        {/* ROUTE 7.9: PLANTILLAS DE EMAILS TRANSACCIONALES */}
+        {currentPath === '/emails' && <EmailsPage onNavigate={navigateTo} />}
 
         {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR / COMPLETAR PERFIL) */}
         {(currentPath.startsWith('/cuenta') || currentPath === '/completar-perfil' || currentPath === '/cuenta/completar') && (

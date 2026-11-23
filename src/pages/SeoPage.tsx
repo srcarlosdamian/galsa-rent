@@ -85,7 +85,7 @@ export const SeoPage: React.FC<SeoPageProps> = ({ onNavigate }) => {
         ].includes(path)
       ) {
         category = 'auth';
-      } else if (['/seo', '/design-system', '/404'].includes(path)) {
+      } else if (['/seo', '/design-system', '/emails', '/404'].includes(path)) {
         category = 'checkout';
       }
 
