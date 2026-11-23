@@ -82,6 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
       if (e.key === 'Escape') {
         setHelpDrawerOpen(false);
         setUserMenuOpen(false);
+        setMobileMenuOpen(false);
       }
     };
     const handleClickOutsideUser = (e: MouseEvent) => {
@@ -92,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
     document.addEventListener('mousedown', handleClickOutsideUser);
     const handleOpenHelp = () => setHelpDrawerOpen(true);
 
-    if (helpDrawerOpen) {
+    if (helpDrawerOpen || mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
@@ -106,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
       window.removeEventListener('open-galsa-help', handleOpenHelp);
       document.removeEventListener('mousedown', handleClickOutsideUser);
     };
-  }, [helpDrawerOpen]);
+  }, [helpDrawerOpen, mobileMenuOpen]);
 
   // Cerrar dropdown al hacer clic fuera
   useEffect(() => {
@@ -534,75 +535,103 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
         </div>
       </div>
 
-      {/* Mobile & Tablet Drawer Navigation */}
+      {/* Mobile & Tablet Fullscreen Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white px-5 pt-4 pb-6 space-y-4">
-          <div className="space-y-1">
-            {navLinks.map((item) => {
-              const isActive = currentPath === item.path;
-              return (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  onClick={(e) => handleLinkClick(e, item.path)}
-                  className={`block px-3 py-2.5 rounded-lg text-sm font-heading font-semibold ${
-                    isActive ? 'bg-slate-100 text-black' : 'text-slate-600 hover:bg-slate-50 hover:text-black'
-                  }`}
-                >
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
-
-          {/* Selector de idioma mobile */}
-          <div className="pt-2 pb-1 border-t border-slate-100">
-            <div className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Idioma y moneda
-            </div>
-            <div className="grid grid-cols-2 gap-2">
+        <div className="lg:hidden fixed inset-0 z-[90] bg-white flex flex-col justify-between overflow-y-auto animate-in fade-in-0 duration-150">
+          {/* Cabecera superior del menú full-screen */}
+          <div>
+            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 h-16 sm:h-[72px] flex items-center justify-between">
+              <a
+                href="/"
+                onClick={(e) => handleLinkClick(e, '/')}
+                className="flex items-center group"
+                aria-label="GALSA Rent Inicio"
+              >
+                <GalsaLogo className="h-6 sm:h-7 w-auto text-cta transition-transform duration-200 group-hover:scale-105" />
+              </a>
               <button
                 type="button"
-                onClick={() => setSelectedLang('es')}
-                className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
-                  selectedLang === 'es'
-                    ? 'border-cta bg-cta-50 text-slate-900 font-medium'
-                    : 'border-slate-200 bg-white text-slate-700'
-                }`}
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-[10px] bg-slate-100 text-slate-700 hover:bg-slate-200/70 hover:text-slate-900 transition-colors cursor-pointer"
+                aria-label="Cerrar menú"
               >
-                <MexicoFlag />
-                <div className="flex flex-col leading-tight">
-                  <span className="text-[12px] font-semibold">Español</span>
-                  <span className="text-[10px] text-slate-500">MXN ($)</span>
-                </div>
+                <X className="w-5 h-5" strokeWidth={1.7} />
               </button>
-              <button
-                type="button"
-                onClick={() => setSelectedLang('en')}
-                className={`flex items-center gap-2 p-2.5 rounded-lg border text-left transition-colors ${
-                  selectedLang === 'en'
-                    ? 'border-cta bg-cta-50 text-slate-900 font-medium'
-                    : 'border-slate-200 bg-white text-slate-700'
-                }`}
-              >
-                <UsaFlag />
-                <div className="flex flex-col leading-tight">
-                  <span className="text-[12px] font-semibold">English</span>
-                  <span className="text-[10px] text-slate-500">USD ($)</span>
+            </div>
+
+            {/* Links de navegación más grandes, sin líneas */}
+            <div className="px-5 pt-4 pb-6 space-y-6">
+              <nav className="space-y-1.5" aria-label="Navegación móvil">
+                {navLinks.map((item) => {
+                  const isActive = currentPath === item.path;
+                  return (
+                    <a
+                      key={item.path}
+                      href={item.path}
+                      onClick={(e) => handleLinkClick(e, item.path)}
+                      className={`block px-4 py-3.5 rounded-2xl text-xl sm:text-2xl font-heading font-semibold transition-colors ${
+                        isActive
+                          ? 'bg-slate-100 text-slate-900'
+                          : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  );
+                })}
+              </nav>
+
+              {/* Selector de idioma mobile (sin líneas, solo fondito claro) */}
+              <div className="rounded-2xl bg-slate-50 p-3.5 space-y-2.5">
+                <div className="px-1 text-[11px] font-heading font-bold text-slate-400 uppercase tracking-wider">
+                  Idioma y moneda
                 </div>
-              </button>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedLang('es')}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl text-left transition-colors cursor-pointer ${
+                      selectedLang === 'es'
+                        ? 'bg-cta-50 text-cta-950 font-semibold'
+                        : 'bg-white text-slate-700 hover:bg-slate-100/80'
+                    }`}
+                  >
+                    <MexicoFlag />
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-xs font-heading font-semibold">Español</span>
+                      <span className="text-[11px] text-slate-500">MXN ($)</span>
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedLang('en')}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl text-left transition-colors cursor-pointer ${
+                      selectedLang === 'en'
+                        ? 'bg-cta-50 text-cta-950 font-semibold'
+                        : 'bg-white text-slate-700 hover:bg-slate-100/80'
+                    }`}
+                  >
+                    <UsaFlag />
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-xs font-heading font-semibold">English</span>
+                      <span className="text-[11px] text-slate-500">USD ($)</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-3">
+          {/* Botones de cuenta / sesión hasta abajo, sin líneas */}
+          <div className="mt-auto px-5 pt-4 pb-8 grid grid-cols-2 gap-3 bg-white">
             {isLoggedIn ? (
               <>
                 <a
                   href="/cuenta"
                   onClick={(e) => handleLinkClick(e, '/cuenta')}
-                  className="flex items-center justify-center gap-2 text-center py-2.5 rounded-[8px] border border-slate-200 bg-transparent text-slate-900 font-medium text-sm hover:bg-slate-50"
+                  className="flex items-center justify-center gap-2 text-center py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 text-slate-900 font-heading font-semibold text-sm transition-colors"
                 >
-                  <Settings className="w-4 h-4 text-slate-600" strokeWidth={1.7} />
+                  <Settings className="w-4 h-4 text-slate-700" strokeWidth={1.7} />
                   <span>Configuración</span>
                 </a>
                 <button
@@ -617,7 +646,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                     setIsLoggedIn(false);
                     if (onNavigate) onNavigate('/login');
                   }}
-                  className="flex items-center justify-center gap-2 text-center py-2.5 rounded-[8px] border border-slate-200 bg-transparent text-slate-700 font-medium text-sm hover:bg-slate-50 cursor-pointer"
+                  className="flex items-center justify-center gap-2 text-center py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 text-slate-700 font-heading font-semibold text-sm transition-colors cursor-pointer"
                 >
                   <LogOut className="w-4 h-4 text-slate-600" strokeWidth={1.7} />
                   <span>Cerrar sesión</span>
@@ -628,14 +657,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath = '/', onNavigate })
                 <a
                   href="/login"
                   onClick={(e) => handleLinkClick(e, '/login')}
-                  className="flex items-center justify-center text-center py-2.5 rounded-[8px] border border-slate-200 bg-white text-slate-900 font-medium text-sm hover:bg-slate-50"
+                  className="flex items-center justify-center text-center py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 text-slate-900 font-heading font-semibold text-sm transition-colors"
                 >
                   Inicia sesión
                 </a>
                 <a
                   href="/registro"
                   onClick={(e) => handleLinkClick(e, '/registro')}
-                  className="flex items-center justify-center text-center py-2.5 rounded-[8px] bg-cta hover:bg-cta-600 text-white font-medium text-sm transition-colors"
+                  className="flex items-center justify-center text-center py-3.5 rounded-xl bg-cta hover:bg-cta-600 text-white font-heading font-semibold text-sm transition-colors"
                 >
                   Crear cuenta
                 </a>
