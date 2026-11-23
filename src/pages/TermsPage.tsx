@@ -30,14 +30,14 @@ export const TermsPage: React.FC = () => {
           </section>
 
           <section className="space-y-2">
-            <h2 className="text-base font-bold text-ink-900">3. Requisitos del Conductor</h2>
+            <h2 className="text-base font-heading font-bold text-slate-900">3. Requisitos del Conductor</h2>
             <p>
               Para conducir las unidades se requiere: licencia de conducir vigente con antigüedad mínima de 2 años, identificación oficial (INE o pasaporte), comprobante de domicilio no mayor a 3 meses y edad mínima de 21 años cumplidos.
             </p>
           </section>
 
-          <section className="space-y-2">
-            <h2 className="text-base font-bold text-ink-900">4. Depósito en Garantía y Cancelaciones</h2>
+          <section id="cancelaciones" className="space-y-2">
+            <h2 className="text-base font-heading font-bold text-slate-900">4. Depósito en Garantía y Cancelaciones</h2>
             <p>
               El depósito en garantía se retiene de forma temporal y se devuelve al 100% al momento de la entrega en Sucursal Plaza 450 tras cotejo del checklist fotográfico. Las cancelaciones con más de 48 horas de anticipación son 100% reembolsables.
             </p>

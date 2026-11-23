@@ -154,23 +154,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2 text-[13px] font-heading text-slate-500">
               <li><a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-black transition-colors">Términos y condiciones</a></li>
               <li><a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-black transition-colors">Aviso de privacidad</a></li>
-              <li><a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-black transition-colors">Contrato y cobertura</a></li>
+              <li><a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-black transition-colors">Seguridad y cobertura</a></li>
               <li><a href="/terminos#cancelaciones" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-black transition-colors">Políticas de cancelación</a></li>
             </ul>
           </div>
 
-        </div>
-      </div>
-
-      {/* Bottom Bar minimalista */}
-      <div className="border-t border-slate-100 py-6">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center sm:justify-end gap-4 text-[12px] font-heading text-slate-400">
-          <div className="flex items-center space-x-6">
-            <a href="/privacidad" onClick={(e) => handleLink(e, '/privacidad')} className="hover:text-slate-700 transition-colors">Privacidad</a>
-            <a href="/terminos" onClick={(e) => handleLink(e, '/terminos')} className="hover:text-slate-700 transition-colors">Términos</a>
-            <a href="/confianza" onClick={(e) => handleLink(e, '/confianza')} className="hover:text-slate-700 transition-colors">Seguridad</a>
-            <a href="/contacto" onClick={(e) => handleLink(e, '/contacto')} className="hover:text-slate-700 transition-colors">Contacto</a>
-          </div>
         </div>
       </div>
 
@@ -247,8 +235,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               )}
             </div>
 
-            <span>Última actualización: <strong>23 Nov 2026, 03:00 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.45</span>
+            <span>Última actualización: <strong>23 Nov 2026, 03:09 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.46</span>
           </div>
         </div>
       </div>
