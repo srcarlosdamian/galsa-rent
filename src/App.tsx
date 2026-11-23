@@ -426,7 +426,7 @@ export const App: React.FC = () => {
                   <h1 className="relative self-stretch text-ink-900 text-[40px] sm:text-[54px] lg:text-[64px] font-bold font-heading leading-[1.12] sm:leading-[1.14] tracking-tight">
                     Renta de autos en México,<br className="hidden sm:inline" />{' '}
                     <span className="relative inline-block whitespace-nowrap">
-                      <span className="relative z-10">100 % en línea</span>
+                      <span className="relative z-10">100% en línea</span>
                       <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-2.5 sm:h-3.5 bg-cta-300 rounded-sm -z-0" />
                     </span>{' '}
                     y al instante
