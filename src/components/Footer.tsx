@@ -32,8 +32,12 @@ const QA_ALL_ROUTES: { group: string; items: { label: string; path: string }[] }
     group: 'Blog & Legal',
     items: [
       { label: 'Blog de viajes', path: '/blog' },
+      { label: 'Artículo: Preguntas frecuentes', path: '/blog/preguntas-frecuentes-renta-autos-galsa' },
       { label: 'Artículo: Requisitos de renta', path: '/blog/guia-renta-autos-mexico-requisitos' },
       { label: 'Artículo: Gana con tu auto', path: '/blog/como-ganar-dinero-rentando-tu-auto-anfitrion' },
+      { label: 'Artículo: Contrato mercantil digital', path: '/blog/contrato-mercantil-digital-como-protege-tu-renta' },
+      { label: 'Artículo: Entrega express Plaza 450', path: '/blog/entrega-express-plaza-450-durango-sin-filas' },
+      { label: 'Artículo: Cómo elegir auto ideal', path: '/blog/que-auto-elegir-para-viaje-familiar-o-negocios' },
       { label: 'Términos y condiciones', path: '/terminos' },
       { label: 'Aviso de privacidad', path: '/privacidad' },
     ],
@@ -133,9 +137,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Ayuda & Guías
             </p>
             <ul className="space-y-2 text-[13px] font-heading text-slate-500">
-              <li><a href="/faq" onClick={(e) => handleLink(e, '/faq')} className="hover:text-black transition-colors">Preguntas frecuentes</a></li>
+              <li><a href="/blog/preguntas-frecuentes-renta-autos-galsa" onClick={(e) => handleLink(e, '/blog/preguntas-frecuentes-renta-autos-galsa')} className="hover:text-black transition-colors">Preguntas frecuentes</a></li>
               <li><a href="/blog/guia-renta-autos-mexico-requisitos" onClick={(e) => handleLink(e, '/blog/guia-renta-autos-mexico-requisitos')} className="hover:text-black transition-colors">Requisitos de renta</a></li>
               <li><a href="/blog/como-ganar-dinero-rentando-tu-auto-anfitrion" onClick={(e) => handleLink(e, '/blog/como-ganar-dinero-rentando-tu-auto-anfitrion')} className="hover:text-black transition-colors">Gana con tu auto</a></li>
+              <li><a href="/blog/entrega-express-plaza-450-durango-sin-filas" onClick={(e) => handleLink(e, '/blog/entrega-express-plaza-450-durango-sin-filas')} className="hover:text-black transition-colors">Entrega express Plaza 450</a></li>
               <li><a href="/blog" onClick={(e) => handleLink(e, '/blog')} className="hover:text-black transition-colors">Blog de viajes</a></li>
               <li><a href="/contacto" onClick={(e) => handleLink(e, '/contacto')} className="hover:text-black transition-colors">Contacto</a></li>
             </ul>
@@ -242,8 +247,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               )}
             </div>
 
-            <span>Última actualización: <strong>23 Nov 2026, 02:25 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.41</span>
+            <span>Última actualización: <strong>23 Nov 2026, 02:33 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.42</span>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, ArrowRight, BookOpen, User } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, User } from 'lucide-react';
 import { BLOG_POSTS } from '../data/blog';
 
 interface BlogPageProps {
@@ -72,18 +72,41 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
           </header>
 
           {/* Cover Image */}
-          <div className="w-full aspect-[16/9] rounded-[24px] overflow-hidden mb-10 bg-slate-100">
+          <div className="w-full aspect-[16/9] rounded-[24px] overflow-hidden mb-10 bg-slate-50 flex items-center justify-center p-6">
             <img
               src={currentPost.image}
               alt={currentPost.title}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-contain object-center"
             />
           </div>
 
           {/* Article Body */}
-          <article className="prose max-w-none text-left space-y-6 text-slate-700 font-sans text-base sm:text-lg leading-relaxed">
-            {currentPost.content.map((paragraph, idx) => (
-              <p key={idx}>{paragraph}</p>
+          <article className="text-left space-y-8 text-slate-700 font-sans text-base sm:text-lg leading-relaxed">
+            <div className="space-y-5">
+              {currentPost.content.map((paragraph, idx) => (
+                <p key={idx}>{paragraph}</p>
+              ))}
+            </div>
+
+            {currentPost.sections?.map((section, idx) => (
+              <section key={idx} className="space-y-3.5 pt-2">
+                <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
+                  {section.heading}
+                </h2>
+                {section.paragraphs?.map((p, pIdx) => (
+                  <p key={pIdx}>{p}</p>
+                ))}
+                {section.bullets && section.bullets.length > 0 && (
+                  <ul className="space-y-2.5 pt-1">
+                    {section.bullets.map((bullet, bIdx) => (
+                      <li key={bIdx} className="flex items-start gap-3 text-base text-slate-700">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cta mt-2.5 shrink-0" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
             ))}
           </article>
 
@@ -114,12 +137,8 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
   return (
     <div className="py-12 md:py-16 bg-white">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        {/* Header */}
+        {/* Header (sin etiqueta "Blog GALSA Rent") */}
         <div className="text-left mb-8 sm:mb-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-xs font-heading font-semibold text-cta mb-2 uppercase tracking-wider">
-            <BookOpen className="w-4 h-4" strokeWidth={1.5} />
-            <span>Blog GALSA Rent</span>
-          </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-slate-900 tracking-tight leading-tight">
             Consejos de movilidad, rutas y anfitriones
           </h1>
@@ -159,13 +178,13 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
               <a
                 href={`/blog/${post.slug}`}
                 onClick={(e) => handleLink(e, `/blog/${post.slug}`)}
-                className="block relative aspect-[16/10] overflow-hidden bg-slate-100"
+                className="block relative aspect-[16/10] overflow-hidden bg-slate-50 p-4"
               >
                 <img
                   src={post.image}
                   alt={post.title}
                   loading="lazy"
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
                 />
                 <span className="absolute top-4 left-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-heading font-semibold text-cta bg-cta-50/95 backdrop-blur-xs">
                   {post.category}
