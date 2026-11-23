@@ -48,9 +48,6 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, selectedSlug }) 
 
           {/* Post Header */}
           <header className="mb-8 text-left space-y-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cta-50 text-cta text-xs font-heading font-semibold">
-              {currentPost.category}
-            </span>
             <h1 className="text-3xl sm:text-4xl font-heading font-bold text-slate-900 leading-tight tracking-tight">
               {currentPost.title}
             </h1>
