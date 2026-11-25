@@ -204,7 +204,12 @@ const INITIAL_REVIEWS: AdminReview[] = [
   },
 ];
 
-const TYPE_TABS: Array<'Todas' | ReviewType> = ['Todas', 'Vehículo', 'Cliente', 'Anfitrión'];
+const TYPE_OPTIONS: DropdownOption[] = [
+  { value: 'Todas', label: 'Todos los tipos', subtitle: 'Vehículos, clientes y anfitriones', icon: SlidersHorizontal },
+  { value: 'Vehículo', label: 'Vehículo', subtitle: 'Reseñas de autos', icon: SlidersHorizontal },
+  { value: 'Cliente', label: 'Cliente', subtitle: 'Reseñas de clientes', icon: SlidersHorizontal },
+  { value: 'Anfitrión', label: 'Anfitrión', subtitle: 'Reseñas de anfitriones', icon: SlidersHorizontal },
+];
 
 const STATUS_OPTIONS: DropdownOption[] = [
   { value: 'all', label: 'Todos los estados', subtitle: 'Mostrar todo el historial', icon: SlidersHorizontal },
@@ -403,26 +408,17 @@ export const AdminReviewsView: React.FC = () => {
       {/* Filtros a la izquierda + Buscar a la derecha */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          {TYPE_TABS.map((tab) => {
-            const active = typeFilter === tab;
-            return (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => {
-                  setTypeFilter(tab);
-                  setPage(1);
-                }}
-                className={`px-3.5 py-2 rounded-xl text-xs font-heading font-semibold transition-colors cursor-pointer ${
-                  active
-                    ? 'bg-cta-50 text-cta'
-                    : 'bg-transparent border border-slate-200 text-slate-600 hover:bg-slate-50'
-                }`}
-              >
-                {tab}
-              </button>
-            );
-          })}
+          <CustomDropdown
+            options={TYPE_OPTIONS}
+            value={typeFilter}
+            onChange={(val) => {
+              setTypeFilter(val as 'Todas' | ReviewType);
+              setPage(1);
+            }}
+            triggerIcon={SlidersHorizontal}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-60"
+          />
 
           <CustomDropdown
             options={STATUS_OPTIONS}

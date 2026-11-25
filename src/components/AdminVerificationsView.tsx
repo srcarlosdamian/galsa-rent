@@ -234,12 +234,12 @@ const INITIAL_VERIFICATIONS: AdminVerification[] = [
   },
 ];
 
-const ROLE_TABS: Array<{ id: 'Todos' | VerificationRole; label: string }> = [
-  { id: 'Todos', label: 'Todos' },
-  { id: 'Cliente', label: 'Clientes' },
-  { id: 'Anfitrión', label: 'Anfitriones' },
-  { id: 'Chofer', label: 'Choferes' },
-  { id: 'Auto', label: 'Autos' },
+const ROLE_OPTIONS: DropdownOption[] = [
+  { value: 'Todos', label: 'Todos los perfiles', subtitle: 'Clientes, anfitriones, choferes y autos', icon: Users },
+  { value: 'Cliente', label: 'Clientes', subtitle: 'Documentos de clientes', icon: Users },
+  { value: 'Anfitrión', label: 'Anfitriones', subtitle: 'Documentos de anfitriones', icon: UserCheck },
+  { value: 'Chofer', label: 'Choferes', subtitle: 'Expedientes de choferes', icon: IdCard },
+  { value: 'Auto', label: 'Autos', subtitle: 'Unidades por aprobar', icon: Car },
 ];
 
 const STATUS_OPTIONS: DropdownOption[] = [
@@ -402,23 +402,14 @@ export const AdminVerificationsView: React.FC = () => {
       {/* Filtros a la izquierda + Buscador por nombre a la derecha */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          {ROLE_TABS.map((tab) => {
-            const active = roleFilter === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setRoleFilter(tab.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-heading font-semibold transition-colors cursor-pointer ${
-                  active
-                    ? 'bg-cta-50 text-cta'
-                    : 'bg-transparent border border-slate-200 text-slate-600 hover:bg-slate-50'
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
+          <CustomDropdown
+            options={ROLE_OPTIONS}
+            value={roleFilter}
+            onChange={(val) => setRoleFilter(val as 'Todos' | VerificationRole)}
+            triggerIcon={Users}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-64"
+          />
 
           <CustomDropdown
             options={STATUS_OPTIONS}
