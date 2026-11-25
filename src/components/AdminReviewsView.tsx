@@ -331,12 +331,12 @@ export const AdminReviewsView: React.FC = () => {
         </p>
       </div>
 
-      {/* 4 KPIs superiores compactos con el mismo estilo de Dashboard y Reportes */}
+      {/* 4 KPIs superiores compactos: neutrales salvo Pendientes > 0 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
         <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
           <div className="flex items-start justify-between gap-2">
             <span className="text-[11px] font-sans font-medium text-slate-500">Rating promedio</span>
-            <span className="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
+            <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <Star className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
@@ -351,7 +351,7 @@ export const AdminReviewsView: React.FC = () => {
         <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
           <div className="flex items-start justify-between gap-2">
             <span className="text-[11px] font-sans font-medium text-slate-500">Total reseñas</span>
-            <span className="w-7 h-7 rounded-lg bg-cta-50 text-cta flex items-center justify-center shrink-0">
+            <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <MessageSquare className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
@@ -366,7 +366,11 @@ export const AdminReviewsView: React.FC = () => {
         <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
           <div className="flex items-start justify-between gap-2">
             <span className="text-[11px] font-sans font-medium text-slate-500">Pendientes</span>
-            <span className="w-7 h-7 rounded-lg bg-amber-50 text-amber-800 flex items-center justify-center shrink-0">
+            <span
+              className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                pendingCount > 0 ? 'bg-amber-50 text-amber-800' : 'bg-white text-slate-500'
+              }`}
+            >
               <Clock className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
@@ -381,7 +385,7 @@ export const AdminReviewsView: React.FC = () => {
         <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
           <div className="flex items-start justify-between gap-2">
             <span className="text-[11px] font-sans font-medium text-slate-500">Publicadas</span>
-            <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+            <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>

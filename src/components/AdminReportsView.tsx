@@ -81,12 +81,12 @@ export const AdminReportsView: React.FC = () => {
   }, []);
 
   const reportKpis = [
-    { label: 'Ingresos', value: '$6.7 M', sub: 'rentas $6.7 M + Contabilidad $27.6 k', icon: DollarSign, tone: 'bg-cta-50 text-cta' },
-    { label: 'Costos', value: '$1.7 M', sub: 'operativo + gastos', icon: TrendingDown, tone: 'bg-red-50 text-red-700' },
-    { label: 'Resultado neto', value: '$5 M', sub: 'ingresos - costos', icon: Scale, tone: 'bg-emerald-50 text-emerald-700' },
-    { label: 'Margen', value: '74.9%', sub: 'neto / ingresos', icon: Gauge, tone: 'bg-cta-50 text-cta' },
-    { label: 'Ocupación', value: '17%', sub: '1/6 de la flota', icon: Gauge, tone: 'bg-cta-50 text-cta' },
-    { label: 'Reservas', value: '155', sub: 'en el rango', icon: Calendar, tone: 'bg-amber-50 text-amber-800' },
+    { label: 'Ingresos', value: '$6.7 M', sub: 'rentas $6.7 M + Contabilidad $27.6 k', icon: DollarSign, tone: 'bg-white text-slate-500' },
+    { label: 'Costos', value: '$1.7 M', sub: 'operativo + gastos', icon: TrendingDown, tone: 'bg-white text-slate-500' },
+    { label: 'Resultado neto', value: '$5 M', sub: 'ingresos - costos', icon: Scale, tone: 'bg-white text-slate-500' },
+    { label: 'Margen', value: '74.9%', sub: 'neto / ingresos', icon: Gauge, tone: 'bg-white text-slate-500' },
+    { label: 'Ocupación', value: '17%', sub: '1/6 de la flota', icon: Gauge, tone: 'bg-white text-slate-500' },
+    { label: 'Reservas', value: '155', sub: 'en el rango', icon: Calendar, tone: 'bg-white text-slate-500' },
   ];
 
   const visibleLines =

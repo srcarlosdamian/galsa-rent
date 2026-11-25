@@ -139,47 +139,80 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
 
   const cityText = cityFilter === 'all' ? 'todas las ciudades' : cityFilter;
 
+  // Regla semántica de color: neutral por defecto para métricas informativas;
+  // color solo cuando existe alerta real, falla o pendiente operativo.
+  const NEUTRAL_KPI_ICON = 'bg-white text-slate-500';
+
   const primaryKpis = [
     {
       label: 'Ingresos del mes',
       value: '$0.0',
       sub: `Cobrado en Nov 2026 · ${cityText}`,
       icon: DollarSign,
-      iconClass: 'bg-cta-50 text-cta',
+      iconClass: NEUTRAL_KPI_ICON,
     },
     {
       label: 'Reservas activas',
       value: '13',
       sub: 'En curso hoy (renta a chofer: la semana en curso)',
       icon: Calendar,
-      iconClass: 'bg-cta-50 text-cta',
+      iconClass: NEUTRAL_KPI_ICON,
     },
     {
       label: 'Ocupación de flota',
       value: '17%',
       sub: '1 vehículos en operación',
       icon: Gauge,
-      iconClass: 'bg-emerald-50 text-emerald-700',
+      iconClass: NEUTRAL_KPI_ICON,
     },
     {
       label: 'Utilidad del mes',
       value: '$0.0',
       sub: 'Ingresos netos, igual que en Finanzas',
       icon: TrendingUp,
-      iconClass: 'bg-emerald-50 text-emerald-700',
+      iconClass: NEUTRAL_KPI_ICON,
     },
   ];
 
+  const openIncidents = 17;
+  const unitsToValidate = 6;
+  const docsToVerify = 10;
+  const inMaintenance = 0;
+
   const secondaryCompactKpis = [
-    { label: 'Vehículos disponibles', value: '5', sub: 'Listos para rentar', icon: Car, tone: 'text-cta bg-cta-50' },
-    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de anfitrión · Nov 2026', icon: Percent, tone: 'text-cta bg-cta-50' },
-    { label: 'Incidentes abiertos', value: '17', sub: 'Todas las no resueltas', icon: AlertTriangle, tone: 'text-red-700 bg-red-50' },
-    { label: 'Unidades por validar', value: '6', sub: 'Altas sin aprobar', icon: Car, tone: 'text-amber-800 bg-amber-50' },
-    { label: 'Documentos por verificar', value: '10', sub: 'Clientes y anfitriones', icon: ClipboardList, tone: 'text-amber-800 bg-amber-50' },
-    { label: 'En mantenimiento', value: '0', sub: 'Ver esas unidades', icon: Wrench, tone: 'text-amber-700 bg-amber-50' },
-    { label: 'Reservas totales', value: '178', sub: 'Historial completo', icon: Calendar, tone: 'text-slate-700 bg-white' },
-    { label: 'Sucursales activas', value: '10', sub: 'Puntos de entrega', icon: Building2, tone: 'text-cta bg-cta-50' },
-    { label: 'Ciudades', value: '5', sub: 'Cobertura', icon: MapPin, tone: 'text-cta bg-cta-50' },
+    { label: 'Vehículos disponibles', value: '5', sub: 'Listos para rentar', icon: Car, tone: NEUTRAL_KPI_ICON },
+    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de anfitrión · Nov 2026', icon: Percent, tone: NEUTRAL_KPI_ICON },
+    {
+      label: 'Incidentes abiertos',
+      value: String(openIncidents),
+      sub: 'Todas las no resueltas',
+      icon: AlertTriangle,
+      tone: openIncidents > 0 ? 'text-red-700 bg-red-50' : NEUTRAL_KPI_ICON,
+    },
+    {
+      label: 'Unidades por validar',
+      value: String(unitsToValidate),
+      sub: 'Altas sin aprobar',
+      icon: Car,
+      tone: unitsToValidate > 0 ? 'text-amber-800 bg-amber-50' : NEUTRAL_KPI_ICON,
+    },
+    {
+      label: 'Documentos por verificar',
+      value: String(docsToVerify),
+      sub: 'Clientes y anfitriones',
+      icon: ClipboardList,
+      tone: docsToVerify > 0 ? 'text-amber-800 bg-amber-50' : NEUTRAL_KPI_ICON,
+    },
+    {
+      label: 'En mantenimiento',
+      value: String(inMaintenance),
+      sub: 'Ver esas unidades',
+      icon: Wrench,
+      tone: inMaintenance > 0 ? 'text-amber-800 bg-amber-50' : NEUTRAL_KPI_ICON,
+    },
+    { label: 'Reservas totales', value: '178', sub: 'Historial completo', icon: Calendar, tone: NEUTRAL_KPI_ICON },
+    { label: 'Sucursales activas', value: '10', sub: 'Puntos de entrega', icon: Building2, tone: NEUTRAL_KPI_ICON },
+    { label: 'Ciudades', value: '5', sub: 'Cobertura', icon: MapPin, tone: NEUTRAL_KPI_ICON },
   ];
 
   const renderSidebarContent = () => (
