@@ -165,19 +165,16 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
     },
   ];
 
-  const secondaryKpis = [
+  const secondaryCompactKpis = [
     { label: 'Vehículos disponibles', value: '5', sub: 'Listos para rentar', icon: Car, tone: 'text-cta bg-cta-50' },
-    { label: 'En mantenimiento', value: '0', sub: 'Ver esas unidades', icon: Wrench, tone: 'text-amber-700 bg-amber-50' },
+    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de anfitrión · Nov 2026', icon: Percent, tone: 'text-cta bg-cta-50' },
     { label: 'Incidentes abiertos', value: '17', sub: 'Todas las no resueltas', icon: AlertTriangle, tone: 'text-red-700 bg-red-50' },
-    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de autos de anfitrión · Nov 2026', icon: Percent, tone: 'text-cta bg-cta-50' },
-  ];
-
-  const tertiaryKpis = [
-    { label: 'Reservas totales', value: '178', sub: 'Historial completo', icon: Calendar, tone: 'text-slate-700 bg-white' },
-    { label: 'Ciudades', value: '5', sub: 'Cobertura', icon: MapPin, tone: 'text-cta bg-cta-50' },
-    { label: 'Sucursales activas', value: '10', sub: 'Puntos de entrega', icon: Building2, tone: 'text-cta bg-cta-50' },
     { label: 'Unidades por validar', value: '6', sub: 'Altas sin aprobar', icon: Car, tone: 'text-amber-800 bg-amber-50' },
     { label: 'Documentos por verificar', value: '10', sub: 'Clientes y anfitriones', icon: ClipboardList, tone: 'text-amber-800 bg-amber-50' },
+    { label: 'En mantenimiento', value: '0', sub: 'Ver esas unidades', icon: Wrench, tone: 'text-amber-700 bg-amber-50' },
+    { label: 'Reservas totales', value: '178', sub: 'Historial completo', icon: Calendar, tone: 'text-slate-700 bg-white' },
+    { label: 'Sucursales activas', value: '10', sub: 'Puntos de entrega', icon: Building2, tone: 'text-cta bg-cta-50' },
+    { label: 'Ciudades', value: '5', sub: 'Cobertura', icon: MapPin, tone: 'text-cta bg-cta-50' },
   ];
 
   const renderSidebarContent = () => (
@@ -355,75 +352,51 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Fila 1: 4 KPIs Principales (compactos, fondo slate-50 sin borde) */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {/* Fila 1: 4 KPIs Principales (Prioridad alta: más grandes y protagonistas) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
             {primaryKpis.map((kpi) => {
               const Icon = kpi.icon;
               return (
                 <div
                   key={kpi.label}
-                  className="rounded-2xl bg-slate-50 p-3.5 sm:p-4 text-left space-y-2"
+                  className="rounded-2xl bg-slate-50 p-4 sm:p-5 text-left space-y-3"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-heading font-medium text-slate-500 truncate">
+                    <span className="text-xs sm:text-[13px] font-heading font-semibold text-slate-600 truncate">
                       {kpi.label}
                     </span>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${kpi.iconClass}`}>
-                      <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${kpi.iconClass}`}>
+                      <Icon className="w-4 h-4" strokeWidth={1.8} />
                     </div>
                   </div>
                   <div>
-                    <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tabular-nums leading-none">
+                    <p className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 tabular-nums leading-none">
                       {kpi.value}
                     </p>
-                    <p className="text-[11px] font-sans text-slate-500 mt-1.5 truncate">{kpi.sub}</p>
+                    <p className="text-[11px] font-sans text-slate-500 mt-2 truncate">{kpi.sub}</p>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Fila 2: 4 KPIs Operativos (compactos con fondo slate-50) */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {secondaryKpis.map((m) => {
+          {/* Fila 2: 9 Indicadores Secundarios (pequeños y compactos en bloque denso) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            {secondaryCompactKpis.map((m) => {
               const Icon = m.icon;
               return (
                 <div
                   key={m.label}
-                  className="rounded-2xl bg-slate-50 p-3.5 text-left space-y-1.5"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-heading font-medium text-slate-500 truncate">{m.label}</span>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${m.tone}`}>
-                      <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
-                    </div>
-                  </div>
-                  <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
-                    {m.value}
-                  </p>
-                  <p className="text-[11px] font-sans text-slate-500 truncate">{m.sub}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Fila 3: 5 Indicadores de Cobertura y Validación (compactos con fondo slate-50) */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {tertiaryKpis.map((m) => {
-              const Icon = m.icon;
-              return (
-                <div
-                  key={m.label}
-                  className="rounded-2xl bg-slate-50 p-3 text-left flex items-center justify-between gap-2"
+                  className="rounded-xl bg-slate-50 px-3 py-2.5 text-left flex items-center justify-between gap-2"
                 >
                   <div className="min-w-0">
                     <p className="text-[11px] font-heading font-medium text-slate-500 truncate">{m.label}</p>
-                    <p className="text-base sm:text-lg font-heading font-bold text-slate-900 tabular-nums mt-0.5 leading-none">
+                    <p className="text-base font-heading font-bold text-slate-900 tabular-nums mt-0.5 leading-none">
                       {m.value}
                     </p>
                     <p className="text-[10px] font-sans text-slate-400 truncate mt-1">{m.sub}</p>
                   </div>
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${m.tone}`}>
+                  <div className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 ${m.tone}`}>
                     <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
                   </div>
                 </div>
