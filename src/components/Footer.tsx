@@ -4,6 +4,7 @@ import { Palette, Globe, ChevronUp, Mail, LayoutDashboard } from 'lucide-react';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
+  qaOnly?: boolean;
 }
 
 const QA_ALL_ROUTES: { group: string; items: { label: string; path: string }[] }[] = [
@@ -65,7 +66,7 @@ const QA_ALL_ROUTES: { group: string; items: { label: string; path: string }[] }
   },
 ];
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, qaOnly = false }) => {
   const [qaMenuOpen, setQaMenuOpen] = useState(false);
   const qaMenuRef = useRef<HTMLDivElement>(null);
 
@@ -99,9 +100,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
   return (
     <footer className="bg-white text-slate-900 border-t border-slate-100">
-      
-      {/* Main Footer Content */}
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 sm:py-16">
+      {/* Main Footer Content (oculto en /admin donde solo se muestra la barra QA) */}
+      {!qaOnly && (
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-14 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           
           {/* Brand Info */}
@@ -162,7 +163,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
         </div>
-      </div>
+        </div>
+      )}
 
       {/* Listón de control interno de despliegue / QA (No forma parte del diseño final) */}
       <div className="bg-black text-white text-[11px] font-mono py-2 px-4 border-t border-neutral-800 text-center tracking-wide">
@@ -259,8 +261,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               )}
             </div>
 
-            <span>Última actualización: <strong>25 Nov 2026, 00:20 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.54</span>
+            <span>Última actualización: <strong>25 Nov 2026, 00:21 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.55</span>
           </div>
         </div>
       </div>

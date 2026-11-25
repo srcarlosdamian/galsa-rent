@@ -604,8 +604,8 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Footer corporativo GALSA */}
-      <Footer onNavigate={navigateTo} />
+      {/* Footer corporativo GALSA (en /admin solo muestra la barra QA interna) */}
+      <Footer onNavigate={navigateTo} qaOnly={currentPath === '/admin'} />
     </div>
   );
 };
