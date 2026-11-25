@@ -10,6 +10,7 @@ import {
   MapPin,
   Layers,
   Car,
+  Search,
 } from 'lucide-react';
 import { CustomDropdown, DropdownOption } from './CustomDropdown';
 import { SingleDatePicker } from './SingleDatePicker';
@@ -68,6 +69,7 @@ export const AdminReportsView: React.FC = () => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [openDate, setOpenDate] = useState<'from' | 'to' | null>(null);
+  const [unitSearch, setUnitSearch] = useState('');
   const dateWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -419,9 +421,21 @@ export const AdminReportsView: React.FC = () => {
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
-          <div>
-            <h2 className="text-sm font-heading font-bold text-slate-900">Rentabilidad por unidad</h2>
-            <p className="text-[11px] text-slate-500">Top vehículos por ingreso (MXN)</p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h2 className="text-sm font-heading font-bold text-slate-900">Rentabilidad por unidad</h2>
+              <p className="text-[11px] text-slate-500">Top vehículos por ingreso (MXN)</p>
+            </div>
+            <div className="relative w-full sm:w-48">
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" strokeWidth={1.6} />
+              <input
+                type="text"
+                value={unitSearch}
+                onChange={(e) => setUnitSearch(e.target.value)}
+                placeholder="Buscar por nombre..."
+                className="w-full pl-8 pr-2.5 py-1.5 rounded-xl bg-transparent border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta text-xs font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
+              />
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -433,7 +447,9 @@ export const AdminReportsView: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
-                {UNIT_PROFITABILITY.map((u) => (
+                {UNIT_PROFITABILITY.filter((u) =>
+                  !unitSearch.trim() || u.name.toLowerCase().includes(unitSearch.toLowerCase())
+                ).map((u) => (
                   <tr key={u.name}>
                     <td className="py-3 pr-3 font-heading font-semibold text-slate-900">
                       <span className="inline-flex items-center gap-2">

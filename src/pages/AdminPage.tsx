@@ -35,6 +35,7 @@ import { GalsaLogo } from '../components/GalsaLogo';
 import { CustomDropdown, DropdownOption } from '../components/CustomDropdown';
 import { AdminReportsView } from '../components/AdminReportsView';
 import { AdminReviewsView } from '../components/AdminReviewsView';
+import { AdminDriversView } from '../components/AdminDriversView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
@@ -50,7 +51,7 @@ const ADMIN_CITY_OPTIONS: DropdownOption[] = [
 ];
 
 // Secciones ya diseñadas; el resto permanece en SIDEBAR_GROUPS oculto hasta diseñarse
-const DESIGNED_ADMIN_SECTIONS = new Set(['dashboard', 'reportes', 'resenas']);
+const DESIGNED_ADMIN_SECTIONS = new Set(['dashboard', 'reportes', 'resenas', 'choferes']);
 
 const SIDEBAR_GROUPS = [
   {
@@ -362,12 +363,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
           </div>
         </header>
 
-        {/* Main Body: Dashboard, Reportes o Reseñas */}
+        {/* Main Body: Dashboard, Reportes, Reseñas o Choferes */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1240px] w-full mx-auto space-y-6">
           {activeNav === 'reportes' ? (
             <AdminReportsView />
           ) : activeNav === 'resenas' ? (
             <AdminReviewsView />
+          ) : activeNav === 'choferes' ? (
+            <AdminDriversView />
           ) : (
             <>
               {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
