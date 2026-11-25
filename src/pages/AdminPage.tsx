@@ -639,8 +639,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
             </div>
           </div>
 
-          {/* Tabla minimalista lineal (sin fondo): Estado de la flota */}
-          <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
+          {/* Tabla libre sin borde: Estado de la flota */}
+          <div className="text-left space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 className="text-sm font-heading font-bold text-slate-900">Estado de la flota</h2>

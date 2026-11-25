@@ -406,58 +406,53 @@ export const AdminIncidentsView: React.FC = () => {
         </div>
       )}
 
-      {/* Tabla minimalista de Registro de incidencias */}
-      <div className="rounded-2xl border border-slate-200 bg-transparent p-4 sm:p-5 text-left space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-          {/* Buscador por código / nombre */}
-          <div className="relative w-full lg:w-72">
-            <Search
-              className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"
-              strokeWidth={1.6}
-            />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por nombre o código..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-transparent border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta text-xs sm:text-sm font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
-            />
-          </div>
-
-          {/* Filtros exactamente iguales al resto del sistema */}
-          <div className="flex flex-wrap items-center gap-2">
-            <CustomDropdown
-              options={STATUS_OPTIONS}
-              value={statusFilter}
-              onChange={setStatusFilter}
-              triggerIcon={SlidersHorizontal}
-              buttonClassName="!w-auto"
-              align="right"
-              menuWidthClass="w-56"
-            />
-            <CustomDropdown
-              options={SEVERITY_OPTIONS}
-              value={severityFilter}
-              onChange={setSeverityFilter}
-              triggerIcon={AlertTriangle}
-              buttonClassName="!w-auto"
-              align="right"
-              menuWidthClass="w-56"
-            />
-            <CustomDropdown
-              options={LINE_OPTIONS}
-              value={lineFilter}
-              onChange={setLineFilter}
-              triggerIcon={Layers}
-              buttonClassName="!w-auto"
-              align="right"
-              menuWidthClass="w-56"
-            />
-          </div>
+      {/* Filtros a la izquierda + Buscador por nombre a la derecha (fuera de la tabla) */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <CustomDropdown
+            options={STATUS_OPTIONS}
+            value={statusFilter}
+            onChange={setStatusFilter}
+            triggerIcon={SlidersHorizontal}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-56"
+          />
+          <CustomDropdown
+            options={SEVERITY_OPTIONS}
+            value={severityFilter}
+            onChange={setSeverityFilter}
+            triggerIcon={AlertTriangle}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-56"
+          />
+          <CustomDropdown
+            options={LINE_OPTIONS}
+            value={lineFilter}
+            onChange={setLineFilter}
+            triggerIcon={Layers}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-56"
+          />
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        <div className="relative w-full lg:w-64">
+          <Search
+            className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"
+            strokeWidth={1.6}
+          />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar por nombre o código..."
+            className="w-full pl-9 pr-3 py-2 rounded-xl bg-transparent border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta text-xs sm:text-sm font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
+          />
+        </div>
+      </div>
+
+      {/* Tabla libre sin borde ni scroll interno */}
+      <div className="text-left space-y-4">
+        <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-slate-100 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
                 <th className="py-2.5 pr-4">Código</th>
@@ -572,7 +567,6 @@ export const AdminIncidentsView: React.FC = () => {
               )}
             </tbody>
           </table>
-        </div>
 
         <div className="pt-2 border-t border-slate-100 text-xs text-slate-500">
           Mostrando {filteredIncidents.length} de {incidents.length} incidencias

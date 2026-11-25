@@ -400,9 +400,9 @@ export const AdminReviewsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Filtros directos (sin contenedor de color) */}
+      {/* Filtros a la izquierda + Buscar a la derecha */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-2">
           {TYPE_TABS.map((tab) => {
             const active = typeFilter === tab;
             return (
@@ -423,46 +423,41 @@ export const AdminReviewsView: React.FC = () => {
               </button>
             );
           })}
+
+          <CustomDropdown
+            options={STATUS_OPTIONS}
+            value={statusFilter}
+            onChange={(val) => {
+              setStatusFilter(val);
+              setPage(1);
+            }}
+            triggerIcon={SlidersHorizontal}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-60"
+          />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
-          <div className="w-48">
-            <CustomDropdown
-              options={STATUS_OPTIONS}
-              value={statusFilter}
-              onChange={(val) => {
-                setStatusFilter(val);
-                setPage(1);
-              }}
-              triggerIcon={SlidersHorizontal}
-              align="right"
-              menuWidthClass="w-60"
-            />
-          </div>
-
-          <div className="relative w-full sm:w-56">
-            <Search
-              className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"
-              strokeWidth={1.6}
-            />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-              placeholder="Buscar reseñas..."
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-transparent border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta text-xs sm:text-sm font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
-            />
-          </div>
+        <div className="relative w-full md:w-64">
+          <Search
+            className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"
+            strokeWidth={1.6}
+          />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+            placeholder="Buscar por nombre..."
+            className="w-full pl-9 pr-3 py-2 rounded-xl bg-transparent border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta text-xs sm:text-sm font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
+          />
         </div>
       </div>
 
-      {/* Tabla minimalista solo con borde */}
-      <div className="rounded-2xl border border-slate-200 bg-transparent p-4 sm:p-5 text-left space-y-4">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+      {/* Tabla libre sin borde ni scroll interno */}
+      <div className="text-left space-y-4">
+        <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-slate-100 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
                 <th className="py-2.5 pr-4">Usuario</th>
@@ -608,7 +603,6 @@ export const AdminReviewsView: React.FC = () => {
               )}
             </tbody>
           </table>
-        </div>
 
         {/* Paginación */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-100 text-xs text-slate-500">

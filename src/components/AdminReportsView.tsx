@@ -136,91 +136,6 @@ export const AdminReportsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Filtros directos agrupados a la izquierda con ancho automático */}
-      <div ref={dateWrapRef} className="flex flex-wrap items-center gap-2.5 overflow-visible">
-        <CustomDropdown
-          options={REPORT_CITY_OPTIONS}
-          value={city}
-          onChange={setCity}
-          triggerIcon={MapPin}
-          buttonClassName="!w-auto"
-          menuWidthClass="w-64"
-        />
-
-        <CustomDropdown
-          options={REPORT_LINE_OPTIONS}
-          value={line}
-          onChange={setLine}
-          triggerIcon={Layers}
-          buttonClassName="!w-auto"
-          menuWidthClass="w-60"
-        />
-
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setOpenDate((prev) => (prev === 'from' ? null : 'from'))}
-            className={`w-auto px-3.5 py-2.5 rounded-xl border bg-white inline-flex items-center gap-2.5 text-sm font-sans text-left transition-colors cursor-pointer ${
-              openDate === 'from'
-                ? 'border-cta ring-1 ring-cta text-slate-900'
-                : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-700'
-            }`}
-          >
-            <span className="whitespace-nowrap">
-              <span className="text-slate-400 mr-1.5">Desde:</span>
-              <span className={fromDate ? 'text-slate-900' : 'text-slate-400'}>
-                {formatShortDate(fromDate)}
-              </span>
-            </span>
-            <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
-          </button>
-          {openDate === 'from' && (
-            <div className="absolute top-full left-0 mt-2 z-[70]">
-              <SingleDatePicker
-                value={fromDate || '2026-11-01'}
-                onChange={(d) => {
-                  setFromDate(d);
-                  setOpenDate(null);
-                }}
-                onClose={() => setOpenDate(null)}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setOpenDate((prev) => (prev === 'to' ? null : 'to'))}
-            className={`w-auto px-3.5 py-2.5 rounded-xl border bg-white inline-flex items-center gap-2.5 text-sm font-sans text-left transition-colors cursor-pointer ${
-              openDate === 'to'
-                ? 'border-cta ring-1 ring-cta text-slate-900'
-                : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-700'
-            }`}
-          >
-            <span className="whitespace-nowrap">
-              <span className="text-slate-400 mr-1.5">Hasta:</span>
-              <span className={toDate ? 'text-slate-900' : 'text-slate-400'}>
-                {formatShortDate(toDate)}
-              </span>
-            </span>
-            <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
-          </button>
-          {openDate === 'to' && (
-            <div className="absolute top-full left-0 mt-2 z-[70]">
-              <SingleDatePicker
-                value={toDate || '2026-11-30'}
-                onChange={(d) => {
-                  setToDate(d);
-                  setOpenDate(null);
-                }}
-                onClose={() => setOpenDate(null)}
-              />
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* 6 KPIs compactos arriba con exactamente la misma altura */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 items-stretch">
         {reportKpis.map((kpi) => {
@@ -249,6 +164,93 @@ export const AdminReportsView: React.FC = () => {
             </div>
           );
         })}
+      </div>
+
+      {/* Filtros agrupados a la izquierda debajo de los KPIs */}
+      <div ref={dateWrapRef} className="flex flex-wrap items-center justify-between gap-3 overflow-visible">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <CustomDropdown
+            options={REPORT_CITY_OPTIONS}
+            value={city}
+            onChange={setCity}
+            triggerIcon={MapPin}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-64"
+          />
+
+          <CustomDropdown
+            options={REPORT_LINE_OPTIONS}
+            value={line}
+            onChange={setLine}
+            triggerIcon={Layers}
+            buttonClassName="!w-auto"
+            menuWidthClass="w-60"
+          />
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenDate((prev) => (prev === 'from' ? null : 'from'))}
+              className={`w-auto px-3.5 py-2.5 rounded-xl border bg-white inline-flex items-center gap-2.5 text-sm font-sans text-left transition-colors cursor-pointer ${
+                openDate === 'from'
+                  ? 'border-cta ring-1 ring-cta text-slate-900'
+                  : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-700'
+              }`}
+            >
+              <span className="whitespace-nowrap">
+                <span className="text-slate-400 mr-1.5">Desde:</span>
+                <span className={fromDate ? 'text-slate-900' : 'text-slate-400'}>
+                  {formatShortDate(fromDate)}
+                </span>
+              </span>
+              <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
+            </button>
+            {openDate === 'from' && (
+              <div className="absolute top-full left-0 mt-2 z-[70]">
+                <SingleDatePicker
+                  value={fromDate || '2026-11-01'}
+                  onChange={(d) => {
+                    setFromDate(d);
+                    setOpenDate(null);
+                  }}
+                  onClose={() => setOpenDate(null)}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setOpenDate((prev) => (prev === 'to' ? null : 'to'))}
+              className={`w-auto px-3.5 py-2.5 rounded-xl border bg-white inline-flex items-center gap-2.5 text-sm font-sans text-left transition-colors cursor-pointer ${
+                openDate === 'to'
+                  ? 'border-cta ring-1 ring-cta text-slate-900'
+                  : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-700'
+              }`}
+            >
+              <span className="whitespace-nowrap">
+                <span className="text-slate-400 mr-1.5">Hasta:</span>
+                <span className={toDate ? 'text-slate-900' : 'text-slate-400'}>
+                  {formatShortDate(toDate)}
+                </span>
+              </span>
+              <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
+            </button>
+            {openDate === 'to' && (
+              <div className="absolute top-full left-0 mt-2 z-[70]">
+                <SingleDatePicker
+                  value={toDate || '2026-11-30'}
+                  onChange={(d) => {
+                    setToDate(d);
+                    setOpenDate(null);
+                  }}
+                  onClose={() => setOpenDate(null)}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Gráfica principal: Costo vs ingreso (minimalista, solo borde) */}
@@ -338,15 +340,14 @@ export const AdminReportsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Tabla minimalista: Desempeño por línea de negocio */}
-      <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
+      {/* Tabla libre sin borde: Desempeño por línea de negocio */}
+      <div className="text-left space-y-4">
         <div>
           <h2 className="text-sm font-heading font-bold text-slate-900">Desempeño por línea de negocio</h2>
           <p className="text-[11px] text-slate-500">Ingreso, costo, resultado y reservas</p>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-slate-100 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
                 <th className="py-2.5 pr-4">Línea</th>
@@ -393,7 +394,6 @@ export const AdminReportsView: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </div>
       </div>
 
       {/* Fila inferior: Costos por categoría + Rentabilidad por unidad */}
@@ -420,7 +420,7 @@ export const AdminReportsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
+        <div className="text-left space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <h2 className="text-sm font-heading font-bold text-slate-900">Rentabilidad por unidad</h2>
@@ -437,8 +437,7 @@ export const AdminReportsView: React.FC = () => {
               />
             </div>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-slate-100 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
                   <th className="py-2 pr-3">Vehículo</th>
@@ -467,7 +466,6 @@ export const AdminReportsView: React.FC = () => {
                 ))}
               </tbody>
             </table>
-          </div>
         </div>
       </div>
     </div>
