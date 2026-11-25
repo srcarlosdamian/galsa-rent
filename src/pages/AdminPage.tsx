@@ -471,7 +471,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
           ) : activeNav === 'usuarios' || activeNav === 'permisos' ? (
             <AdminUsersPermissionsView
               activeTab={activeNav === 'permisos' ? 'permisos' : 'usuarios'}
-              onTabChange={(tab) => navigateToSection(tab)}
             />
           ) : activeNav === 'capital' ? (
             <AdminCapitalView />

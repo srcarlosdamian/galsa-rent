@@ -344,12 +344,10 @@ const STATUS_CHIP: Record<UserAccountStatus, { pill: string; dot: string }> = {
 
 interface AdminUsersPermissionsViewProps {
   activeTab: 'usuarios' | 'permisos';
-  onTabChange: (tab: 'usuarios' | 'permisos') => void;
 }
 
 export const AdminUsersPermissionsView: React.FC<AdminUsersPermissionsViewProps> = ({
   activeTab,
-  onTabChange,
 }) => {
   const [users, setUsers] = useState<InternalUser[]>(INITIAL_USERS);
   const [matrix, setMatrix] = useState<MatrixModule[]>(INITIAL_MATRIX);
@@ -420,10 +418,12 @@ export const AdminUsersPermissionsView: React.FC<AdminUsersPermissionsViewProps>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="text-left">
           <h1 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
-            Usuarios y permisos
+            {activeTab === 'permisos' ? 'Matriz de permisos' : 'Usuarios y permisos'}
           </h1>
           <p className="text-xs sm:text-sm font-sans text-slate-500 mt-0.5">
-            Gestión de usuarios internos y control de acceso por rol (RBAC).
+            {activeTab === 'permisos'
+              ? 'Define qué módulos ve cada rol. Los cambios se guardan y aplican en el panel al instante.'
+              : 'Gestión de usuarios internos y control de acceso por rol (RBAC).'}
           </p>
         </div>
 
@@ -488,32 +488,6 @@ export const AdminUsersPermissionsView: React.FC<AdminUsersPermissionsViewProps>
             <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">cobertura</p>
           </div>
         </div>
-      </div>
-
-      {/* Tabs: Usuarios y permisos | Matriz de permisos */}
-      <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-        <button
-          type="button"
-          onClick={() => onTabChange('usuarios')}
-          className={`px-3.5 py-2 rounded-xl text-xs font-heading font-semibold transition-colors cursor-pointer ${
-            activeTab === 'usuarios'
-              ? 'bg-cta-50 text-cta'
-              : 'bg-transparent border border-slate-200 text-slate-600 hover:bg-slate-50'
-          }`}
-        >
-          Usuarios y permisos
-        </button>
-        <button
-          type="button"
-          onClick={() => onTabChange('permisos')}
-          className={`px-3.5 py-2 rounded-xl text-xs font-heading font-semibold transition-colors cursor-pointer ${
-            activeTab === 'permisos'
-              ? 'bg-cta-50 text-cta'
-              : 'bg-transparent border border-slate-200 text-slate-600 hover:bg-slate-50'
-          }`}
-        >
-          Matriz de permisos
-        </button>
       </div>
 
       {/* TAB 1: Usuarios */}
