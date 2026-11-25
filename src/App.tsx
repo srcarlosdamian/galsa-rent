@@ -35,6 +35,7 @@ import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { SeoPage } from './pages/SeoPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
 import { EmailsPage } from './pages/EmailsPage';
+import { AdminPage } from './pages/AdminPage';
 import { HostRegistrationPage } from './pages/HostRegistrationPage';
 
 import { VEHICLES, findVehicleBySlugOrUuid } from './data/vehicles';
@@ -301,14 +302,15 @@ export const App: React.FC = () => {
     currentPath === '/seo' ||
     currentPath === '/design-system' ||
     currentPath === '/emails' ||
+    currentPath === '/admin' ||
     currentPath.startsWith('/cuenta') ||
     currentPath === '/completar-perfil' ||
     currentPath === '/cuenta/completar';
 
   return (
     <div className="min-h-screen bg-white text-ink-900 font-sans selection:bg-black selection:text-white flex flex-col">
-      {/* Header with concise menu */}
-      <Header currentPath={currentPath} onNavigate={navigateTo} />
+      {/* Header with concise menu (oculto en /admin porque tiene su propio header y sidebar) */}
+      {currentPath !== '/admin' && <Header currentPath={currentPath} onNavigate={navigateTo} />}
 
       <main className="flex-1">
         
@@ -407,6 +409,9 @@ export const App: React.FC = () => {
 
         {/* ROUTE 7.9: PLANTILLAS DE EMAILS TRANSACCIONALES */}
         {currentPath === '/emails' && <EmailsPage onNavigate={navigateTo} />}
+
+        {/* ROUTE 7.10: SISTEMA ADMINISTRATIVO (PROTOTIPO QA) */}
+        {currentPath === '/admin' && <AdminPage onNavigate={navigateTo} />}
 
         {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR / COMPLETAR PERFIL) */}
         {(currentPath.startsWith('/cuenta') || currentPath === '/completar-perfil' || currentPath === '/cuenta/completar') && (

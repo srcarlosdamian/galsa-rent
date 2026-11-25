@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GalsaLogo } from './GalsaLogo';
-import { Palette, Globe, ChevronUp, Mail } from 'lucide-react';
+import { Palette, Globe, ChevronUp, Mail, LayoutDashboard } from 'lucide-react';
 
 interface FooterProps {
   onNavigate?: (path: string) => void;
@@ -58,6 +58,7 @@ const QA_ALL_ROUTES: { group: string; items: { label: string; path: string }[] }
   {
     group: 'Sistema',
     items: [
+      { label: 'Panel Administrativo', path: '/admin' },
       { label: 'Emails transaccionales', path: '/emails' },
       { label: 'Página 404', path: '/404' },
     ],
@@ -218,6 +219,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                       </span>
                       <span className="text-[10px] text-neutral-400 font-mono">/emails</span>
                     </a>
+                    <a
+                      href="/admin"
+                      onClick={(e) => handleLink(e, '/admin')}
+                      className="flex items-center justify-between gap-2 px-2.5 py-2 rounded-lg hover:bg-neutral-800 text-amber-300 hover:text-white transition-colors"
+                    >
+                      <span className="inline-flex items-center gap-2 font-semibold text-xs">
+                        <LayoutDashboard className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        Panel Admin
+                      </span>
+                      <span className="text-[10px] text-neutral-400 font-mono">/admin</span>
+                    </a>
                   </div>
 
                   <div className="border-t border-neutral-800 my-2" />
@@ -247,8 +259,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               )}
             </div>
 
-            <span>Última actualización: <strong>23 Nov 2026, 03:36 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.52</span>
+            <span>Última actualización: <strong>25 Nov 2026, 00:16 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.53</span>
           </div>
         </div>
       </div>

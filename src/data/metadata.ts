@@ -258,6 +258,16 @@ export const STATIC_ROUTES_METADATA: Record<string, RouteMetadata> = {
     ogImage: DEFAULT_OG_IMAGE,
     noIndex: true,
   },
+  '/admin': {
+    title: 'Panel Administrativo | GALSA Rent',
+    description: 'Prototipo de sistema administrativo de GALSA Rent: dashboard, flota, reservas y operación.',
+    focusKeyword: 'panel administrativo galsa rent',
+    canonical: `${SITE_URL}/admin`,
+    ogTitle: 'Panel Administrativo | GALSA Rent',
+    ogDescription: 'Prototipo de sistema administrativo de GALSA Rent: dashboard, flota, reservas y operación.',
+    ogImage: DEFAULT_OG_IMAGE,
+    noIndex: true,
+  },
   '/404': {
     title: 'Página no encontrada | GALSA Rent',
     description: 'La página que buscas no existe. Explora nuestro catálogo de autos disponibles en renta en México.',
