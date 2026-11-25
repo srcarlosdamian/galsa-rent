@@ -29,6 +29,7 @@ import {
   Menu,
   X,
   TrendingUp,
+  ArrowRight,
 } from 'lucide-react';
 import { GalsaLogo } from '../components/GalsaLogo';
 import { CustomDropdown, DropdownOption } from '../components/CustomDropdown';
@@ -407,14 +408,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               return (
                 <div
                   key={kpi.label}
-                  className="rounded-2xl bg-slate-50 p-4 sm:p-5 text-left space-y-3"
+                  className="group rounded-2xl bg-slate-50 hover:bg-slate-100 p-4 sm:p-5 text-left space-y-3 transition-colors cursor-pointer"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs sm:text-[13px] font-heading font-semibold text-slate-600 truncate">
                       {kpi.label}
                     </span>
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${kpi.iconClass}`}>
-                      <Icon className="w-4 h-4" strokeWidth={1.8} />
+                    <div className={`relative w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${kpi.iconClass}`}>
+                      <Icon className="w-4 h-4 transition-opacity duration-150 group-hover:opacity-0" strokeWidth={1.8} />
+                      <ArrowRight className="w-4 h-4 absolute transition-all duration-150 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 text-slate-700" strokeWidth={1.9} />
                     </div>
                   </div>
                   <div>
@@ -435,7 +437,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               return (
                 <div
                   key={m.label}
-                  className="rounded-xl bg-slate-50 px-3 py-2.5 text-left flex items-center justify-between gap-2"
+                  className="group rounded-xl bg-slate-50 hover:bg-slate-100 px-3 py-2.5 text-left flex items-center justify-between gap-2 transition-colors cursor-pointer"
                 >
                   <div className="min-w-0">
                     <p className="text-[11px] font-heading font-medium text-slate-500 truncate">{m.label}</p>
@@ -444,8 +446,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                     </p>
                     <p className="text-[10px] font-sans text-slate-400 truncate mt-1">{m.sub}</p>
                   </div>
-                  <div className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 ${m.tone}`}>
-                    <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
+                  <div className={`relative w-6 h-6 rounded-md flex items-center justify-center shrink-0 transition-colors ${m.tone}`}>
+                    <Icon className="w-3.5 h-3.5 transition-opacity duration-150 group-hover:opacity-0" strokeWidth={1.8} />
+                    <ArrowRight className="w-3.5 h-3.5 absolute transition-all duration-150 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 text-slate-700" strokeWidth={1.9} />
                   </div>
                 </div>
               );
