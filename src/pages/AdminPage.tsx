@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { GalsaLogo } from '../components/GalsaLogo';
 import { CustomDropdown, DropdownOption } from '../components/CustomDropdown';
+import { AdminReportsView } from '../components/AdminReportsView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
@@ -318,9 +319,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
           </div>
         </header>
 
-        {/* Dashboard Body */}
+        {/* Main Body: Dashboard o Reportes */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1240px] w-full mx-auto space-y-6">
-          {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
+          {activeNav === 'reportes' ? (
+            <AdminReportsView />
+          ) : (
+            <>
+              {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="text-left">
               <h1 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight">
@@ -615,6 +620,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               )}
             </div>
           </div>
+            </>
+          )}
         </main>
       </div>
     </div>

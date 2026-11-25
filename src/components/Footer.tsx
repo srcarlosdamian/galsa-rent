@@ -261,8 +261,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, qaOnly = false }) =>
               )}
             </div>
 
-            <span>Última actualización: <strong>25 Nov 2026, 00:30 hrs</strong></span>
-            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.57</span>
+            <span>Última actualización: <strong>25 Nov 2026, 00:32 hrs</strong></span>
+            <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.58</span>
           </div>
         </div>
       </div>
