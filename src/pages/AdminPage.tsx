@@ -38,6 +38,7 @@ import { AdminReviewsView } from '../components/AdminReviewsView';
 import { AdminDriversView } from '../components/AdminDriversView';
 import { AdminIncidentsView } from '../components/AdminIncidentsView';
 import { AdminVerificationsView } from '../components/AdminVerificationsView';
+import { AdminUsersPermissionsView } from '../components/AdminUsersPermissionsView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
@@ -70,6 +71,8 @@ const DESIGNED_ADMIN_SECTIONS = new Set([
   'choferes',
   'incidencias',
   'verificaciones',
+  'usuarios',
+  'permisos',
 ]);
 
 const SIDEBAR_GROUPS = [
@@ -113,6 +116,20 @@ const SIDEBAR_GROUPS = [
       { id: 'plat-entregas', label: 'Entregas / devoluciones', icon: ArrowLeftRight },
       { id: 'inspeccion', label: 'Inspección semanal', icon: FileCheck },
       { id: 'ingresos-renta', label: 'Ingresos por renta', icon: DollarSign },
+    ],
+  },
+  {
+    title: 'Sistema',
+    items: [
+      {
+        id: 'usuarios',
+        label: 'Usuarios y permisos',
+        icon: ShieldCheck,
+        children: [
+          { id: 'usuarios', label: 'Usuarios' },
+          { id: 'permisos', label: 'Matriz de permisos' },
+        ],
+      },
     ],
   },
 ];
@@ -280,29 +297,67 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
               </p>
               {visibleItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = activeNav === item.id;
+                const children = (item as { children?: Array<{ id: string; label: string }> }).children;
+                const hasActiveChild = children?.some((c) => c.id === activeNav) ?? false;
+                const isActive = activeNav === item.id || hasActiveChild;
                 const href = getAdminHref(item.id);
                 return (
-                  <a
-                    key={item.id}
-                    href={href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigateToSection(item.id);
-                      setMobileSidebarOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
-                      isActive
-                        ? 'bg-cta-50 text-cta font-semibold'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
-                    }`}
-                  >
-                    <Icon
-                      className={`w-4 h-4 shrink-0 ${isActive ? 'text-cta' : 'text-slate-400'}`}
-                      strokeWidth={1.7}
-                    />
-                    <span className="truncate">{item.label}</span>
-                  </a>
+                  <div key={item.id} className="space-y-0.5">
+                    <a
+                      href={href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigateToSection(item.id);
+                        setMobileSidebarOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
+                        isActive
+                          ? 'bg-cta-50 text-cta font-semibold'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2.5 min-w-0">
+                        <Icon
+                          className={`w-4 h-4 shrink-0 ${isActive ? 'text-cta' : 'text-slate-400'}`}
+                          strokeWidth={1.7}
+                        />
+                        <span className="truncate">{item.label}</span>
+                      </span>
+                      {children && (
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 shrink-0 transition-transform ${
+                            hasActiveChild ? 'rotate-180 text-cta' : 'text-slate-400'
+                          }`}
+                        />
+                      )}
+                    </a>
+
+                    {children && hasActiveChild && (
+                      <div className="ml-5 pl-3 border-l border-slate-200 space-y-0.5 py-0.5">
+                        {children.map((sub) => {
+                          const subActive = activeNav === sub.id;
+                          return (
+                            <a
+                              key={sub.id}
+                              href={getAdminHref(sub.id)}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                navigateToSection(sub.id);
+                                setMobileSidebarOpen(false);
+                              }}
+                              className={`block px-2.5 py-1.5 rounded-lg text-[11px] font-heading transition-colors cursor-pointer ${
+                                subActive
+                                  ? 'text-cta font-semibold bg-cta-50/70'
+                                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50 font-medium'
+                              }`}
+                            >
+                              {sub.label}
+                            </a>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
@@ -405,6 +460,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
             <AdminIncidentsView />
           ) : activeNav === 'verificaciones' ? (
             <AdminVerificationsView />
+          ) : activeNav === 'usuarios' || activeNav === 'permisos' ? (
+            <AdminUsersPermissionsView
+              activeTab={activeNav === 'permisos' ? 'permisos' : 'usuarios'}
+              onTabChange={(tab) => navigateToSection(tab)}
+            />
           ) : (
             <>
               {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
