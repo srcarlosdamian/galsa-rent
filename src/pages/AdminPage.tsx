@@ -33,6 +33,7 @@ import {
 import { GalsaLogo } from '../components/GalsaLogo';
 import { CustomDropdown, DropdownOption } from '../components/CustomDropdown';
 import { AdminReportsView } from '../components/AdminReportsView';
+import { AdminReviewsView } from '../components/AdminReviewsView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
@@ -46,6 +47,9 @@ const ADMIN_CITY_OPTIONS: DropdownOption[] = [
   { value: 'Monterrey', label: 'Monterrey', subtitle: 'Nuevo León · Área Metropolitana', icon: MapPin },
   { value: 'Querétaro', label: 'Querétaro', subtitle: 'Querétaro · Centro', icon: MapPin },
 ];
+
+// Secciones ya diseñadas; el resto permanece en SIDEBAR_GROUPS oculto hasta diseñarse
+const DESIGNED_ADMIN_SECTIONS = new Set(['dashboard', 'reportes', 'resenas']);
 
 const SIDEBAR_GROUPS = [
   {
@@ -202,38 +206,42 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
 
       {/* Navigation Groups (scroll interno solo si la pantalla es muy baja) */}
       <nav className="flex-1 overflow-y-auto no-scrollbar space-y-4 pr-0.5" aria-label="Menú administrativo">
-        {SIDEBAR_GROUPS.map((group) => (
-          <div key={group.title} className="space-y-0.5">
-            <p className="px-3 pb-1 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
-              {group.title}
-            </p>
-            {group.items.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeNav === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => {
-                    setActiveNav(item.id);
-                    setMobileSidebarOpen(false);
-                  }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
-                    isActive
-                      ? 'bg-cta-50 text-cta font-semibold'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
-                  }`}
-                >
-                  <Icon
-                    className={`w-4 h-4 shrink-0 ${isActive ? 'text-cta' : 'text-slate-400'}`}
-                    strokeWidth={1.7}
-                  />
-                  <span className="truncate">{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
+        {SIDEBAR_GROUPS.map((group) => {
+          const visibleItems = group.items.filter((item) => DESIGNED_ADMIN_SECTIONS.has(item.id));
+          if (visibleItems.length === 0) return null;
+          return (
+            <div key={group.title} className="space-y-0.5">
+              <p className="px-3 pb-1 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
+                {group.title}
+              </p>
+              {visibleItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeNav === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveNav(item.id);
+                      setMobileSidebarOpen(false);
+                    }}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
+                      isActive
+                        ? 'bg-cta-50 text-cta font-semibold'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                    }`}
+                  >
+                    <Icon
+                      className={`w-4 h-4 shrink-0 ${isActive ? 'text-cta' : 'text-slate-400'}`}
+                      strokeWidth={1.7}
+                    />
+                    <span className="truncate">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
       </nav>
 
       {/* Centro de ayuda fijo abajo en gris claro sin borde */}
@@ -319,10 +327,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
           </div>
         </header>
 
-        {/* Main Body: Dashboard o Reportes */}
+        {/* Main Body: Dashboard, Reportes o Reseñas */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1240px] w-full mx-auto space-y-6">
           {activeNav === 'reportes' ? (
             <AdminReportsView />
+          ) : activeNav === 'resenas' ? (
+            <AdminReviewsView />
           ) : (
             <>
               {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
