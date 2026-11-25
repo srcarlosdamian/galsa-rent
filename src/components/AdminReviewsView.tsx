@@ -214,11 +214,11 @@ const STATUS_OPTIONS: DropdownOption[] = [
   { value: 'Rechazada', label: 'Rechazada', subtitle: 'No aprobadas', icon: X },
 ];
 
-const STATUS_BADGE: Record<ReviewStatus, string> = {
-  Pendiente: 'bg-amber-50 text-amber-800',
-  Publicada: 'bg-emerald-50 text-emerald-700',
-  Oculta: 'bg-slate-100 text-slate-600',
-  Rechazada: 'bg-red-50 text-red-700',
+const STATUS_BADGE: Record<ReviewStatus, { pill: string; dot: string }> = {
+  Pendiente: { pill: 'border border-slate-200 bg-transparent text-amber-950', dot: 'bg-amber-500' },
+  Publicada: { pill: 'border border-slate-200 bg-transparent text-emerald-950', dot: 'bg-emerald-500' },
+  Oculta: { pill: 'border border-slate-200 bg-transparent text-slate-950', dot: 'bg-slate-400' },
+  Rechazada: { pill: 'border border-slate-200 bg-transparent text-red-950', dot: 'bg-red-500' },
 };
 
 const PAGE_SIZE = 10;
@@ -525,9 +525,9 @@ export const AdminReviewsView: React.FC = () => {
                     {/* Estatus */}
                     <td className="py-3 px-3 whitespace-nowrap">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-heading font-semibold ${STATUS_BADGE[review.status]}`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-heading font-semibold ${STATUS_BADGE[review.status].pill}`}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                        <span className={`w-1.5 h-1.5 rounded-full ${STATUS_BADGE[review.status].dot}`} />
                         {review.status}
                       </span>
                     </td>
@@ -679,9 +679,9 @@ export const AdminReviewsView: React.FC = () => {
                 </div>
               </div>
               <span
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-heading font-semibold ${STATUS_BADGE[selectedReview.status]}`}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-heading font-semibold ${STATUS_BADGE[selectedReview.status].pill}`}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                <span className={`w-1.5 h-1.5 rounded-full ${STATUS_BADGE[selectedReview.status].dot}`} />
                 {selectedReview.status}
               </span>
             </div>

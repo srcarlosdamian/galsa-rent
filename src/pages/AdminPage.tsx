@@ -630,8 +630,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               </button>
             </div>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-heading font-semibold">
-              Todas las unidades al día en servicio.
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-transparent text-emerald-950 text-xs font-heading font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span>Todas las unidades al día en servicio.</span>
             </div>
 
             <div className="divide-y divide-slate-100 border-t border-slate-100">
@@ -650,13 +651,16 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                       </p>
                     </div>
                     <span
-                      className={`self-start sm:self-center inline-flex items-center px-3 py-1 rounded-full text-xs font-heading font-semibold shrink-0 ${
-                        unit.hasPlan
-                          ? 'bg-cta-50 text-cta'
-                          : 'bg-slate-100 text-slate-600'
+                      className={`self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-transparent text-xs font-heading font-semibold shrink-0 ${
+                        unit.hasPlan ? 'text-blue-950' : 'text-slate-950'
                       }`}
                     >
-                      {unit.interval}
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          unit.hasPlan ? 'bg-cta' : 'bg-slate-400'
+                        }`}
+                      />
+                      <span>{unit.interval}</span>
                     </span>
                   </div>
                 ))

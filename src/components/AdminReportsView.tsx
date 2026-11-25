@@ -372,13 +372,16 @@ export const AdminReportsView: React.FC = () => {
                   </td>
                   <td className="py-3 px-3 text-right whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-heading font-semibold ${
-                        row.marginPositive
-                          ? 'bg-emerald-50 text-emerald-700'
-                          : 'bg-amber-50 text-amber-800'
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-200 bg-transparent text-xs font-heading font-semibold ${
+                        row.marginPositive ? 'text-emerald-950' : 'text-amber-950'
                       }`}
                     >
-                      {row.margin}
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          row.marginPositive ? 'bg-emerald-500' : 'bg-amber-500'
+                        }`}
+                      />
+                      <span>{row.margin}</span>
                     </span>
                   </td>
                   <td className="py-3 pl-3 text-right font-heading font-semibold text-slate-700 tabular-nums">
