@@ -335,35 +335,41 @@ export const AdminDriversView: React.FC = () => {
         </div>
       </div>
 
-      {/* 5 KPIs compactos con regla semántica */}
+      {/* 5 KPIs compactos (mismo formato que Reportes) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 items-stretch">
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Choferes registrados</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Choferes registrados</span>
             <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <Users className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none mt-2 tabular-nums">
-            {drivers.length}
-          </p>
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
+              {drivers.length}
+            </p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">Base total</p>
+          </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Choferes activos</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Choferes activos</span>
             <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
               <UserCheck className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none mt-2 tabular-nums">
-            {activeCount}
-          </p>
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
+              {activeCount}
+            </p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">En operación</p>
+          </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">En revisión</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">En revisión</span>
             <span
               className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                 reviewCount > 0 ? 'bg-amber-50 text-amber-800' : 'bg-white text-slate-500'
@@ -372,17 +378,17 @@ export const AdminDriversView: React.FC = () => {
               <Clock className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {reviewCount}
             </p>
-            <p className="text-[11px] font-sans text-slate-400 mt-1.5">esperan aprobación</p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">esperan aprobación</p>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Irregulares</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Irregulares</span>
             <span
               className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                 irregularCount > 0 ? 'bg-red-50 text-red-700' : 'bg-white text-slate-500'
@@ -391,17 +397,17 @@ export const AdminDriversView: React.FC = () => {
               <AlertTriangle className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {irregularCount}
             </p>
-            <p className="text-[11px] font-sans text-slate-400 mt-1.5">activos, sin papeles al día</p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">activos, sin papeles al día</p>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left col-span-2 sm:col-span-1">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Expedientes pendientes</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5 col-span-2 sm:col-span-1">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Expedientes pendientes</span>
             <span
               className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                 pendingDocsCount > 0 ? 'bg-amber-50 text-amber-800' : 'bg-white text-slate-500'
@@ -410,11 +416,11 @@ export const AdminDriversView: React.FC = () => {
               <FileWarning className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {pendingDocsCount}
             </p>
-            <p className="text-[11px] font-sans text-slate-400 mt-1.5">por completar</p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">por completar</p>
           </div>
         </div>
       </div>

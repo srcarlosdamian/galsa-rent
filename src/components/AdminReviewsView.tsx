@@ -331,41 +331,43 @@ export const AdminReviewsView: React.FC = () => {
         </p>
       </div>
 
-      {/* 4 KPIs superiores compactos: neutrales salvo Pendientes > 0 */}
+      {/* 4 KPIs superiores compactos (mismo formato que Reportes) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 items-stretch">
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Rating promedio</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Rating promedio</span>
             <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <Star className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2 space-y-1">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {avgRating}
             </p>
-            <StarRow rating={Number(avgRating)} />
+            <div className="mt-1.5">
+              <StarRow rating={Number(avgRating)} />
+            </div>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Total reseñas</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Total reseñas</span>
             <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <MessageSquare className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {reviews.length}
             </p>
-            <p className="text-[11px] font-sans text-slate-400 mt-1.5">Historial registrado</p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">Historial registrado</p>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Pendientes</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Pendientes</span>
             <span
               className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
                 pendingCount > 0 ? 'bg-amber-50 text-amber-800' : 'bg-white text-slate-500'
@@ -374,26 +376,26 @@ export const AdminReviewsView: React.FC = () => {
               <Clock className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {pendingCount}
             </p>
-            <p className="text-[11px] font-sans text-slate-400 mt-1.5">Por revisar</p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">Por revisar</p>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4 h-full flex flex-col justify-between text-left">
-          <div className="flex items-start justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-slate-500">Publicadas</span>
+        <div className="h-full rounded-2xl bg-slate-50 p-3.5 text-left flex flex-col justify-between gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-heading font-medium text-slate-500 truncate">Publicadas</span>
             <span className="w-7 h-7 rounded-lg bg-white text-slate-500 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-3.5 h-3.5" strokeWidth={1.8} />
             </span>
           </div>
-          <div className="mt-2">
-            <p className="text-xl sm:text-2xl font-heading font-bold text-slate-900 tracking-tight leading-none tabular-nums">
+          <div>
+            <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
               {publishedCount}
             </p>
-            <p className="text-[11px] font-sans text-slate-400 mt-1.5">Visibles en el sitio</p>
+            <p className="text-[11px] font-sans text-slate-500 mt-1.5 leading-snug">Visibles en el sitio</p>
           </div>
         </div>
       </div>
