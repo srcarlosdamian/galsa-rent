@@ -632,7 +632,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
               </div>
 
               <div className="h-44 w-full">
-                <svg viewBox="0 0 600 160" className="w-full h-full overflow-visible">
+                <svg
+                  viewBox="0 0 600 160"
+                  preserveAspectRatio="none"
+                  className="w-full h-full overflow-visible"
+                >
                   <defs>
                     <linearGradient id="galsaAreaBlue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#3D63FF" stopOpacity="0.18" />
@@ -644,36 +648,49 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
                     </linearGradient>
                   </defs>
                   {[30, 70, 110, 145].map((y) => (
-                    <line key={y} x1="0" y1={y} x2="600" y2={y} stroke="#E2E8F0" strokeDasharray="3 3" strokeWidth="1" />
+                    <line
+                      key={y}
+                      x1="0"
+                      y1={y}
+                      x2="600"
+                      y2={y}
+                      stroke="#E2E8F0"
+                      strokeDasharray="3 3"
+                      strokeWidth="1"
+                      vectorEffect="non-scaling-stroke"
+                    />
                   ))}
                   {/* Serie Sky */}
                   <path
-                    d="M 10 38 C 110 26, 175 18, 225 22 C 280 28, 310 132, 390 140 L 590 142 L 590 145 L 10 145 Z"
+                    d="M 0 38 C 110 26, 175 18, 225 22 C 280 28, 310 132, 390 140 L 600 142 L 600 145 L 0 145 Z"
                     fill="url(#galsaAreaSky)"
                   />
                   <path
-                    d="M 10 38 C 110 26, 175 18, 225 22 C 280 28, 310 132, 390 140 L 590 142"
+                    d="M 0 38 C 110 26, 175 18, 225 22 C 280 28, 310 132, 390 140 L 600 142"
                     fill="none"
                     stroke="#38BDF8"
                     strokeWidth="2"
+                    vectorEffect="non-scaling-stroke"
                   />
                   {/* Serie CTA */}
                   <path
-                    d="M 10 72 C 110 64, 175 56, 225 60 C 280 66, 310 136, 390 142 L 590 143 L 590 145 L 10 145 Z"
+                    d="M 0 72 C 110 64, 175 56, 225 60 C 280 66, 310 136, 390 142 L 600 143 L 600 145 L 0 145 Z"
                     fill="url(#galsaAreaBlue)"
                   />
                   <path
-                    d="M 10 72 C 110 64, 175 56, 225 60 C 280 66, 310 136, 390 142 L 590 143"
+                    d="M 0 72 C 110 64, 175 56, 225 60 C 280 66, 310 136, 390 142 L 600 143"
                     fill="none"
                     stroke="#3D63FF"
                     strokeWidth="2"
+                    vectorEffect="non-scaling-stroke"
                   />
                   {/* Serie Emerald */}
                   <path
-                    d="M 10 105 C 120 102, 180 104, 225 108 C 285 112, 320 141, 390 144 L 590 144"
+                    d="M 0 105 C 120 102, 180 104, 225 108 C 285 112, 320 141, 390 144 L 600 144"
                     fill="none"
                     stroke="#10B981"
                     strokeWidth="2"
+                    vectorEffect="non-scaling-stroke"
                   />
                 </svg>
               </div>
