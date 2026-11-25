@@ -181,68 +181,66 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
   ];
 
   const renderSidebarContent = () => (
-    <div className="flex flex-col h-full justify-between">
-      <div className="space-y-5">
-        {/* Brand */}
-        <div className="px-3 pt-1 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => onNavigate && onNavigate('/')}
-            className="flex items-center cursor-pointer"
-            title="Volver al sitio público"
-          >
-            <GalsaLogo className="h-5 w-auto text-cta" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setMobileSidebarOpen(false)}
-            className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:bg-slate-100"
-            aria-label="Cerrar menú"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Navigation Groups */}
-        <nav className="space-y-4" aria-label="Menú administrativo">
-          {SIDEBAR_GROUPS.map((group) => (
-            <div key={group.title} className="space-y-0.5">
-              <p className="px-3 pb-1 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
-                {group.title}
-              </p>
-              {group.items.map((item) => {
-                const Icon = item.icon;
-                const isActive = activeNav === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveNav(item.id);
-                      setMobileSidebarOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
-                      isActive
-                        ? 'bg-cta-50 text-cta font-semibold'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
-                    }`}
-                  >
-                    <Icon
-                      className={`w-4 h-4 shrink-0 ${isActive ? 'text-cta' : 'text-slate-400'}`}
-                      strokeWidth={1.7}
-                    />
-                    <span className="truncate">{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          ))}
-        </nav>
+    <div className="flex flex-col h-full justify-between gap-3">
+      {/* Brand fijo arriba */}
+      <div className="px-3 pt-1 pb-2 flex items-center justify-between shrink-0">
+        <button
+          type="button"
+          onClick={() => onNavigate && onNavigate('/')}
+          className="flex items-center cursor-pointer"
+          title="Volver al sitio público"
+        >
+          <GalsaLogo className="h-5 w-auto text-cta" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileSidebarOpen(false)}
+          className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:bg-slate-100"
+          aria-label="Cerrar menú"
+        >
+          <X className="w-4 h-4" />
+        </button>
       </div>
 
-      {/* Centro de ayuda abajo sin borde */}
-      <div className="pt-4">
-        <div className="rounded-2xl bg-cta-50 p-3.5 text-left space-y-1">
+      {/* Navigation Groups (scroll interno solo si la pantalla es muy baja) */}
+      <nav className="flex-1 overflow-y-auto no-scrollbar space-y-4 pr-0.5" aria-label="Menú administrativo">
+        {SIDEBAR_GROUPS.map((group) => (
+          <div key={group.title} className="space-y-0.5">
+            <p className="px-3 pb-1 text-[10px] font-heading font-bold uppercase tracking-wider text-slate-400">
+              {group.title}
+            </p>
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeNav === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveNav(item.id);
+                    setMobileSidebarOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
+                    isActive
+                      ? 'bg-cta-50 text-cta font-semibold'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                  }`}
+                >
+                  <Icon
+                    className={`w-4 h-4 shrink-0 ${isActive ? 'text-cta' : 'text-slate-400'}`}
+                    strokeWidth={1.7}
+                  />
+                  <span className="truncate">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+
+      {/* Centro de ayuda fijo abajo en gris claro sin borde */}
+      <div className="shrink-0 pt-2">
+        <div className="rounded-2xl bg-slate-50 p-3.5 text-left space-y-1">
           <p className="text-xs font-heading font-semibold text-slate-900">Centro de ayuda</p>
           <p className="text-[11px] font-sans text-slate-600 leading-relaxed">
             ¿Dudas con la operación? Escríbenos a{' '}
@@ -256,9 +254,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
   );
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex">
-      {/* Sidebar Desktop */}
-      <aside className="hidden lg:block w-60 shrink-0 border-r border-slate-100 bg-white p-4">
+    <div className="min-h-screen bg-white text-slate-900 flex items-start">
+      {/* Sidebar Desktop fijo (sticky h-screen) */}
+      <aside className="hidden lg:flex lg:flex-col w-60 shrink-0 border-r border-slate-100 bg-white sticky top-0 h-screen p-4">
         {renderSidebarContent()}
       </aside>
 
@@ -269,7 +267,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             className="fixed inset-0 bg-slate-900/30 backdrop-blur-xs"
             onClick={() => setMobileSidebarOpen(false)}
           />
-          <aside className="relative w-64 max-w-[80vw] bg-white h-full p-4 overflow-y-auto z-10">
+          <aside className="relative w-64 max-w-[80vw] bg-white h-full p-4 z-10">
             {renderSidebarContent()}
           </aside>
         </div>
@@ -277,8 +275,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
 
       {/* Main Content */}
       <div className="flex-1 min-w-0 flex flex-col bg-white">
-        {/* Admin Top Header: Búsqueda a la izquierda, Notificaciones + Super Admin a la derecha */}
-        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-slate-100 px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        {/* Admin Top Header (no sticky): Búsqueda a la izquierda, Notificaciones + Super Admin a la derecha */}
+        <header className="bg-white border-b border-slate-100 px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-1 max-w-md">
             <button
               type="button"
