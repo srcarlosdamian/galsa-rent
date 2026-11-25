@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Users,
   UserCheck,
@@ -218,6 +219,51 @@ const APP_ACCESS_META: Record<
     subtitle: 'Falta correo electrónico',
     bar: 'border-amber-500',
   },
+};
+
+interface HoverTooltipProps {
+  content: React.ReactNode;
+  children: React.ReactNode;
+}
+
+const HoverTooltip: React.FC<HoverTooltipProps> = ({ content, children }) => {
+  const triggerRef = useRef<HTMLSpanElement>(null);
+  const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
+
+  const show = () => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    setCoords({
+      top: rect.top - 8,
+      left: Math.min(Math.max(rect.left + rect.width / 2, 130), window.innerWidth - 130),
+    });
+  };
+
+  const hide = () => setCoords(null);
+
+  return (
+    <span
+      ref={triggerRef}
+      onMouseEnter={show}
+      onMouseLeave={hide}
+      onFocus={show}
+      onBlur={hide}
+      className="inline-flex items-center"
+    >
+      {children}
+      {coords &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            style={{ top: coords.top, left: coords.left }}
+            className="fixed -translate-x-1/2 -translate-y-full z-[90] w-60 rounded-xl bg-slate-900 text-white p-2.5 text-[11px] leading-relaxed shadow-lg pointer-events-none whitespace-normal text-left"
+          >
+            {content}
+          </div>,
+          document.body
+        )}
+    </span>
+  );
 };
 
 export const AdminDriversView: React.FC = () => {
@@ -620,26 +666,41 @@ export const AdminDriversView: React.FC = () => {
                         ${driver.weeklyRent.toLocaleString('es-MX')}
                       </td>
 
-                      {/* Expediente compacto */}
+                      {/* Expediente compacto con tooltip de documentos obligatorios */}
                       <td className="py-3 px-3 whitespace-nowrap">
-                        <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-slate-200 bg-transparent text-[11px] font-heading font-semibold ${
-                            driver.docsCompleted === driver.docsTotal
-                              ? 'text-emerald-950'
-                              : 'text-amber-950'
-                          }`}
+                        <HoverTooltip
+                          content={
+                            <div>
+                              <p className="font-heading font-semibold text-white">
+                                {driver.docsCompleted}/{driver.docsTotal} documentos obligatorios
+                              </p>
+                              <p className="text-slate-300 mt-0.5">
+                                {driver.docsCompleted === driver.docsTotal
+                                  ? 'Expediente completo: identificación, comprobante y licencia vigentes.'
+                                  : `Faltan ${driver.docsTotal - driver.docsCompleted} documentos por cargar o validar.`}
+                              </p>
+                            </div>
+                          }
                         >
                           <span
-                            className={`w-1.5 h-1.5 rounded-full ${
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-slate-200 bg-transparent text-[11px] font-heading font-semibold cursor-help ${
                               driver.docsCompleted === driver.docsTotal
-                                ? 'bg-emerald-500'
-                                : 'bg-amber-500'
+                                ? 'text-emerald-950'
+                                : 'text-amber-950'
                             }`}
-                          />
-                          <span>
-                            {driver.docsCompleted}/{driver.docsTotal}
+                          >
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                driver.docsCompleted === driver.docsTotal
+                                  ? 'bg-emerald-500'
+                                  : 'bg-amber-500'
+                              }`}
+                            />
+                            <span>
+                              {driver.docsCompleted}/{driver.docsTotal}
+                            </span>
                           </span>
-                        </span>
+                        </HoverTooltip>
                       </td>
 
                       {/* Acceso a la app: 2 líneas limpias con barra vertical de estatus a la izquierda (sin chips) */}
@@ -654,9 +715,9 @@ export const AdminDriversView: React.FC = () => {
                         </div>
                       </td>
 
-                      {/* Estado: chip lineal + indicador Irregular con tooltip al pasar el cursor */}
+                      {/* Estado: chip lineal + icono de warning a un lado con tooltip sin recortarse */}
                       <td className="py-3 px-3 whitespace-nowrap">
-                        <div className="flex flex-col items-start gap-1">
+                        <div className="inline-flex items-center gap-1.5">
                           <span
                             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-heading font-semibold ${chip.pill}`}
                           >
@@ -665,20 +726,28 @@ export const AdminDriversView: React.FC = () => {
                           </span>
 
                           {driver.irregularSince && (
-                            <div className="relative group/irr inline-flex items-center gap-1 text-[11px] font-sans font-medium text-amber-800 cursor-help">
-                              <AlertTriangle className="w-3 h-3 shrink-0" />
-                              <span>Irregular</span>
-                              <div className="pointer-events-none opacity-0 group-hover/irr:opacity-100 transition-opacity absolute left-0 top-full mt-1.5 z-40 w-60 rounded-xl bg-slate-900 text-white p-2.5 text-[11px] leading-relaxed shadow-lg whitespace-normal">
-                                <p className="font-heading font-semibold text-amber-300">
-                                  Irregular desde {driver.irregularSince}
-                                </p>
-                                {driver.missingDocs && (
-                                  <p className="text-slate-200 mt-0.5">
-                                    Falta: {driver.missingDocs.join(', ')}
+                            <HoverTooltip
+                              content={
+                                <div>
+                                  <p className="font-heading font-semibold text-amber-300">
+                                    Irregular desde {driver.irregularSince}
                                   </p>
-                                )}
-                              </div>
-                            </div>
+                                  {driver.missingDocs && (
+                                    <p className="text-slate-200 mt-0.5">
+                                      Falta: {driver.missingDocs.join(', ')}
+                                    </p>
+                                  )}
+                                </div>
+                              }
+                            >
+                              <span
+                                tabIndex={0}
+                                aria-label={`Irregular desde ${driver.irregularSince}`}
+                                className="inline-flex items-center justify-center w-6 h-6 rounded-full text-amber-600 hover:bg-amber-50 transition-colors cursor-help"
+                              >
+                                <AlertTriangle className="w-3.5 h-3.5" strokeWidth={2} />
+                              </span>
+                            </HoverTooltip>
                           )}
                         </div>
                       </td>
