@@ -98,7 +98,12 @@ const FLEET_STATUS = [
   { name: 'Chevrolet Spark 2026', km: '0 km · sin plan de servicio', city: 'Durango', interval: 'Sin datos de servicio', hasPlan: false },
   { name: 'Geely EX2 2026', km: '80 km / 12,000 km', city: 'Ciudad de México', interval: '0% del intervalo', hasPlan: true },
   { name: 'Honda Civic Coupé 2019', km: '0 km · sin plan de servicio', city: 'Durango', interval: 'Sin datos de servicio', hasPlan: false },
+  { name: 'Jeep Wrangler 2011', km: '0 km · sin plan de servicio', city: 'Durango', interval: 'Sin datos de servicio', hasPlan: false },
   { name: 'Jeep Wrangler Rubicon 2018', km: '4,200 km / 10,000 km', city: 'Durango', interval: '42% del intervalo', hasPlan: true },
+  { name: 'Nissan March Active 2022', km: '0 km · sin plan de servicio', city: 'Durango', interval: 'Sin datos de servicio', hasPlan: false },
+  { name: 'Nissan Sentra Sense 2026', km: '1,100 km / 10,000 km', city: 'Durango', interval: '11% del intervalo', hasPlan: true },
+  { name: 'Toyota RAV4 XLE 2024', km: '0 km · sin plan de servicio', city: 'Durango', interval: 'Sin datos de servicio', hasPlan: false },
+  { name: 'Volkswagen Virtus Trendline 2026', km: '0 km · sin plan de servicio', city: 'Durango', interval: 'Sin datos de servicio', hasPlan: false },
 ];
 
 const RESERVAS_POR_MES = [
@@ -127,46 +132,52 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
     });
   }, [cityFilter, searchQuery]);
 
+  const cityText = cityFilter === 'all' ? 'todas las ciudades' : cityFilter;
+
   const primaryKpis = [
     {
       label: 'Ingresos del mes',
       value: '$0.0',
-      sub: 'Cobrado en Nov 2026',
+      sub: `Cobrado en Nov 2026 · ${cityText}`,
       icon: DollarSign,
       iconClass: 'bg-cta-50 text-cta',
     },
     {
       label: 'Reservas activas',
       value: '13',
-      sub: 'En curso hoy',
+      sub: 'En curso hoy (renta a chofer: la semana en curso)',
       icon: Calendar,
       iconClass: 'bg-cta-50 text-cta',
     },
     {
       label: 'Ocupación de flota',
       value: '17%',
-      sub: '1 vehículo en operación',
+      sub: '1 vehículos en operación',
       icon: Gauge,
       iconClass: 'bg-emerald-50 text-emerald-700',
     },
     {
       label: 'Utilidad del mes',
       value: '$0.0',
-      sub: 'Ingresos netos',
+      sub: 'Ingresos netos, igual que en Finanzas',
       icon: TrendingUp,
       iconClass: 'bg-emerald-50 text-emerald-700',
     },
   ];
 
-  const compactMetrics = [
-    { label: 'Disponibles', value: '5', icon: Car, tone: 'text-cta bg-cta-50' },
-    { label: 'Mantenimiento', value: '0', icon: Wrench, tone: 'text-amber-700 bg-amber-50' },
-    { label: 'Incidentes', value: '17', icon: AlertTriangle, tone: 'text-red-700 bg-red-50' },
-    { label: 'Comisión GALSA', value: '$0.0', icon: Percent, tone: 'text-cta bg-cta-50' },
-    { label: 'Reservas totales', value: '178', icon: Calendar, tone: 'text-slate-700 bg-white' },
-    { label: 'Ciudades', value: '5', icon: MapPin, tone: 'text-cta bg-cta-50' },
-    { label: 'Sucursales', value: '10', icon: Building2, tone: 'text-cta bg-cta-50' },
-    { label: 'Por validar', value: '16', icon: ClipboardList, tone: 'text-amber-800 bg-amber-50' },
+  const secondaryKpis = [
+    { label: 'Vehículos disponibles', value: '5', sub: 'Listos para rentar', icon: Car, tone: 'text-cta bg-cta-50' },
+    { label: 'En mantenimiento', value: '0', sub: 'Ver esas unidades', icon: Wrench, tone: 'text-amber-700 bg-amber-50' },
+    { label: 'Incidentes abiertos', value: '17', sub: 'Todas las no resueltas', icon: AlertTriangle, tone: 'text-red-700 bg-red-50' },
+    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de autos de anfitrión · Nov 2026', icon: Percent, tone: 'text-cta bg-cta-50' },
+  ];
+
+  const tertiaryKpis = [
+    { label: 'Reservas totales', value: '178', sub: 'Historial completo', icon: Calendar, tone: 'text-slate-700 bg-white' },
+    { label: 'Ciudades', value: '5', sub: 'Cobertura', icon: MapPin, tone: 'text-cta bg-cta-50' },
+    { label: 'Sucursales activas', value: '10', sub: 'Puntos de entrega', icon: Building2, tone: 'text-cta bg-cta-50' },
+    { label: 'Unidades por validar', value: '6', sub: 'Altas sin aprobar', icon: Car, tone: 'text-amber-800 bg-amber-50' },
+    { label: 'Documentos por verificar', value: '10', sub: 'Clientes y anfitriones', icon: ClipboardList, tone: 'text-amber-800 bg-amber-50' },
   ];
 
   const renderSidebarContent = () => (
@@ -284,7 +295,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar vehículos, clientes, choferes..."
-                className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200/80 focus:bg-white focus:border-cta focus:ring-1 focus:ring-cta text-xs sm:text-sm font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
+                className="w-full pl-9 pr-3 py-2 rounded-xl bg-transparent border border-slate-200 hover:border-slate-300 focus:border-cta focus:ring-1 focus:ring-cta text-xs sm:text-sm font-sans text-slate-900 placeholder:text-slate-400 outline-none transition-colors"
               />
             </div>
           </div>
@@ -374,22 +385,47 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             })}
           </div>
 
-          {/* Fila 2: 8 Indicadores Operativos Ultra-Compactos */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
-            {compactMetrics.map((m) => {
+          {/* Fila 2: 4 KPIs Operativos (compactos con fondo slate-50) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {secondaryKpis.map((m) => {
               const Icon = m.icon;
               return (
                 <div
                   key={m.label}
-                  className="rounded-xl bg-slate-50 px-3 py-2.5 text-left flex items-center justify-between gap-2"
+                  className="rounded-2xl bg-slate-50 p-3.5 text-left space-y-1.5"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-heading font-medium text-slate-500 truncate">{m.label}</span>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${m.tone}`}>
+                      <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
+                    </div>
+                  </div>
+                  <p className="text-lg sm:text-xl font-heading font-bold text-slate-900 tabular-nums leading-none">
+                    {m.value}
+                  </p>
+                  <p className="text-[11px] font-sans text-slate-500 truncate">{m.sub}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Fila 3: 5 Indicadores de Cobertura y Validación (compactos con fondo slate-50) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {tertiaryKpis.map((m) => {
+              const Icon = m.icon;
+              return (
+                <div
+                  key={m.label}
+                  className="rounded-2xl bg-slate-50 p-3 text-left flex items-center justify-between gap-2"
                 >
                   <div className="min-w-0">
-                    <p className="text-[11px] font-sans text-slate-500 truncate">{m.label}</p>
-                    <p className="text-sm font-heading font-bold text-slate-900 tabular-nums mt-0.5">
+                    <p className="text-[11px] font-heading font-medium text-slate-500 truncate">{m.label}</p>
+                    <p className="text-base sm:text-lg font-heading font-bold text-slate-900 tabular-nums mt-0.5 leading-none">
                       {m.value}
                     </p>
+                    <p className="text-[10px] font-sans text-slate-400 truncate mt-1">{m.sub}</p>
                   </div>
-                  <div className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 ${m.tone}`}>
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${m.tone}`}>
                     <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
                   </div>
                 </div>
@@ -397,17 +433,17 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             })}
           </div>
 
-          {/* Gráficas Minimalistas sobre fondo claro (bg-slate-50) */}
+          {/* Gráficas Minimalistas Lineales (sin fondo, solo borde sutil) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Ingresos por línea de negocio */}
-            <div className="lg:col-span-8 rounded-2xl bg-slate-50 p-5 text-left space-y-4">
-              <div className="flex items-center justify-between gap-2">
+            <div className="lg:col-span-8 rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <h2 className="text-sm font-heading font-bold text-slate-900">
                     Ingresos por línea de negocio
                   </h2>
                   <p className="text-[11px] text-slate-500">
-                    Últimos 6 meses · {cityFilter === 'all' ? 'todas las ciudades' : cityFilter}
+                    Últimos 6 meses, por fecha del movimiento · {cityText}
                   </p>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] text-slate-500">
@@ -481,13 +517,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
 
             {/* Ingresos por línea */}
-            <div className="lg:col-span-4 rounded-2xl bg-slate-50 p-5 text-left flex flex-col justify-between">
+            <div className="lg:col-span-4 rounded-2xl border border-slate-200 bg-transparent p-5 text-left flex flex-col justify-between">
               <div>
                 <h2 className="text-sm font-heading font-bold text-slate-900">Ingresos por línea</h2>
                 <p className="text-[11px] text-slate-500">Distribución de Nov 2026</p>
               </div>
               <div className="py-10 flex flex-col items-center justify-center gap-2 text-center">
-                <div className="w-9 h-9 rounded-xl bg-white text-slate-400 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl border border-slate-200 text-slate-400 flex items-center justify-center">
                   <BarChart3 className="w-4 h-4" strokeWidth={1.6} />
                 </div>
                 <span className="text-xs font-heading font-medium text-slate-500">
@@ -500,10 +536,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Fila inferior de gráficas: Ocupación por ciudad + Reservas por mes */}
+          {/* Fila inferior de gráficas: Ocupación por ciudad + Reservas por mes (lineales sin fondo) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Ocupación por ciudad */}
-            <div className="rounded-2xl bg-slate-50 p-5 text-left space-y-4">
+            <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
               <div>
                 <h2 className="text-sm font-heading font-bold text-slate-900">Ocupación por ciudad</h2>
                 <p className="text-[11px] text-slate-500">% de flota en operación</p>
@@ -525,10 +561,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
 
             {/* Reservas por mes */}
-            <div className="rounded-2xl bg-slate-50 p-5 text-left space-y-4">
+            <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
               <div>
                 <h2 className="text-sm font-heading font-bold text-slate-900">Reservas por mes</h2>
-                <p className="text-[11px] text-slate-500">Últimos 6 meses</p>
+                <p className="text-[11px] text-slate-500">
+                  Últimos 6 meses, por fecha de alta · una renta a chofer cuenta una vez
+                </p>
               </div>
               <div className="h-36 flex items-end justify-between gap-3 px-2 pt-4 border-b border-slate-200/70">
                 {RESERVAS_POR_MES.map((bar) => (
@@ -551,14 +589,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Tabla minimalista: Estado de la flota */}
-          <div className="rounded-2xl bg-slate-50 p-5 text-left space-y-4">
+          {/* Tabla minimalista lineal (sin fondo): Estado de la flota */}
+          <div className="rounded-2xl border border-slate-200 bg-transparent p-5 text-left space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 className="text-sm font-heading font-bold text-slate-900">Estado de la flota</h2>
                 <p className="text-[11px] text-slate-500">
-                  Kilometraje y próximo servicio de {filteredFleet.length} unidades ·{' '}
-                  {cityFilter === 'all' ? 'todas las ciudades' : cityFilter}
+                  Kilometraje y próximo servicio de las {filteredFleet.length} unidades · {cityText}
                 </p>
               </div>
               <button
@@ -571,15 +608,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-heading font-semibold">
-              Ninguna unidad llegó al umbral de kilometraje ni al vencimiento por tiempo
+              Ninguna unidad llegó al umbral de kilometraje ni al vencimiento por tiempo.
             </div>
 
-            <div className="bg-white rounded-xl overflow-hidden divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100 border-t border-slate-100">
               {filteredFleet.length > 0 ? (
                 filteredFleet.map((unit, idx) => (
                   <div
                     key={`${unit.name}-${unit.city}-${idx}`}
-                    className="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50/70 transition-colors"
+                    className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
                   >
                     <div className="min-w-0">
                       <p className="text-xs sm:text-sm font-heading font-semibold text-slate-900 truncate">
