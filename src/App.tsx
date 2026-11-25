@@ -278,6 +278,8 @@ export const App: React.FC = () => {
     navigateTo('/catalogo');
   };
 
+  const isAdminRoute = currentPath === '/admin' || currentPath.startsWith('/admin/');
+
   const isKnownRoute =
     currentPath === '/' ||
     currentPath.startsWith('/vehiculos/') ||
@@ -302,7 +304,7 @@ export const App: React.FC = () => {
     currentPath === '/seo' ||
     currentPath === '/design-system' ||
     currentPath === '/emails' ||
-    currentPath === '/admin' ||
+    isAdminRoute ||
     currentPath.startsWith('/cuenta') ||
     currentPath === '/completar-perfil' ||
     currentPath === '/cuenta/completar';
@@ -310,7 +312,7 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-white text-ink-900 font-sans selection:bg-black selection:text-white flex flex-col">
       {/* Header with concise menu (oculto en /admin porque tiene su propio header y sidebar) */}
-      {currentPath !== '/admin' && <Header currentPath={currentPath} onNavigate={navigateTo} />}
+      {!isAdminRoute && <Header currentPath={currentPath} onNavigate={navigateTo} />}
 
       <main className="flex-1">
         
@@ -411,7 +413,7 @@ export const App: React.FC = () => {
         {currentPath === '/emails' && <EmailsPage onNavigate={navigateTo} />}
 
         {/* ROUTE 7.10: SISTEMA ADMINISTRATIVO (PROTOTIPO QA) */}
-        {currentPath === '/admin' && <AdminPage onNavigate={navigateTo} />}
+        {isAdminRoute && <AdminPage currentPath={currentPath} onNavigate={navigateTo} />}
 
         {/* ROUTE 8: PRIVATE ROUTES (CUENTA / RESERVAR / COMPLETAR PERFIL) */}
         {(currentPath.startsWith('/cuenta') || currentPath === '/completar-perfil' || currentPath === '/cuenta/completar') && (
@@ -605,7 +607,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer corporativo GALSA (en /admin solo muestra la barra QA interna) */}
-      <Footer onNavigate={navigateTo} qaOnly={currentPath === '/admin'} />
+      <Footer onNavigate={navigateTo} qaOnly={isAdminRoute} />
     </div>
   );
 };

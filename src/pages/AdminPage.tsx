@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   LayoutDashboard,
   MessageSquare,
@@ -40,7 +40,17 @@ import { AdminIncidentsView } from '../components/AdminIncidentsView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
+  currentPath?: string;
 }
+
+const getAdminSectionFromPath = (path?: string): string => {
+  if (!path || path === '/admin' || path === '/admin/') return 'dashboard';
+  const sub = path.replace(/^\/admin\/?/, '').split('/')[0];
+  return sub || 'dashboard';
+};
+
+const getAdminHref = (sectionId: string): string =>
+  sectionId === 'dashboard' ? '/admin' : `/admin/${sectionId}`;
 
 const ADMIN_CITY_OPTIONS: DropdownOption[] = [
   { value: 'all', label: 'Todas las ciudades', subtitle: 'Cobertura nacional (5 ciudades)', icon: MapPin },
@@ -123,11 +133,20 @@ const RESERVAS_POR_MES = [
   { month: 'Nov 2026', value: 2 },
 ];
 
-export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
-  const [activeNav, setActiveNav] = useState('dashboard');
+export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath }) => {
+  const [activeNav, setActiveNav] = useState(() => getAdminSectionFromPath(currentPath));
   const [searchQuery, setSearchQuery] = useState('');
   const [cityFilter, setCityFilter] = useState('all');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    setActiveNav(getAdminSectionFromPath(currentPath));
+  }, [currentPath]);
+
+  const navigateToSection = (sectionId: string) => {
+    setActiveNav(sectionId);
+    onNavigate?.(getAdminHref(sectionId));
+  };
 
   const filteredFleet = useMemo(() => {
     return FLEET_STATUS.filter((unit) => {
@@ -254,12 +273,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               {visibleItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeNav === item.id;
+                const href = getAdminHref(item.id);
                 return (
-                  <button
+                  <a
                     key={item.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveNav(item.id);
+                    href={href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateToSection(item.id);
                       setMobileSidebarOpen(false);
                     }}
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-heading transition-colors cursor-pointer ${
@@ -273,7 +294,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
                       strokeWidth={1.7}
                     />
                     <span className="truncate">{item.label}</span>
-                  </button>
+                  </a>
                 );
               })}
             </div>
@@ -400,7 +421,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               </div>
               <button
                 type="button"
-                onClick={() => setActiveNav('reportes')}
+                onClick={() => navigateToSection('reportes')}
                 className="px-4 py-2.5 rounded-xl bg-cta-50 hover:bg-cta-100 text-cta text-xs sm:text-sm font-heading font-semibold transition-colors cursor-pointer"
               >
                 Ver reportes
@@ -629,7 +650,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
               </div>
               <button
                 type="button"
-                onClick={() => setActiveNav('mantenimientos')}
+                onClick={() => navigateToSection('mantenimientos')}
                 className="self-start sm:self-auto px-4 py-2 rounded-xl bg-cta hover:bg-cta-600 text-white text-xs font-heading font-semibold transition-colors cursor-pointer"
               >
                 Ver mantenimientos
