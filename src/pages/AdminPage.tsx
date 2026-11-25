@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   LayoutDashboard,
   MessageSquare,
@@ -30,6 +30,7 @@ import {
   X,
   TrendingUp,
   ArrowRight,
+  HelpCircle,
 } from 'lucide-react';
 import { GalsaLogo } from '../components/GalsaLogo';
 import { CustomDropdown, DropdownOption } from '../components/CustomDropdown';
@@ -171,10 +172,30 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
   const [searchQuery, setSearchQuery] = useState('');
   const [cityFilter, setCityFilter] = useState('all');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const helpRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveNav(getAdminSectionFromPath(currentPath));
   }, [currentPath]);
+
+  useEffect(() => {
+    if (!helpOpen) return;
+    const handleOutside = (e: MouseEvent) => {
+      if (helpRef.current && !helpRef.current.contains(e.target as Node)) {
+        setHelpOpen(false);
+      }
+    };
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setHelpOpen(false);
+    };
+    document.addEventListener('mousedown', handleOutside);
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [helpOpen]);
 
   const navigateToSection = (sectionId: string) => {
     setActiveNav(sectionId);
@@ -372,19 +393,6 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
           );
         })}
       </nav>
-
-      {/* Centro de ayuda fijo abajo en gris claro sin borde */}
-      <div className="shrink-0 pt-2">
-        <div className="rounded-2xl bg-slate-50 p-3.5 text-left space-y-1">
-          <p className="text-xs font-heading font-semibold text-slate-900">Centro de ayuda</p>
-          <p className="text-[11px] font-sans text-slate-600 leading-relaxed">
-            ¿Dudas con la operación? Escríbenos a{' '}
-            <a href="mailto:soporte@galsarent.com.mx" className="text-cta font-medium hover:underline">
-              soporte@galsarent.com.mx
-            </a>
-          </p>
-        </div>
-      </div>
     </div>
   );
 
@@ -433,7 +441,39 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
+            <div ref={helpRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setHelpOpen((prev) => !prev)}
+                aria-label="Centro de ayuda"
+                aria-expanded={helpOpen}
+                title="Centro de ayuda"
+                className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors cursor-pointer ${
+                  helpOpen
+                    ? 'bg-cta-50 text-cta'
+                    : 'bg-transparent hover:bg-slate-100/70 text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <HelpCircle className="w-4 h-4" strokeWidth={1.7} />
+              </button>
+
+              {helpOpen && (
+                <div className="absolute right-0 top-full mt-2 w-72 rounded-2xl bg-white border border-slate-200 p-4 shadow-lg z-50 text-left space-y-1.5">
+                  <p className="text-xs font-heading font-semibold text-slate-900">Centro de ayuda</p>
+                  <p className="text-[11px] font-sans text-slate-600 leading-relaxed">
+                    ¿Dudas con la operación? Escríbenos a{' '}
+                    <a
+                      href="mailto:soporte@galsarent.com.mx"
+                      className="text-cta font-medium hover:underline"
+                    >
+                      soporte@galsarent.com.mx
+                    </a>
+                  </p>
+                </div>
+              )}
+            </div>
+
             <button
               type="button"
               aria-label="Notificaciones"
