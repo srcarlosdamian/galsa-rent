@@ -631,7 +631,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-heading font-semibold">
-              Ninguna unidad llegó al umbral de kilometraje ni al vencimiento por tiempo.
+              Todas las unidades al día en servicio.
             </div>
 
             <div className="divide-y divide-slate-100 border-t border-slate-100">
