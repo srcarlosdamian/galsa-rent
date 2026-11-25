@@ -331,7 +331,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                     <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200/60">
                       Atomic Design System
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.74</span>
+                    <span className="text-xs text-slate-400 font-mono">GALSA Rent v2.8.75</span>
                   </div>
                   <h1 className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 leading-tight">
                     Sistema de Diseño, UI Kit &amp; Auditoría
@@ -1777,7 +1777,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
 
                   <div className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-2">
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-800 text-emerald-400 font-mono">
-                      v2.8.74
+                      v2.8.75
                     </span>
                     <div className="text-[11px] font-heading font-bold text-slate-800">7. Chip de Versión QA</div>
                     <span className="text-[10px] font-mono text-slate-400 block">Footer, DesignSystemPage</span>
@@ -3032,7 +3032,7 @@ export const DesignSystemPage: React.FC<DesignSystemPageProps> = ({ onNavigate }
                         <span>Sistema de Diseño</span>
                       </span>
                       <span>Última actualización: <strong>18 Nov 2026</strong></span>
-                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.74</span>
+                      <span className="bg-neutral-800 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">v2.8.75</span>
                     </div>
                   </div>
                 </div>

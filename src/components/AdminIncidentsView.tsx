@@ -462,7 +462,7 @@ export const AdminIncidentsView: React.FC = () => {
                 <th className="py-2.5 px-3">Línea</th>
                 <th className="py-2.5 px-3">Gravedad</th>
                 <th className="py-2.5 px-3">Estado</th>
-                <th className="py-2.5 px-3 text-right">Costo</th>
+                <th className="py-2.5 px-3">Costo</th>
                 <th className="py-2.5 pl-3 text-right">Acciones</th>
               </tr>
             </thead>
@@ -532,7 +532,7 @@ export const AdminIncidentsView: React.FC = () => {
                       </td>
 
                       {/* Costo */}
-                      <td className="py-3 px-3 text-right font-heading font-semibold tabular-nums whitespace-nowrap">
+                      <td className="py-3 px-3 text-left font-heading font-semibold tabular-nums whitespace-nowrap">
                         <span className={inc.cost > 0 ? 'text-slate-900' : 'text-slate-400'}>
                           ${inc.cost.toLocaleString('es-MX')}
                         </span>
