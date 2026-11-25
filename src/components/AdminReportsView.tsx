@@ -134,13 +134,15 @@ export const AdminReportsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Filtros directos sin título ni contenedor de color */}
-      <div ref={dateWrapRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 overflow-visible">
+      {/* Filtros directos agrupados a la izquierda con ancho automático */}
+      <div ref={dateWrapRef} className="flex flex-wrap items-center gap-2.5 overflow-visible">
         <CustomDropdown
           options={REPORT_CITY_OPTIONS}
           value={city}
           onChange={setCity}
           triggerIcon={MapPin}
+          buttonClassName="!w-auto"
+          menuWidthClass="w-64"
         />
 
         <CustomDropdown
@@ -148,19 +150,21 @@ export const AdminReportsView: React.FC = () => {
           value={line}
           onChange={setLine}
           triggerIcon={Layers}
+          buttonClassName="!w-auto"
+          menuWidthClass="w-60"
         />
 
         <div className="relative">
           <button
             type="button"
             onClick={() => setOpenDate((prev) => (prev === 'from' ? null : 'from'))}
-            className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-sans text-left transition-colors cursor-pointer ${
+            className={`w-auto px-3.5 py-2.5 rounded-xl border bg-white inline-flex items-center gap-2.5 text-sm font-sans text-left transition-colors cursor-pointer ${
               openDate === 'from'
                 ? 'border-cta ring-1 ring-cta text-slate-900'
                 : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-700'
             }`}
           >
-            <span className="truncate">
+            <span className="whitespace-nowrap">
               <span className="text-slate-400 mr-1.5">Desde:</span>
               <span className={fromDate ? 'text-slate-900' : 'text-slate-400'}>
                 {formatShortDate(fromDate)}
@@ -186,13 +190,13 @@ export const AdminReportsView: React.FC = () => {
           <button
             type="button"
             onClick={() => setOpenDate((prev) => (prev === 'to' ? null : 'to'))}
-            className={`w-full px-3.5 py-2.5 rounded-xl border bg-white flex items-center justify-between gap-2 text-sm font-sans text-left transition-colors cursor-pointer ${
+            className={`w-auto px-3.5 py-2.5 rounded-xl border bg-white inline-flex items-center gap-2.5 text-sm font-sans text-left transition-colors cursor-pointer ${
               openDate === 'to'
                 ? 'border-cta ring-1 ring-cta text-slate-900'
                 : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 text-slate-700'
             }`}
           >
-            <span className="truncate">
+            <span className="whitespace-nowrap">
               <span className="text-slate-400 mr-1.5">Hasta:</span>
               <span className={toDate ? 'text-slate-900' : 'text-slate-400'}>
                 {formatShortDate(toDate)}
@@ -201,7 +205,7 @@ export const AdminReportsView: React.FC = () => {
             <Calendar className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={1.5} />
           </button>
           {openDate === 'to' && (
-            <div className="absolute top-full right-0 mt-2 z-[70]">
+            <div className="absolute top-full left-0 mt-2 z-[70]">
               <SingleDatePicker
                 value={toDate || '2026-11-30'}
                 onChange={(d) => {
