@@ -366,13 +366,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
             <button
               type="button"
               aria-label="Notificaciones"
-              className="relative w-9 h-9 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
+              className="relative w-9 h-9 rounded-full bg-transparent hover:bg-slate-100/70 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer"
             >
               <Bell className="w-4 h-4" strokeWidth={1.7} />
               <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
             </button>
 
-            <div className="inline-flex items-center gap-2.5 pl-1.5 pr-3 py-1 rounded-full bg-slate-50">
+            <div className="inline-flex items-center gap-2.5 pl-1.5 pr-3 py-1 rounded-full bg-transparent border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer">
               <div className="w-7 h-7 rounded-full bg-cta text-white text-[11px] font-heading font-bold flex items-center justify-center">
                 SA
               </div>
