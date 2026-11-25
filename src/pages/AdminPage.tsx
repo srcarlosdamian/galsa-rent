@@ -39,6 +39,7 @@ import { AdminDriversView } from '../components/AdminDriversView';
 import { AdminIncidentsView } from '../components/AdminIncidentsView';
 import { AdminVerificationsView } from '../components/AdminVerificationsView';
 import { AdminUsersPermissionsView } from '../components/AdminUsersPermissionsView';
+import { AdminCapitalView } from '../components/AdminCapitalView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
@@ -73,6 +74,7 @@ const DESIGNED_ADMIN_SECTIONS = new Set([
   'verificaciones',
   'usuarios',
   'permisos',
+  'capital',
 ]);
 
 const SIDEBAR_GROUPS = [
@@ -116,6 +118,12 @@ const SIDEBAR_GROUPS = [
       { id: 'plat-entregas', label: 'Entregas / devoluciones', icon: ArrowLeftRight },
       { id: 'inspeccion', label: 'Inspección semanal', icon: FileCheck },
       { id: 'ingresos-renta', label: 'Ingresos por renta', icon: DollarSign },
+    ],
+  },
+  {
+    title: 'Finanzas',
+    items: [
+      { id: 'capital', label: 'Capital e inversiones', icon: TrendingUp },
     ],
   },
   {
@@ -465,6 +473,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
               activeTab={activeNav === 'permisos' ? 'permisos' : 'usuarios'}
               onTabChange={(tab) => navigateToSection(tab)}
             />
+          ) : activeNav === 'capital' ? (
+            <AdminCapitalView />
           ) : (
             <>
               {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
