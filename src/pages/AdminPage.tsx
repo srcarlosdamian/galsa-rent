@@ -37,6 +37,7 @@ import { AdminReportsView } from '../components/AdminReportsView';
 import { AdminReviewsView } from '../components/AdminReviewsView';
 import { AdminDriversView } from '../components/AdminDriversView';
 import { AdminIncidentsView } from '../components/AdminIncidentsView';
+import { AdminVerificationsView } from '../components/AdminVerificationsView';
 
 interface AdminPageProps {
   onNavigate?: (path: string) => void;
@@ -62,7 +63,14 @@ const ADMIN_CITY_OPTIONS: DropdownOption[] = [
 ];
 
 // Secciones ya diseñadas; el resto permanece en SIDEBAR_GROUPS oculto hasta diseñarse
-const DESIGNED_ADMIN_SECTIONS = new Set(['dashboard', 'reportes', 'resenas', 'choferes', 'incidencias']);
+const DESIGNED_ADMIN_SECTIONS = new Set([
+  'dashboard',
+  'reportes',
+  'resenas',
+  'choferes',
+  'incidencias',
+  'verificaciones',
+]);
 
 const SIDEBAR_GROUPS = [
   {
@@ -385,7 +393,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
           </div>
         </header>
 
-        {/* Main Body: Dashboard, Reportes, Reseñas, Choferes o Incidencias */}
+        {/* Main Body: Dashboard, Reportes, Reseñas, Choferes, Incidencias o Verificaciones */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1240px] w-full mx-auto space-y-6">
           {activeNav === 'reportes' ? (
             <AdminReportsView />
@@ -395,6 +403,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate, currentPath })
             <AdminDriversView />
           ) : activeNav === 'incidencias' ? (
             <AdminIncidentsView />
+          ) : activeNav === 'verificaciones' ? (
+            <AdminVerificationsView />
           ) : (
             <>
               {/* Page Header + Controls usando CustomDropdown del Sistema de Diseño */}
