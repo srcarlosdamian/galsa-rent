@@ -141,8 +141,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
   const cityText = cityFilter === 'all' ? 'todas las ciudades' : cityFilter;
 
   // Regla semántica de color: neutral por defecto para métricas informativas;
-  // color solo cuando existe alerta real, falla o pendiente operativo.
+  // verde para dinero/positivo, ámbar para pendientes y rojo para fallas/incidentes.
   const NEUTRAL_KPI_ICON = 'bg-white text-slate-500';
+  const POSITIVE_KPI_ICON = 'bg-emerald-50 text-emerald-700';
 
   const primaryKpis = [
     {
@@ -150,7 +151,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
       value: '$0.0',
       sub: `Cobrado en Nov 2026 · ${cityText}`,
       icon: DollarSign,
-      iconClass: NEUTRAL_KPI_ICON,
+      iconClass: POSITIVE_KPI_ICON,
     },
     {
       label: 'Reservas activas',
@@ -171,7 +172,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
       value: '$0.0',
       sub: 'Ingresos netos, igual que en Finanzas',
       icon: TrendingUp,
-      iconClass: NEUTRAL_KPI_ICON,
+      iconClass: POSITIVE_KPI_ICON,
     },
   ];
 
@@ -182,7 +183,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
 
   const secondaryCompactKpis = [
     { label: 'Vehículos disponibles', value: '5', sub: 'Listos para rentar', icon: Car, tone: NEUTRAL_KPI_ICON },
-    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de anfitrión · Nov 2026', icon: Percent, tone: NEUTRAL_KPI_ICON },
+    { label: 'Comisión de GALSA', value: '$0.0', sub: 'Rentas de anfitrión · Nov 2026', icon: Percent, tone: POSITIVE_KPI_ICON },
     {
       label: 'Incidentes abiertos',
       value: String(openIncidents),
